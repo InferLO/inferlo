@@ -38,7 +38,7 @@ def _naive_mean_field_iteration(mu, field, edges, int):
         mu[i, :] = special_functions.softmax_1d(f[i, :])
 
 
-@numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:],i4,i4,i4)")
+@numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:],i8,i8,i8)")
 def _infer_mean_field_internal(best_mu,
                                field,
                                edges,

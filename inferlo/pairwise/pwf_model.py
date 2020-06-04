@@ -100,7 +100,7 @@ class PairWiseFiniteModel(GraphModel):
         return self._graph
 
     def get_compact_interactions(self):
-        edges = np.array(self.edges)
+        edges = np.array(self.edges, dtype=np.int32)
         int = np.array(self._edges_interactions, dtype=np.float64)
         if len(self.edges) == 0:
             edges = np.empty((0, 2), dtype=np.int32)

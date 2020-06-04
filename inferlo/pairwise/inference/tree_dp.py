@@ -56,7 +56,7 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     dfs_j = np.zeros((model.gr_size, model.al_size, model.al_size))
     for vx, to in dfs_edges:
         dfs_j[to, :, :] = model.get_interaction_matrix(vx, to)
-    dfs_edges = np.array(dfs_edges)
+    dfs_edges = np.array(dfs_edges, dtype=np.int32)
 
     lz = np.array(model.field)  # log(z)
     lzc = np.zeros((model.gr_size, model.al_size))  # log(zc)

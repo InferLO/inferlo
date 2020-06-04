@@ -29,7 +29,7 @@ def _precalc(model: PairWiseFiniteModel):
 
     # For each vertex, contains interval of edge ids for edges
     # starting with this vertex.
-    dir_edges = np.array(dir_edges)
+    dir_edges = np.array(dir_edges, dtype=np.int32)
     v_to_e = np.zeros((model.gr_size, 2), dtype=np.int32)
     for i in range(1, len(dir_edges)):
         if dir_edges[i - 1][1] != dir_edges[i][1]:
