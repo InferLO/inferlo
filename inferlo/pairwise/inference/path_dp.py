@@ -106,7 +106,7 @@ def infer_path_dp(model: 'PairWiseFiniteModel') -> InferenceResult:
     max_layer_size = max([len(layer) for layer in layers])
     assert model.al_size ** max_layer_size <= 1e7, "Too wide."
 
-    a = [get_a(model, l) for l in layers]
+    a = [get_a(model, layer) for layer in layers]
     b = [get_b(model, layers[i], layers[i + 1])
          for i in range(len(layers) - 1)]
     layers_cnt = len(layers)

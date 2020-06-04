@@ -1,5 +1,6 @@
-from inferlo.pairwise.testing import tree_potts_model, line_potts_model
 import numpy as np
+
+from inferlo.pairwise.testing import tree_potts_model, line_potts_model
 
 
 def test_empirical_probabilities():

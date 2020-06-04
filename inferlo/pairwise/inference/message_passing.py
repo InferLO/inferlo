@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import time
 from typing import TYPE_CHECKING
 
 import networkx
@@ -71,15 +70,13 @@ def infer_message_passing(model: 'PairWiseFiniteModel',
         to graph's diameter, which is guaranteed to give exact result for tree.
     :return: InferenceResult object.
     """
-    t0 = time.time()
-
     if iter_num is None:
         iter_num = networkx.diameter(model.get_graph())
 
     dir_edges, v_to_e, intrn = _precalc(model)
 
     m = np.zeros((len(dir_edges), model.al_size))
-    for i in range(iter_num):
+    for _ in range(iter_num):
         _update(m, dir_edges, v_to_e, intrn, model.field)
 
     # Restore partition function for fixed values in nodes.

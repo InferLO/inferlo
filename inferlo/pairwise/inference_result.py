@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import numpy as np
-
 
 class InferenceResult:
     """Inference result for Potts Model.

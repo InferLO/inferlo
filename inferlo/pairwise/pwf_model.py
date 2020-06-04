@@ -101,11 +101,12 @@ class PairWiseFiniteModel(GraphModel):
 
     def get_compact_interactions(self):
         edges = np.array(self.edges, dtype=np.int32)
-        int = np.array(self._edges_interactions, dtype=np.float64)
+        inter = np.array(self._edges_interactions, dtype=np.float64)
         if len(self.edges) == 0:
             edges = np.empty((0, 2), dtype=np.int32)
-            int = np.empty((0, self.al_size, self.al_size,), dtype=np.float64)
-        return edges, int
+            inter = np.empty(
+                (0, self.al_size, self.al_size,), dtype=np.float64)
+        return edges, inter
 
     def add_factor(self, factor: Factor):
         if isinstance(factor, DiscreteFactor):
@@ -177,7 +178,7 @@ class PairWiseFiniteModel(GraphModel):
             if is_tree(self.get_graph()):
                 return sample_tree_dp(self, num_samples=num_samples)
             else:
-                raise NotImplemented("Can handle only trees so far.")
+                raise NotImplementedError("Can handle only trees so far.")
         elif algorithm == 'tree_dp':
             return sample_tree_dp(self, num_samples=num_samples)
         else:

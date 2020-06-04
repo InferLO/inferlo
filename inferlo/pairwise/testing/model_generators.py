@@ -29,8 +29,8 @@ def grid_potts_model(
             if y != width - 1:
                 edges.append((v, v + 1))  # right
     field = 0.1 * np.random.random(size=(gr_size, al_size))
-    int = np.random.random(size=(edges_num, al_size, al_size)) * 5.0
-    return PairWiseFiniteModel.create(field, edges, int)
+    inter = np.random.random(size=(edges_num, al_size, al_size)) * 5.0
+    return PairWiseFiniteModel.create(field, edges, inter)
 
 
 def tree_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
@@ -73,10 +73,10 @@ def line_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
     if not zero_field:
         field = -3.0 + 6.0 * np.random.random(field.shape)
     edges = [[i, i + 1] for i in range(gr_size - 1)]
-    int = np.random.random(size=(gr_size - 1, al_size, al_size)) * 5.0
+    inter = np.random.random(size=(gr_size - 1, al_size, al_size)) * 5.0
     if same_j is not None:
-        int = np.tile(same_j, (gr_size - 1, 1, 1))
-    return PairWiseFiniteModel.create(field, edges, int)
+        inter = np.tile(same_j, (gr_size - 1, 1, 1))
+    return PairWiseFiniteModel.create(field, edges, inter)
 
 
 def clique_potts_model(gr_size=5, al_size=2, seed=0) -> PairWiseFiniteModel:
@@ -86,6 +86,6 @@ def clique_potts_model(gr_size=5, al_size=2, seed=0) -> PairWiseFiniteModel:
     model.set_field(-3.0 + 6.0 * np.random.random((gr_size, al_size)))
     for i in range(gr_size):
         for j in range(i + 1, gr_size):
-            int = np.random.random((al_size, al_size)) * 5.0
-            model.add_interaction(i, j, int)
+            inter = np.random.random((al_size, al_size)) * 5.0
+            model.add_interaction(i, j, inter)
     return model

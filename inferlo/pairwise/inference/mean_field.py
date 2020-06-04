@@ -19,21 +19,21 @@ os.environ["NUMBA_DISABLE_PERFORMANCE_WARNINGS"] = '1'
 
 
 @numba.jit("f8(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
-def _logpf_lower_bound(mu, field, edges, int):
+def _logpf_lower_bound(mu, field, edges, inter):
     ans = np.sum(field * mu) + special_functions.entropy(mu)
     for i in range(len(edges)):
         v1, v2 = edges[i, ...]
-        ans += np.dot(mu[v1, ...], np.dot(int[i, ...], mu[v2, ...]))
+        ans += np.dot(mu[v1, ...], np.dot(inter[i, ...], mu[v2, ...]))
     return ans
 
 
 @numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
-def _naive_mean_field_iteration(mu, field, edges, int):
+def _naive_mean_field_iteration(mu, field, edges, inter):
     f = np.copy(field)
     for i in range(len(edges)):
         v1, v2 = edges[i, :]
-        f[v1, :] += np.dot(int[i, ...], mu[v2, :])
-        f[v2, :] += np.dot(mu[v1, :], int[i, :])
+        f[v1, :] += np.dot(inter[i, ...], mu[v2, :])
+        f[v2, :] += np.dot(mu[v1, :], inter[i, :])
     for i in range(f.shape[0]):
         mu[i, :] = special_functions.softmax_1d(f[i, :])
 
@@ -42,7 +42,7 @@ def _naive_mean_field_iteration(mu, field, edges, int):
 def _infer_mean_field_internal(best_mu,
                                field,
                                edges,
-                               int,
+                               inter,
                                iters_wait,
                                max_iter,
                                num_attempts):
@@ -53,8 +53,8 @@ def _infer_mean_field_internal(best_mu,
         mu /= np.sum(mu, axis=1).reshape(-1, 1)
         steps_without_improvement = 0
         for _ in range(max_iter):
-            _naive_mean_field_iteration(mu, field, edges, int)
-            new_bound = _logpf_lower_bound(mu, field, edges, int)
+            _naive_mean_field_iteration(mu, field, edges, inter)
+            new_bound = _logpf_lower_bound(mu, field, edges, inter)
             if new_bound > best_bound:
                 best_bound = new_bound
                 best_mu[:, :] = mu

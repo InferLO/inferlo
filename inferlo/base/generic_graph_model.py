@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable
 
-from inferlo.base.domain import Domain, RealDomain
+import numpy as np
+
+from inferlo.base.domain import RealDomain
 from inferlo.base.graph_model import GraphModel
 
 if TYPE_CHECKING:

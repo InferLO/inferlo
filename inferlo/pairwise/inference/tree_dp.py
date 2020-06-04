@@ -6,7 +6,7 @@ import numba
 import numpy as np
 from networkx import is_tree
 from networkx.algorithms.traversal import depth_first_search
-from scipy.special import logsumexp, softmax
+from scipy.special import logsumexp
 
 from inferlo.pairwise.inference_result import InferenceResult
 from inferlo.utils.special_functions import logsumexp_1d
