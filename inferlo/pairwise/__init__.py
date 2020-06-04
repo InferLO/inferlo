@@ -1,0 +1,2 @@
+from inferlo.pairwise.pwf_model import PairWiseFiniteModel
+from inferlo.pairwise.inference_result import InferenceResult
