@@ -19,7 +19,7 @@ jobs:
       - name: Install libraries
         run: pip install pylint pycodestyle
       - name: Check style
-        run: tools/check_style
+        run: tools/check_style.sh
   pytest:
     name: Tests
     runs-on: ubuntu-latest
