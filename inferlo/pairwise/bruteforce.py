@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 def calculate_full_probs(model: PottsModel):
     states_count = model.al_size ** model.gr_size
-    assert states_count <= 2e7, "Too much states."
+    assert states_count <= 1e7, "Too much states."
     full_probs = np.zeros(states_count)
 
     edges, interactions = model.get_compact_interactions()
