@@ -20,8 +20,8 @@ jobs:
         run: pip install pylint pycodestyle
       - name: Check style
         run: tools/check_style.sh
-  pytest:
-    name: Tests
+  pytest-ubuntu:
+    name: Tests (Ubuntu)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -32,6 +32,21 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r requirements.txt
-          pip install -r tools/dev_requirements.txt
+          pip install -r pytest>=5.3.2
+      - name: Pytest check
+        run: pytest
+  pytest-windows:
+    name: Tests (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          pip install -r pytest>=5.3.2
       - name: Pytest check
         run: pytest
