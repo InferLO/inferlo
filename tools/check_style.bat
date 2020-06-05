@@ -1,1 +1,1 @@
-pycodestyle inferlo && pylint --rcfile=tools/.pylintrc inferlo
+pycodestyle inferlo && pylint --rcfile=tools/pylintrc.txt inferlo
