@@ -21,6 +21,7 @@ class GraphModel(abc.ABC):
         self._vars = dict()
 
     def get_variable(self, idx: int):
+        """Returns variable by index."""
         if not 0 <= idx < self.num_variables:
             raise IndexError(
                 "index %d is out of bounds for random vector of size %d" % (
@@ -31,6 +32,7 @@ class GraphModel(abc.ABC):
         return self._vars[idx]
 
     def get_variables(self) -> Iterable[Variable]:
+        """Returns all variables."""
         return [self.get_variable(i) for i in range(self.num_variables)]
 
     def __getitem__(self, idx: int) -> Variable:
@@ -38,7 +40,7 @@ class GraphModel(abc.ABC):
 
     @abc.abstractmethod
     def add_factor(self, factor: Factor):
-        pass
+        """Adds a factor to the model."""
 
     def __imul__(self, other: Factor):
         self.add_factor(other)
@@ -49,22 +51,19 @@ class GraphModel(abc.ABC):
 
     @abc.abstractmethod
     def infer(self, algorithm='auto', **kwargs):
-        pass
+        """Performs inference."""
 
     @abc.abstractmethod
     def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
-        pass
+        """Finds the most probable state."""
 
     def sample(self, num_samples: int, algorithm='auto',
                **kwargs) -> np.ndarray:
-        pass
-
-    def fit(self, data: np.ndarray, algorithm='auto', **kwargs):
-        pass
+        """Generates i.i.d. samples."""
 
     @abc.abstractmethod
     def get_factors(self) -> Iterable[Factor]:
-        pass
+        """Returns all factors."""
 
     def get_factor_graph(self) -> Tuple[nx.Graph, Dict[int, str]]:
         """Builds factor graph for the model
@@ -89,6 +88,7 @@ class GraphModel(abc.ABC):
         return graph, labels
 
     def draw_factor_graph(self, ax):
+        """Draws the factor graph."""
         graph, labels = self.get_factor_graph()
         top = nx.bipartite.sets(graph)[0]
         vc = self.num_variables

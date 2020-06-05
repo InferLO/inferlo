@@ -1,3 +1,4 @@
+"""Root InferLO package."""
 from inferlo.base import (
     Domain,
     Factor,

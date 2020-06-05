@@ -28,6 +28,7 @@ class NormalFactorGraphModel(GraphModel):
         self.built = False
 
     def add_factor(self, factor: Factor):
+        """Add a factor."""
         assert not self.built, "Model is built."
         assert factor.model == self
         factor_idx = len(self.factors)
@@ -169,12 +170,14 @@ class NormalFactorGraphModel(GraphModel):
         return new_model
 
     def get_edge_variable_graph(self) -> nx.Graph:
+        """Returns edge-variable graph."""
         graph = nx.Graph()
         graph.add_nodes_from(range(len(self.factors)))
         graph.add_edges_from(self.edges)
         return graph
 
     def draw_edge_variable_graph(self, ax):
+        """Draws edge-variable graph."""
         graph = self.get_edge_variable_graph()
         pos = nx.spring_layout(graph)
         try:

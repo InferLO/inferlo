@@ -19,6 +19,7 @@ from .utils import decode_state, encode_state
 
 if TYPE_CHECKING:
     from inferlo.base.factors import Factor
+    from inferlo.pairwise.inference_result import InferenceResult
 
 
 class PairWiseFiniteModel(GraphModel):
@@ -53,6 +54,7 @@ class PairWiseFiniteModel(GraphModel):
         self._graph = None
 
     def set_field(self, field: np.ndarray):
+        """Sets values of field (biases) in all vertices."""
         assert field.shape == (self.gr_size, self.al_size)
         self.field = field
 
@@ -89,9 +91,11 @@ class PairWiseFiniteModel(GraphModel):
             return self._edges_interactions[edge_id].T
 
     def has_edge(self, u, v) -> bool:
+        """Whether there is edge between vertices u and v."""
         return (u, v) in self._edge_ids
 
     def get_graph(self):
+        """Returns interaction graph."""
         if self._graph is None:
             self._graph = Graph()
             self._graph.add_nodes_from(range(self.gr_size))
@@ -100,6 +104,13 @@ class PairWiseFiniteModel(GraphModel):
         return self._graph
 
     def get_compact_interactions(self):
+        """Returns interactions in compact form.
+
+        Returns two np.arrays. First array has shape (edges_num, 2) and is a
+        list of edges in interaction graph. No edge appears twice. Second array
+        has shape (edge_id, al_size, al_size), and for every edge in the first
+        array contains interaction matrix for that edge.
+        """
         edges = np.array(self.edges, dtype=np.int32)
         inter = np.array(self._edges_interactions, dtype=np.float64)
         if len(self.edges) == 0:
@@ -109,6 +120,7 @@ class PairWiseFiniteModel(GraphModel):
         return edges, inter
 
     def add_factor(self, factor: Factor):
+        """Adds a factor."""
         if isinstance(factor, DiscreteFactor):
             self._add_discrete_factor(factor)
         elif factor.is_discrete():
@@ -128,6 +140,7 @@ class PairWiseFiniteModel(GraphModel):
             self.add_interaction(v1, v2, np.log(factor.values))
 
     def get_factors(self) -> Iterable[Factor]:
+        """Generates explicit list of factors."""
         for i in range(self.gr_size):
             if np.linalg.norm(self.field[i, :]) > 1e-9:
                 yield DiscreteFactor(self, [i], np.exp(self.field[i, :]))
@@ -140,7 +153,23 @@ class PairWiseFiniteModel(GraphModel):
                 factor.name = 'J_%d_%d' % (u, v)
             yield factor
 
-    def infer(self, algorithm='auto', **kwargs):
+    def infer(self, algorithm='auto', **kwargs) -> InferenceResult:
+        """Performs inference.
+
+        Returns `InferenceResult` object, which contains logarithm of partition
+        function and matrix of marginal probabilities.
+
+        :param algorithm: Which algorithm to use. Available algorithms are:
+            * auto - Automatic.
+            * bruteforce - Brute force (by definition). Exact
+            * mean_field - Naive Mean Field. Approximate.
+            * message_passing - Message passing. Approximate, exact only for
+                trees.
+            * path_dp - Dynamic programming on path decomposition. Approximate.
+                Effective on graphs of small pathwidth.
+            * tree_dp - Dynamic programming on tree. Exact. Works only on
+                trees.
+        """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):
                 return infer_tree_dp(self)
@@ -152,14 +181,24 @@ class PairWiseFiniteModel(GraphModel):
             return infer_mean_field(self, **kwargs)
         elif algorithm == 'message_passing':
             return infer_message_passing(self, **kwargs)
-        elif algorithm == 'tree_dp':
-            return infer_tree_dp(self)
         elif algorithm == 'path_dp':
             return infer_path_dp(self)
+        elif algorithm == 'tree_dp':
+            return infer_tree_dp(self)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 
     def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
+        """Finds the most probable state.
+
+        Returns the most probable state as numpy int array of length `gr_size`.
+
+        :param algorithm: Which algorithm to use. Available algorithms are:
+            * auto - Automatic.
+            * bruteforce - Brute force (by definition).
+            * tree_dp - Dynamic programming on tree. Exact. Works only on
+                trees.
+        """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):
                 return max_likelihood_tree_dp(self)
@@ -174,6 +213,15 @@ class PairWiseFiniteModel(GraphModel):
 
     def sample(self, num_samples: int = 1, algorithm='auto',
                **kwargs) -> np.ndarray:
+        """Draws i.i.d. samples from the distribution.
+
+        Returns int numpy array of shape (num_samples, gr_size). Every row is
+            an independent sample.
+
+        :param algorithm: Which algorithm to use. Available algorithms are:
+            * auto - Automatic.
+            * tree_dp - Dynamic programming on tree. Works only on trees.
+        """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):
                 return sample_tree_dp(self, num_samples=num_samples)
@@ -210,6 +258,7 @@ class PairWiseFiniteModel(GraphModel):
         return model
 
     def draw_pairwise_graph(self, ax):
+        """Draws pairwise graph."""
         graph = self.get_graph()
         pos = nx.spring_layout(graph)
         node_labels = {i: self[i].name for i in range(self.num_variables)}

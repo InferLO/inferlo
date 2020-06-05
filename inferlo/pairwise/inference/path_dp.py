@@ -15,6 +15,14 @@ if TYPE_CHECKING:
 
 
 def path_decomposition(graph: Graph):
+    """Path decomposition of a graph.
+
+    Splits vertices into layers, such that vertices in layer i are connected
+    only with vertices from layers i-1, i and i+1.
+
+    Uses simple greedy algorithm. First layer always contains single vertex
+    with id=0.
+    """
     layers = [[0]]
     vertex_to_layer = {0: 0}
 

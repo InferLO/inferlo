@@ -17,5 +17,6 @@ def softmax_1d(x: np.ndarray):
 
 @numba.jit("f8(f8[:])")
 def logsumexp_1d(x: np.ndarray):
+    """LogSumExp function on a vector."""
     x_max = np.max(x)
     return x_max + np.log(np.sum(np.exp(x - x_max)))

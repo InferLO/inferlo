@@ -1,3 +1,4 @@
+"""Testing utils for pairwise models."""
 from inferlo.pairwise.testing.model_generators import (
     clique_potts_model,
     grid_potts_model,

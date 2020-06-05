@@ -24,14 +24,18 @@ class GenericGraphModel(GraphModel):
         self.factors = []
 
     def add_factor(self, factor: Factor):
+        """Adds factor."""
         assert factor.model == self
         self.factors.append(factor)
 
     def get_factors(self) -> Iterable[Factor]:
+        """Returns all factors."""
         return self.factors
 
     def infer(self, algorithm='auto', **kwargs):
+        """Performs inference."""
         raise NotImplemented
 
-    def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
+    def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
+        """Finds most probable state."""
         raise NotImplemented

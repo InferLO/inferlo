@@ -1,6 +1,7 @@
 [config]
 disable=all
 max-line-length=80
+no-docstring-rgx:^test.*|^\_.*
 score=no
 
 enable=
@@ -14,6 +15,7 @@ enable=
     continue-in-finally,
     dangerous-default-value,
     duplicate-argument-name,
+    empty-docstring,
     expression-not-assigned,
     function-redefined,
     inconsistent-mro,
@@ -23,6 +25,8 @@ enable=
     missing-kwoa,
     mixed-indentation,
     mixed-line-endings,
+    missing-class-docstring,
+    missing-function-docstring,
     not-callable,
     no-value-for-parameter,
     nonexistent-operator,

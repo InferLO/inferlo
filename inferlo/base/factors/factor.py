@@ -13,8 +13,8 @@ class Factor(abc.ABC):
 
     def __init__(self, model: GraphModel, var_idx: List[int]):
         """
-        :param model: Graphical base this factor belongs to.
-        :param var_idx: Indices of random variables in the base, on which this
+        :param model: Graphical model this factor belongs to.
+        :param var_idx: Indices of variables in the model, on which this
             factor depends.
         """
         self.model = model
@@ -23,9 +23,10 @@ class Factor(abc.ABC):
 
     @abc.abstractmethod
     def value(self, values: List[float]):
-        pass
+        """Value of function inside this factor in given point."""
 
     def is_discrete(self):
+        """Whether all  variables in the factor are discrete."""
         return all([self.model[i].domain.is_discrete() for i in
                     self.var_idx])
 
@@ -37,6 +38,7 @@ class Factor(abc.ABC):
             self.model[i].name for i in self.var_idx))
 
     def get_name(self):
+        """Name of this factor."""
         return self.name if hasattr(self, 'name') else 'f'
 
     def clone(self, new_model: GraphModel):

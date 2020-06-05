@@ -11,9 +11,18 @@ if TYPE_CHECKING:
 
 
 class FunctionFactor(Factor):
+    """A factor given explicitly by function."""
+
     def __init__(self, model: GraphModel,
                  var_idx: List[int],
                  func: Callable[[List[float]], float]):
+        """Create function factor.
+
+        :param model: Graphical model this factor belongs to.
+        :param var_idx: Indices of variables in the model, on which this
+            factor depends.
+        :param func: Function of this factor (as Python callable).
+        """
         super().__init__(model, var_idx)
         self.func = func
 
@@ -51,12 +60,6 @@ class FunctionFactor(Factor):
         """Returns factor func(g(x)), where g(x) is given factor."""
         return FunctionFactor(self.model, self.var_idx,
                               lambda x: func(self.func(x)))
-
-    def combine_with_random_variable(self, other: Variable,
-                                     func: Callable[[float, float], float]):
-        assert other.model == self.model
-        factor = FunctionFactor(self.model, [other.index], lambda x: x[0])
-        return FunctionFactor.combine_factors(self, factor, func)
 
     def combine_with(self, other: Any, func: Callable[[float, float], float]):
         """Returns factor func(g(x), other), where g(x) is given factor.
@@ -99,6 +102,7 @@ class FunctionFactor(Factor):
         return self.apply_function(lambda x: -x)
 
     def exp(self):
+        """Exponent of this factor."""
         return self.apply_function(math.exp)
 
     @staticmethod

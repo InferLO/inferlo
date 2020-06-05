@@ -9,10 +9,11 @@ from inferlo.pairwise.inference_result import InferenceResult
 from inferlo.pairwise.utils import decode_state
 
 if TYPE_CHECKING:
-    from inferlo.base import PottsModel
+    from inferlo.pairwise import PairWiseFiniteModel
 
 
-def calculate_full_probs(model: PottsModel):
+def calculate_full_probs(model: PairWiseFiniteModel):
+    """For all possible states finds their probabilities (not normed)."""
     states_count = model.al_size ** model.gr_size
     assert states_count <= 2e7, "Too much states."
     full_probs = np.zeros(states_count)
@@ -30,7 +31,7 @@ def calculate_full_probs(model: PottsModel):
     return np.exp(full_probs)
 
 
-def infer_bruteforce(model: PottsModel) -> InferenceResult:
+def infer_bruteforce(model: PairWiseFiniteModel) -> InferenceResult:
     """Performs inference for the Potts Model.
 
     Uses Potts Model definition to perform inference, so complexity is
@@ -55,11 +56,8 @@ def infer_bruteforce(model: PottsModel) -> InferenceResult:
     return InferenceResult(np.log(pf), marg / pf)
 
 
-def sample_potts_bruteforce(model: PottsModel):
-    return None
-
-
-def max_likelihood_potts_bruteforce(model: PottsModel):
+def max_likelihood_potts_bruteforce(model: PairWiseFiniteModel):
+    """Finds max likelihood for pairwise model by checking all states."""
     full_probs = calculate_full_probs(model)
     state_id = np.argmax(full_probs)
     return decode_state(state_id, model.gr_size, model.al_size)
