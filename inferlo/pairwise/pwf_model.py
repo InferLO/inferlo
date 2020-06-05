@@ -103,6 +103,22 @@ class PairWiseFiniteModel(GraphModel):
                 self._graph.add_edge(u, v)
         return self._graph
 
+    def make_connected(self):
+        """Makes graph connected without changing the distribution.
+
+        Adds minimal amount of edges with zero interactions. If graph was a
+        forest, it becomes a tree. If graph as connected, does nothing.
+        """
+        # TODO: ideally this shouldn't mutate the model.
+        con_comps = list(nx.connected_components(self.get_graph()))
+        if len(con_comps) > 1:
+            zeros = np.zeros((self.al_size, self.al_size))
+            # Node to which attach other components.
+            v0 = list(con_comps[0])[0]
+            for cc in con_comps[1:]:
+                self.add_interaction(v0, list(cc)[0], zeros)
+            self._graph = None
+
     def get_compact_interactions(self):
         """Returns interactions in compact form.
 

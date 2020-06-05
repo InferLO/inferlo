@@ -39,50 +39,65 @@ def _precalc(model: PairWiseFiniteModel):
     return dir_edges, v_to_e, intrn
 
 
-@numba.jit("void(f8[:,:],i4[:,:],i4[:,:],f8[:,:,:],f8[:,:])")
-def _update(m, dir_edges, v_to_e, intrn, field):
+@numba.jit("void(f8[:,:],i4[:,:],i4[:,:],f8[:,:,:],f8[:,:],i8)")
+def _message_passing(mu, dir_edges, v_to_e, intrn, field, max_iter):
+    """Runs message passing algorihm.
+
+    Terminates if `max_iter` steps were made or if converged.
+    Returns the result in `mu`.
+    """
     edge_num = len(dir_edges)
     al_size = field.shape[1]
-    new_m = np.zeros_like(m)
-    for edge_id in range(edge_num):
-        t, s = dir_edges[edge_id]
-        for xs in range(al_size):
-            terms = intrn[edge_id, xs, :] + field[t, :]
-            for next_edge_id in range(v_to_e[t][0], v_to_e[t][1]):
-                # dir_edges[next_edge_id] is (u, t).
-                if dir_edges[next_edge_id, 0] != s:
-                    terms += m[next_edge_id, :]
-            new_m[edge_id, xs] = logsumexp_1d(terms)
-    m[:, :] = new_m
+    new_mu = np.zeros_like(mu)
+    for _ in range(max_iter):
+        # This loop is one iteration of message passing.
+        for edge_id in range(edge_num):
+            t, s = dir_edges[edge_id]
+            for xs in range(al_size):
+                terms = intrn[edge_id, xs, :] + field[t, :]
+                for next_edge_id in range(v_to_e[t][0], v_to_e[t][1]):
+                    # dir_edges[next_edge_id] is (u, t).
+                    if dir_edges[next_edge_id, 0] != s:
+                        terms += mu[next_edge_id, :]
+                new_mu[edge_id, xs] = logsumexp_1d(terms)
+
+        # If converged, return. Both mu and new_mu contain correct result.
+        # if np.max(np.abs(new_mu - mu)) < 1e-9:
+        #    return
+        # If not converged, repeat again with new mu.
+        mu[:, :] = new_mu
 
 
 def infer_message_passing(model: 'PairWiseFiniteModel',
-                          iter_num=None) -> InferenceResult:
+                          max_iter=None) -> InferenceResult:
     """Performs inference for the Potts Model with message passing algorithm.
 
     For acyclic graph returns exact partition function and marginal
         probabilities. For graph with loops may return good approximation to
         the true marginal probabilities, but partition function will be a
         useless number.
+    This is an iterative algorithm which terminates when it converged or when
+        `max_iter` iterations were made.
 
     :param model: Potts base.
-    :param max_iter: Number of iterations to perform. If not set, will be set
-        to graph's diameter, which is guaranteed to give exact result for tree.
+    :param max_iter: How many iterations without convergence should happen for
+        algorithm to terminate. Defaults to maximal diameter of connected
+        component.
     :return: InferenceResult object.
     """
-    if iter_num is None:
-        iter_num = networkx.diameter(model.get_graph())
+    model.make_connected()
+    if max_iter is None:
+        max_iter = networkx.diameter(model.get_graph())
 
     dir_edges, v_to_e, intrn = _precalc(model)
 
-    m = np.zeros((len(dir_edges), model.al_size))
-    for _ in range(iter_num):
-        _update(m, dir_edges, v_to_e, intrn, model.field)
+    mu = np.zeros((len(dir_edges), model.al_size))
+    _message_passing(mu, dir_edges, v_to_e, intrn, model.field, max_iter)
 
     # Restore partition function for fixed values in nodes.
     log_marg_pf = np.array(model.field)
     for edge_id in range(len(dir_edges)):
-        log_marg_pf[dir_edges[edge_id][1], :] += m[edge_id]
+        log_marg_pf[dir_edges[edge_id][1], :] += mu[edge_id]
 
     log_pf = scipy.special.logsumexp(log_marg_pf, axis=-1)
     marg_prob = scipy.special.softmax(log_marg_pf, axis=-1)

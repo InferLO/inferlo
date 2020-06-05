@@ -41,6 +41,7 @@ def infer_bruteforce(model: PairWiseFiniteModel) -> InferenceResult:
     :return: InferenceResult object.
     """
     if len(model.edges) == 0:
+        # Fully isolated model.
         log_pf = sum(logsumexp(model.field[i, :])
                      for i in range(model.gr_size))
         mp = softmax(model.field, axis=1)
@@ -56,8 +57,12 @@ def infer_bruteforce(model: PairWiseFiniteModel) -> InferenceResult:
     return InferenceResult(np.log(pf), marg / pf)
 
 
-def max_likelihood_potts_bruteforce(model: PairWiseFiniteModel):
+def max_likelihood_potts_bruteforce(model: PairWiseFiniteModel) -> np.array:
     """Finds max likelihood for pairwise model by checking all states."""
+    if len(model.edges) == 0:
+        # Fully isolated model.
+        return np.argmax(model.field, axis=1)
+
     full_probs = calculate_full_probs(model)
     state_id = np.argmax(full_probs)
     return decode_state(state_id, model.gr_size, model.al_size)

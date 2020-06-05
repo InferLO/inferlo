@@ -52,3 +52,11 @@ def test_max_likelihood():
     state = model.max_likelihood(algorithm='bruteforce')
 
     assert np.allclose(state, np.array([1, 0, 1]))
+
+
+def test_max_likelihood_isolated():
+    gr_size = 1000
+    model = PairWiseFiniteModel(gr_size, 2)
+    model.set_field(np.array([[0, 1]] * gr_size))
+    result = model.max_likelihood(algorithm='bruteforce')
+    assert np.allclose(result, np.ones(gr_size))

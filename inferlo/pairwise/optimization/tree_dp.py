@@ -10,10 +10,17 @@ if TYPE_CHECKING:
 
 
 def max_likelihood_tree_dp(model: PairWiseFiniteModel):
-    """Max Likelihood for  the Potts Model.
+    """Max Likelihood for the Potts Model.
 
     Performs dynamic programming on tree.
+
+    Applicable only if the interaction graph is a tree or a forest. Otherwise
+    throws exception.
+
+    :param model: Model for which to find most likely state.
+    :return: Most likely state. np.array of ints.
     """
+    model.make_connected()
     graph = model.get_graph()
     assert is_tree(graph), "Graph is not a tree."
 

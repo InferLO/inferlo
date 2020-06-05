@@ -1,5 +1,6 @@
 import numpy as np
 
+from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.testing import tree_potts_model, line_potts_model
 
 
@@ -61,3 +62,23 @@ def test_antiferromagnetic_ising_line():
 
     good_count = sum([is_alternating(state) for state in samples])
     assert good_count >= 99
+
+
+def test_fully_isolated():
+    # Create model where all variables are independent with given
+    # distributions. Then calculate empirical distributions for every
+    # variable - they should be close to original distributions.
+    gr_size, al_size, num_samples = 10, 5, 200
+    probs = np.random.random(size=(gr_size, al_size))
+    probs /= probs.sum(axis=1).reshape(-1, 1)
+    model = PairWiseFiniteModel(gr_size, al_size)
+    model.set_field(np.log(probs))
+    samples = model.sample(num_samples=num_samples, algorithm='tree_dp')
+
+    emp_mp = np.zeros((gr_size, al_size))
+    for sample in samples:
+        for i in range(gr_size):
+            emp_mp[i, sample[i]] += 1
+    emp_mp /= num_samples
+
+    assert np.mean(np.square(emp_mp - probs)) < 1e-3

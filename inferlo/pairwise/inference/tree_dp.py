@@ -39,15 +39,18 @@ def infer_tree_dp(model: PairWiseFiniteModel,
                   subtree_mp=False) -> InferenceResult:
     """Performs inference for the Potts Model.
 
-    Performs dynamic programming on tree. Applicable only if the underlying
-        graph is a tree.
+    Performs dynamic programming on tree.
 
-    :param model: Potts base for which to perform inference.
+    Applicable only if the interaction graph is a tree or a forest. Otherwise
+    throws exception.
+
+    :param model: Model for which to perform inference.
     :param subtree_mp: If true, will return marginal probabilities for
         subtrees, i.e. for each node will return probability of it having
         different values if we leave only it and its subtree.
     :return: InferenceResult object.
     """
+    model.make_connected()
     assert is_tree(model.get_graph()), "Graph is not a tree."
 
     # Prepare graph for quick DFS.
