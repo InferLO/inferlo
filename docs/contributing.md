@@ -112,7 +112,7 @@ do that. Pylint performs series of more clever checks. Both
 checks are mandatory - if they fail, continuous integration won't let
 yuo tom mege code to master.
 
-## Documentation
+### Documentation
 
 We use [sphinx](https://www.sphinx-doc.org/en/master/) to automatically 
 build the documentation. Documentation is authomatically exported to 
@@ -139,7 +139,7 @@ To build the docs you will have to additionally install
 [pandoc](https://pandoc.org/). On Linux you can do that by running
 ```sudo apt-get intsall pandoc```.
 
-## Adding new algorithms
+### Adding new algorithms
 
 If you are adding new algorithm to solve a problem fo particular kind of problem,
 for which we already have at least one algorithm, you should follow the following 
