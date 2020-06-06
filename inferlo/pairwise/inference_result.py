@@ -5,9 +5,9 @@ class InferenceResult:
     """Inference result for Potts Model.
 
     Inference result consists of log Z (logarithm of partition function) and
-        marginal probabilities.
+    marginal probabilities.
     Marginal probabilities specify for each vertex and for each value what is
-        the probability of this vertex to assume the given value.
+    the probability of this vertex to assume the given value.
     """
 
     def __init__(self, log_pf, marg_prob):

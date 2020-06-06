@@ -57,7 +57,7 @@ def infer_bruteforce(model: PairWiseFiniteModel) -> InferenceResult:
     return InferenceResult(np.log(pf), marg / pf)
 
 
-def max_likelihood_potts_bruteforce(model: PairWiseFiniteModel) -> np.array:
+def max_lh_bruteforce(model: PairWiseFiniteModel) -> np.array:
     """Finds max likelihood for pairwise model by checking all states."""
     if len(model.edges) == 0:
         # Fully isolated model.

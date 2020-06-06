@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 def sample_tree_dp(model: PairWiseFiniteModel, num_samples: int):
-    """Draws i.i.d. samples by using dynamic programming on a tree."""
+    """Draws iid samples with dynamic programming on tree."""
     model.make_connected()
     graph = model.get_graph()
     assert is_tree(graph), "Graph is not a tree."

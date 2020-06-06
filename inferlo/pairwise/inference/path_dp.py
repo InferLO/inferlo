@@ -101,12 +101,13 @@ def infer_path_dp(model: 'PairWiseFiniteModel') -> InferenceResult:
     """Performs inference for the Potts Model.
 
     Performs dynamic programming on the path decomposition of the underlying
-        graph of the Potts Model.
+    graph of the pairwise model.
+
     Time complexity is O(gr_size * al_size^(2*PW)), where PW is pathwidth of
-        the graph.
+    the graph.
 
     :param model: Potts base for which to perform inference.
-    :return: InferenceResult object.
+    :return: ``InferenceResult`` object.
     """
     layers = path_decomposition(model.get_graph())
     sum_layers_size = sum([len(layer) for layer in layers])

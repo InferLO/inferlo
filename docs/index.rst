@@ -1,19 +1,19 @@
-.. InferLO documentation master file, created by
-   sphinx-quickstart on Wed Jun  3 20:30:51 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+InferLO
+=======
 
-Welcome to InferLO's documentation!
-===================================
+InferLO is a python library for Inference, Learning and Optimization with Graphical Models.
+
+Documentation
+-------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    installing
    api
 
 .. toctree::
-    :maxdepth: 0
+    :maxdepth: 1
     :caption: Tutorials
 
     tutorials/getting_started.ipynb

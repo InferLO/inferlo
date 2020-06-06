@@ -22,6 +22,7 @@ sys.path.insert(0, inferlo_root_path)
 def setup(app):
     app.add_source_parser(MarkdownParser)
     app.add_config_value('pandoc_use_parser', 'markdown', True)
+    app.connect('autodoc-process-signature', autodoc_process_signature)
 
 
 # -- Project information -----------------------------------------------------
@@ -88,3 +89,8 @@ autodoc_default_options = {
 autodoc_typehints = 'none'
 
 master_doc = 'index'
+
+
+def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
+    if what == 'class':
+        return None, None

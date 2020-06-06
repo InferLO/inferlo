@@ -8,7 +8,7 @@ from networkx import Graph, is_tree, nx
 from inferlo.base.domain import DiscreteDomain
 from inferlo.base.factors import DiscreteFactor
 from inferlo.base.graph_model import GraphModel
-from .bruteforce import (infer_bruteforce, max_likelihood_potts_bruteforce)
+from .bruteforce import (infer_bruteforce, max_lh_bruteforce)
 from .inference.mean_field import infer_mean_field
 from .inference.message_passing import infer_message_passing
 from .inference.path_dp import infer_path_dp
@@ -23,27 +23,35 @@ if TYPE_CHECKING:
 
 
 class PairWiseFiniteModel(GraphModel):
-    """Class describing Potts Model in the most general sense.
+    """Pairwise finite model.
 
-    Potts Model is a probabilistic base, in which every variable can take
-        values in the same finite set (alphabet), and probability of every
-        configuration is proportional to
-        exp(sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]]), where M is field,
-        J is interaction tensor.
-    Potts base has underlying undirected graph, in which there is edge
-        (i, j) iff `J[i,j,:,:] != 0`.
+    Represents a graphical model in which all variables have the same discrete
+    domain, all factor depends on at most two variables.
+
+    Model is represented by field F and interactions J. Probability of
+    configuration ``X`` is proportional to
+    ``exp(sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]])``.
+
+    Field is stored explicitly as a matrix of shape ``(gr_size, al_size)``.
+
+    Interactions are store only for those pairs of variables for which they
+    are non-zero. So, interactions are represented by undirected graph, where
+    for each edge (i,j) we store matrix `J[i,j]`, which has shape
+    ``(al_size, al_size)``.
     """
 
-    def __init__(self, size, alphabet_size):
-        """Creates PottsModel instance.
+    def __init__(self, size, al_size):
+        """Creates PairWiseFiniteModel.
 
         :param num_variables: Number of variables.
-        :param alphabet_size: Size of the alphabet.
+        :param al_size: Size of the alphabet (domain).
+
+        Domain will consist of integers in range 0, 1, ... al_size - 1.
         """
-        super().__init__(size, DiscreteDomain(list(range(alphabet_size))))
+        super().__init__(size, DiscreteDomain.range(al_size))
 
         self.gr_size = size
-        self.al_size = alphabet_size
+        self.al_size = al_size
 
         self.field = np.zeros((self.gr_size, self.al_size))
 
@@ -221,9 +229,9 @@ class PairWiseFiniteModel(GraphModel):
             if is_tree(self.get_graph()):
                 return max_likelihood_tree_dp(self)
             else:
-                return max_likelihood_potts_bruteforce(self)
+                return max_lh_bruteforce(self)
         elif algorithm == 'bruteforce':
-            return max_likelihood_potts_bruteforce(self)
+            return max_lh_bruteforce(self)
         elif algorithm == 'tree_dp':
             return max_likelihood_tree_dp(self)
         else:
@@ -234,7 +242,7 @@ class PairWiseFiniteModel(GraphModel):
         """Draws i.i.d. samples from the distribution.
 
         Returns int numpy array of shape (num_samples, gr_size). Every row is
-            an independent sample.
+        an independent sample.
 
         :param algorithm: Which algorithm to use. Available algorithms are:
             * auto - Automatic.
