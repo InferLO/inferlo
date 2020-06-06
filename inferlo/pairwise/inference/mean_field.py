@@ -69,7 +69,7 @@ def infer_mean_field(model: PairWiseFiniteModel,
                      iters_wait=10,
                      max_iter=100,
                      num_attempts=1) -> InferenceResult:
-    """Performs inference for the Potts Model.
+    """Inference with Naive Mean Field.
 
     Uses Naive Mean Field Algorithm. Time complexity is proportional to
     `gr_size * num_iters`, where `gr_size` is number of variables, `num_iters`

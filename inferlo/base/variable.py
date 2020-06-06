@@ -3,17 +3,23 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from inferlo.model import Domain, GraphModel
+    from inferlo.base import Domain, GraphModel
 
 
 class Variable:
-    """A variable"""
+    """Random variable."""
 
     def __init__(
             self,
             model: GraphModel,
             index: int,
             domain: Domain):
+        """Initializies a random variable.
+
+        :param model: Model this variable belongs to.
+        :param index: Index (position) of this variable in a model.
+        :param domain: Domain of this variable (set of values it can take).
+        """
         self.model = model
         self.index = index
         self.domain = domain

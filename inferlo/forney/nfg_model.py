@@ -23,6 +23,11 @@ class NormalFactorGraphModel(GraphModel):
     """
 
     def __init__(self, num_variables: int, domain: Domain):
+        """Initializes Normal Factor Graph model.
+
+        :param num_variables: Number of variables in the model.
+        :param domain: Default domain of each variable.
+        """
         super().__init__(num_variables, domain)
 
         # self.edges[i] -- two indices of factors, depending on i-th variable.

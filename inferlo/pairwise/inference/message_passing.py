@@ -70,7 +70,7 @@ def _message_passing(mu, dir_edges, v_to_e, intrn, field, max_iter):
 
 def infer_message_passing(model: 'PairWiseFiniteModel',
                           max_iter=None) -> InferenceResult:
-    """Performs inference for the Potts Model with message passing algorithm.
+    """Inference with Message Passing.
 
     For acyclic graph returns exact partition function and marginal
         probabilities. For graph with loops may return good approximation to

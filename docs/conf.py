@@ -76,21 +76,26 @@ source_suffix = {
     '.md': 'markdown',
 }
 
+# Home page for documentation.
+master_doc = 'index'
+
 # -- Extension configuration -------------------------------------------------
 
 # Generate subpages for reference docs automatically.
 # http://www.sphinx-doc.org/en/master/ext/autosummary.html#generating-stub-pages-automatically
 autosummary_generate = True
 
+# Autodoc configuration.
+# See https://www.sphinx-doc.org/en/2.0/usage/extensions/autodoc.html
+
 # Autodoc options.
 autodoc_default_options = {
     'members': None,  # Enables docs for class members.
 }
-autodoc_typehints = 'none'
-
-master_doc = 'index'
+autodoc_typehints = 'signature'
 
 
-def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
+def autodoc_process_signature(app, what, name, obj, options, signature,
+                              return_annotation):
     if what == 'class':
         return None, None

@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 class PairWiseFiniteModel(GraphModel):
-    """Pairwise finite graphical model
+    """Pairwise finite graphical model.
 
     Represents a graphical model in which all variables have the same discrete
     domain, all factor depends on at most two variables.
@@ -48,11 +48,11 @@ class PairWiseFiniteModel(GraphModel):
         density function inside the exponent also refers to physical models,
         because fields and interactions are terms in energy and according to
         Bolzmann distribution probability of the state with energy E is
-        proportional to $e^{-\beta E}.
+        proportional to ``exp(-E/(kT))``.
     """
 
     def __init__(self, size, al_size):
-        """Creates PairWiseFiniteModel.
+        """Initializes PairWiseFiniteModel.
 
         :param num_variables: Number of variables.
         :param al_size: Size of the alphabet (domain).

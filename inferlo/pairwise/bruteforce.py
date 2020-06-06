@@ -32,13 +32,15 @@ def calculate_full_probs(model: PairWiseFiniteModel):
 
 
 def infer_bruteforce(model: PairWiseFiniteModel) -> InferenceResult:
-    """Performs inference for the Potts Model.
+    """Inference by summing up all states.
 
-    Uses Potts Model definition to perform inference, so complexity is
-        `al_size^gr_size`.
+    Uses definition to perform inference, so complexity is
+    ``O(al_size ** gr_size)``.
 
-    :param model: Potts base for which to perform inference.
-    :return: InferenceResult object.
+    Result is exact.
+
+    :param model: Model for which to perform inference.
+    :return: ``InferenceResult`` object.
     """
     if len(model.edges) == 0:
         # Fully isolated model.

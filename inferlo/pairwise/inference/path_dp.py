@@ -98,7 +98,7 @@ def get_b(model, layer1, layer2):
 
 
 def infer_path_dp(model: 'PairWiseFiniteModel') -> InferenceResult:
-    """Performs inference for the Potts Model.
+    """Inference using DP on path decomposition.
 
     Performs dynamic programming on the path decomposition of the underlying
     graph of the pairwise model.

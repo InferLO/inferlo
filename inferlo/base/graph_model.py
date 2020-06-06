@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import abc
-from typing import TYPE_CHECKING, Iterable, Tuple, Dict
+from typing import TYPE_CHECKING, Iterable, Tuple, Dict, List
 
 import networkx as nx
 import numpy as np
@@ -17,12 +17,16 @@ class GraphModel(abc.ABC):
     """Abstract class representing any graphical model."""
 
     def __init__(self, num_variables: int, domain: Domain):
+        """
+        :param num_variables: Number of variables in the model.
+        :param domain: Default domain of each variable.
+        """
         self.num_variables = num_variables
         self._default_domain = domain
         self._vars = dict()
 
     def get_variable(self, idx: int):
-        """Returns variable by index."""
+        """Returns variable by its index."""
         if not 0 <= idx < self.num_variables:
             raise IndexError(
                 "index %d is out of bounds for random vector of size %d" % (
@@ -32,7 +36,7 @@ class GraphModel(abc.ABC):
             self._vars[idx] = v
         return self._vars[idx]
 
-    def get_variables(self) -> Iterable[Variable]:
+    def get_variables(self) -> Lisst[Variable]:
         """Returns all variables."""
         return [self.get_variable(i) for i in range(self.num_variables)]
 
@@ -60,7 +64,7 @@ class GraphModel(abc.ABC):
 
     def sample(self, num_samples: int, algorithm='auto',
                **kwargs) -> np.ndarray:
-        """Generates i.i.d. samples."""
+        """Generates samples."""
 
     @abc.abstractmethod
     def get_factors(self) -> Iterable[Factor]:
@@ -69,7 +73,7 @@ class GraphModel(abc.ABC):
     def get_symbolic_variables(self) -> Iterable[FunctionFactor]:
         """Prepares variables for usage in expressions.
 
-        Returns lists of trivial ``FunctionFactor``s, each of them representing
+        Returns lists of trivial ``FunctionFactor`` s, each of them representing
         a factor on one variable with identity function. They can be used
         in mathematical expressions, which will result in another
         ``FunctionFactor``.

@@ -5,7 +5,7 @@ API Reference
 Graphical models
 ''''''''''''''''
 
-Classes representing different kinds of graphical models
+Classes representing different kinds of graphical models.
 
 .. autosummary::
     :toctree: generated/
@@ -20,8 +20,8 @@ Classes representing different kinds of graphical models
 Auxiliary classes
 '''''''''''''''''
 
-Classes representing elementary concepts, such as
-variables and factors.
+Classes representing elementary concepts, such as variables and factors.
+Also contains data classes representing results of computations.
 
 .. autosummary::
     :toctree: generated/
@@ -33,6 +33,7 @@ variables and factors.
     inferlo.FunctionFactor
     inferlo.RealDomain
     inferlo.Variable
+    inferlo.pairwise.InferenceResult
 
 
 Algorithms
@@ -76,3 +77,17 @@ Sampling algorithms
     :toctree: generated/
 
     inferlo.pairwise.sampling.tree_dp.sample_tree_dp
+
+Model generators
+''''''''''''''''
+
+These function generate random models of certain structure. They are
+useful for testing and benchmarking.
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo.pairwise.testing.clique_potts_model
+    inferlo.pairwise.testing.grid_potts_model
+    inferlo.pairwise.testing.line_potts_model
+    inferlo.pairwise.testing.tree_potts_model

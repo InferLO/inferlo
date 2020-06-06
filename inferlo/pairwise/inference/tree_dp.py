@@ -37,7 +37,7 @@ def dfs2(lz, lzc, lzr, dfs_edges, dfs_j):
 
 def infer_tree_dp(model: PairWiseFiniteModel,
                   subtree_mp=False) -> InferenceResult:
-    """Performs inference for the Potts Model.
+    """Inference using DP on tree.
 
     Performs dynamic programming on tree.
 

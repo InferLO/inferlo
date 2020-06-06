@@ -43,7 +43,7 @@ class DiscreteDomain(Domain):
 
     @staticmethod
     def range(n: int):
-        """Creates domain with integer values frrom 0 to n-1."""
+        """Creates domain with integer values from 0 to n-1."""
         return DiscreteDomain(range(n))
 
     def __repr__(self):
@@ -51,7 +51,7 @@ class DiscreteDomain(Domain):
 
 
 class RealDomain(Domain):
-    """All real values."""
+    """Domain consisting of all real values."""
 
     def __repr__(self):
         return 'RealDomain'

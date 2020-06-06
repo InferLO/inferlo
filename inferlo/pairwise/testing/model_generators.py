@@ -9,7 +9,7 @@ def grid_potts_model(
         width,
         al_size=3,
         seed=111) -> PairWiseFiniteModel:
-    """Generates random Potts base on a grid.
+    """Generates random PairWiseFinteModel on a grid.
 
     :param height: Heigth of the grid.
     :param width: Wwidth of the grid.
@@ -35,7 +35,7 @@ def grid_potts_model(
 
 def tree_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
                      zero_field=False) -> PairWiseFiniteModel:
-    """Generates random Potts Model on a random tree.
+    """Generates random PairWiseFinteModel on a random tree.
 
     :param gr_size: Size of the graph (number of variables).
     :param al_size: Alphabet size.
@@ -59,14 +59,14 @@ def tree_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
 
 def line_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
                      zero_field=False) -> PairWiseFiniteModel:
-    """Generates random Potts base on a line graph.
+    """Generates random PairWiseFinteModel on a line graph.
 
     :param gr_size: Size of the graph (number of variables).
     :param al_size: Alphabet size.
     :param seed: Random seed.
     :param same_j: If set, interaction matrix for all edges.
     :param zero_field: Whether base should be zero-field.
-    :return: Generated Potts Model.
+    :return: Generated model.
     """
     np.random.seed(seed)
     field = np.zeros((gr_size, al_size))
@@ -80,7 +80,7 @@ def line_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
 
 
 def clique_potts_model(gr_size=5, al_size=2, seed=0) -> PairWiseFiniteModel:
-    """Generates random Potts base on a clique."""
+    """Generates random PairWiseFinteModel on a clique."""
     np.random.seed(seed)
     model = PairWiseFiniteModel(gr_size, al_size)
     model.set_field(-3.0 + 6.0 * np.random.random((gr_size, al_size)))
