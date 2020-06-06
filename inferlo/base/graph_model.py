@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Iterable, Tuple, Dict
 import networkx as nx
 import numpy as np
 
+from inferlo.base.factors import FunctionFactor
 from inferlo.base.variable import Variable
 
 if TYPE_CHECKING:
@@ -65,6 +66,17 @@ class GraphModel(abc.ABC):
     def get_factors(self) -> Iterable[Factor]:
         """Returns all factors."""
 
+    def get_symbolic_variables(self) -> Iterable[FunctionFactor]:
+        """Prepares variable for usage in expressions.
+
+        Returns lists of trivial `FunctionFactor`s, each of them representing
+        factor on one variable with identity function. They can be used
+        in mathematical expressions, which will result in another
+        `FunctionFactor`.
+        """
+        return [FunctionFactor(self, [i], lambda x: x[0]) for i in
+                range(self.num_variables)]
+
     def get_factor_graph(self) -> Tuple[nx.Graph, Dict[int, str]]:
         """Builds factor graph for the model
 
@@ -110,6 +122,7 @@ class GraphModel(abc.ABC):
         In other words, just substitutes values into factors and multiplies
         them.
         """
+        x = np.array(x)
         assert x.shape == (self.num_variables,)
         result = 1.0
         for factor in self.get_factors():

@@ -6,7 +6,6 @@ from typing import List, Callable, Any, TYPE_CHECKING
 from inferlo.base.factors.factor import Factor
 
 if TYPE_CHECKING:
-    from inferlo.base.variable import Variable
     from inferlo.base.graph_model import GraphModel
 
 
@@ -98,21 +97,26 @@ class FunctionFactor(Factor):
     def __rtruediv__(self, other: Any):
         return self.combine_with(other, lambda x, y: y / x)
 
+    def __pow__(self, other):
+        return self.combine_with(other, lambda x, y: x ** y)
+
+    def __rpow__(self, other):
+        return self.combine_with(other, lambda x, y: y ** x)
+
     def __neg__(self):
         return self.apply_function(lambda x: -x)
+
+    def __abs__(self):
+        return self.apply_function(lambda x: abs(x))
 
     def exp(self):
         """Exponent of this factor."""
         return self.apply_function(math.exp)
 
-    @staticmethod
-    def prepare_variables(model: GraphModel):
-        """Prepares variables for usage in expressions.
+    def sin(self):
+        """Sine of this factor."""
+        return self.apply_function(math.sin)
 
-        Returns lists of trivial `FunctionFactor`s, each of them representing
-        factor on one variable with identity function. They can be used
-        in mathematical expressions, which will result in another
-        `FunctionFactor`.
-        """
-        return [FunctionFactor(model, [i], lambda x: x[0]) for i in
-                range(len(model))]
+    def cos(self):
+        """Sine of this factor."""
+        return self.apply_function(math.cos)

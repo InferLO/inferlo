@@ -1,13 +1,13 @@
 import numpy as np
 
-from inferlo.base import FunctionFactor, DiscreteFactor
+from inferlo.base import DiscreteFactor
 from inferlo.pairwise import PairWiseFiniteModel, InferenceResult
 from inferlo.pairwise.testing import assert_results_close
 
 
 def test_build_from_factors():
     model = PairWiseFiniteModel(5, 2)
-    x = FunctionFactor.prepare_variables(model)
+    x = model.get_symbolic_variables()
 
     # Field.
     model *= np.exp(5 * x[1])

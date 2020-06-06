@@ -38,9 +38,20 @@ class DiscreteDomain(Domain):
 
     @staticmethod
     def binary():
-        """Creates somain with two values 0 and 1."""
+        """Creates domain with two values 0 and 1."""
         return DiscreteDomain([0, 1])
+
+    @staticmethod
+    def range(n: int):
+        """Creates domain with integer values frrom 0 to n-1."""
+        return DiscreteDomain(range(n))
+
+    def __repr__(self):
+        return 'DiscreteDomain([%s])' % ','.join([str(v) for v in self.values])
 
 
 class RealDomain(Domain):
     """All real values."""
+
+    def __repr__(self):
+        return 'RealDomain'
