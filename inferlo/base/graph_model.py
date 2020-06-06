@@ -67,18 +67,18 @@ class GraphModel(abc.ABC):
         """Returns all factors."""
 
     def get_symbolic_variables(self) -> Iterable[FunctionFactor]:
-        """Prepares variable for usage in expressions.
+        """Prepares variables for usage in expressions.
 
-        Returns lists of trivial `FunctionFactor`s, each of them representing
-        factor on one variable with identity function. They can be used
+        Returns lists of trivial ``FunctionFactor``s, each of them representing
+        a factor on one variable with identity function. They can be used
         in mathematical expressions, which will result in another
-        `FunctionFactor`.
+        ``FunctionFactor``.
         """
         return [FunctionFactor(self, [i], lambda x: x[0]) for i in
                 range(self.num_variables)]
 
     def get_factor_graph(self) -> Tuple[nx.Graph, Dict[int, str]]:
-        """Builds factor graph for the model
+        """Builds factor graph for the model.
 
         Factor graph is a bipartite graph with variables in one part and
         factors in other graph. Edge denotes that factor depends on variable.

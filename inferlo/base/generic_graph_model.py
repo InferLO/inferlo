@@ -12,9 +12,9 @@ if TYPE_CHECKING:
 
 
 class GenericGraphModel(GraphModel):
-    """Graphical base in the most general form.
+    """Graphical model in the most general form.
 
-    Explicitly specified by factors.
+    Explicitly specified by list of factors.
     """
 
     def __init__(self, num_variables: int, domain=None):

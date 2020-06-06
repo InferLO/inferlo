@@ -113,7 +113,8 @@ def infer_path_dp(model: 'PairWiseFiniteModel') -> InferenceResult:
     sum_layers_size = sum([len(layer) for layer in layers])
     assert sum_layers_size == model.gr_size, "Graph is not connected."
     max_layer_size = max([len(layer) for layer in layers])
-    assert model.al_size ** max_layer_size <= 1e7, "Too wide."
+    assert model.al_size ** max_layer_size <= 1e5, (
+        "Algorithm won't handle this complexity.")
 
     a = [get_a(model, layer) for layer in layers]
     b = [get_b(model, layers[i], layers[i + 1])

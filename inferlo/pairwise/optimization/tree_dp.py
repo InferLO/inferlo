@@ -40,7 +40,6 @@ def max_likelihood_tree_dp(model: PairWiseFiniteModel):
             int_mx = model.get_interaction_matrix(v, to)
             for i in range(model.al_size):
                 mlz[v, i] += np.max(int_mx[i, :] + mlz[to, :])
-        print(v, mlz[v, :])
 
     dfs1(0, -1)
 

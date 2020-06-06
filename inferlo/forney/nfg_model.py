@@ -12,10 +12,14 @@ if TYPE_CHECKING:
 
 
 class NormalFactorGraphModel(GraphModel):
-    """Forney-style (edge-variable) graphical model.
+    """Normal Factor Graph model.
+
+    Also known as Forney-style or Edge-Variable graphical model.
 
     Variables correspond to edges of a graph, factors correspond to vertices of
     a graph.
+
+    Every variable appears in exactly two factors.
     """
 
     def __init__(self, num_variables: int, domain: Domain):
@@ -62,7 +66,7 @@ class NormalFactorGraphModel(GraphModel):
 
     @staticmethod
     def from_model(original_model: GraphModel):
-        """Constructs Forley model which is equivalent to given model.
+        """Constructs NFG model which is equivalent to given model.
 
         If necessary, clones variables and adds factors.
 

@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 
 class PairWiseFiniteModel(GraphModel):
-    """Pairwise finite model.
+    """Pairwise finite graphical model
 
     Represents a graphical model in which all variables have the same discrete
     domain, all factor depends on at most two variables.
@@ -34,10 +34,21 @@ class PairWiseFiniteModel(GraphModel):
 
     Field is stored explicitly as a matrix of shape ``(gr_size, al_size)``.
 
-    Interactions are store only for those pairs of variables for which they
+    Interactions are stored only for those pairs of variables for which they
     are non-zero. So, interactions are represented by undirected graph, where
     for each edge (i,j) we store matrix `J[i,j]`, which has shape
     ``(al_size, al_size)``.
+
+    Names
+        "Field" is called like that because in physical models (such as
+        Ising model) these values correspond to local magnetic fields. They
+        are also known as biases. "Interactions" are called like that because
+        in physical models they correspond to strength of spin-spin
+        interactions. The fact that all these terms enter the probability
+        density function inside the exponent also refers to physical models,
+        because fields and interactions are terms in energy and according to
+        Bolzmann distribution probability of the state with energy E is
+        proportional to $e^{-\beta E}.
     """
 
     def __init__(self, size, al_size):
@@ -53,7 +64,7 @@ class PairWiseFiniteModel(GraphModel):
         self.gr_size = size
         self.al_size = al_size
 
-        self.field = np.zeros((self.gr_size, self.al_size))
+        self.field = np.zeros((self.gr_size, self.al_size), dtype=np.float64)
 
         self.edges = []
         self._edges_interactions = []
@@ -64,7 +75,7 @@ class PairWiseFiniteModel(GraphModel):
     def set_field(self, field: np.ndarray):
         """Sets values of field (biases) in all vertices."""
         assert field.shape == (self.gr_size, self.al_size)
-        self.field = field
+        self.field = np.array(field, dtype=np.float64)
 
     def add_interaction(self, u, v, interaction):
         """Adds factor corresponding to interaction between nodes u and v.
@@ -180,7 +191,7 @@ class PairWiseFiniteModel(GraphModel):
     def infer(self, algorithm='auto', **kwargs) -> InferenceResult:
         """Performs inference.
 
-        Available algorithms:
+        Available algorithms
             * ``auto`` - Automatic.
             * ``bruteforce`` - Brute force (by definition). Exact
             * ``mean_field`` - Naive Mean Field. Approximate.
@@ -216,10 +227,10 @@ class PairWiseFiniteModel(GraphModel):
     def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
         """Finds the most probable state.
 
-        Available algorithms:
-            * `auto` - Automatic.
-            * `bruteforce` - Brute force (by definition).
-            * `tree_dp` - Dynamic programming on tree. Exact. Works only on
+        Available algorithms
+            * ``auto`` - Automatic.
+            * ``bruteforce`` - Brute force (by definition).
+            * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
               trees.
 
         :param algorithm: Which algorithm to use. String.
@@ -241,12 +252,15 @@ class PairWiseFiniteModel(GraphModel):
                **kwargs) -> np.ndarray:
         """Draws i.i.d. samples from the distribution.
 
-        Returns int numpy array of shape (num_samples, gr_size). Every row is
-        an independent sample.
+        Returns ``np.array`` of type ``np.int32`` shape
+        ``(num_samples, gr_size)``. Every row is an independent sample.
 
-        :param algorithm: Which algorithm to use. Available algorithms are:
-            * auto - Automatic.
-            * tree_dp - Dynamic programming on tree. Works only on trees.
+        Available algorithms
+            * ``auto`` - Automatic.
+            * ``tree_dp`` - Dynamic programming on tree. Works only on trees.
+
+        :param num_samples: How many samples to generate.
+        :param algorithm: Which algorithm to use.
         """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):
@@ -273,7 +287,21 @@ class PairWiseFiniteModel(GraphModel):
     def create(field: np.ndarray,
                edges: Iterable,
                interactions: Iterable):
-        """Creates a Potts base represented by field and interactions."""
+        """Creates PairwiseFiniteModel from compact representation.
+
+        Infers number of variables and size of alphabet from shape of
+        ``field``.
+
+        :param field: Values of the field. ``np.array`` of shape
+          ``(gr_size, al_size)``.
+        :param edges: List of edges with interactions. ``np.array`` of integer
+          dtype and shape ``(edge_num, 2)``. Edges can't repeat. If there is
+          edge (u,v), you can't have edge (v,u).
+        :param interactions: ``np.array`` of shape
+          ``(edge_num, al_size, al_size)``, or Iterable which can be converted
+          to such an array. ``interactons[i,:,:]`` is a matrix  decribing
+          interactions between variables ``edges[i, 0]`` and ``edges[i, `]``.
+        """
         size, al_size = field.shape
         model = PairWiseFiniteModel(size, al_size)
         model.set_field(field)
