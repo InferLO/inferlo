@@ -176,8 +176,8 @@ class PairWiseFiniteModel(GraphModel):
             * ``auto`` - Automatic.
             * ``bruteforce`` - Brute force (by definition). Exact
             * ``mean_field`` - Naive Mean Field. Approximate.
-            * ``message_passing`` - Message passing. Approximate, exact only for
-              trees.
+            * ``message_passing`` - Message passing. Approximate, exact only
+              for trees.
             * ``path_dp`` - Dynamic programming on path decomposition.
               Approximate. Effective on graphs of small pathwidth.
             * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on

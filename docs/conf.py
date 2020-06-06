@@ -70,7 +70,7 @@ html_static_path = ['_static']
 autosummary_generate = True
 
 autodoc_default_options = {
-    'members': True,
+    'members': None, # Enables docs for class members.
 }
 
 master_doc = 'index'
