@@ -1,0 +1,6 @@
+# Requirements needed to build documentation.
+sphinx
+sphinx_rtd_theme
+sphinx_markdown_parser
+pypandoc
+nbsphinx

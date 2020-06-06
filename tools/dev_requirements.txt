@@ -7,7 +7,3 @@ autopep8
 
 # Testing.
 pytest
-
-# Documentation.
-sphinx
-sphinx_rtd_theme
