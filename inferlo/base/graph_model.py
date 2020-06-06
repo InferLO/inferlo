@@ -36,7 +36,7 @@ class GraphModel(abc.ABC):
             self._vars[idx] = v
         return self._vars[idx]
 
-    def get_variables(self) -> Lisst[Variable]:
+    def get_variables(self) -> List[Variable]:
         """Returns all variables."""
         return [self.get_variable(i) for i in range(self.num_variables)]
 
@@ -73,10 +73,10 @@ class GraphModel(abc.ABC):
     def get_symbolic_variables(self) -> Iterable[FunctionFactor]:
         """Prepares variables for usage in expressions.
 
-        Returns lists of trivial ``FunctionFactor`` s, each of them representing
-        a factor on one variable with identity function. They can be used
-        in mathematical expressions, which will result in another
-        ``FunctionFactor``.
+        Returns lists of trivial ``FunctionFactor`` s, each of them
+        representing a factor on one variable with identity function.
+        They can  be used in mathematical expressions, which will result in
+        another ``FunctionFactor``.
         """
         return [FunctionFactor(self, [i], lambda x: x[0]) for i in
                 range(self.num_variables)]

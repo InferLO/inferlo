@@ -46,6 +46,7 @@ def test_build_from_interactions():
 
 
 def test_inference_all_methods():
+    # Sanity check that all algorithms work on very simple model.
     all_methods = ['auto', 'bruteforce', 'mean_field', 'message_passing',
                    'tree_dp', 'path_dp']
     model = PairWiseFiniteModel(2, 2)
@@ -62,10 +63,24 @@ def test_inference_all_methods():
 
 
 def test_max_likelihood_all_methods():
+    # Sanity check that all algorithms work on very simple model.
     all_methods = ['auto', 'bruteforce', 'tree_dp']
     model = PairWiseFiniteModel(2, 2)
     model.add_interaction(0, 1, np.array([[0, 0], [0, 1]]))
     expected_result = np.array([1, 1])
+
+    for method in all_methods:
+        result = model.max_likelihood(algorithm=method)
+        assert np.allclose(result, expected_result)
+
+
+def test_sample_likelihood_all_methods():
+    # Sanity check that all algorithms work on very simple model.
+    all_methods = ['auto', 'tree_dp']
+    model = PairWiseFiniteModel(2, 2)
+    model.set_field(np.array([[100, 0], [100, 0]]))
+    num_samples = 10
+    expected_result = np.zeros((num_samples, 2))
 
     for method in all_methods:
         result = model.max_likelihood(algorithm=method)
