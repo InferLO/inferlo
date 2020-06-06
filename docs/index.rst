@@ -8,15 +8,19 @@ Welcome to InferLO's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
-   
+
+   installing
    api
 
+.. toctree::
+    :maxdepth: 0
+    :caption: Tutorials
 
+    tutorials/getting_started.ipynb
 
-Indices and tables
-==================
+.. toctree::
+    :maxdepth: 1
+    :caption: Developer documentation
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    contributing
+

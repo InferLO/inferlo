@@ -12,11 +12,17 @@
 #
 import os
 import sys
+
+from sphinx_markdown_parser.parser import MarkdownParser
+
 inferlo_root_path = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, inferlo_root_path)
 
+
 def setup(app):
-    pass
+    app.add_source_parser(MarkdownParser)
+    app.add_config_value('pandoc_use_parser', 'markdown', True)
+
 
 # -- Project information -----------------------------------------------------
 
@@ -27,13 +33,13 @@ author = 'InferLO developers'
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 
+extensions = [
+    'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
@@ -50,7 +56,6 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -63,6 +68,13 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['static']
 
+# Allow markdown includes.
+# http://www.sphinx-doc.org/en/master/markdown.html
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown',
+}
+
 # -- Extension configuration -------------------------------------------------
 
 # Generate subpages for reference docs automatically.
@@ -71,9 +83,8 @@ autosummary_generate = True
 
 # Autodoc options.
 autodoc_default_options = {
-    'members': None, # Enables docs for class members.
+    'members': None,  # Enables docs for class members.
 }
 autodoc_typehints = 'none'
-
 
 master_doc = 'index'
