@@ -37,3 +37,5 @@ classes.
     :toctree: generated/
 
     inferlo.pairwise.inference.mean_field.infer_mean_field
+    inferlo.nonexistent.infer_mean_field
+

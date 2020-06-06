@@ -69,8 +69,11 @@ html_static_path = ['_static']
 # http://www.sphinx-doc.org/en/master/ext/autosummary.html#generating-stub-pages-automatically
 autosummary_generate = True
 
+# Autodoc options.
 autodoc_default_options = {
     'members': None, # Enables docs for class members.
 }
+autodoc_typehints = 'none'
+
 
 master_doc = 'index'
