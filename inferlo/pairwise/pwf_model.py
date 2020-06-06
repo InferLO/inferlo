@@ -172,19 +172,20 @@ class PairWiseFiniteModel(GraphModel):
     def infer(self, algorithm='auto', **kwargs) -> InferenceResult:
         """Performs inference.
 
-        Returns `InferenceResult` object, which contains logarithm of partition
-        function and matrix of marginal probabilities.
+        Available algorithms:
+            * ``auto`` - Automatic.
+            * ``bruteforce`` - Brute force (by definition). Exact
+            * ``mean_field`` - Naive Mean Field. Approximate.
+            * ``message_passing`` - Message passing. Approximate, exact only for
+              trees.
+            * ``path_dp`` - Dynamic programming on path decomposition.
+              Approximate. Effective on graphs of small pathwidth.
+            * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
+              trees.
 
-        :param algorithm: Which algorithm to use. Available algorithms are:
-            * auto - Automatic.
-            * bruteforce - Brute force (by definition). Exact
-            * mean_field - Naive Mean Field. Approximate.
-            * message_passing - Message passing. Approximate, exact only for
-                trees.
-            * path_dp - Dynamic programming on path decomposition. Approximate.
-                Effective on graphs of small pathwidth.
-            * tree_dp - Dynamic programming on tree. Exact. Works only on
-                trees.
+        :param algorithm: Which algorithm to use. String.
+        :return: `InferenceResult` object, which contains logarithm of
+          partition function and matrix of marginal probabilities.
         """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):
@@ -207,13 +208,14 @@ class PairWiseFiniteModel(GraphModel):
     def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
         """Finds the most probable state.
 
-        Returns the most probable state as numpy int array of length `gr_size`.
+        Available algorithms:
+            * `auto` - Automatic.
+            * `bruteforce` - Brute force (by definition).
+            * `tree_dp` - Dynamic programming on tree. Exact. Works only on
+              trees.
 
-        :param algorithm: Which algorithm to use. Available algorithms are:
-            * auto - Automatic.
-            * bruteforce - Brute force (by definition).
-            * tree_dp - Dynamic programming on tree. Exact. Works only on
-                trees.
+        :param algorithm: Which algorithm to use. String.
+        :return: The most probable state as numpy int array.
         """
         if algorithm == 'auto':
             if is_tree(self.get_graph()):

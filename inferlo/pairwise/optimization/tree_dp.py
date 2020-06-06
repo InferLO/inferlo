@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 
 def max_likelihood_tree_dp(model: PairWiseFiniteModel):
-    """Max Likelihood for the Potts Model.
+    """Max Likelihood for the pairwise model.
 
     Performs dynamic programming on tree.
 

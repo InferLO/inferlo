@@ -71,17 +71,17 @@ def infer_mean_field(model: PairWiseFiniteModel,
                      num_attempts=1) -> InferenceResult:
     """Performs inference for the Potts Model.
 
-    Uses Naive Mean Field Algorithm. Time complexity is proportional to size of
-        base times number of iterattions.
+    Uses Naive Mean Field Algorithm. Time complexity is proportional to
+    `gr_size * num_iters`, where `gr_size` is number of variables, `num_iters`
+    is number of iterations.
 
     :param model: Potts base for which to perform inference.
     :param iters_wait: Algorithm stops if result doesn't improve for that long.
     :param max_iter: Maximal number of iterations.
     :param num_attempts: How many times try optimization from new random point.
-    :return: InferenceResult object.
-        `log_pf` is guaranteed to be lower bound for logarithm of the true
-            partition function.
-        `marg_prob` is approximation for marginal probabilities.
+    :return: InferenceResult object. `log_pf` is guaranteed to be lower bound
+        for logarithm of the true partition function. `marg_prob` is
+        approximation for marginal probabilities.
     """
     field = model.field
     edges, interactions = model.get_compact_interactions()

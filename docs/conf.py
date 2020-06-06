@@ -21,8 +21,8 @@ def setup(app):
 # -- Project information -----------------------------------------------------
 
 project = 'InferLO'
-copyright = '2020, Michael Chertkov, Dmytro Fedoriaka'
-author = 'Michael Chertkov, Dmytro Fedoriaka'
+copyright = '2020, InferLO developers'
+author = 'InferLO developers'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
@@ -68,3 +68,9 @@ html_static_path = ['_static']
 # Generate subpages for reference docs automatically.
 # http://www.sphinx-doc.org/en/master/ext/autosummary.html#generating-stub-pages-automatically
 autosummary_generate = True
+
+autodoc_default_options = {
+    'members': True,
+}
+
+master_doc = 'index'
