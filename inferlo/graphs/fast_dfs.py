@@ -84,7 +84,7 @@ def dfs_one_vertex(flat_adj_list,
     return dfs_edges_count
 
 
-@numba.njit("i4[:,:](i8,i4[:,:],i1[:])")
+@numba.njit("i4[:,:](i4,i4[:,:],i1[:])")
 def _fast_dfs_internal(vert_num, edges, flags):
     """Performs depth-first search handling multiple connected components.
 
@@ -181,6 +181,7 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
 
     See https://en.wikipedia.org/wiki/Depth-first_search.
     """
+    edges = edges.astype(dtype=np.int32, copy=False)
     edges_count = edges.shape[0]
     assert edges.shape == (edges_count, 2)
     if edges_count > 0:
@@ -188,7 +189,7 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
         assert np.max(edges) < vert_num
 
     flags = np.zeros(2, dtype=np.int8)
-    dfs_edges = _fast_dfs_internal(numba.types.int64(vert_num), edges, flags)
+    dfs_edges = _fast_dfs_internal(numba.types.int32(vert_num), edges, flags)
 
     had_cycles = (flags[0] != 0)
     was_disconnected = (flags[1] != 0)
