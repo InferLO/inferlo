@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from typing import TYPE_CHECKING
 
 import numba
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
 
-@numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
+@numba.njit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
 def dfs1(lz, lzc, dfs_edges, dfs_j):
     """DFS to calculate partition functions for subtrees."""
     al_size = lz.shape[1]
@@ -25,7 +26,7 @@ def dfs1(lz, lzc, dfs_edges, dfs_j):
         lz[vx, :] += lzc[to, :]
 
 
-@numba.jit("void(f8[:,:],f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
+@numba.njit("void(f8[:,:],f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
 def dfs2(lz, lzc, lzr, dfs_edges, dfs_j):
     """DFS to calculate reverse partition functions for subtrees."""
     al_size = lz.shape[1]
@@ -50,16 +51,22 @@ def infer_tree_dp(model: PairWiseFiniteModel,
         different values if we leave only it and its subtree.
     :return: InferenceResult object.
     """
+    t0 = time.time()
     model.make_connected()
     assert is_tree(model.get_graph()), "Graph is not a tree."
 
     # Prepare graph for quick DFS.
     dfs_edges = np.array(
-        list(depth_first_search.dfs_edges(model.get_graph(), source=0)))
+        list(
+            depth_first_search.dfs_edges(
+                model.get_graph(),
+                source=0)),
+        dtype=np.int32)
+    print("DFS done", time.time() - t0)
     dfs_j = np.zeros((model.gr_size, model.al_size, model.al_size))
     for vx, to in dfs_edges:
         dfs_j[to, :, :] = model.get_interaction_matrix(vx, to)
-    dfs_edges = np.array(dfs_edges, dtype=np.int32)
+    print("Edge lookup done", time.time() - t0)
 
     lz = np.array(model.field)  # log(z)
     lzc = np.zeros((model.gr_size, model.al_size))  # log(zc)
@@ -67,6 +74,7 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     # vertex, when value of given vertex id fixed.
     lzr = np.zeros((model.gr_size, model.al_size))
 
+    print("Precalc done", time.time() - t0)
     dfs1(lz, lzc, dfs_edges, dfs_j)
     log_pf = logsumexp(lz[0, :])
 
@@ -74,6 +82,7 @@ def infer_tree_dp(model: PairWiseFiniteModel,
         return InferenceResult(log_pf, lz)
 
     dfs2(lz, lzc, lzr, dfs_edges, dfs_j)
+    print("DFSs done", time.time() - t0)
 
     marg_proba = np.exp(lz + lzr - log_pf)
     return InferenceResult(log_pf, marg_proba)

@@ -41,7 +41,7 @@ def _precalc(model: PairWiseFiniteModel):
 
 @numba.jit("void(f8[:,:],i4[:,:],i4[:,:],f8[:,:,:],f8[:,:],i8)")
 def _message_passing(mu, dir_edges, v_to_e, intrn, field, max_iter):
-    """Runs message passing algorihm.
+    """Runs message passing algorithm.
 
     Terminates if `max_iter` steps were made or if converged.
     Returns the result in `mu`.

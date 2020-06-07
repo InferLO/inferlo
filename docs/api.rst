@@ -36,8 +36,8 @@ Also contains data classes representing results of computations.
     inferlo.pairwise.InferenceResult
 
 
-Algorithms
-''''''''''
+Algorithms on graphical models
+''''''''''''''''''''''''''''''
 
 All algorithms are available through methods on graphical models. To invoke
 specific algorithm, you should pass its name as "algorithm" argument to
@@ -77,6 +77,21 @@ Sampling algorithms
     :toctree: generated/
 
     inferlo.pairwise.sampling.tree_dp.sample_tree_dp
+
+Algorithm on graphs
+'''''''''''''''''''
+
+In most cases we use NetworkX to represent and manipulate graphs. However,
+in some cases, if the algorithm is too specific and is not available in
+NetworkX, or if we need it to be faster than in NetworkX, we implement it
+in our library. Those implementations are collected in this section. They are
+intended for internal usage by other algorithms rather than to be used directly
+by library users.
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo.graphs.fast_dfs
 
 Model generators
 ''''''''''''''''
