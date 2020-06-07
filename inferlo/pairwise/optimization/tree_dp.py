@@ -26,17 +26,17 @@ def _max_likelihood_internal(field, dfs_edges, ints):
     mlz = np.copy(field)
 
     # Forward DFS: compute max partition function for subtrees.
-    for edge_id in range(dfs_edges_count - 1, -1, -1):
-        v, to = dfs_edges[edge_id]
+    for edge_idx in range(dfs_edges_count - 1, -1, -1):
+        v, to = dfs_edges[edge_idx]
         for i in range(al_size):
-            mlz[v, i] += np.max(ints[edge_id, i, :] + mlz[to, :])
+            mlz[v, i] += np.max(ints[edge_idx, i, :] + mlz[to, :])
 
     # Backward DFS: determine best values at each vertex.
     result = np.zeros(gr_size, dtype=np.int32)
     result[0] = np.argmax(mlz[0, :])
-    for edge_id in range(dfs_edges_count):
-        v, to = dfs_edges[edge_id]
-        result[to] = np.argmax(ints[edge_id, result[v], :] + mlz[to, :])
+    for edge_idx in range(dfs_edges_count):
+        v, to = dfs_edges[edge_idx]
+        result[to] = np.argmax(ints[edge_idx, result[v], :] + mlz[to, :])
 
     return result
 
