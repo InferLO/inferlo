@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import numba
 import numpy as np
-from scipy.special import softmax
 
 from inferlo.pairwise.inference.tree_dp import infer_tree_dp
+from inferlo.utils.special_functions import softmax_1d, sample_categorical
 
 if TYPE_CHECKING:
     from inferlo import PairWiseFiniteModel
@@ -16,14 +17,17 @@ def sample_tree_dp(model: PairWiseFiniteModel, num_samples: int):
     assert not model.get_dfs_result().had_cycles, "Graph has cycles."
 
     log_z = infer_tree_dp(model, subtree_mp=True).marg_prob
+    log_z = log_z.astype(np.float64, copy=False)
     assert log_z.shape == (model.gr_size, model.al_size)
 
     dfs_edges = model.get_dfs_result().dfs_edges
     ints = model.get_interactions_for_edges(dfs_edges)
+    num_samples = numba.types.int32(num_samples)
 
     return _sample_internal(log_z, dfs_edges, ints, num_samples)
 
 
+@numba.njit("i4[:,:](f8[:,:],i4[:,:],f8[:,:,:],i4)")
 def _sample_internal(log_z, dfs_edges, ints, num_samples):
     gr_size = log_z.shape[0]
     al_size = log_z.shape[1]
@@ -34,8 +38,8 @@ def _sample_internal(log_z, dfs_edges, ints, num_samples):
     result = np.zeros((gr_size, num_samples), dtype=np.int32)
 
     # Sample values at first vertex.
-    v0_probs = softmax(log_z[0, :])
-    result[0, :] = np.random.choice(al_size, size=num_samples, p=v0_probs)
+    v0_probs = softmax_1d(log_z[0, :])
+    result[0, :] = sample_categorical(v0_probs, num_samples)
 
     # Allocate a buffer for samples.
     smpl = np.empty((al_size, num_samples), dtype=np.int32)
@@ -50,9 +54,8 @@ def _sample_internal(log_z, dfs_edges, ints, num_samples):
         # samples from that distribution.
         # We generate more samples then needed.
         for par_val in range(al_size):
-            ch_probs = softmax(log_z[ch, :] + ints[edge_idx, par_val, :])
-            smpl[par_val, :] = np.random.choice(al_size, size=num_samples,
-                                                p=ch_probs)
+            ch_probs = softmax_1d(log_z[ch, :] + ints[edge_idx, par_val, :])
+            smpl[par_val, :] = sample_categorical(ch_probs, num_samples)
 
         # Now, pick appropriate samples.
         for sample_id in range(num_samples):

@@ -20,3 +20,17 @@ def logsumexp_1d(x: np.ndarray):
     """LogSumExp function on a vector."""
     x_max = np.max(x)
     return x_max + np.log(np.sum(np.exp(x - x_max)))
+
+
+@numba.njit("i4[:](f8[:],i4)")
+def sample_categorical(probs, num_samples):
+    """Samples from categorical distribution."""
+    al_size = probs.shape[0]
+    cum_probs = np.cumsum(probs)
+    rnd_numbers = np.random.random(num_samples)
+
+    ans = np.zeros(num_samples, dtype=np.int32)
+    for i in range(1, al_size):
+        mask = rnd_numbers >= cum_probs[i - 1]
+        ans[mask] = i
+    return ans

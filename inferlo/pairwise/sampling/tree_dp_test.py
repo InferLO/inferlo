@@ -81,4 +81,4 @@ def test_fully_isolated():
             emp_mp[i, sample[i]] += 1
     emp_mp /= num_samples
 
-    assert np.mean(np.square(emp_mp - probs)) < 1e-3
+    assert np.mean(np.square(emp_mp - probs)) < 2e-3

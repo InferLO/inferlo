@@ -57,8 +57,8 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     dfs_edges = model.get_dfs_result().dfs_edges
     dfs_j = model.get_interactions_for_edges(dfs_edges)
 
-    lz = np.array(model.field)  # log(z)
-    lzc = np.zeros((model.gr_size, model.al_size))  # log(zc)
+    lz = model.field.astype(dtype=np.float64, copy=True)  # log(z)
+    lzc = np.zeros_like(lz)  # log(zc)
     # Log(z_r). z_r  is partition function for all tree except subtree of given
     # vertex, when value of given vertex id fixed.
     lzr = np.zeros((model.gr_size, model.al_size))
