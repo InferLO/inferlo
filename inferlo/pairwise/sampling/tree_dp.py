@@ -14,9 +14,7 @@ if TYPE_CHECKING:
 
 def sample_tree_dp(model: PairWiseFiniteModel, num_samples: int):
     """Draws iid samples with dynamic programming on tree."""
-    model._make_connected()
-    graph = model.get_graph()
-    assert is_tree(graph), "Graph is not a tree."
+    assert not model.get_dfs_result().had_cycles, "Graph has cycles."
 
     # Allocate array for the answer.
     # First index is variable number, second index is sample number.
@@ -32,12 +30,14 @@ def sample_tree_dp(model: PairWiseFiniteModel, num_samples: int):
 
     # Traverse graph in DFS order and for each edges in DFS tree sample values
     # in children node given values in parent node.
-    dfs_edges = np.array(
-        list(depth_first_search.dfs_edges(model.get_graph(), source=0)))
-    for par, ch in dfs_edges:  # parent, child
+    dfs_edges = model.get_dfs_result().dfs_edges
+    dfs_edges_count = dfs_edges.shape[0]
+    ints = model.get_interactions_for_edges(dfs_edges)
+    for edge_idx in range(dfs_edges_count):
+        par, ch = dfs_edges[edge_idx]   # parent, child
         # For every parent's value calculate distribution at child given that
         # parent node has that value.
-        J = model.get_interaction_matrix(par, ch)
+        J = ints[edge_idx]
         ch_probs = np.zeros((model.al_size, model.al_size))
         for par_val in range(model.al_size):
             ch_probs[par_val, :] = softmax(log_z[ch, :] + J[par_val, :])
