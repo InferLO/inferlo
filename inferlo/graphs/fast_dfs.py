@@ -5,15 +5,8 @@ import numpy as np
 
 
 @numba.njit("i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:],i4[:],i4[:])")
-def dfs_one_vertex(flat_adj_list,
-                   fal_start,
-                   visited,
-                   dfs_edges,
-                   dfs_edges_count,
-                   start_vx,
-                   flags,
-                   stack,
-                   fal_pos_stack):
+def dfs_one_vertex(flat_adj_list, fal_start, visited, dfs_edges,
+                   dfs_edges_count, start_vx, flags, stack, fal_pos_stack):
     """Performs depth-first search starting from given vertex.
 
     This algorithm returns DFS tree for connected component containing
@@ -174,8 +167,8 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
     Fields in result object
         * ``dfs_edges`` - np.array of type ``np.int32`` and shape
           ``(vert_num-1, 2)``. Contains edges in DFS tree in DFS traversal
-          order (from root to leafs). This edges are guaranteed to form a tree.
-        * ``had_cycles`` - whether input graph has cycles.
+          order (from root to leafs). These edges are guaranteed to form a tree.
+        * ``had_cycles`` - whether input graph had cycles.
         * ``was_disconnected`` - whether input graph was disconnected.
         * ``was_disconnected`` - whether input graph was a tree.
 
