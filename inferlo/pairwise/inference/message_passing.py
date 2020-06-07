@@ -85,7 +85,7 @@ def infer_message_passing(model: 'PairWiseFiniteModel',
         component.
     :return: InferenceResult object.
     """
-    model.make_connected()
+    model._make_connected()
     if max_iter is None:
         max_iter = networkx.diameter(model.get_graph())
 

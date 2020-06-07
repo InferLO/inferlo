@@ -167,7 +167,8 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
     Fields in result object
         * ``dfs_edges`` - np.array of type ``np.int32`` and shape
           ``(vert_num-1, 2)``. Contains edges in DFS tree in DFS traversal
-          order (from root to leafs). These edges are guaranteed to form a tree.
+          order (from root to leafs). These edges are guaranteed to form a
+          tree.
         * ``had_cycles`` - whether input graph had cycles.
         * ``was_disconnected`` - whether input graph was disconnected.
         * ``was_disconnected`` - whether input graph was a tree.
@@ -176,7 +177,6 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
     """
     edges = edges.astype(dtype=np.int32, copy=False)
     edges_count = edges.shape[0]
-    print(edges.shape)
     assert edges.shape == (edges_count, 2)
     if edges_count > 0:
         assert np.min(edges) >= 0

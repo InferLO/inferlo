@@ -115,7 +115,7 @@ class PairWiseFiniteModel(GraphModel):
         else:
             return self._edges_interactions[edge_id].T
 
-    def get_interactions_for_edges(self, edges):
+    def get_interactions_for_edges(self, edges) -> np.ndarray:
         """Returns interaction for given edges.
 
         If some edges don't exist, interaction matrix for them will be a zero
@@ -126,7 +126,8 @@ class PairWiseFiniteModel(GraphModel):
         """
         edges_num = edges.shape[0]
         assert edges.shape == (edges_num, 2)
-        result = np.zeros((edges_num, self.al_size, self.al_size))
+        result = np.zeros((edges_num, self.al_size, self.al_size),
+                          dtype=np.float64)
 
         for i in range(edges_num):
             u, v = edges[i]
@@ -173,13 +174,13 @@ class PairWiseFiniteModel(GraphModel):
         self._edge_array = None
         self._dfs_result = None
 
-    def make_connected(self):
+    def _make_connected(self):
         """Makes graph connected without changing the distribution.
 
         Adds minimal amount of edges with zero interactions. If graph was a
         forest, it becomes a tree. If graph as connected, does nothing.
         """
-        # TODO: ideally this shouldn't mutate the model.
+        # TODO: Remove.
         con_comps = list(nx.connected_components(self.get_graph()))
         if len(con_comps) > 1:
             zeros = np.zeros((self.al_size, self.al_size))
