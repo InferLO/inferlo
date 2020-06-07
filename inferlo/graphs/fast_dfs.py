@@ -4,14 +4,16 @@ import numba
 import numpy as np
 
 
-@numba.njit("i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:])")
+@numba.njit("i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:],i4[:],i4[:])")
 def dfs_one_vertex(flat_adj_list,
                    fal_start,
                    visited,
                    dfs_edges,
                    dfs_edges_count,
                    start_vx,
-                   flags):
+                   flags,
+                   stack,
+                   fal_pos_stack):
     """Performs depth-first search starting from given vertex.
 
     This algorithm returns DFS tree for connected component containing
@@ -34,15 +36,15 @@ def dfs_one_vertex(flat_adj_list,
     :param start_vx: From which vertex to start DFS.
     :param flags: Side output. If DFS finds cycle, it should set
       ``flags[0] = 1``.
+    :param stack: Allocated memory for DFS stack. DFS stack contains nodes
+      which DFS entered but not exited. It corresponds to call stack if we
+      implemented DFS recursively. It's important that we don' allocate this
+      memory inside this function, because then algorithm would have quadratic
+      complexity if graph has a lot of small connected components.
+    :param fal_stack: Allocated memory stack which would contain pointers
+      (flat_adj_list indices) to currently considered children at each level.
     :return: Updated dfs_edges_count.
     """
-    # Allocate stack for DFS.
-    vert_num = visited.shape[0]
-    stack = np.empty(vert_num, dtype=np.int32)
-
-    # Stores pointer to number in flat_adj_list for every stack depth.
-    fal_pos_stack = np.empty(vert_num, dtype=np.int32)
-
     # Push start_vx to the stack.
     stack_head = 0
     stack[stack_head] = start_vx
@@ -114,10 +116,14 @@ def _fast_dfs_internal(vert_num, edges, flags):
 
     visited = np.zeros_like(degree, dtype=np.int8)
 
-    # Allocate array for answer.
+    # Allocate array for the answer.
     # Answer will always be a tree, so it has vert_num-1 edges.
     dfs_edges = np.empty((vert_num - 1, 2), dtype=np.int32)
     dfs_edges_count = 0
+
+    # Allocate memory for stacks.
+    stack = np.empty(vert_num, dtype=np.int32)
+    fal_pos_stack = np.empty(vert_num, dtype=np.int32)
 
     for vertex in range(vert_num):
         if not visited[vertex]:
@@ -129,13 +135,8 @@ def _fast_dfs_internal(vert_num, edges, flags):
                 # Mark that graph was disconnected.
                 flags[1] = 1
             dfs_edges_count = dfs_one_vertex(
-                flat_adj_list,
-                fal_start,
-                visited,
-                dfs_edges,
-                dfs_edges_count,
-                vertex,
-                flags)
+                flat_adj_list, fal_start, visited, dfs_edges, dfs_edges_count,
+                vertex, flags, stack, fal_pos_stack)
 
     assert dfs_edges_count == vert_num - 1
     return dfs_edges
