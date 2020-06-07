@@ -115,6 +115,26 @@ class PairWiseFiniteModel(GraphModel):
         else:
             return self._edges_interactions[edge_id].T
 
+    def get_interactions_for_edges(self, edges):
+        """Returns interaction for given edges.
+
+        If some edges don't exist, interaction matrix for them will be a zero
+        matrix.
+
+        :param edges: Edge list. np.aray of shape ```(x, 2)```.
+        :return: np.array of shape (x, al_size, al_size).
+        """
+        edges_num = edges.shape[0]
+        assert edges.shape == (edges_num, 2)
+        result = np.zeros((edges_num, self.al_size, self.al_size))
+
+        for i in range(edges_num):
+            u, v = edges[i]
+            if self.has_edge(u, v):
+                result[i, :, :] = self.get_interaction_matrix(u, v)
+
+        return result
+
     def has_edge(self, u, v) -> bool:
         """Whether there is edge between vertices u and v."""
         return (u, v) in self._edge_ids

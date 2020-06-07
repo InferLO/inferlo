@@ -11,6 +11,7 @@ def test_tree_12x2():
         result = model.max_likelihood(algorithm='tree_dp')
         assert np.allclose(truth, result)
 
+
 def test_tree_8x3():
     for seed in range(5):
         model = tree_potts_model(gr_size=8, al_size=3, seed=seed)
