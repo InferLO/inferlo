@@ -24,7 +24,10 @@ def logsumexp_1d(x: np.ndarray):
 
 @numba.njit("i4[:](f8[:],i4)")
 def sample_categorical(probs, num_samples):
-    """Samples from categorical distribution."""
+    """Samples from categorical distribution.
+
+    Equivalent to ``np.random.choice(len(probs), size=num_samples, p=probs)``.
+    """
     al_size = probs.shape[0]
     cum_probs = np.cumsum(probs)
     rnd_numbers = np.random.random(num_samples)

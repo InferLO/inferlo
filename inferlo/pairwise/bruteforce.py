@@ -18,7 +18,7 @@ def calculate_full_probs(model: PairWiseFiniteModel):
     assert states_count <= 2e7, "Too much states."
     full_probs = np.zeros(states_count)
 
-    edges = model.get_edge_array()
+    edges = model.get_edges_array()
     interactions = model.get_all_interactions()
     edge_count = len(model.edges)
     for state_id in range(states_count):

@@ -8,7 +8,7 @@ from inferlo.pairwise.testing import (tree_potts_model, assert_results_close,
                                       grid_potts_model)
 
 
-def test_tree():
+def test_tree_exact():
     model = tree_potts_model(gr_size=50, al_size=3, seed=0)
     assert_results_close(model.infer(algorithm='message_passing'),
                          model.infer(algorithm='tree_dp'))

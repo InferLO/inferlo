@@ -75,7 +75,7 @@ class PairWiseFiniteModel(GraphModel):
 
         # Cached properties that are invalidated when graph changes.
         self._graph = None
-        self._edge_array = None
+        self._edges_array = None
         self._dfs_result = None
 
     def set_field(self, field: np.ndarray):
@@ -121,7 +121,7 @@ class PairWiseFiniteModel(GraphModel):
         If some edges don't exist, interaction matrix for them will be a zero
         matrix.
 
-        :param edges: Edge list. np.aray of shape ```(x, 2)```.
+        :param edges: Edge list. np.array of shape ``(x, 2)``.
         :return: np.array of shape (x, al_size, al_size).
         """
         edges_num = edges.shape[0]
@@ -152,50 +152,51 @@ class PairWiseFiniteModel(GraphModel):
     def get_dfs_result(self) -> FastDfsResult:
         """Performs DFS for interaction graph."""
         if self._dfs_result is None:
-            self._dfs_result = fast_dfs(self.gr_size, self.get_edge_array())
+            self._dfs_result = fast_dfs(self.gr_size, self.get_edges_array())
         return self._dfs_result
 
     def is_graph_acyclic(self):
         """Whether interaction graph is acyclic."""
         return not self.get_dfs_result().had_cycles
 
-    def get_edge_array(self) -> np.ndarray:
+    def get_edges_array(self) -> np.ndarray:
         """Returns edge list as np.array."""
-        if self._edge_array is None:
+        if self._edges_array is None:
             if len(self.edges) == 0:
-                self._edge_array = np.empty((0, 2), dtype=np.int32)
+                self._edges_array = np.empty((0, 2), dtype=np.int32)
             else:
-                self._edge_array = np.array(self.edges, dtype=np.int32)
-        return self._edge_array
+                self._edges_array = np.array(self.edges, dtype=np.int32)
+        return self._edges_array
+
+    def get_edges_connected(self) -> np.ndarray:
+        """Returns edges, ensuring that graph is connected.
+
+        If graph is already connected, equivalent to ``get_edges_array``.
+        If graph is not connected, adds minimal amount of edges to make it
+        connected.
+
+        This is needed for algorithms which require connected graph to work
+        correctly.
+        """
+        if not self.get_dfs_result().was_disconnected:
+            return self.get_edges_array()
+
+        additional_edges = [(u, v) for u, v in self.get_dfs_result().dfs_edges
+                            if not self.has_edge(u, v)]
+        return np.concatenate([self.get_edges_array(), additional_edges])
 
     def _on_graph_changed(self):
         """Invalidates cached graphs."""
         self._graph = None
-        self._edge_array = None
+        self._edges_array = None
         self._dfs_result = None
-
-    def _make_connected(self):
-        """Makes graph connected without changing the distribution.
-
-        Adds minimal amount of edges with zero interactions. If graph was a
-        forest, it becomes a tree. If graph as connected, does nothing.
-        """
-        # TODO: Remove.
-        con_comps = list(nx.connected_components(self.get_graph()))
-        if len(con_comps) > 1:
-            zeros = np.zeros((self.al_size, self.al_size))
-            # Node to which attach other components.
-            v0 = list(con_comps[0])[0]
-            for cc in con_comps[1:]:
-                self.add_interaction(v0, list(cc)[0], zeros)
-            self._on_graph_changed()
 
     def get_all_interactions(self) -> np.ndarray:
         """Returns all interaction matrices in compact form.
 
         :return: np.array of shape ``(edge_num, al_size, al_size)`` with
-        interaction matrix for every edge. Matrices correspond to edges in the
-        same order as returned by get_edges.array.
+          interaction matrix for every edge. Matrices correspond to edges in
+          the same order as returned by get_edges.array.
         """
         if len(self.edges) == 0:
             shape = (0, self.al_size, self.al_size)

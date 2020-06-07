@@ -14,61 +14,78 @@ if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
 
-def _precalc(model: PairWiseFiniteModel):
-    # Build list of directed edges.
-    dir_edges = []
-    for t, s in model.edges:
-        dir_edges += [(t, s), (s, t)]
-    # Enable continuous lookup by the second vertex.
-    dir_edges.sort(key=lambda x: x[1])
+@numba.njit("i4[:](i4[:,:])")
+def _build_edge_lookup(sorted_edges):
+    """Builds edge lookup.
 
-    # Compact representation of interactions (transposed).
-    intrn = np.array(
-        [model.get_interaction_matrix(j, i) for (i, j) in dir_edges])
+    Edges must be sorted by end vertex (ascending).
 
+    Returns array indicating where is the first edge ending on given vertex.
+    In other words, all edges ending on vertex are
+    ``sorted_edges[edge_lookup[v]:edge_lookup[v+1], :]``.
+    """
+    gr_size = sorted_edges[-1, 1] + 1
     # For each vertex, contains interval of edge ids for edges
     # starting with this vertex.
-    dir_edges = np.array(dir_edges, dtype=np.int32)
-    v_to_e = np.zeros((model.gr_size, 2), dtype=np.int32)
-    for i in range(1, len(dir_edges)):
-        if dir_edges[i - 1][1] != dir_edges[i][1]:
-            v_to_e[dir_edges[i - 1][1]][1] = i
-            v_to_e[dir_edges[i][1]][0] = i
-    v_to_e[-1, -1] = len(dir_edges)
-
-    return dir_edges, v_to_e, intrn
+    ans = np.zeros(gr_size + 1, dtype=np.int32)
+    for i in range(1, len(sorted_edges)):
+        if sorted_edges[i - 1][1] != sorted_edges[i][1]:
+            ans[sorted_edges[i][1]] = i
+    ans[-1] = len(sorted_edges)
+    return ans
 
 
-@numba.jit("void(f8[:,:],i4[:,:],i4[:,:],f8[:,:,:],f8[:,:],i8)")
-def _message_passing(mu, dir_edges, v_to_e, intrn, field, max_iter):
+@numba.njit("f8[:,:](i4[:,:],f8[:,:,:],f8[:,:],i8)")
+def _message_passing(dir_edges, intrn, field, max_iter):
     """Runs message passing algorithm.
 
     Terminates if `max_iter` steps were made or if converged.
-    Returns the result in `mu`.
+
+    :param dir_edges: Directed edges. Even though graph is undirected, every
+      edge (u,v) must appear in this list twice as (u,v) and (v,u).
+    :param intrn: Interaction matrices corresponding to dir_edges.
+    :param field: Field.
+    :param max_iter: Maximal number of iterations. Can perform less if
+      converges earlier.
+    :return: Logarithm of mu describing marginal probabilities associated
+      with directed edges. See formula (2.5) in [1], except here we work with
+      logarithms.
     """
     edge_num = len(dir_edges)
     al_size = field.shape[1]
-    new_mu = np.zeros_like(mu)
+
+    # Initialize initial guess with zeros. Since those are logarithms, it
+    # corresponds to probabilities all proportional to 1, i.e. equal.
+    # `lmu` is logarithm of mu, defined in formula (2.5) in [1].
+    lmu = np.zeros((edge_num, al_size), dtype=np.float64)
+    new_lmu = np.zeros_like(lmu)
+
+    edge_lookup = _build_edge_lookup(dir_edges)
+
     for _ in range(max_iter):
         # This loop is one iteration of message passing.
+        # It implements formulas (2.8a) and (2.8b) from ref. [1].
         for edge_id in range(edge_num):
             t, s = dir_edges[edge_id]
             for xs in range(al_size):
-                terms = intrn[edge_id, xs, :] + field[t, :]
-                for next_edge_id in range(v_to_e[t][0], v_to_e[t][1]):
+                terms = intrn[edge_id, :, xs] + field[t, :]
+                for next_edge_id in range(edge_lookup[t], edge_lookup[t + 1]):
                     # dir_edges[next_edge_id] is (u, t).
+                    # We should skip edge (s, t).
                     if dir_edges[next_edge_id, 0] != s:
-                        terms += mu[next_edge_id, :]
-                new_mu[edge_id, xs] = logsumexp_1d(terms)
+                        terms += lmu[next_edge_id, :]
+                new_lmu[edge_id, xs] = logsumexp_1d(terms)
 
         # If converged, return. Both mu and new_mu contain correct result.
-        # if np.max(np.abs(new_mu - mu)) < 1e-9:
-        #    return
-        # If not converged, repeat again with new mu.
-        mu[:, :] = new_mu
+        if np.max(np.abs(new_lmu - lmu)) < 1e-9:
+            break
+        # If not converged, repeat again with new mu as old mu.
+        lmu[:, :] = new_lmu
+
+    return lmu
 
 
-def infer_message_passing(model: 'PairWiseFiniteModel',
+def infer_message_passing(model: PairWiseFiniteModel,
                           max_iter=None) -> InferenceResult:
     """Inference with Message Passing.
 
@@ -79,25 +96,39 @@ def infer_message_passing(model: 'PairWiseFiniteModel',
     This is an iterative algorithm which terminates when it converged or when
         `max_iter` iterations were made.
 
-    :param model: Potts base.
+    :param model: Pairwise model for which to perform inference.
     :param max_iter: How many iterations without convergence should happen for
         algorithm to terminate. Defaults to maximal diameter of connected
         component.
     :return: InferenceResult object.
+
+    Reference
+        [1] Wainwright, Jordan. Graphical Models, Exponential Families, and
+        Variational Inference. 2008. Section 2.5.1 (p. 26).
     """
-    model._make_connected()
     if max_iter is None:
-        max_iter = networkx.diameter(model.get_graph())
+        graph = networkx.Graph()
+        graph.add_edges_from(model.get_edges_connected())
+        max_iter = networkx.diameter(graph)
 
-    dir_edges, v_to_e, intrn = _precalc(model)
+    # Build list of directed edges.
+    edges = model.get_edges_connected()
+    dir_edges = np.concatenate([edges, np.flip(edges, axis=1)])
 
-    mu = np.zeros((len(dir_edges), model.al_size))
-    _message_passing(mu, dir_edges, v_to_e, intrn, model.field, max_iter)
+    # Sort edges by end vertex. This ensures that edges ending with the same
+    # vertex are sequential, which allows for efficient lookup.
+    dir_edges.view('i4,i4').sort(order=['f1'], axis=0)
+
+    # Compact representation of interactions.
+    intrn = model.get_interactions_for_edges(dir_edges)
+
+    # Main algorithm.
+    lmu = _message_passing(dir_edges, intrn, model.field, max_iter)
 
     # Restore partition function for fixed values in nodes.
     log_marg_pf = np.array(model.field)
     for edge_id in range(len(dir_edges)):
-        log_marg_pf[dir_edges[edge_id][1], :] += mu[edge_id]
+        log_marg_pf[dir_edges[edge_id][1], :] += lmu[edge_id]
 
     log_pf = scipy.special.logsumexp(log_marg_pf, axis=-1)
     marg_prob = scipy.special.softmax(log_marg_pf, axis=-1)
