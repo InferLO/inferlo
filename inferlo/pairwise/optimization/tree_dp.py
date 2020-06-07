@@ -20,6 +20,7 @@ def max_likelihood_tree_dp(model: PairWiseFiniteModel):
     :param model: Model for which to find most likely state.
     :return: Most likely state. np.array of ints.
     """
+    #assert not model.get_dfs_result().had_cycles, "Graph has cycles."
     model.make_connected()
     graph = model.get_graph()
     assert is_tree(graph), "Graph is not a tree."

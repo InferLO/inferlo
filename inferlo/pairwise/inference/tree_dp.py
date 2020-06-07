@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import time
 from typing import TYPE_CHECKING
 
 import numba
@@ -71,7 +70,6 @@ def infer_tree_dp(model: PairWiseFiniteModel,
         different values if we leave only it and its subtree.
     :return: InferenceResult object.
     """
-    t0 = time.time()
     assert not model.get_dfs_result().had_cycles, "Graph has cycles."
 
     dfs_edges = model.get_dfs_result().dfs_edges
@@ -90,7 +88,6 @@ def infer_tree_dp(model: PairWiseFiniteModel,
         return InferenceResult(log_pf, lz)
 
     dfs2(lz, lzc, lzr, dfs_edges, dfs_j)
-    print("Main calculation done", time.time() - t0)
 
     marg_proba = np.exp(lz + lzr - log_pf)
     return InferenceResult(log_pf, marg_proba)

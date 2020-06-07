@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable
 
 import numpy as np
-from networkx import Graph, is_tree, nx
+from networkx import Graph, nx
 
 from inferlo.base.domain import DiscreteDomain
 from inferlo.base.factors import DiscreteFactor
@@ -234,7 +234,7 @@ class PairWiseFiniteModel(GraphModel):
           partition function and matrix of marginal probabilities.
         """
         if algorithm == 'auto':
-            if is_tree(self.get_graph()):
+            if self.is_graph_acyclic():
                 return infer_tree_dp(self)
             else:
                 return infer_message_passing(self)
@@ -264,7 +264,7 @@ class PairWiseFiniteModel(GraphModel):
         :return: The most probable state as numpy int array.
         """
         if algorithm == 'auto':
-            if is_tree(self.get_graph()):
+            if self.is_graph_acyclic():
                 return max_likelihood_tree_dp(self)
             else:
                 return max_lh_bruteforce(self)
@@ -290,7 +290,7 @@ class PairWiseFiniteModel(GraphModel):
         :param algorithm: Which algorithm to use.
         """
         if algorithm == 'auto':
-            if is_tree(self.get_graph()):
+            if self.is_graph_acyclic():
                 return sample_tree_dp(self, num_samples=num_samples)
             else:
                 raise NotImplementedError("Can handle only trees so far.")
