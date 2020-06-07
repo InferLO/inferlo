@@ -84,7 +84,8 @@ def infer_mean_field(model: PairWiseFiniteModel,
         approximation for marginal probabilities.
     """
     field = model.field
-    edges, interactions = model.get_compact_interactions()
+    edges = model.get_edge_array()
+    interactions = model.get_all_interactions()
 
     best_mu = np.zeros_like(model.field)
     _infer_mean_field_internal(best_mu, field, edges, interactions,

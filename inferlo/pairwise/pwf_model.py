@@ -169,20 +169,17 @@ class PairWiseFiniteModel(GraphModel):
                 self.add_interaction(v0, list(cc)[0], zeros)
             self._on_graph_changed()
 
-    def get_compact_interactions(self):
-        """Returns interactions in compact form.
+    def get_all_interactions(self) -> np.ndarray:
+        """Returns all interaction matrices in compact form.
 
-        Returns two np.arrays. First array has shape (edges_num, 2) and is a
-        list of edges in interaction graph. No edge appears twice. Second array
-        has shape (edge_id, al_size, al_size), and for every edge in the first
-        array contains interaction matrix for that edge.
+        :return: np.array of shape ``(edge_num, al_size, al_size)`` with
+        interaction matrix for every edge. Matrices correspond to edges in the
+        same order as returned by get_edges.array.
         """
-        edges = self.get_edge_array()
-        inter = np.array(self._edges_interactions, dtype=np.float64)
         if len(self.edges) == 0:
-            inter = np.empty(
-                (0, self.al_size, self.al_size,), dtype=np.float64)
-        return edges, inter
+            shape = (0, self.al_size, self.al_size)
+            return np.empty(shape, dtype=np.float64)
+        return np.array(self._edges_interactions, dtype=np.float64)
 
     def add_factor(self, factor: Factor):
         """Adds a factor."""
