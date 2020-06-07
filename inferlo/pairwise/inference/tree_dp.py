@@ -13,8 +13,8 @@ if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
 
-def prepare_interactions(dfs_edges: np.ndarray,
-                         model: PairWiseFiniteModel) -> np.ndarray:
+def _prepare_interactions(dfs_edges: np.ndarray,
+                          model: PairWiseFiniteModel) -> np.ndarray:
     """Prepares interactions for quick DFS.
 
     Returns np.array of shape (gr_size, al_size, al_size), where at index
@@ -36,7 +36,7 @@ def prepare_interactions(dfs_edges: np.ndarray,
 
 
 @numba.njit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
-def dfs1(lz, lzc, dfs_edges, dfs_j):
+def _dfs1(lz, lzc, dfs_edges, dfs_j):
     """DFS to calculate partition functions for subtrees."""
     al_size = lz.shape[1]
     for vx, to in dfs_edges[::-1]:
@@ -46,7 +46,7 @@ def dfs1(lz, lzc, dfs_edges, dfs_j):
 
 
 @numba.njit("void(f8[:,:],f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
-def dfs2(lz, lzc, lzr, dfs_edges, dfs_j):
+def _dfs2(lz, lzc, lzr, dfs_edges, dfs_j):
     """DFS to calculate reverse partition functions for subtrees."""
     al_size = lz.shape[1]
     for p, v in dfs_edges:
@@ -73,7 +73,7 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     assert not model.get_dfs_result().had_cycles, "Graph has cycles."
 
     dfs_edges = model.get_dfs_result().dfs_edges
-    dfs_j = prepare_interactions(dfs_edges, model)
+    dfs_j = _prepare_interactions(dfs_edges, model)
 
     lz = np.array(model.field)  # log(z)
     lzc = np.zeros((model.gr_size, model.al_size))  # log(zc)
@@ -81,13 +81,13 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     # vertex, when value of given vertex id fixed.
     lzr = np.zeros((model.gr_size, model.al_size))
 
-    dfs1(lz, lzc, dfs_edges, dfs_j)
+    _dfs1(lz, lzc, dfs_edges, dfs_j)
     log_pf = logsumexp(lz[0, :])
 
     if subtree_mp:
         return InferenceResult(log_pf, lz)
 
-    dfs2(lz, lzc, lzr, dfs_edges, dfs_j)
+    _dfs2(lz, lzc, lzr, dfs_edges, dfs_j)
 
     marg_proba = np.exp(lz + lzr - log_pf)
     return InferenceResult(log_pf, marg_proba)

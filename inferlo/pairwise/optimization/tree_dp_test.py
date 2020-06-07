@@ -4,11 +4,27 @@ from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.testing import tree_potts_model
 
 
-def test_tree_10x2():
-    model = tree_potts_model(gr_size=10, al_size=2, seed=0)
-    truth = model.max_likelihood(algorithm='bruteforce')
-    result = model.max_likelihood(algorithm='tree_dp')
-    assert np.allclose(truth, result)
+def test_tree_12x2():
+    for seed in range(5):
+        model = tree_potts_model(gr_size=12, al_size=2, seed=seed)
+        truth = model.max_likelihood(algorithm='bruteforce')
+        result = model.max_likelihood(algorithm='tree_dp')
+        assert np.allclose(truth, result)
+
+def test_tree_8x3():
+    for seed in range(5):
+        model = tree_potts_model(gr_size=8, al_size=3, seed=seed)
+        truth = model.max_likelihood(algorithm='bruteforce')
+        result = model.max_likelihood(algorithm='tree_dp')
+        assert np.allclose(truth, result)
+
+
+def test_tree_6x4():
+    for seed in range(5):
+        model = tree_potts_model(gr_size=6, al_size=4, seed=seed)
+        truth = model.max_likelihood(algorithm='bruteforce')
+        result = model.max_likelihood(algorithm='tree_dp')
+        assert np.allclose(truth, result)
 
 
 def test_tree_5x3():
