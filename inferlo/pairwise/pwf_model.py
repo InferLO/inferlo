@@ -16,6 +16,8 @@ from .inference.tree_dp import infer_tree_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
 from .utils import decode_state, encode_state
+from ..graphs import fast_dfs
+from ..graphs.fast_dfs import FastDfsResult
 
 if TYPE_CHECKING:
     from inferlo.base.factors import Factor
@@ -68,9 +70,13 @@ class PairWiseFiniteModel(GraphModel):
 
         self.edges = []
         self._edges_interactions = []
-        self._edge_ids = dict()  # Maps vertex pair to edge id.
+        # Maps  (u,v) and (v,u) to index of one of them in self.edges.
+        self._edge_ids = dict()
 
+        # Cached properties that are invalidated when graph changes.
         self._graph = None
+        self._edge_array = None
+        self._dfs_result = None
 
     def set_field(self, field: np.ndarray):
         """Sets values of field (biases) in all vertices."""
@@ -90,7 +96,7 @@ class PairWiseFiniteModel(GraphModel):
                 interaction = interaction.T
             self._edges_interactions[edge_id] += interaction
         else:
-            self._graph = None
+            self._on_graph_changed()
             self.edges.append((u, v))
             self._edges_interactions.append(np.array(interaction,
                                                      dtype=np.float64))
@@ -122,6 +128,31 @@ class PairWiseFiniteModel(GraphModel):
                 self._graph.add_edge(u, v)
         return self._graph
 
+    def get_dfs_result(self) -> FastDfsResult:
+        """Performs DFS for interaction graph."""
+        if self._dfs_result is None:
+            self._dfs_result = fast_dfs(self.gr_size, self.get_edge_array())
+        return self._dfs_result
+
+    def is_graph_acyclic(self):
+        """Whether interaction graph is acyclic."""
+        return not self.get_dfs_result().had_cycles
+
+    def get_edge_array(self) -> np.ndarray:
+        """Returns edge list as np.array."""
+        if self._edge_array is None:
+            if len(self.edges) == 0:
+                self._edge_array = np.empty((0, 2), dtype=np.int32)
+            else:
+                self._edge_array = np.array(self.edges, dtype=np.int32)
+        return self._edge_array
+
+    def _on_graph_changed(self):
+        """Invalidates cached graphs."""
+        self._graph = None
+        self._edge_array = None
+        self._dfs_result = None
+
     def make_connected(self):
         """Makes graph connected without changing the distribution.
 
@@ -136,7 +167,7 @@ class PairWiseFiniteModel(GraphModel):
             v0 = list(con_comps[0])[0]
             for cc in con_comps[1:]:
                 self.add_interaction(v0, list(cc)[0], zeros)
-            self._graph = None
+            self._on_graph_changed()
 
     def get_compact_interactions(self):
         """Returns interactions in compact form.
@@ -146,10 +177,9 @@ class PairWiseFiniteModel(GraphModel):
         has shape (edge_id, al_size, al_size), and for every edge in the first
         array contains interaction matrix for that edge.
         """
-        edges = np.array(self.edges, dtype=np.int32)
+        edges = self.get_edge_array()
         inter = np.array(self._edges_interactions, dtype=np.float64)
         if len(self.edges) == 0:
-            edges = np.empty((0, 2), dtype=np.int32)
             inter = np.empty(
                 (0, self.al_size, self.al_size,), dtype=np.float64)
         return edges, inter

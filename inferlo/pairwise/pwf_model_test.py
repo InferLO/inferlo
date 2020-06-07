@@ -85,3 +85,16 @@ def test_sample_likelihood_all_methods():
     for method in all_methods:
         result = model.max_likelihood(algorithm=method)
         assert np.allclose(result, expected_result)
+
+
+def test_get_dfs_result():
+    model = PairWiseFiniteModel(4, 2)
+    j = np.ones((2, 2))
+    model.add_interaction(2, 3, j)
+    model.add_interaction(2, 1, j)
+    model.get_dfs_result()  # To test cache invalidation.
+    model.add_interaction(1, 0, j)
+
+    dfs_edges = model.get_dfs_result().dfs_edges
+
+    assert np.allclose(dfs_edges, np.array([[0, 1], [1, 2], [2, 3]]))

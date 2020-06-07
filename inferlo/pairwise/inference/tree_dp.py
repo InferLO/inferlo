@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING
 
 import numba
 import numpy as np
-from networkx import is_tree
-from networkx.algorithms.traversal import depth_first_search
 from scipy.special import logsumexp
 
 from inferlo.pairwise.inference_result import InferenceResult
@@ -14,6 +12,28 @@ from inferlo.utils.special_functions import logsumexp_1d
 
 if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
+
+
+def prepare_interactions(dfs_edges: np.ndarray,
+                         model: PairWiseFiniteModel) -> np.ndarray:
+    """Prepares interactions for quick DFS.
+
+    Returns np.array of shape (gr_size, al_size, al_size), where at index
+    to we have interaction matrix for edge (v, to) in DFS traversal. Such edge
+    is unique, unless to is root.
+
+    It's possible that some edges in DFS traversal don't actually exist, but
+    were added to make the graph connected. In this case e leave zero
+    interaction matrix for them, which is equivalent to not having an edge.
+
+    :param dfs_edges: DFS traversal of the graph.
+    :param model: Pairwise model.
+    """
+    dfs_j = np.zeros((model.gr_size, model.al_size, model.al_size))
+    for vx, to in dfs_edges:
+        if model.has_edge(vx, to):
+            dfs_j[to, :, :] = model.get_interaction_matrix(vx, to)
+    return dfs_j
 
 
 @numba.njit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
@@ -52,21 +72,10 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     :return: InferenceResult object.
     """
     t0 = time.time()
-    model.make_connected()
-    assert is_tree(model.get_graph()), "Graph is not a tree."
+    assert not model.get_dfs_result().had_cycles, "Graph has cycles."
 
-    # Prepare graph for quick DFS.
-    dfs_edges = np.array(
-        list(
-            depth_first_search.dfs_edges(
-                model.get_graph(),
-                source=0)),
-        dtype=np.int32)
-    print("DFS done", time.time() - t0)
-    dfs_j = np.zeros((model.gr_size, model.al_size, model.al_size))
-    for vx, to in dfs_edges:
-        dfs_j[to, :, :] = model.get_interaction_matrix(vx, to)
-    print("Edge lookup done", time.time() - t0)
+    dfs_edges = model.get_dfs_result().dfs_edges
+    dfs_j = prepare_interactions(dfs_edges, model)
 
     lz = np.array(model.field)  # log(z)
     lzc = np.zeros((model.gr_size, model.al_size))  # log(zc)
@@ -74,7 +83,6 @@ def infer_tree_dp(model: PairWiseFiniteModel,
     # vertex, when value of given vertex id fixed.
     lzr = np.zeros((model.gr_size, model.al_size))
 
-    print("Precalc done", time.time() - t0)
     dfs1(lz, lzc, dfs_edges, dfs_j)
     log_pf = logsumexp(lz[0, :])
 
@@ -82,7 +90,7 @@ def infer_tree_dp(model: PairWiseFiniteModel,
         return InferenceResult(log_pf, lz)
 
     dfs2(lz, lzc, lzr, dfs_edges, dfs_j)
-    print("DFSs done", time.time() - t0)
+    print("Main calculation done", time.time() - t0)
 
     marg_proba = np.exp(lz + lzr - log_pf)
     return InferenceResult(log_pf, marg_proba)

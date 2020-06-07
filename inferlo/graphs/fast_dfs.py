@@ -183,6 +183,7 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
     """
     edges = edges.astype(dtype=np.int32, copy=False)
     edges_count = edges.shape[0]
+    print(edges.shape)
     assert edges.shape == (edges_count, 2)
     if edges_count > 0:
         assert np.min(edges) >= 0
