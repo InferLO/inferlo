@@ -53,10 +53,13 @@ class NormalFactorGraphModel(GraphModel):
     def build(self):
         """Validates the model and makes it immutable."""
         for i in range(self.num_variables):
-            assert len(self.edges[i]) == 2, (
-                "Can't build Forney-style model. Variable %d appears in "
-                "%d factors, but must appear in exactly 2 factors." % (
-                    i, len(self.edges)))
+            k = len(self.edges[i])
+            assert 1 <= k <= 2, (
+                    "Can't build Forney-style model. Variable %d appears in "
+                    "%d factors, but must appear in 1 or 2 factors." % (i, k))
+            if k == 1:
+                # If variable appears in one factor, it's a loop.
+                self.edges[i].append(self.edges[i][0])
 
         self.built = True
 
@@ -129,25 +132,17 @@ class NormalFactorGraphModel(GraphModel):
         for i in range(original_model.num_variables):
             k = len(var_to_factors[i])
 
-            # For every variable, which appears only in one factor - copy this
-            # variable (with the same index) and add a trivial factor
-            # (constant 1) on another end of the edge.
-            if len(var_to_factors[i]) == 1:
-                new_model[i].domain = original_model[i].domain
-                new_model[i].name = original_model[i].name
-                new_factors.append(create_constant_factor(i))
-
-            # For every variable, which appears in exactly two factors - copy
+            # For every variable, which appears in 1 or 2 factors - copy
             # this variable and don't add new factors.
-            elif len(var_to_factors[i]) == 2:
+            if k <= 2:
                 new_model[i].domain = original_model[i].domain
                 new_model[i].name = original_model[i].name
 
-            # For ever variable appearing in k > 2 factors - create k copies of
+            # For every variable appearing in k > 2 factors - create k copies of
             # it, remap factors such that every factor depends on a unique copy
             # of it and add one new delta factor, which requires all these
             # variables to be equal.
-            else:
+            if k > 2:
                 var_idx = [i]
                 for _ in range(k - 1):
                     var_idx.append(used_variables_count)
