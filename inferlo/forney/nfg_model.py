@@ -188,11 +188,7 @@ class NormalFactorGraphModel(GraphModel):
     def draw_edge_variable_graph(self, ax):
         """Draws edge-variable graph."""
         graph = self.get_edge_variable_graph()
-        pos = nx.spring_layout(graph)
-        try:
-            pos = nx.planar_layout(graph)
-        except nx.NetworkXException:
-            pass
+        pos = nx.kamada_kawai_layout(graph)
         node_labels = {i: self.factors[i].get_name() for i in
                        range(len(self.factors))}
         edge_labels = {(*self.edges[i],): self[i].name for i in

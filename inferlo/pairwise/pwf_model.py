@@ -363,7 +363,7 @@ class PairWiseFiniteModel(GraphModel):
     def draw_pairwise_graph(self, ax):
         """Draws pairwise graph."""
         graph = self.get_graph()
-        pos = nx.spring_layout(graph)
+        pos = nx.kamada_kawai_layout(graph)
         node_labels = {i: self[i].name for i in range(self.num_variables)}
         nx.draw_networkx(graph, pos, ax,
                          labels=node_labels,
