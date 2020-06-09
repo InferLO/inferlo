@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import abc
+import itertools
 from typing import TYPE_CHECKING, Iterable, Tuple, Dict, List
 
 import networkx as nx
@@ -132,3 +133,11 @@ class GraphModel(abc.ABC):
         for factor in self.get_factors():
             result *= factor.value(x[factor.var_idx])
         return result
+
+    def part_func_bruteforce(model):
+        """Evaluates partition function in very inefficient way."""
+        part_func = 0
+        for x in itertools.product(
+                *(v.domain.values for v in model.get_variables())):
+            part_func += model.evaluate(np.array(x))
+        return part_func

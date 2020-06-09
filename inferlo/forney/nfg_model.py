@@ -56,7 +56,7 @@ class NormalFactorGraphModel(GraphModel):
             assert len(self.edges[i]) == 2, (
                 "Can't build Forney-style model. Variable %d appears in "
                 "%d factors, but must appear in exactly 2 factors." % (
-                    i, len(self.edges)))
+                    i, len(self.edges[i])))
 
         self.built = True
 
@@ -180,6 +180,7 @@ class NormalFactorGraphModel(GraphModel):
 
     def get_edge_variable_graph(self) -> nx.Graph:
         """Returns edge-variable graph."""
+        self.check_built()
         graph = nx.Graph()
         graph.add_nodes_from(range(len(self.factors)))
         graph.add_edges_from(self.edges)
@@ -200,3 +201,7 @@ class NormalFactorGraphModel(GraphModel):
                          node_color='lightgreen',
                          edge_color='red')
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+
+    def check_built(self):
+        """Checks that model is built."""
+        assert self.built, "Model is not built, call build()."

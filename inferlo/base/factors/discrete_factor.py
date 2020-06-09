@@ -9,6 +9,8 @@ from inferlo.base.factors.factor import Factor
 if TYPE_CHECKING:
     from inferlo.base import GraphModel
 
+# TODO: make immutable.
+
 
 class DiscreteFactor(Factor):
     """A factor of several discrete variables."""
