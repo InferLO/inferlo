@@ -10,6 +10,9 @@ if TYPE_CHECKING:
     from inferlo.forney.nfg_model import NormalFactorGraphModel
 
 
+# TODO: Implement LogSumExp trick and return log pf to avoid overflow.
+# TODO: Support convolution over several variables.
+
 def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
     """Convolves (integrates) factor over variable.
 
