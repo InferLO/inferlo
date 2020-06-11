@@ -27,8 +27,8 @@ def decode_all_states(vert_num, al_size):
 
     Returns np.array of shape(states_count, vert_num).
     """
-    n = al_size ** vert_num
-    return np.array([decode_state(i, vert_num, al_size) for i in range(n)])
+    state_ids = np.arange(al_size ** vert_num)
+    return np.array(decode_state(state_ids, vert_num, al_size)).T
 
 
 @lru_cache(maxsize=None)
