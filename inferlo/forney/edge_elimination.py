@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import numpy as np
-from networkx import is_connected
 
 from inferlo.base.factors import DiscreteFactor
 
@@ -51,7 +50,7 @@ def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
     assert var in vars2
 
     all_vars = list(set(vars1 + vars2))
-    # Einsum supports only Latin letters as indices.
+    # einsum supports only Latin letters as indices.
     assert len(all_vars) <= 26
     vars_idx = {all_vars[i]: chr(65 + i) for i in range(len(all_vars))}
     new_vars = [v for v in all_vars if v != var]
@@ -68,57 +67,50 @@ def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
 def infer_edge_elimination(model: NormalFactorGraphModel):
     """Calculates partition function using Edge Elimination.
 
+    Algorithm
+        Repeat the following: pick variable (edge). If it's a self-loop,
+        convolve (sum) the factor referencing it over one variable. If it
+        connects two factors, convolve these two factors to get new factor,
+        insert the new factor in factors list where first factor was, update
+        edges which were connected to second factor to point to new factor.
+
+        Strategy for picking variable to eliminate: if there is a self-loop,
+        pick it. Otherwise, pick edge whose elimination would result in factor
+        with least degree.
+
     :param model: Model, for which to compute partition function.
     :return: Partition function.
     """
     model.check_built()
-
     factors = [DiscreteFactor.from_factor(f) for f in model.factors]
     edges = np.array(model.edges)
     # Don't reference model from this point to ensure we don't modify it.
 
     num_edges = len(edges)
-    edge_exists = [True for _ in range(num_edges)]
+    edge_exists = np.ones(num_edges, dtype=np.bool)
 
-    # Now repeat the following: pick variable (edge). If it's a self-loop,
-    # sum the factor referencing it over one variable. If it connects two
-    # factors, convolve these two factors to get new factors, insert it in
-    # factors list where first factor was, update variables which were
-    # connected to second factor.
-    # Strategy for picking variable to eliminate: if there are self-loops pick
-    # them. Otherwise pick edge whose two factors has least sum of degrees.
+    # Heuristic to find which edge to eliminate. Will pick edge of least cost.
+    def edge_cost(edge_id):
+        if not edge_exists[edge_id]:
+            return np.inf
+        u, v = edges[edge_id]
+        if u == v:
+            return -1
+        return len(set(factors[u].var_idx) | set(factors[v].var_idx)) - 1
 
-    # print("Edges: ", edges)
-
-    def pick_edge():
-        # print("Enter pick_edge. Exists:", edge_exists)
-        best_i = -1
-        best_sum = 1000000000
-
-        for i in range(num_edges):
-            if not edge_exists[i]:
-                continue
-            u, v = edges[i]
-            sum_deg = len(factors[u].var_idx) + len(factors[v].var_idx)
-            if u == v:
-                sum_deg = -1  # Self loop.
-            if sum_deg < best_sum:
-                best_i = i
-                best_sum = sum_deg
-        assert best_i != -1
-        # print("Picked edge", best_i)
-        return best_i
-
-    for _ in range(num_edges):
-        var_id = pick_edge()
+    while np.any(edge_exists):
+        var_id = np.argmin([edge_cost(i) for i in range(num_edges)])
         f1, f2 = edges[var_id]
         if f1 == f2:
             factors[f1] = convolve_factor(factors[f1], var_id)
         else:
-            edges = np.where(edges == f2, f1, edges)
+            # Convolve two factors and replace first factor with result.
             factors[f1] = convolve_two_factors(
                 factors[f1], factors[f2], var_id)
+            # Delete second factor.
             factors[f2] = None
+            # Remap references to second factor on edges.
+            edges = np.where(edges == f2, f1, edges)
         edge_exists[var_id] = False
 
     # At this point we should have one or more scalar factors.

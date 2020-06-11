@@ -1,6 +1,7 @@
 import numpy as np
 
-from inferlo import PairWiseFiniteModel, NormalFactorGraphModel
+from inferlo import (PairWiseFiniteModel, NormalFactorGraphModel,
+                     DiscreteDomain, DiscreteFactor)
 
 
 def test_create_from_model():
@@ -13,7 +14,8 @@ def test_create_from_model():
     kron_delta = np.array([[[1, 0], [0, 0]], [[0, 0], [0, 1]]])
     unit_factor = np.array([1, 1])
     expected_factor_tables = [
-        np.exp(j1)] * 3 + [kron_delta] + [unit_factor] * 3
+                                 np.exp(j1)] * 3 + [kron_delta] + [
+                                 unit_factor] * 3
 
     model2 = NormalFactorGraphModel.from_model(model1)
 
@@ -22,3 +24,17 @@ def test_create_from_model():
     assert model2.edges == expected_edges
     for i in range(7):
         assert np.allclose(model2.factors[i].values, expected_factor_tables[i])
+
+
+def test_inference_all_methods():
+    # Sanity check that all algorithms work on very simple model.
+    all_methods = ['auto', 'edge_elimination']
+
+    model = NormalFactorGraphModel(2, DiscreteDomain.range(2))
+    model *= DiscreteFactor(model, [0], np.array([0, 1]))
+    model *= DiscreteFactor(model, [0, 1], np.array([[2, 3], [4, 5]]))
+    model *= DiscreteFactor(model, [1], np.array([6, 7]))
+    model.build()
+
+    for method in all_methods:
+        assert np.allclose(model.infer(method=method), 59)

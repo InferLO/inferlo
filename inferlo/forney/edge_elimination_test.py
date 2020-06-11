@@ -98,8 +98,8 @@ def test_infer_compare_with_pairwise_tree():
     assert np.allclose(true_pf, pf)
 
 
-def test_infer_compare_with_pairwise_grid_4x4():
-    pw_model = grid_potts_model(4, 4, al_size=5, seed=0)
+def test_infer_compare_with_pairwise_grid_5x5():
+    pw_model = grid_potts_model(5, 5, al_size=2, seed=0)
     true_pf = np.exp(pw_model.infer(algorithm='path_dp').log_pf)
     nfg_model = inferlo.NormalFactorGraphModel.from_model(pw_model)
 
@@ -108,7 +108,7 @@ def test_infer_compare_with_pairwise_grid_4x4():
     assert np.allclose(true_pf, pf)
 
 
-def test_infer_disjoined():
+def test_infer_disconnected():
     pw_model = PairWiseFiniteModel(5, al_size=2)
     pw_model.set_field(np.random.random(size=(5, 2)))
     pw_model.add_interaction(2, 3, np.random.random(size=(2, 2)))

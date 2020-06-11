@@ -64,8 +64,19 @@ class NormalFactorGraphModel(GraphModel):
     def infer(self, algorithm='auto', **kwargs):
         """Calculates partition function.
 
+        Available algorithms
+            * ``auto`` - Automatic.
+            * ``edge_elimination`` - Edge elimination.
+
+        :param algorithm: Which algorithm to use. String.
+        :return: Partition function.
         """
-        return infer_edge_elimination(self)
+        if algorithm == 'auto':
+            return infer_edge_elimination(self)
+        elif algorithm == 'edge_elimination':
+            return infer_edge_elimination(self)
+        else:
+            raise ValueError('Unknown algorithm %s' % algorithm)
 
     def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
         raise NotImplemented
