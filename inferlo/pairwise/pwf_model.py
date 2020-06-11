@@ -261,6 +261,9 @@ class PairWiseFiniteModel(GraphModel):
         if algorithm == 'auto':
             if self.is_graph_acyclic():
                 return infer_tree_dp(self)
+            if self.al_size <= 5 and self.gr_size <= 20 and (
+                    self.al_size ** self.gr_size <= 1e7):
+                return infer_bruteforce(self)
             else:
                 return infer_message_passing(self)
         elif algorithm == 'bruteforce':
