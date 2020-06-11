@@ -6,6 +6,7 @@ import networkx as nx
 import numpy as np
 
 from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
+from inferlo.forney.edge_elimination import infer_edge_elimination
 
 if TYPE_CHECKING:
     from inferlo import Domain, Factor
@@ -56,12 +57,26 @@ class NormalFactorGraphModel(GraphModel):
             assert len(self.edges[i]) == 2, (
                 "Can't build Forney-style model. Variable %d appears in "
                 "%d factors, but must appear in exactly 2 factors." % (
-                    i, len(self.edges)))
+                    i, len(self.edges[i])))
 
         self.built = True
 
     def infer(self, algorithm='auto', **kwargs):
-        raise NotImplemented
+        """Calculates partition function.
+
+        Available algorithms
+            * ``auto`` - Automatic.
+            * ``edge_elimination`` - Edge elimination.
+
+        :param algorithm: Which algorithm to use. String.
+        :return: Partition function.
+        """
+        if algorithm == 'auto':
+            return infer_edge_elimination(self)
+        elif algorithm == 'edge_elimination':
+            return infer_edge_elimination(self)
+        else:
+            raise ValueError('Unknown algorithm %s' % algorithm)
 
     def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
         raise NotImplemented
@@ -180,6 +195,7 @@ class NormalFactorGraphModel(GraphModel):
 
     def get_edge_variable_graph(self) -> nx.Graph:
         """Returns edge-variable graph."""
+        self.check_built()
         graph = nx.Graph()
         graph.add_nodes_from(range(len(self.factors)))
         graph.add_edges_from(self.edges)
@@ -200,3 +216,7 @@ class NormalFactorGraphModel(GraphModel):
                          node_color='lightgreen',
                          edge_color='red')
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+
+    def check_built(self):
+        """Checks that model is built."""
+        assert self.built, "Model is not built, call build()."
