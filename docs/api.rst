@@ -60,6 +60,7 @@ Inference algorithms
     inferlo.pairwise.inference.message_passing.infer_message_passing
     inferlo.pairwise.inference.path_dp.infer_path_dp
     inferlo.pairwise.inference.tree_dp.infer_tree_dp
+    inferlo.forney.edge_elimination.infer_edge_elimination
 
 Optimization algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^
