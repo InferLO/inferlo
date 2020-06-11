@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.special import softmax
 
-from inferlo.pairwise.bruteforce import infer_bruteforce
+from inferlo.pairwise.bruteforce import infer_bruteforce, sample_bruteforce
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 
 
@@ -60,3 +60,11 @@ def test_max_likelihood_isolated():
     model.set_field(np.array([[0, 1]] * gr_size))
     result = model.max_likelihood(algorithm='bruteforce')
     assert np.allclose(result, np.ones(gr_size))
+
+
+def test_sample_bruteforce():
+    gr_size, num_samples = 3, 50
+    model = PairWiseFiniteModel(gr_size, 2)
+    model.set_field(np.array([[0, 20]] * gr_size))
+    samples = sample_bruteforce(model, num_samples=num_samples)
+    assert np.allclose(samples, np.ones((num_samples, gr_size)))

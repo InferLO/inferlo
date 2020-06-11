@@ -26,7 +26,10 @@ def logsumexp_1d(x: np.ndarray):
 def sample_categorical(probs, num_samples):
     """Samples from categorical distribution.
 
-    Equivalent to ``np.random.choice(len(probs), size=num_samples, p=probs)``.
+    Equivalent to ``np.random.choice(len(probs), size=num_samples, p=probs)``,
+    slightly less efficient, but works with Numba.
+
+    Probabilities must add up to 1, but it won't check it.
     """
     al_size = probs.shape[0]
     cum_probs = np.cumsum(probs)

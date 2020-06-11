@@ -47,12 +47,19 @@ def _compute_all_probs_internal(field, edges, inter):
     return np.exp(probs)
 
 
-def _compute_all_probs(model: PairWiseFiniteModel):
+def _compute_all_probs(model: PairWiseFiniteModel) -> np.ndarray:
     """For all possible states finds their probabilities (not normed)."""
     assert model.al_size ** model.gr_size <= 2e7, "Too much states."
     return _compute_all_probs_internal(model.field,
                                        model.get_edges_array(),
                                        model.get_all_interactions())
+
+
+def _compute_all_probs_normed(model: PairWiseFiniteModel) -> np.ndarray:
+    """For all possible states finds their probabilities (normed to 1)."""
+    probs = _compute_all_probs(model)
+    print('probs not normed', probs)
+    return probs / np.sum(probs)
 
 
 @numba.njit("f8[:,:](f8[:],i4,i4)")
@@ -104,3 +111,23 @@ def max_lh_bruteforce(model: PairWiseFiniteModel) -> np.array:
 
     state_id = np.argmax(_compute_all_probs(model))
     return decode_state(state_id, model.gr_size, model.al_size)
+
+
+def sample_bruteforce(
+        model: PairWiseFiniteModel,
+        num_samples: int) -> np.array:
+    """Samples from Pairwise Finite model.
+
+    Explicitly calculates probabilities of every state and uses them to sample
+    from categorical distribution.
+
+    :param model: Model to sample from.
+    :param num_samples: Number of samples.
+    :return: ``np.array`` of type ``np.int32`` and shape
+      ``(num_samples, gr_size)``. Every row is an independent sample.
+    """
+    probs = _compute_all_probs_normed(model)
+    print('probs', probs)
+    sample_ids = np.random.choice(len(probs), size=num_samples, p=probs)
+    samples = decode_state(sample_ids, model.gr_size, model.al_size)
+    return np.array(samples).T

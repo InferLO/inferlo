@@ -8,7 +8,10 @@ from networkx import Graph, nx
 from inferlo.base.domain import DiscreteDomain
 from inferlo.base.factors import DiscreteFactor
 from inferlo.base.graph_model import GraphModel
-from .bruteforce import (infer_bruteforce, max_lh_bruteforce)
+from .bruteforce import (
+    infer_bruteforce,
+    max_lh_bruteforce,
+    sample_bruteforce)
 from .inference.mean_field import infer_mean_field
 from .inference.message_passing import infer_message_passing
 from .inference.path_dp import infer_path_dp
@@ -301,21 +304,22 @@ class PairWiseFiniteModel(GraphModel):
                **kwargs) -> np.ndarray:
         """Draws i.i.d. samples from the distribution.
 
-        Returns ``np.array`` of type ``np.int32`` shape
-        ``(num_samples, gr_size)``. Every row is an independent sample.
-
         Available algorithms
             * ``auto`` - Automatic.
             * ``tree_dp`` - Dynamic programming on tree. Works only on trees.
+            * ``bruteforce`` - Sampling from explicitly calculated
+              probabilities for each state.
 
         :param num_samples: How many samples to generate.
         :param algorithm: Which algorithm to use.
+        :return: ``np.array`` of type ``np.int32`` and shape
+          ``(num_samples, gr_size)``. Every row is an independent sample.
         """
         if algorithm == 'auto':
             if self.is_graph_acyclic():
                 return sample_tree_dp(self, num_samples=num_samples)
             else:
-                raise NotImplementedError("Can handle only trees so far.")
+                return sample_bruteforce(self, num_samples=num_samples)
         elif algorithm == 'tree_dp':
             return sample_tree_dp(self, num_samples=num_samples)
         else:

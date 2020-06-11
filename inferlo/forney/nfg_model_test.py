@@ -14,8 +14,8 @@ def test_create_from_model():
     kron_delta = np.array([[[1, 0], [0, 0]], [[0, 0], [0, 1]]])
     unit_factor = np.array([1, 1])
     expected_factor_tables = [
-                                 np.exp(j1)] * 3 + [kron_delta] + [
-                                 unit_factor] * 3
+        np.exp(j1)] * 3 + [kron_delta] + [
+        unit_factor] * 3
 
     model2 = NormalFactorGraphModel.from_model(model1)
 

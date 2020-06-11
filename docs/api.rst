@@ -77,6 +77,7 @@ Sampling algorithms
 .. autosummary::
     :toctree: generated/
 
+    inferlo.pairwise.bruteforce.sample_bruteforce
     inferlo.pairwise.sampling.tree_dp.sample_tree_dp
 
 Algorithm on graphs

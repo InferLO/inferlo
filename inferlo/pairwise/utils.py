@@ -7,7 +7,10 @@ import numpy as np
 
 
 def decode_state(state_id, vert_num, al_size):
-    """Converts integer id to state."""
+    """Converts integer id to state.
+
+    Can also be applied to np.array with multiple state ids.
+    """
     return [(state_id // (al_size ** (vert_num - j - 1))) % al_size for j in
             range(vert_num)]
 
