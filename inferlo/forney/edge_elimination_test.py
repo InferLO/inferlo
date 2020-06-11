@@ -1,6 +1,7 @@
 import numpy as np
 
 import inferlo
+from inferlo import PairWiseFiniteModel
 from inferlo.forney.edge_elimination import (convolve_factor,
                                              convolve_two_factors,
                                              infer_edge_elimination)
@@ -100,6 +101,18 @@ def test_infer_compare_with_pairwise_tree():
 def test_infer_compare_with_pairwise_grid_4x4():
     pw_model = grid_potts_model(4, 4, al_size=5, seed=0)
     true_pf = np.exp(pw_model.infer(algorithm='path_dp').log_pf)
+    nfg_model = inferlo.NormalFactorGraphModel.from_model(pw_model)
+
+    pf = infer_edge_elimination(nfg_model)
+
+    assert np.allclose(true_pf, pf)
+
+
+def test_infer_disjoined():
+    pw_model = PairWiseFiniteModel(5, al_size=2)
+    pw_model.set_field(np.random.random(size=(5, 2)))
+    pw_model.add_interaction(2, 3, np.random.random(size=(2, 2)))
+    true_pf = np.exp(pw_model.infer(algorithm='bruteforce').log_pf)
     nfg_model = inferlo.NormalFactorGraphModel.from_model(pw_model)
 
     pf = infer_edge_elimination(nfg_model)

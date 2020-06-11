@@ -6,6 +6,7 @@ import networkx as nx
 import numpy as np
 
 from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
+from inferlo.forney.edge_elimination import infer_edge_elimination
 
 if TYPE_CHECKING:
     from inferlo import Domain, Factor
@@ -61,7 +62,10 @@ class NormalFactorGraphModel(GraphModel):
         self.built = True
 
     def infer(self, algorithm='auto', **kwargs):
-        raise NotImplemented
+        """Calculates partition function.
+
+        """
+        return infer_edge_elimination(self)
 
     def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
         raise NotImplemented

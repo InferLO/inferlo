@@ -72,8 +72,6 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
     :return: Partition function.
     """
     model.check_built()
-    assert is_connected(model.get_edge_variable_graph()), (
-        "Graph is not connected.")
 
     factors = [DiscreteFactor.from_factor(f) for f in model.factors]
     edges = np.array(model.edges)
@@ -111,7 +109,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
         # print("Picked edge", best_i)
         return best_i
 
-    for _ in range(num_edges - 1):
+    for _ in range(num_edges):
         var_id = pick_edge()
         f1, f2 = edges[var_id]
         if f1 == f2:
@@ -123,14 +121,10 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
             factors[f2] = None
         edge_exists[var_id] = False
 
-    # At this point we should have only one edge, factors for which are just
-    # arrays and the answer is dot product, or just sum if it's self-loop.
-    last_var_id = pick_edge()
-    f1, f2 = edges[last_var_id]
-    vals1 = factors[f1].values
-    vals2 = factors[f2].values
-    # print(vals1, vals2)
-    part_func = np.dot(vals1, vals2)
-    if f1 == f2:
-        part_func = np.sum(vals1)
+    # At this point we should have one or more scalar factors.
+    # Partition function is their product.
+    result_factors = [f.values.item() for f in factors if f is not None]
+    part_func = 1.0
+    for factor in result_factors:
+        part_func *= factor
     return part_func
