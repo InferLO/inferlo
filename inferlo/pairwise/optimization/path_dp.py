@@ -1,8 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import numpy as np
 
-from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.inference.path_dp import prepare_path_dp
 from inferlo.pairwise.utils import decode_state
+
+
+if TYPE_CHECKING:
+    from inferlo import PairWiseFiniteModel
 
 
 def max_lh_path_dp(model: PairWiseFiniteModel) -> np.ndarray:

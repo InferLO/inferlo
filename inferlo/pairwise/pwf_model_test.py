@@ -76,7 +76,7 @@ def test_max_likelihood_all_methods():
 
 def test_sample_all_methods():
     # Sanity check that all algorithms work on very simple model.
-    all_methods = ['auto', 'tree_dp', 'bruteforce']
+    all_methods = ['auto', 'tree_dp', 'bruteforce', 'path_dp']
     model = PairWiseFiniteModel(2, 2)
     model.set_field(np.array([[100, 0], [100, 0]]))
     num_samples = 10
