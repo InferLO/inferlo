@@ -3,47 +3,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import numpy as np
-from networkx import Graph
 from scipy.special import logsumexp
 
+from inferlo.graphs.path_decomposition import path_decomposition
 from inferlo.pairwise.inference_result import InferenceResult
 from inferlo.pairwise.utils import (get_marginal_states,
                                     decode_all_states)
 
 if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
-
-
-def path_decomposition(graph: Graph):
-    """Path decomposition of a graph.
-
-    Splits vertices into layers, such that vertices in layer i are connected
-    only with vertices from layers i-1, i and i+1.
-
-    Uses simple greedy algorithm. First layer always contains single vertex
-    with id=0.
-    """
-    layers = [[0]]
-    vertex_to_layer = {0: 0}
-
-    while True:
-        last_layer_id = len(layers) - 1
-        neighbors = set([w for v in layers[-1] for w in graph.neighbors(v)])
-        new_layer = []
-        for v in neighbors:
-            if v in vertex_to_layer:
-                if vertex_to_layer[v] < last_layer_id - 1:
-                    raise ValueError("Graph is not layered.")
-            else:
-                new_layer.append(v)
-                vertex_to_layer[v] = last_layer_id + 1
-
-        if len(new_layer) > 0:
-            layers.append(np.array(new_layer))
-        else:
-            break
-
-    return layers
 
 
 def get_a(model, layer: np.ndarray):
@@ -97,7 +65,7 @@ def get_b(model, layer1, layer2):
     return b.reshape(model.al_size ** l1, model.al_size ** l2)
 
 
-def infer_path_dp(model: 'PairWiseFiniteModel') -> InferenceResult:
+def infer_path_dp(model: PairWiseFiniteModel) -> InferenceResult:
     """Inference using DP on path decomposition.
 
     Performs dynamic programming on the path decomposition of the underlying
