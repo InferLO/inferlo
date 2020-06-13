@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import namedtuple
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -65,6 +66,36 @@ def get_b(model, layer1, layer2):
     return b.reshape(model.al_size ** l1, model.al_size ** l2)
 
 
+# Path decomposition of Pairwise model.
+# Contains layers of graph's path decomposition and also matrices A and B
+# describing interactions within and between layers.
+PwPathDecomposition = namedtuple('PwPathDecomposition', ['layers', 'a', 'b'])
+
+
+def prepare_path_dp(model: PairWiseFiniteModel) -> PwPathDecomposition:
+    """Prepares model for path decomposition dynamic programming.
+
+    Builds path decomposition and calculates matrices A describing interactions
+    with layers and matrices B describing interactions between them.
+
+    :param model: Pairwise model.
+    :return: PwPathDecomposition object with path decomposition and calculated
+      matrices A and B.
+    """
+    layers = path_decomposition(model.get_graph())
+    sum_layers_size = sum([len(layer) for layer in layers])
+    assert sum_layers_size == model.gr_size, "Graph is not connected."
+    max_layer_size = max([len(layer) for layer in layers])
+    assert model.al_size ** max_layer_size <= 1e5, (
+        "Algorithm won't handle this complexity.")
+
+    a = [get_a(model, layer) for layer in layers]
+    b = [get_b(model, layers[i], layers[i + 1])
+         for i in range(len(layers) - 1)]
+
+    return PwPathDecomposition(layers=layers, a=a, b=b)
+
+
 def infer_path_dp(model: PairWiseFiniteModel) -> InferenceResult:
     """Inference using DP on path decomposition.
 
@@ -77,29 +108,20 @@ def infer_path_dp(model: PairWiseFiniteModel) -> InferenceResult:
     :param model: Potts base for which to perform inference.
     :return: ``InferenceResult`` object.
     """
-    layers = path_decomposition(model.get_graph())
-    sum_layers_size = sum([len(layer) for layer in layers])
-    assert sum_layers_size == model.gr_size, "Graph is not connected."
-    max_layer_size = max([len(layer) for layer in layers])
-    assert model.al_size ** max_layer_size <= 1e5, (
-        "Algorithm won't handle this complexity.")
-
-    a = [get_a(model, layer) for layer in layers]
-    b = [get_b(model, layers[i], layers[i + 1])
-         for i in range(len(layers) - 1)]
-    layers_cnt = len(layers)
+    decomp = prepare_path_dp(model)
+    layers_cnt = len(decomp.layers)
 
     # Forward dynamic programming.
     z = [None] * layers_cnt
-    z[0] = a[0]
+    z[0] = decomp.a[0]
     for i in range(1, layers_cnt):
-        z[i] = logsumexp(z[i - 1] + b[i - 1].T, axis=1) + a[i]
+        z[i] = logsumexp(z[i - 1] + decomp.b[i - 1].T, axis=1) + decomp.a[i]
 
     # Backward dp.
     z_rev = [None] * layers_cnt
-    z_rev[-1] = a[-1]
+    z_rev[-1] = decomp.a[-1]
     for i in range(layers_cnt - 2, -1, -1):
-        z_rev[i] = logsumexp(z_rev[i + 1] + b[i], axis=1) + a[i]
+        z_rev[i] = logsumexp(z_rev[i + 1] + decomp.b[i], axis=1) + decomp.a[i]
 
     # Partition function.
     log_pf = logsumexp(z[-1])
@@ -107,11 +129,11 @@ def infer_path_dp(model: PairWiseFiniteModel) -> InferenceResult:
     # Restore marginal probabilities.
     log_marg_pf = np.zeros((model.gr_size, model.al_size))
     for layer_id in range(layers_cnt):
-        layer_size = len(layers[layer_id])
-        state_log_pf = z[layer_id] + z_rev[layer_id] - a[layer_id]
+        layer_size = len(decomp.layers[layer_id])
+        state_log_pf = z[layer_id] + z_rev[layer_id] - decomp.a[layer_id]
 
         marg_states = get_marginal_states(layer_size, model.al_size)
         layer_log_marg_pf = logsumexp(state_log_pf[marg_states], axis=2)
-        log_marg_pf[layers[layer_id], :] = layer_log_marg_pf[:, :]
+        log_marg_pf[decomp.layers[layer_id], :] = layer_log_marg_pf[:, :]
 
     return InferenceResult(log_pf, np.exp(log_marg_pf - log_pf))
