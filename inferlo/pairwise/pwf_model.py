@@ -16,6 +16,7 @@ from .inference.mean_field import infer_mean_field
 from .inference.message_passing import infer_message_passing
 from .inference.path_dp import infer_path_dp
 from .inference.tree_dp import infer_tree_dp
+from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
 from .utils import decode_state, encode_state
@@ -249,8 +250,8 @@ class PairWiseFiniteModel(GraphModel):
             * ``mean_field`` - Naive Mean Field. Approximate.
             * ``message_passing`` - Message passing. Approximate, exact only
               for trees.
-            * ``path_dp`` - Dynamic programming on path decomposition.
-              Approximate. Effective on graphs of small pathwidth.
+            * ``path_dp`` - Dynamic programming on path decomposition. Exact.
+              Effective on graphs of small pathwidth.
             * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
               trees.
 
@@ -285,6 +286,8 @@ class PairWiseFiniteModel(GraphModel):
         Available algorithms
             * ``auto`` - Automatic.
             * ``bruteforce`` - Brute force (by definition).
+            * ``path_dp`` - Dynamic programming on path decomposition. Exact.
+              Effective on graphs of small pathwidth.
             * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
               trees.
 
@@ -300,6 +303,8 @@ class PairWiseFiniteModel(GraphModel):
             return max_lh_bruteforce(self)
         elif algorithm == 'tree_dp':
             return max_likelihood_tree_dp(self)
+        elif algorithm == 'path_dp':
+            return max_lh_path_dp(self)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 

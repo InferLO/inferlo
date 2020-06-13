@@ -27,7 +27,7 @@ def test_empirical_probabilities():
                   range(model.al_size ** model.gr_size)]
     true_proba /= np.sum(true_proba)
 
-    assert np.max(true_proba - emp_proba) < 0.01
+    assert np.max(true_proba - emp_proba) < 0.02
 
 
 def test_one_very_likely_state():

@@ -70,6 +70,7 @@ Optimization algorithms
 
     inferlo.pairwise.bruteforce.max_lh_bruteforce
     inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp
+    inferlo.pairwise.optimization.path_dp.max_lh_path_dp
 
 Sampling algorithms
 ^^^^^^^^^^^^^^^^^^^
@@ -94,6 +95,7 @@ by library users.
     :toctree: generated/
 
     inferlo.graphs.fast_dfs
+    inferlo.graphs.path_decomposition
 
 Model generators
 ''''''''''''''''

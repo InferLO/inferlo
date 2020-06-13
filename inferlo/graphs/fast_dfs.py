@@ -171,7 +171,7 @@ def fast_dfs(vert_num: int, edges: np.ndarray) -> FastDfsResult:
           tree.
         * ``had_cycles`` - whether input graph had cycles.
         * ``was_disconnected`` - whether input graph was disconnected.
-        * ``was_disconnected`` - whether input graph was a tree.
+        * ``was_tree`` - whether input graph was a tree.
 
     See https://en.wikipedia.org/wiki/Depth-first_search.
     """
