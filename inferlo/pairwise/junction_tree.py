@@ -69,18 +69,17 @@ class JunctionizedModel:
     orig_al_size: int
 
     def restore_original_state(self, new_state):
-        """Converts new model state to original model state."""
-        old_state = -1 * np.ones(self.orig_gr_size, dtype=np.int32)
+        """Converts new model state to original model state.
+
+        Doesn't validate input.
+        """
+        old_state = np.zeros(self.orig_gr_size, dtype=np.int32)
         for i in range(len(self.junction_nodes)):
             decoded_state = decode_state(new_state[i],
                                          len(self.junction_nodes[i]),
                                          self.orig_al_size)
             old_nodes = self.junction_nodes[i]
-            for i in range(len(old_nodes)):
-                if old_state[old_nodes[i]] == -1:
-                    old_state[old_nodes[i]] = decoded_state[i]
-                else:
-                    assert old_state[old_nodes[i]] == decoded_state[i]
+            old_state[old_nodes] = decoded_state
         return old_state
 
     def restore_original_inference_result(
@@ -90,18 +89,15 @@ class JunctionizedModel:
         new_marg_prob = new_result.marg_prob
         old_marg_prob = np.zeros((self.orig_gr_size, self.orig_al_size))
         for i in range(len(self.junction_nodes)):
+            marg_probs = new_marg_prob[i]
             marg_states = get_marginal_states(len(self.junction_nodes[i]),
                                               self.orig_al_size)
             for j in range(len(self.junction_nodes[i])):
                 orig_v = self.junction_nodes[i][j]
-                for val in range(self.orig_al_size):
-                    sm = 0
-                    for k in marg_states[j, val]:
-                        sm += new_marg_prob[i, k]
-                    old_marg_prob[orig_v, val] = sm
+                old_marg_prob[orig_v, :] = np.sum(marg_probs[marg_states[j, :]],
+                                                  axis=1)
 
-        for v in range(self.orig_gr_size):
-            assert np.allclose(np.sum(old_marg_prob[v, :]), 1)
+        assert np.allclose(np.sum(old_marg_prob, axis=1), 1.0)
         return InferenceResult(log_pf=new_result.log_pf,
                                marg_prob=old_marg_prob)
 

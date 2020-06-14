@@ -114,4 +114,4 @@ def test_encode_state():
     assert model.encode_state([1, 1, 0, 1, 0]) == 11
 
     model = PairWiseFiniteModel(5, 10)
-    assert model.decode_state([5, 4, 3, 2, 1]) == 12345
+    assert model.encode_state([5, 4, 3, 2, 1]) == 12345
