@@ -17,12 +17,12 @@ if TYPE_CHECKING:
 def _next_state(state, gr_size, al_size):
     """Go to the next state."""
     # States are like numbers in positional system, with least significant
-    # "digit" on the right.
-    pos = gr_size - 1
+    # "digit" on the left.
+    pos = 0
     state[pos] += 1
-    while state[pos] == al_size and pos >= 0:
+    while state[pos] == al_size:
         state[pos] = 0
-        pos -= 1
+        pos += 1
         state[pos] += 1
 
 
@@ -33,7 +33,7 @@ def _compute_all_probs_internal(field, edges, inter):
     states_count = al_size ** gr_size
     edge_count = edges.shape[0]
     probs = np.zeros(states_count, dtype=np.float64)
-    state = np.zeros(gr_size, dtype=np.int32)
+    state = np.zeros(gr_size + 1, dtype=np.int32)
 
     for state_id in range(states_count):
         state_prob = 0
@@ -58,7 +58,6 @@ def _compute_all_probs(model: PairWiseFiniteModel) -> np.ndarray:
 def _compute_all_probs_normed(model: PairWiseFiniteModel) -> np.ndarray:
     """For all possible states finds their probabilities (normed to 1)."""
     probs = _compute_all_probs(model)
-    print('probs not normed', probs)
     return probs / np.sum(probs)
 
 
@@ -71,7 +70,7 @@ def _compute_marg_probs(all_probs, gr_size, al_size):
     marginal probabilities.
     """
     marg = np.zeros((gr_size, al_size))
-    state = np.zeros(gr_size, dtype=np.int32)
+    state = np.zeros(gr_size + 1, dtype=np.int32)
     for state_id in range(len(all_probs)):
         for i in range(gr_size):
             marg[i][state[i]] += all_probs[state_id]
@@ -127,7 +126,6 @@ def sample_bruteforce(
       ``(num_samples, gr_size)``. Every row is an independent sample.
     """
     probs = _compute_all_probs_normed(model)
-    print('probs', probs)
     sample_ids = np.random.choice(len(probs), size=num_samples, p=probs)
     samples = decode_state(sample_ids, model.gr_size, model.al_size)
     return np.array(samples).T

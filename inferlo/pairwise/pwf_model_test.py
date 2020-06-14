@@ -48,7 +48,7 @@ def test_build_from_interactions():
 def test_inference_all_methods():
     # Sanity check that all algorithms work on very simple model.
     all_methods = ['auto', 'bruteforce', 'mean_field', 'message_passing',
-                   'tree_dp', 'path_dp']
+                   'tree_dp', 'path_dp', 'junction_tree']
     model = PairWiseFiniteModel(2, 2)
     model.add_interaction(0, 1, np.array([[0, 0], [0, 1]]))
     m = np.array([2, 1 + np.exp(1)])
@@ -64,7 +64,7 @@ def test_inference_all_methods():
 
 def test_max_likelihood_all_methods():
     # Sanity check that all algorithms work on very simple model.
-    all_methods = ['auto', 'bruteforce', 'tree_dp']
+    all_methods = ['auto', 'bruteforce', 'tree_dp', 'path_dp', 'junction_tree']
     model = PairWiseFiniteModel(2, 2)
     model.add_interaction(0, 1, np.array([[0, 0], [0, 1]]))
     expected_result = np.array([1, 1])
@@ -76,14 +76,15 @@ def test_max_likelihood_all_methods():
 
 def test_sample_all_methods():
     # Sanity check that all algorithms work on very simple model.
-    all_methods = ['auto', 'tree_dp', 'bruteforce', 'path_dp']
+    all_methods = ['auto', 'tree_dp', 'bruteforce']
     model = PairWiseFiniteModel(2, 2)
     model.set_field(np.array([[100, 0], [100, 0]]))
     num_samples = 10
     expected_result = np.zeros((num_samples, 2))
 
     for method in all_methods:
-        result = model.max_likelihood(algorithm=method)
+        result = model.sample(algorithm=method, num_samples=num_samples)
+        assert result.shape == expected_result.shape
         assert np.allclose(result, expected_result)
 
 
@@ -98,3 +99,19 @@ def test_get_dfs_result():
     dfs_edges = model.get_dfs_result().dfs_edges
 
     assert np.allclose(dfs_edges, np.array([[0, 1], [1, 2], [2, 3]]))
+
+
+def test_decode_state():
+    model = PairWiseFiniteModel(5, 2)
+    assert model.decode_state(11) == [1, 1, 0, 1, 0]
+
+    model = PairWiseFiniteModel(5, 10)
+    assert model.decode_state(12345) == [5, 4, 3, 2, 1]
+
+
+def test_encode_state():
+    model = PairWiseFiniteModel(5, 2)
+    assert model.encode_state([1, 1, 0, 1, 0]) == 11
+
+    model = PairWiseFiniteModel(5, 10)
+    assert model.encode_state([5, 4, 3, 2, 1]) == 12345

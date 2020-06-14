@@ -71,7 +71,7 @@ class GraphModel(abc.ABC):
     def get_factors(self) -> Iterable[Factor]:
         """Returns all factors."""
 
-    def get_symbolic_variables(self) -> Iterable[FunctionFactor]:
+    def get_symbolic_variables(self) -> List[FunctionFactor]:
         """Prepares variables for usage in expressions.
 
         Returns lists of trivial ``FunctionFactor`` s, each of them

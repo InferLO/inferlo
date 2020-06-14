@@ -15,26 +15,6 @@ if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
 
-def get_a(model, layer: np.ndarray):
-    """Returns tensor describing interactions within one layer."""
-    layer_size = len(layer)
-    edges = []
-    for i in range(layer_size):
-        v1 = layer[i]
-        for j in range(i + 1, layer_size):
-            v2 = layer[j]
-            if model.has_edge(v1, v2):
-                edges.append((i, j, model.get_interaction_matrix(v1, v2)))
-
-    all_states = decode_all_states(layer_size, model.al_size)
-    a = np.zeros(model.al_size ** layer_size)
-    for u in range(layer_size):
-        a += model.field[layer[u]][all_states[:, u]]
-    for u, v, j in edges:
-        a += j[all_states[:, u], all_states[:, v]]
-    return a
-
-
 def get_b(model, layer1, layer2):
     """Returns tensor describing interactions between two layers."""
     l1 = len(layer1)
@@ -89,7 +69,7 @@ def prepare_path_dp(model: PairWiseFiniteModel) -> PwPathDecomposition:
     assert model.al_size ** max_layer_size <= 1e5, (
         "Algorithm won't handle this complexity.")
 
-    a = [get_a(model, layer) for layer in layers]
+    a = [model.get_subgraph_factor_values(layer) for layer in layers]
     b = [get_b(model, layers[i], layers[i + 1])
          for i in range(len(layers) - 1)]
 
