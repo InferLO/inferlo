@@ -56,6 +56,7 @@ Inference algorithms
     :toctree: generated/
 
     inferlo.pairwise.bruteforce.infer_bruteforce
+    inferlo.pairwise.junction_tree.infer_junction_tree
     inferlo.pairwise.inference.mean_field.infer_mean_field
     inferlo.pairwise.inference.message_passing.infer_message_passing
     inferlo.pairwise.inference.path_dp.infer_path_dp
@@ -69,6 +70,7 @@ Optimization algorithms
     :toctree: generated/
 
     inferlo.pairwise.bruteforce.max_lh_bruteforce
+    inferlo.pairwise.junction_tree.max_likelihood_junction_tree
     inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp
     inferlo.pairwise.optimization.path_dp.max_lh_path_dp
 
@@ -80,6 +82,14 @@ Sampling algorithms
 
     inferlo.pairwise.bruteforce.sample_bruteforce
     inferlo.pairwise.sampling.tree_dp.sample_tree_dp
+
+Model conversion algorithms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo.pairwise.junction_tree.to_junction_tree_model
 
 Algorithm on graphs
 '''''''''''''''''''
@@ -110,3 +120,4 @@ useful for testing and benchmarking.
     inferlo.pairwise.testing.grid_potts_model
     inferlo.pairwise.testing.line_potts_model
     inferlo.pairwise.testing.tree_potts_model
+    inferlo.pairwise.testing.pairwise_model_on_graph

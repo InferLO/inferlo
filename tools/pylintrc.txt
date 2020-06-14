@@ -32,6 +32,7 @@ enable=
     nonexistent-operator,
     not-in-loop,
     pointless-statement,
+    print-statement,
     redefined-builtin,
     relative-import,
     return-arg-in-generator,

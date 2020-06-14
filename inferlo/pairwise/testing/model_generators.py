@@ -8,13 +8,15 @@ def grid_potts_model(
         height,
         width,
         al_size=3,
-        seed=111) -> PairWiseFiniteModel:
+        seed=111,
+        zero_field=False) -> PairWiseFiniteModel:
     """Generates random PairWiseFinteModel on a grid.
 
     :param height: Heigth of the grid.
     :param width: Wwidth of the grid.
     :param al_size: Alphabet size.
     :param seed: Random seed.
+    :param zero_field: Whether model should be zero-field.
     :return: Generated Potts Model.
     """
     np.random.seed(seed)
@@ -29,6 +31,8 @@ def grid_potts_model(
             if y != width - 1:
                 edges.append((v, v + 1))  # right
     field = 0.1 * np.random.random(size=(gr_size, al_size))
+    if zero_field:
+        field *= 0
     inter = np.random.random(size=(edges_num, al_size, al_size)) * 5.0
     return PairWiseFiniteModel.create(field, edges, inter)
 
@@ -41,7 +45,7 @@ def tree_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
     :param al_size: Alphabet size.
     :param seed: Random set.
     :param same_j: If set, interaction matrix for all edges.
-    :param zero_field: Whether base should be zero-field.
+    :param zero_field: Whether model should be zero-field.
     :return: Generated Potts Model.
     """
     np.random.seed(seed)
@@ -65,7 +69,7 @@ def line_potts_model(gr_size=5, al_size=2, seed=111, same_j=None,
     :param al_size: Alphabet size.
     :param seed: Random seed.
     :param same_j: If set, interaction matrix for all edges.
-    :param zero_field: Whether base should be zero-field.
+    :param zero_field: Whether model should be zero-field.
     :return: Generated model.
     """
     np.random.seed(seed)
@@ -89,3 +93,21 @@ def clique_potts_model(gr_size=5, al_size=2, seed=0) -> PairWiseFiniteModel:
             inter = np.random.random((al_size, al_size)) * 5.0
             model.add_interaction(i, j, inter)
     return model
+
+
+def pairwise_model_on_graph(graph, al_size=2, zero_field=False):
+    """Builds random pairwise model with given interaction graph.
+
+    :param graph: Interaction graph. Nodes must be labeled with consecutive
+      integers, starting with 0.
+    :param al_size: Alphabet size.
+    :param zero_field: Whether model should be zero-field.
+    :return: Generated model.
+    """
+    gr_size = len(graph.nodes())
+    field = np.random.random(size=(gr_size, al_size))
+    if zero_field:
+        field *= 0
+    edges = np.array(list(graph.edges()))
+    interactions = np.random.random(size=(len(edges), al_size, al_size))
+    return PairWiseFiniteModel.create(field, edges, interactions)

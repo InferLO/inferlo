@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING, Iterable, Set
 
 import numpy as np
 from networkx import Graph, nx
@@ -16,10 +16,11 @@ from .inference.mean_field import infer_mean_field
 from .inference.message_passing import infer_message_passing
 from .inference.path_dp import infer_path_dp
 from .inference.tree_dp import infer_tree_dp
+from .junction_tree import infer_junction_tree, max_likelihood_junction_tree
 from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
-from .utils import decode_state, encode_state
+from .utils import decode_state, encode_state, decode_all_states
 from ..graphs import fast_dfs
 from ..graphs.fast_dfs import FastDfsResult
 
@@ -254,6 +255,8 @@ class PairWiseFiniteModel(GraphModel):
               Effective on graphs of small pathwidth.
             * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
               trees.
+            * ``junction_tree`` - DP on junction tree. Exact. Effective on
+              graphs of small treewidth.
 
         :param algorithm: Which algorithm to use. String.
         :return: `InferenceResult` object, which contains logarithm of
@@ -277,6 +280,8 @@ class PairWiseFiniteModel(GraphModel):
             return infer_path_dp(self)
         elif algorithm == 'tree_dp':
             return infer_tree_dp(self)
+        elif algorithm == 'junction_tree':
+            return infer_junction_tree(self)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 
@@ -290,6 +295,8 @@ class PairWiseFiniteModel(GraphModel):
               Effective on graphs of small pathwidth.
             * ``tree_dp`` - Dynamic programming on tree. Exact. Works only on
               trees.
+            * ``junction_tree`` - DP on junction tree. Exact. Effective on
+              graphs of small treewidth.
 
         :param algorithm: Which algorithm to use. String.
         :return: The most probable state as numpy int array.
@@ -305,6 +312,8 @@ class PairWiseFiniteModel(GraphModel):
             return max_likelihood_tree_dp(self)
         elif algorithm == 'path_dp':
             return max_lh_path_dp(self)
+        elif algorithm == 'junction_tree':
+            return max_likelihood_junction_tree(self)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 
@@ -330,6 +339,8 @@ class PairWiseFiniteModel(GraphModel):
                 return sample_bruteforce(self, num_samples=num_samples)
         elif algorithm == 'tree_dp':
             return sample_tree_dp(self, num_samples=num_samples)
+        elif algorithm == 'bruteforce':
+            return sample_bruteforce(self, num_samples=num_samples)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 
@@ -346,8 +357,8 @@ class PairWiseFiniteModel(GraphModel):
 
     @staticmethod
     def create(field: np.ndarray,
-               edges: Iterable,
-               interactions: Iterable):
+               edges: np.ndarray,
+               interactions: np.ndarray):
         """Creates PairwiseFiniteModel from compact representation.
 
         Infers number of variables and size of alphabet from shape of
@@ -367,6 +378,7 @@ class PairWiseFiniteModel(GraphModel):
         model = PairWiseFiniteModel(size, al_size)
         model.set_field(field)
         idx = 0
+        assert len(edges) == len(interactions)
         for v1, v2 in edges:
             model.add_interaction(v1, v2, interactions[idx])
             idx += 1
@@ -383,3 +395,53 @@ class PairWiseFiniteModel(GraphModel):
                          node_color='#ffaaaa')
         edge_labels = {(u, v): "J_%d_%d" % (u, v) for u, v in self.edges}
         nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
+
+    def get_subgraph_factor_values(self,
+                                   vars_idx: np.ndarray,
+                                   vars_skip: Set = frozenset()) -> np.ndarray:
+        """Calculates factor values for subgraph.
+
+        Consider model on subgraph containing only variables with indices
+        ``vars``. That is, containing only factors which depend only on
+        variables from ``vars``. For every possible combination of those
+        variable values, calculate product of all factors in the new model -
+        that's what this function returns.
+
+        This can also be described as "interactions within subgraph". Or if we
+        condense all variables in ``vars`` in single "supervariable", this
+        function returns field for the new supervariable.
+
+        :param vars_idx: Indices of variables in subgraph.
+        :param vars_skip_factors: Set. Indices of variables, which should be
+          skipped for factor calculation. Field factors for these variables
+          won't be included in the result. Interaction factors oth arguments
+          of which are in ``vars_skip_factors``, won't be included in the
+          result. However, interaction factors where only one variable appears
+          in ``vars_skip_factors``, will be included in result. This parameter
+          is useful when building junction tree, to avoid double-counting
+          factors.
+        :return: ``np.array`` of length ``al_size ** len(vars)``. Each value
+          is logarithm of product of all relevant factors for certain variable
+          values. Correspondence between indices in this array and states
+          is consistent with ``decode_state``.
+        """
+        vars_num = len(vars_idx)
+        edges = []
+        for i in range(vars_num):
+            v1 = vars_idx[i]
+            for j in range(i + 1, vars_num):
+                v2 = vars_idx[j]
+                should_skip = v1 in vars_skip and v2 in vars_skip
+                if not should_skip and self.has_edge(v1, v2):
+                    edges.append(
+                        (i, j, self.get_interaction_matrix(v1, v2)))
+
+        all_states = decode_all_states(vars_num, self.al_size)
+        a = np.zeros(self.al_size ** vars_num)
+        for u in range(vars_num):
+            if vars_idx[u] in vars_skip:
+                continue
+            a += self.field[vars_idx[u]][all_states[:, u]]
+        for u, v, j in edges:
+            a += j[all_states[:, u], all_states[:, v]]
+        return a
