@@ -13,41 +13,31 @@ if TYPE_CHECKING:
     from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 
 
-def build_kron_delta(var_num, al_size, p1, p2):
-    """Builds boolean factor requiring that v1[p1]=v2[p2]. """
-    ans_size = al_size ** var_num
-    ans = np.zeros((ans_size, ans_size), dtype=np.bool)
-    for i in range(ans_size):
-        val1 = (i // (al_size ** p1)) % al_size
-        for j in range(ans_size):
-            val2 = (j // (al_size ** p2)) % al_size
-            ans[i, j] = (val1 == val2)
-    return ans
-
-
 def build_multi_delta(var_num, al_size, nodes1, nodes2):
     """Build boolean matrix describing Kroneker delta symbol.
 
     Result[i][j]==True iff state of first supervariable encoded by i and state
     of second supervariable encoded by j are consistent. If the same variable
     appears both in nodes1 and nodes2, then "consistent"  means this variable
-    takes the same value in both  supervariables.
+    takes the same value in both supervariables.
 
-    :param: var_num - Number of variables in supervariable. It's possible that
-      length of nodes1 or nodes2 less than this value, then some False entries
-      in matrix will corresond to non-existent states.
-    :al_size: Alphabet size of original model.
-    :nodes1: Indices of variables in first supervariable.
-    :nodes2: Indices of variables in second supervariable.
+    :param var_num: Number of variables in each supervariable.
+    :param al_size: Alphabet size of original model.
+    :param nodes1: Indices of variables in first supervariable.
+    :param nodes2: Indices of variables in second supervariable.
     :return: Square boolean matrix of size al_size ** var_num.
     """
     ans_size = al_size ** var_num
     ans = np.ones((ans_size, ans_size), dtype=np.bool)
-    nodes2 = nodes2.tolist()
     for i in range(len(nodes1)):
         for j in range(len(nodes2)):
-            if nodes1[i] == nodes2[j]:
-                ans *= build_kron_delta(var_num, al_size, i, j)
+            if nodes1[i] != nodes2[j]:
+                continue
+            # Require that v1[i] = v2[j].
+            vals1 = (np.arange(ans_size) // (al_size ** i)) % al_size
+            vals2 = (np.arange(ans_size) // (al_size ** j)) % al_size
+            for k in range(ans_size):
+                ans[k] &= vals1[k] == vals2
     return ans
 
 
@@ -90,11 +80,11 @@ class JunctionizedModel:
         old_marg_prob = np.zeros((self.orig_gr_size, self.orig_al_size))
         for i in range(len(self.junction_nodes)):
             marg_probs = new_marg_prob[i]
-            marg_states = get_marginal_states(len(self.junction_nodes[i]),
-                                              self.orig_al_size)
+            marg_st = get_marginal_states(len(self.junction_nodes[i]),
+                                          self.orig_al_size)
             for j in range(len(self.junction_nodes[i])):
                 orig_v = self.junction_nodes[i][j]
-                old_marg_prob[orig_v, :] = np.sum(marg_probs[marg_states[j, :]],
+                old_marg_prob[orig_v, :] = np.sum(marg_probs[marg_st[j, :]],
                                                   axis=1)
 
         assert np.allclose(np.sum(old_marg_prob, axis=1), 1.0)
@@ -141,6 +131,7 @@ def to_junction_tree_model(model) -> JunctionizedModel:
     tree_width, junc_tree = treewidth_min_fill_in(model.get_graph())
     jt_nodes = list(junc_tree.nodes())
     sv_size = tree_width + 1  # Supervariable size.
+
     new_gr_size = len(jt_nodes)  # New graph size.
     new_al_size = model.al_size ** sv_size  # New alphabet size.
     assert new_al_size <= 1e6, "New domain size is too large."

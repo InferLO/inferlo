@@ -111,3 +111,46 @@ def pairwise_model_on_graph(graph, al_size=2, zero_field=False):
     edges = np.array(list(graph.edges()))
     interactions = np.random.random(size=(len(edges), al_size, al_size))
     return PairWiseFiniteModel.create(field, edges, interactions)
+
+
+def make_cross(length=20, width=2) -> networkx.Graph:
+    """Builds graph which looks like a cross.
+
+    Result graph has (2*length-width)*width vertices.
+
+    For example, this is a cross of width 3:
+           ...
+           +++
+           +++
+    ...+++++++++++...
+    ...+++++++++++...
+    ...+++++++++++...
+           +++
+           +++
+           ...
+    :param length: Length of a cross.
+    :param width: Width of a cross.
+    """
+    assert width < length * 2
+
+    nodes = set()
+    for i in range(length // 2, length // 2 + width):
+        for j in range(0, length):
+            nodes.add((i, j))
+            nodes.add((j, i))
+    nodes = list(nodes)
+    node_index = {nodes[i]: i for i in range(len(nodes))}
+    graph = networkx.Graph()
+    graph.add_nodes_from(range(len(nodes)))
+
+    for x, y in nodes:
+        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            if (x + dx, y + dy) in node_index:
+                graph.add_edge(node_index[(x, y)],
+                               node_index[(x + dx, y + dy)])
+    return graph
+
+
+def cross_potts_model(length=20, width=2, al_size=2):
+    """Builds random Potts model with cross-like interactionn graph."""
+    return pairwise_model_on_graph(make_cross(length, width), al_size=al_size)

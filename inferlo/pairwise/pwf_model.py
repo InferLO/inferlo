@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterable, Set
+from typing import TYPE_CHECKING, Iterable, Set, Union, List
 
 import numpy as np
 from networkx import Graph, nx
@@ -357,7 +357,7 @@ class PairWiseFiniteModel(GraphModel):
 
     @staticmethod
     def create(field: np.ndarray,
-               edges: np.ndarray,
+               edges: Union[np.ndarra, List],
                interactions: np.ndarray):
         """Creates PairwiseFiniteModel from compact representation.
 
