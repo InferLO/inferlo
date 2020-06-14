@@ -18,9 +18,9 @@ def build_kron_delta(var_num, al_size, p1, p2):
     ans_size = al_size ** var_num
     ans = np.zeros((ans_size, ans_size), dtype=np.bool)
     for i in range(ans_size):
-        val1 = (i // (al_size ** (var_num - p1 - 1))) % al_size
+        val1 = (i // (al_size ** p1)) % al_size
         for j in range(ans_size):
-            val2 = (j // (al_size ** (var_num - p2 - 1))) % al_size
+            val2 = (j // (al_size ** p2)) % al_size
             ans[i, j] = (val1 == val2)
     return ans
 
@@ -34,23 +34,20 @@ def build_multi_delta(var_num, al_size, nodes1, nodes2):
     takes the same value in both  supervariables.
 
     :param: var_num - Number of variables in supervariable. It's possible that
-      length of nodes1 or nodes2 less than this value, then we have to do
-      padding.
+      length of nodes1 or nodes2 less than this value, then some False entries
+      in matrix will corresond to non-existent states.
     :al_size: Alphabet size of original model.
     :nodes1: Indices of variables in first supervariable.
     :nodes2: Indices of variables in second supervariable.
     :return: Square boolean matrix of size al_size ** var_num.
     """
-    # Padding to account for non-full nodes.
-    pad1 = var_num - len(nodes1)
-    pad2 = var_num - len(nodes2)
     ans_size = al_size ** var_num
     ans = np.ones((ans_size, ans_size), dtype=np.bool)
     nodes2 = nodes2.tolist()
     for i in range(len(nodes1)):
         for j in range(len(nodes2)):
             if nodes1[i] == nodes2[j]:
-                ans *= build_kron_delta(var_num, al_size, i + pad1, j + pad2)
+                ans *= build_kron_delta(var_num, al_size, i, j)
     return ans
 
 

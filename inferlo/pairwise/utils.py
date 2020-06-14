@@ -11,14 +11,12 @@ def decode_state(state_id, vert_num, al_size):
 
     Can also be applied to np.array with multiple state ids.
     """
-    return [(state_id // (al_size ** (vert_num - j - 1))) % al_size for j in
-            range(vert_num)]
+    return [(state_id // (al_size ** j)) % al_size for j in range(vert_num)]
 
 
 def encode_state(state, vert_num, al_size):
     """Converts states to integer id."""
-    return sum(
-        [state[j] * (al_size ** (vert_num - j - 1)) for j in range(vert_num)])
+    return np.dot(state, al_size ** np.arange(vert_num))
 
 
 @lru_cache(maxsize=None)

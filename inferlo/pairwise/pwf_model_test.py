@@ -99,3 +99,19 @@ def test_get_dfs_result():
     dfs_edges = model.get_dfs_result().dfs_edges
 
     assert np.allclose(dfs_edges, np.array([[0, 1], [1, 2], [2, 3]]))
+
+
+def test_decode_state():
+    model = PairWiseFiniteModel(5, 2)
+    assert model.decode_state(11) == [1, 1, 0, 1, 0]
+
+    model = PairWiseFiniteModel(5, 10)
+    assert model.decode_state(12345) == [5, 4, 3, 2, 1]
+
+
+def test_encode_state():
+    model = PairWiseFiniteModel(5, 2)
+    assert model.encode_state([1, 1, 0, 1, 0]) == 11
+
+    model = PairWiseFiniteModel(5, 10)
+    assert model.decode_state([5, 4, 3, 2, 1]) == 12345
