@@ -68,4 +68,4 @@ def test_sample_grid2x20x2():
     model = grid_potts_model(2, 20, al_size=2, seed=0)
     true_marg_probs = model.infer(algorithm='path_dp').marg_prob
     samples = model.sample(num_samples=1000)
-    check_samples(samples=samples, true_marg_probs=true_marg_probs, tol=2e-4)
+    check_samples(samples=samples, true_marg_probs=true_marg_probs, tol=5e-4)
