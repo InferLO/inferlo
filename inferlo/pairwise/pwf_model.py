@@ -11,12 +11,13 @@ from inferlo.base.graph_model import GraphModel
 from .bruteforce import (
     infer_bruteforce,
     max_lh_bruteforce,
-    sample_bruteforce)
+    sample_bruteforce, TooMuchStatesError)
 from .inference.mean_field import infer_mean_field
 from .inference.message_passing import infer_message_passing
 from .inference.path_dp import infer_path_dp
 from .inference.tree_dp import infer_tree_dp
-from .junction_tree import infer_junction_tree, max_likelihood_junction_tree
+from .junction_tree import infer_junction_tree, max_likelihood_junction_tree, \
+    sample_junction_tree
 from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
@@ -265,10 +266,9 @@ class PairWiseFiniteModel(GraphModel):
         if algorithm == 'auto':
             if self.is_graph_acyclic():
                 return infer_tree_dp(self)
-            if self.al_size <= 5 and self.gr_size <= 20 and (
-                    self.al_size ** self.gr_size <= 1e7):
+            try:
                 return infer_bruteforce(self)
-            else:
+            except TooMuchStatesError:
                 return infer_message_passing(self)
         elif algorithm == 'bruteforce':
             return infer_bruteforce(self)
@@ -305,7 +305,10 @@ class PairWiseFiniteModel(GraphModel):
             if self.is_graph_acyclic():
                 return max_likelihood_tree_dp(self)
             else:
-                return max_lh_bruteforce(self)
+                try:
+                    return max_lh_bruteforce(self)
+                except TooMuchStatesError:
+                    return max_likelihood_junction_tree(self)
         elif algorithm == 'bruteforce':
             return max_lh_bruteforce(self)
         elif algorithm == 'tree_dp':
@@ -323,9 +326,10 @@ class PairWiseFiniteModel(GraphModel):
 
         Available algorithms
             * ``auto`` - Automatic.
-            * ``tree_dp`` - Dynamic programming on tree. Works only on trees.
             * ``bruteforce`` - Sampling from explicitly calculated
               probabilities for each state.
+            * ``tree_dp`` - Dynamic programming on tree. Works only on trees.
+            * ``junction_tree`` - DP on junction tree.
 
         :param num_samples: How many samples to generate.
         :param algorithm: Which algorithm to use.
@@ -336,11 +340,16 @@ class PairWiseFiniteModel(GraphModel):
             if self.is_graph_acyclic():
                 return sample_tree_dp(self, num_samples=num_samples)
             else:
-                return sample_bruteforce(self, num_samples=num_samples)
-        elif algorithm == 'tree_dp':
-            return sample_tree_dp(self, num_samples=num_samples)
+                try:
+                    return sample_bruteforce(self, num_samples=num_samples)
+                except TooMuchStatesError:
+                    return sample_junction_tree(self, num_samples=num_samples)
         elif algorithm == 'bruteforce':
             return sample_bruteforce(self, num_samples=num_samples)
+        elif algorithm == 'tree_dp':
+            return sample_tree_dp(self, num_samples=num_samples)
+        elif algorithm == 'junction_tree':
+            return sample_junction_tree(self, num_samples=num_samples)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 

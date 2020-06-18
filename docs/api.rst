@@ -81,6 +81,7 @@ Sampling algorithms
     :toctree: generated/
 
     inferlo.pairwise.bruteforce.sample_bruteforce
+    inferlo.pairwise.junction_tree.sample_junction_tree
     inferlo.pairwise.sampling.tree_dp.sample_tree_dp
 
 Model conversion algorithms

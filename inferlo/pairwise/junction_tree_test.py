@@ -5,6 +5,7 @@ from inferlo.pairwise.junction_tree import (max_likelihood_junction_tree,
 from inferlo.pairwise.testing import (clique_potts_model, tree_potts_model,
                                       grid_potts_model, assert_results_close)
 from inferlo.pairwise.testing.model_generators import cross_potts_model
+from inferlo.pairwise.testing.test_utils import check_samples
 
 
 def test_inference_clique_10x2():
@@ -61,3 +62,10 @@ def test_max_likelihood_cross_50x2x2():
     true_ml = model.max_likelihood(algorithm='path_dp')
     ml = max_likelihood_junction_tree(model)
     assert np.allclose(ml, true_ml)
+
+
+def test_sample_grid2x20x2():
+    model = grid_potts_model(2, 20, al_size=2, seed=0)
+    true_marg_probs = model.infer(algorithm='path_dp').marg_prob
+    samples = model.sample(num_samples=1000)
+    check_samples(samples=samples, true_marg_probs=true_marg_probs, tol=2e-4)

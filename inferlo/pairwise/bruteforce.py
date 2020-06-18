@@ -13,6 +13,10 @@ if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
 
+class TooMuchStatesError(Exception):
+    """Error: algorithm can't solve given problem within reasonable time."""
+
+
 @numba.njit("void(i4[:],i4,i4)")
 def _next_state(state, gr_size, al_size):
     """Go to the next state."""
@@ -49,7 +53,8 @@ def _compute_all_probs_internal(field, edges, inter):
 
 def _compute_all_probs(model: PairWiseFiniteModel) -> np.ndarray:
     """For all possible states finds their probabilities (not normed)."""
-    assert model.al_size ** model.gr_size <= 2e7, "Too much states."
+    if model.al_size ** model.gr_size > 2e7:
+        raise TooMuchStatesError()
     return _compute_all_probs_internal(model.field,
                                        model.get_edges_array(),
                                        model.get_all_interactions())

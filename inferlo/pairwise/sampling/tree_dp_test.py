@@ -2,6 +2,7 @@ import numpy as np
 
 from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.testing import tree_potts_model, line_potts_model
+from inferlo.pairwise.testing.test_utils import check_samples
 
 
 def test_empirical_probabilities():
@@ -75,10 +76,12 @@ def test_fully_isolated():
     model.set_field(np.log(probs))
     samples = model.sample(num_samples=num_samples, algorithm='tree_dp')
 
-    emp_mp = np.zeros((gr_size, al_size))
-    for sample in samples:
-        for i in range(gr_size):
-            emp_mp[i, sample[i]] += 1
-    emp_mp /= num_samples
+    check_samples(samples=samples, true_marg_probs=probs, tol=2e-3)
 
-    assert np.mean(np.square(emp_mp - probs)) < 2e-3
+
+def test_tree_100x2():
+    model = tree_potts_model(gr_size=100, al_size=2, seed=0)
+    true_marg_probs = model.infer(algorithm='tree_dp').marg_prob
+    samples = model.sample(num_samples=10000, algorithm='tree_dp')
+
+    check_samples(samples=samples, true_marg_probs=true_marg_probs, tol=1e-4)

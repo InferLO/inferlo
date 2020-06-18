@@ -179,7 +179,7 @@ def to_junction_tree_model(model) -> JunctionizedModel:
     return JunctionizedModel(new_model, jt_nodes, model.gr_size, model.al_size)
 
 
-def infer_junction_tree(model):
+def infer_junction_tree(model) -> InferenceResult:
     """Performs inference using Junction Tree decomposition.
 
     Decomposes graph into junction tree, builds equivalent model on that tree,
@@ -194,7 +194,7 @@ def infer_junction_tree(model):
     return junct_model.restore_original_inference_result(result)
 
 
-def max_likelihood_junction_tree(model):
+def max_likelihood_junction_tree(model) -> np.ndarray:
     """Finds most probable state using Junction Tree decomposition.
 
     Decomposes graph into junction tree, builds equivalent model on that tree,
@@ -208,3 +208,20 @@ def max_likelihood_junction_tree(model):
     junct_model = to_junction_tree_model(model)
     state = junct_model.new_model.max_likelihood(algorithm='tree_dp')
     return junct_model.restore_original_state(state)
+
+
+def sample_junction_tree(model, num_samples: int) -> np.ndarray:
+    """IID sampling using Junction Tree decomposition.
+
+    Decomposes graph into junction tree, builds equivalent model on that tree,
+    samples from that model and restores answer for the original model.
+
+    :param model: Model, for which to perform sampling.
+    :param num_samples: Number of samples.
+    :return: ``np.array`` of type ``np.int32`` and shape
+      ``(num_samples, gr_size)``. Every row is an independent sample.
+    """
+    junct_model = to_junction_tree_model(model)
+    samples = junct_model.new_model.sample(algorithm='tree_dp',
+                                           num_samples=num_samples)
+    return np.array([junct_model.restore_original_state(s) for s in samples])

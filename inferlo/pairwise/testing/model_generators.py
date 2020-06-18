@@ -95,15 +95,17 @@ def clique_potts_model(gr_size=5, al_size=2, seed=0) -> PairWiseFiniteModel:
     return model
 
 
-def pairwise_model_on_graph(graph, al_size=2, zero_field=False):
+def pairwise_model_on_graph(graph, al_size=2, zero_field=False, seed=0):
     """Builds random pairwise model with given interaction graph.
 
     :param graph: Interaction graph. Nodes must be labeled with consecutive
       integers, starting with 0.
     :param al_size: Alphabet size.
     :param zero_field: Whether model should be zero-field.
+    :param seed: Random seed.
     :return: Generated model.
     """
+    np.random.seed(seed)
     gr_size = len(graph.nodes())
     field = np.random.random(size=(gr_size, al_size))
     if zero_field:
@@ -151,6 +153,8 @@ def make_cross(length=20, width=2) -> networkx.Graph:
     return graph
 
 
-def cross_potts_model(length=20, width=2, al_size=2):
+def cross_potts_model(length=20, width=2, al_size=2, seed=0):
     """Builds random Potts model with cross-like interactionn graph."""
-    return pairwise_model_on_graph(make_cross(length, width), al_size=al_size)
+    return pairwise_model_on_graph(make_cross(length, width),
+                                   al_size=al_size,
+                                   seed=seed)
