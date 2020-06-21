@@ -1,12 +1,11 @@
 # This is a temporary test to make sure CVXPY is properly installed.
-# It should be removed once we add GM algorithms using CVXPY and tests for them.
+# It should be removed once we add algorithms using CVXPY and tests for them.
 
 import cvxpy
 import numpy as np
 
 
 def test_quadratic_form():
-    m = 30
     n = 20
     np.random.seed(1)
     A = np.random.randn(n, n)
