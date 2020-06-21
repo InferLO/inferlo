@@ -1,6 +1,6 @@
 """Basic classes."""
-from inferlo.base.domain import DiscreteDomain, Domain, RealDomain
-from inferlo.base.factors import DiscreteFactor, Factor, FunctionFactor
-from inferlo.base.generic_graph_model import GenericGraphModel
-from inferlo.base.graph_model import GraphModel
-from inferlo.base.variable import Variable
+from .domain import DiscreteDomain, Domain, RealDomain
+from .factors import DiscreteFactor, Factor, FunctionFactor
+from .generic_graph_model import GenericGraphModel
+from .graph_model import GraphModel
+from .variable import Variable
