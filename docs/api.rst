@@ -122,3 +122,14 @@ useful for testing and benchmarking.
     inferlo.pairwise.testing.line_potts_model
     inferlo.pairwise.testing.tree_potts_model
     inferlo.pairwise.testing.pairwise_model_on_graph
+
+
+Interoperation
+''''''''''''''''
+
+These classes are repossible for interoperation with other GM libraries.
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo.interop.LibDaiInterop

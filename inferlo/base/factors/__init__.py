@@ -1,4 +1,4 @@
 """Different kinds of factors."""
-from inferlo.base.factors.discrete_factor import DiscreteFactor
-from inferlo.base.factors.factor import Factor
-from inferlo.base.factors.function_factor import FunctionFactor
+from .discrete_factor import DiscreteFactor
+from .factor import Factor
+from .function_factor import FunctionFactor

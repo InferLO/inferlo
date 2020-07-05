@@ -2,4 +2,4 @@
 
 Contains model definition and algorithms specific to it.
 """
-from inferlo.forney.nfg_model import NormalFactorGraphModel
+from .nfg_model import NormalFactorGraphModel

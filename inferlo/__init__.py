@@ -1,5 +1,5 @@
 """Root InferLO package."""
-from inferlo.base import (
+from .base import (
     DiscreteDomain,
     Domain,
     Factor,
@@ -10,5 +10,5 @@ from inferlo.base import (
     RealDomain,
     Variable,
 )
-from inferlo.forney import NormalFactorGraphModel
-from inferlo.pairwise import PairWiseFiniteModel
+from .forney import NormalFactorGraphModel
+from .pairwise import PairWiseFiniteModel
