@@ -26,7 +26,7 @@ class GraphModel(abc.ABC):
         self._default_domain = domain
         self._vars = dict()
 
-    def get_variable(self, idx: int):
+    def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
         if not 0 <= idx < self.num_variables:
             raise IndexError(

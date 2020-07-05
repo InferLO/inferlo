@@ -220,14 +220,16 @@ class PairWiseFiniteModel(GraphModel):
 
     def _add_discrete_factor(self, factor: DiscreteFactor):
         assert factor.model == self
+        with np.errstate(divide='ignore'):
+            log_factor = np.log(factor.values)
         if len(factor.var_idx) > 2:
             raise ValueError("Can't add factor with more than 2 variables.")
         if len(factor.var_idx) == 1:
             assert factor.values.shape == (self.al_size,)
-            self.field[factor.var_idx[0], :] += np.log(factor.values)
+            self.field[factor.var_idx[0], :] += log_factor
         elif len(factor.var_idx) == 2:
             v1, v2 = factor.var_idx
-            self.add_interaction(v1, v2, np.log(factor.values))
+            self.add_interaction(v1, v2, log_factor)
 
     def get_factors(self) -> Iterable[Factor]:
         """Generates explicit list of factors."""
