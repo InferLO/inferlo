@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import os
 import subprocess
-from pathlib import Path
-from typing import TYPE_CHECKING, List
 import time
+from pathlib import Path
+from typing import TYPE_CHECKING, List, Dict
 
 import numpy as np
 
@@ -58,7 +58,7 @@ class LibDaiInterop():
         # Check that executable file can be executed.
         if os.path.exists(self.exe_path):
             try:
-                process = subprocess.Popen(args=[self.exe_path],
+                process = subprocess.Popen(args=[self.exe_path, 'problem=x'],
                                            stdout=subprocess.DEVNULL,
                                            stderr=subprocess.DEVNULL)
                 process.wait()
@@ -107,34 +107,48 @@ class LibDaiInterop():
                 value_lines.append("%d %.10f" % (i, flat_values[i]))
         return header_lines + [str(len(value_lines))] + value_lines
 
-    def infer(self, model: GraphModel) -> InferenceResult:
+    def infer(self, model: GraphModel, algorithm="BP",
+              options=None) -> InferenceResult:
         """Infrence with libDAI.
 
         Calculates partition function and marginal probabilities.
         """
-        self._run(model, 'infer')
+        if options is None:
+            options = dict()
+        self._run(model, 'infer', algorithm, options)
         log_z = float(self.stdout)
         marg_probs = np.loadtxt(self.output_file)
         return InferenceResult(log_z, marg_probs)
 
-    def max_likelihood(self, model: GraphModel) -> np.ndarray:
+    def max_likelihood(self, model: GraphModel, algorithm="BP",
+                       options=None) -> np.ndarray:
         """Calculates most likely state with libDAI."""
-        self._run(model, 'max_likelihood')
+        if options is None:
+            options = dict()
+        self._run(model, 'max_likelihood', algorithm, options)
         return np.loadtxt(self.output_file, dtype=np.int32)
 
-    def _run(self, model: GraphModel, problem: str):
+    def _run(self, model: GraphModel, problem: str, algorithm: str,
+             options: Dict[str, str]):
         """Invokes run_libdai for given model and problem."""
         assert self.ready, "libDAI is not ready."
         LibDaiInterop.write_fg_file(model, self.input_file)
 
+        encoded_options = ','.join(
+            ["%s=%s" % (k, v) for k, v in options.items()])
+        encoded_options = '[' + encoded_options + ']'
+
         start_time = time.time()
         process = subprocess.Popen(
             args=[self.exe_path, self.input_file, self.output_file,
-                  problem, 'algorithm'],
-            stdout=subprocess.PIPE)
+                  problem, algorithm, encoded_options],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         process.wait()
         # Store true running time, which doesn't include conversions and IO.
         self.true_running_time = time.time() - start_time
 
-        assert process.returncode == 0
+        if process.returncode != 0:
+            msg = process.stderr.read().decode("utf-8")
+            raise ValueError("libDAI failed with error message: %s" % msg)
         self.stdout = process.stdout.read().decode("utf-8")
