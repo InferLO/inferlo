@@ -21,5 +21,6 @@ Please follow these [guideleines](https://inferlo.readthedocs.io/en/latest/contr
 
 ### Authors
 
-* Misha Chertkov.
-* Dmytro Fedoriaka, Google LLC.
+* Misha Chertkov
+* Dmytro Fedoriaka
+* Mikhail Krechetov
