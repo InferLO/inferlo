@@ -79,7 +79,7 @@ class LibDaiInterop():
     ML_ALGORITHMS = ['BP', 'DECMAP', 'EXACT', 'FBP', 'GIBBS', 'JTREE',
                      'TREEEP', 'TRWBP']
 
-    #: Default options.
+    #: Default options for all algorithms.
     DEFAULT_OPTIONS = {
         'EXACT': dict(),
         'MF': {'tol': 1e-9, 'maxiter': 100},
@@ -182,7 +182,8 @@ class LibDaiInterop():
 
         :param model: Model, for which to perform inference. All factors must
            be discrete.
-        :param model: Inference algorithm.
+        :param model: Inference algorithm. Must be one of
+          ``LibDaiInterop.ALL_ALGORITHMS``.
         :param options: libDAI options.
         :return: InferenceResult containing log partition function and marginal
           probabilities.
@@ -202,7 +203,8 @@ class LibDaiInterop():
 
         :param model: Model, for which to perform inference. All factors must
            be discrete.
-        :param model: Inference algorithm.
+        :param model: Inference algorithm. Must be one of
+          ``LibDaiInterop.ML_ALGORITHMS``.
         :param options: libDAI options.
         :return: Marginal probabilities. Array of shape (number of variables,
           number of variables). If variables are from different domains, second
