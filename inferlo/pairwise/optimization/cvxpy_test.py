@@ -1,3 +1,5 @@
+# Copyright (c) 2020, The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE file.
 # This is a temporary test to make sure CVXPY is properly installed.
 # It should be removed once we add algorithms using CVXPY and tests for them.
 
