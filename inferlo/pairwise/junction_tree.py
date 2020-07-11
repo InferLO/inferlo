@@ -6,7 +6,8 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 import numpy as np
-from networkx.algorithms.approximation.treewidth import treewidth_min_fill_in
+from networkx.algorithms.approximation.treewidth import (treewidth_min_fill_in,
+                                                         treewidth_min_degree)
 
 from inferlo.pairwise.inference_result import InferenceResult
 from inferlo.pairwise.utils import decode_state, get_marginal_states
@@ -94,7 +95,7 @@ class JunctionizedModel:
                                marg_prob=old_marg_prob)
 
 
-def to_junction_tree_model(model) -> JunctionizedModel:
+def to_junction_tree_model(model, algorithm) -> JunctionizedModel:
     """Builds equivalent model on a junction tree.
 
     First, builds a junction tree using algorithm from NetworkX which uses
@@ -125,12 +126,28 @@ def to_junction_tree_model(model) -> JunctionizedModel:
     See https://en.wikipedia.org/wiki/Tree_decomposition.
 
     :param model: original model.
+    :param algorithm: decomposition algorithm.
     :return: JunctionizedModel object, which contains junction tree and the
       new model, which is equivalent to original model, but whose graph is a
       tree.
     """
     # Build junction tree.
-    tree_width, junc_tree = treewidth_min_fill_in(model.get_graph())
+    graph = model.get_graph()
+    if algorithm == 'min_fill_in':
+        tree_width, junc_tree = treewidth_min_fill_in(graph)
+    elif algorithm == 'min_degree':
+        tree_width, junc_tree = treewidth_min_degree(graph)
+    elif algorithm == 'auto':
+        tree_width_1, junc_tree_1 = treewidth_min_fill_in(graph)
+        tree_width_2, junc_tree_2 = treewidth_min_degree(graph)
+        if tree_width_1 < tree_width_2:
+            tree_width, junc_tree = tree_width_1, junc_tree_1
+        else:
+            tree_width, junc_tree = tree_width_2, junc_tree_2
+    else:
+        raise ValueError(
+            'Unknown treewidth decomposition algorithm %s' % algorithm)
+
     jt_nodes = list(junc_tree.nodes())
     sv_size = tree_width + 1  # Supervariable size.
 
@@ -191,7 +208,7 @@ def infer_junction_tree(model) -> InferenceResult:
     :param model: Model, for which to perform inference.
     :param result: InferenceResult object.
     """
-    junct_model = to_junction_tree_model(model)
+    junct_model = to_junction_tree_model(model, algorithm='min_fill_in')
     result = junct_model.new_model.infer(algorithm='tree_dp')
     return junct_model.restore_original_inference_result(result)
 
@@ -207,7 +224,7 @@ def max_likelihood_junction_tree(model) -> np.ndarray:
     :param result: The most probable state. Integer np.array of length
       ``model.gr_size``.
     """
-    junct_model = to_junction_tree_model(model)
+    junct_model = to_junction_tree_model(model, algorithm='min_fill_in')
     state = junct_model.new_model.max_likelihood(algorithm='tree_dp')
     return junct_model.restore_original_state(state)
 
@@ -223,7 +240,7 @@ def sample_junction_tree(model, num_samples: int) -> np.ndarray:
     :return: ``np.array`` of type ``np.int32`` and shape
       ``(num_samples, gr_size)``. Every row is an independent sample.
     """
-    junct_model = to_junction_tree_model(model)
+    junct_model = to_junction_tree_model(model, algorithm='min_fill_in')
     samples = junct_model.new_model.sample(algorithm='tree_dp',
                                            num_samples=num_samples)
     return np.array([junct_model.restore_original_state(s) for s in samples])

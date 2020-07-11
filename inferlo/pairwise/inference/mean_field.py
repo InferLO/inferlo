@@ -77,7 +77,7 @@ def infer_mean_field(model: PairWiseFiniteModel,
     `gr_size * num_iters`, where `gr_size` is number of variables, `num_iters`
     is number of iterations.
 
-    :param model: Potts base for which to perform inference.
+    :param model: Potts model for which to perform inference.
     :param iters_wait: Algorithm stops if result doesn't improve for that long.
     :param max_iter: Maximal number of iterations.
     :param num_attempts: How many times try optimization from new random point.

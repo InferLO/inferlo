@@ -285,7 +285,7 @@ class PairWiseFiniteModel(GraphModel):
         elif algorithm == 'tree_dp':
             return infer_tree_dp(self)
         elif algorithm == 'junction_tree':
-            return infer_junction_tree(self)
+            return infer_junction_tree(self, **kwargs)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 

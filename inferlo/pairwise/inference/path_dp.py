@@ -87,7 +87,7 @@ def infer_path_dp(model: PairWiseFiniteModel) -> InferenceResult:
     Time complexity is O(gr_size * al_size^(2*PW)), where PW is pathwidth of
     the graph.
 
-    :param model: Potts base for which to perform inference.
+    :param model: Potts model for which to perform inference.
     :return: ``InferenceResult`` object.
     """
     decomp = prepare_path_dp(model)
