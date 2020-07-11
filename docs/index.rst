@@ -20,6 +20,13 @@ Documentation
 
 .. toctree::
     :maxdepth: 1
+    :caption: Examples
+
+    examples/inferlo_libdai.ipynb
+
+	
+.. toctree::
+    :maxdepth: 1
     :caption: Developer documentation
 
     contributing
