@@ -143,3 +143,18 @@ class GraphModel(abc.ABC):
                 *(v.domain.values for v in model.get_variables())):
             part_func += model.evaluate(np.array(x))
         return part_func
+
+    def max_likelihood_bruteforce(model):
+        """Evaluates most likely state in a  very inefficient way."""
+        best_state = None
+        best_prob = 0.0
+        for x in itertools.product(
+                *(v.domain.values for v in model.get_variables())):
+            prob = model.evaluate(np.array(x))
+            if prob >= best_prob:
+                best_state = x
+                best_prob = prob
+        return best_state
+
+    def get_max_domain_size(self):
+        return max([var.domain.size() for var in self.get_variables()])
