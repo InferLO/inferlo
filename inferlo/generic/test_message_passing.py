@@ -16,7 +16,8 @@ def test_non_pairwise():
     model *= (x[2] + x[3] + x[4] + x[5])
 
     true_log_pf = np.log(model.part_func_bruteforce())
-    assert np.allclose(infer_generic_message_passing(model).log_pf, true_log_pf)
+    assert np.allclose(infer_generic_message_passing(model).log_pf,
+                       true_log_pf)
 
 
 def test_pairwise_tree():

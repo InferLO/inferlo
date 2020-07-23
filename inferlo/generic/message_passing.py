@@ -8,7 +8,9 @@ from inferlo.base.factors import DiscreteFactor
 from inferlo.pairwise.inference_result import InferenceResult
 
 
-def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=False):
+def infer_generic_message_passing(model: GraphModel,
+                                  max_iter=100,
+                                  max_product=False):
     """Generic message passing algorithm.
 
     Also known as "Loopy belief propagation."
@@ -38,7 +40,9 @@ def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=F
             graph.add_edge(factor_vertex_id, var_id, id=edges_count + 1)
             edges_count += 2
     edges = list(graph.edges)
-    RI = {edges[i]: i for i in range(len(edges))}
+
+    # Reverse index on edges. Maps edge to its id.
+    edges_ri = {edges[i]: i for i in range(len(edges))}
 
     def get_variable_for_edge(edge_id):
         start_vx, end_vx = edges[edge_id]
@@ -47,7 +51,7 @@ def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=F
     # Initialize all messages with "unit functions".
     edge_messages = [np.ones(
         model.get_variable(get_variable_for_edge(edge_id)).domain.size()) for
-                     edge_id in range(len(edges))]
+        edge_id in range(len(edges))]
 
     def tensor_product(x):
         ans = np.array([1.0])
@@ -57,12 +61,11 @@ def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=F
 
     def incoming_edge_ids(edge_id):
         start_vx, end_vx = edges[edge_id]
-        return [RI[(i, start_vx)] for i in graph.neighbors(start_vx) if
+        return [edges_ri[(i, start_vx)] for i in graph.neighbors(start_vx) if
                 i != end_vx]
 
     def new_message_vf(edge_id):
         """Calculate new message for variable->factor edge."""
-        start_vx, end_vx = edges[edge_id]
         ans = np.ones_like(edge_messages[edge_id])
         for i in incoming_edge_ids(edge_id):
             ans = ans * edge_messages[i]
@@ -101,7 +104,7 @@ def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=F
 
     # Caclulates new message for edge.
     def calculate_new_message(edge_id):
-        start_vx, end_vx = edges[edge_id]
+        start_vx, _ = edges[edge_id]
         if start_vx < num_variables:
             return new_message_vf(edge_id)
         else:
@@ -114,9 +117,8 @@ def infer_generic_message_passing(model: GraphModel, max_iter=100, max_product=F
     def get_result_for_variable(var_id):
         ans = 1
         for prev_vx in graph.neighbors(var_id):
-            ans *= edge_messages[RI[(prev_vx, var_id)]]
+            ans *= edge_messages[edges_ri[(prev_vx, var_id)]]
         return ans
-
 
     ans = np.zeros((model.num_variables, model.get_max_domain_size()))
     for i in range(model.num_variables):

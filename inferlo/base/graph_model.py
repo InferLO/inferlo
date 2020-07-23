@@ -157,4 +157,5 @@ class GraphModel(abc.ABC):
         return best_state
 
     def get_max_domain_size(self):
+        """Returns the biggest domain size over all variables."""
         return max([var.domain.size() for var in self.get_variables()])
