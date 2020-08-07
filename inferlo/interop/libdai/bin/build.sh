@@ -1,1 +1,1 @@
-g++ -o run_libdai.exe run_libdai.cpp -I/mnt/d/libdai_linux/include -Llibdai/lib -ldai -lgmp -lgmpxx -L/mnt/d/libdai_linux/lib -std=c++14
+g++ -o run_libdai.exe run_libdai.cpp -I/home/fedimser/projects/libdai/include -Llibdai/lib -ldai -lgmp -lgmpxx -L/home/fedimser/projects/libdai/lib -std=c++14
