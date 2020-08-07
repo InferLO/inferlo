@@ -23,6 +23,7 @@ def setup(app):
     app.add_source_parser(MarkdownParser)
     app.add_config_value('pandoc_use_parser', 'markdown', True)
     app.connect('autodoc-process-signature', autodoc_process_signature)
+    app.add_css_file('custom.css')
 
 
 # -- Project information -----------------------------------------------------
@@ -55,7 +56,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 # -- Options for HTML output -------------------------------------------------
 
