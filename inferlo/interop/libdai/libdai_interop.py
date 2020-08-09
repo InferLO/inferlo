@@ -166,9 +166,7 @@ class LibDaiInterop():
                         ' '.join(map(str, domain_sizes))]
 
         value_lines = []
-        rev_perm = list(range(len(factor.var_idx)))[::-1]
-        values = factor.values.transpose(rev_perm)
-        flat_values = values.reshape(-1)
+        flat_values = factor.libdai_vs()
         for i in range(len(flat_values)):
             if abs(flat_values[i]) > 1e-9:
                 value_lines.append("%d %.10f" % (i, flat_values[i]))
@@ -195,6 +193,8 @@ class LibDaiInterop():
         self._run(model, 'infer', algorithm, options)
         log_z = float(self.stdout)
         marg_probs = np.loadtxt(self.output_file)
+        if len(marg_probs.shape) == 1:
+            marg_probs = np.array([marg_probs])
         return InferenceResult(log_z, marg_probs)
 
     def max_likelihood(self, model: GraphModel, algorithm,
@@ -239,8 +239,8 @@ class LibDaiInterop():
         process.wait()
         # Store true running time, which doesn't include conversions and IO.
         self.true_running_time = time.time() - start_time
+        self.stdout = process.stdout.read().decode("utf-8")
+        self.stderr = process.stderr.read().decode("utf-8")
 
         if process.returncode != 0:
-            msg = process.stderr.read().decode("utf-8")
-            raise ValueError("libDAI failed with error message: %s" % msg)
-        self.stdout = process.stdout.read().decode("utf-8")
+            raise ValueError("libDAI failed with error message: %s" % self.stderr)

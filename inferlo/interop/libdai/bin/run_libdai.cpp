@@ -8,6 +8,7 @@
 #include <dai/decmap.h>
 #include <dai/jtree.h>
 
+const bool DEBUG = true;
 
 void print_marginal_probs(const dai::FactorGraph& fg, const dai::InfAlg* inf_alg, const std::string& file_name) {
   int max_domain_size = 1;
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
     
     // Create InfAlg object.
     dai::InfAlg* inf_alg = dai::newInfAlg(algorithm_name, fg, opts);
+    if (DEBUG) {((dai::BP*)inf_alg)->recordSentMessages = true;}
     inf_alg->init();
     inf_alg->run();
 
@@ -65,5 +67,28 @@ int main(int argc, char *argv[]) {
         std::cerr << "Unknown problem " << problem << "\n";
         return 1;
     }
+
+    if (DEBUG) {
+        dai::BP bp = *((dai::BP*)inf_alg);
+        std::cerr << "Sent messages:\n";
+        for(const std::pair<std::size_t, std::size_t>& msg: bp.getSentMessages()) {
+            std::cerr << msg.first << " " << msg.second << "\n";
+        }
+
+        std::cerr << "Beliefs:\n";
+        for(int i=0; i < bp.nrVars(); i++) {
+            std::cerr << "beliefV(" << i << ")=" << bp.beliefV(i) << "\n";
+        }
+        for(int i=0; i < bp.nrFactors(); i++) {
+            dai::Factor b = bp.beliefF(i);
+            std::cerr << "beliefF(" << i << ")=" << b << "\n";
+        }
+
+        std::cerr << "Factors:\n";
+        for(int i=0; i < bp.nrFactors(); i++) {
+            std::cerr << "factor(" << i << ")=" << bp.factor(i) << "\n";
+        }
+    }
+
     return 0;
 }
