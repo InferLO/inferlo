@@ -1,3 +1,5 @@
+# Copyright (c) 2020, The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE file.
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -7,6 +9,7 @@ import numpy as np
 import time
 import random
 from inferlo.base.factors.discrete_factor import DiscreteFactor, FunctionFactor
+from inferlo.pairwise import InferenceResult
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -16,9 +19,10 @@ recordSentMessages = True
 
 
 class Prob:
+    """Wrapper around a vector - represents probability distribution."""
     @staticmethod
     def uniform(n):
-        return Prob.same_value(n, 1.0/n)
+        return Prob.same_value(n, 1.0 / n)
 
     @staticmethod
     def same_value(n: int, val: float):
@@ -49,7 +53,7 @@ class Prob:
         self._p = np.log(self._p)
 
     def takeExp(self):
-        self._p = np.log(self._p)
+        self._p = np.exp(self._p)
 
     def max(self):
         return np.max(self._p)
@@ -86,9 +90,14 @@ def dist(p: Prob, q: Prob, dt):
 
 @dataclass
 class Neighbor:
-    iter: int  # Corresponds to the index of this Neighbor entry in the vector of neighbors.
-    node: int  # Contains the absolute index of the neighboring node.
-    dual: int  # Contains the "dual" index (i.e., the index of this node in the Neighbors vector of the neighboring node)
+    # Corresponds to the index of this Neighbor entry in the vector of
+    # neighbors.
+    iter: int
+    # Contains the absolute index of the neighboring node.
+    node: int
+    # Contains the "dual" index (i.e., the index of this node in the Neighbors
+    # vector of the neighboring node)
+    dual: int
 
 
 @dataclass
@@ -101,7 +110,8 @@ class EdgeProp:
 
 
 # LibDai's factor. Consists of set of variables and flattened values assigned to all var combinations.
-# Variables are assigned linke in Inferlo, but tensor is transposed before flattening.
+# Variables are assigned linke in Inferlo, but tensor is transposed before
+# flattening.
 class LDFactor:
 
     def __init__(self, model: GraphModel, var_idx: List[int], p: Prob):
@@ -118,21 +128,27 @@ class LDFactor:
 
     @staticmethod
     def from_inferlo_factor(f: DiscreteFactor):
-        return LDFactor(f.model, f.var_idx, Prob(f.libdai_vs()))
+        rev_perm = list(range(len(f.var_idx)))[::-1]
+        prob = f.values.transpose(rev_perm).reshape(-1)
+        return LDFactor(f.model, f.var_idx, Prob(prob))
 
     def to_inferlo_factor(self) -> DiscreteFactor:
-        sizes = [self.model.get_variable(i).domain.size() for i in self.var_idx[::-1]]
+        sizes = [self.model.get_variable(i).domain.size()
+                 for i in self.var_idx[::-1]]
         libdai_tensor = self.p._p.reshape(sizes)
         rev_perm = list(range(len(self.var_idx)))[::-1]
         inferlo_tensor = libdai_tensor.transpose(rev_perm)
         return DiscreteFactor(self.model, self.var_idx, inferlo_tensor)
 
-    def combine_with_factor(self, other: LDFactor, func: Callable[[float, float], float]):
-        # Check that variables of the other factor are subset of variables of the given factor.
+    def combine_with_factor(self, other: LDFactor,
+                            func: Callable[[float, float], float]):
+        # Check that variables of the other factor are subset of variables of
+        # the given factor.
         for i in other.var_idx:
             assert i in self.var_idx
 
-        # Now, update every value of given factor with corresponding value of the other factor.
+        # Now, update every value of given factor with corresponding value of
+        # the other factor.
         for idx in range(len(self.p._p)):
             j = other.encode_value_index(self.decode_value_index(idx))
             self.p._p[idx] = func(self.p._p[idx], other.p._p[j])
@@ -184,18 +200,24 @@ class LDFactor:
 
 
 class BP:
+    @staticmethod
+    def infer(model, options=None):
+        if options is None:
+            options = {'tol': 1e-9, 'logdomain': 0, 'updates': 'SEQRND'}
+        inf_alg = BP(model, options)
+        inf_alg.init()
+        inf_alg.run()
+        return InferenceResult(inf_alg.logZ(), inf_alg.marg_prob())
+
     def __init__(self, model: GraphModel, props: Dict[str, str]):
         # Stores all edge properties
-        self._edges = []
-        # Lookup table (only used for maximum-residual BP)
-        self._edge2lut = []
-        # Lookup table (only used for maximum-residual BP)
-        self._lut = []
+        self._edges: List[List[EdgeProp]] = []
         # Maximum difference between variable beliefs encountered so far
         self._maxdiff = 0.0
         # Number of iterations needed
         self._iters = 0
-        # The history of message updates (only recorded if \a recordSentMessages is \c true)
+        # The history of message updates (only recorded if \a
+        # recordSentMessages is \c true)
         self._sentMessages = []
         # Stores variable beliefs of previous iteration
         self._oldBeliefsV: List[LDFactor] = []
@@ -205,7 +227,9 @@ class BP:
         self._updateSeq = []
 
         self.model = model
-        self.factors = [LDFactor.from_inferlo_factor(DiscreteFactor.from_factor(f)) for f in model.get_factors()]
+        self.factors = [
+            LDFactor.from_inferlo_factor(
+                DiscreteFactor.from_factor(f)) for f in model.get_factors()]
         self.nrVars = model.num_variables
         self.nrFactors = len(self.factors)
 
@@ -221,8 +245,16 @@ class BP:
                 nbv_len = len(self.nbV[var_id])
                 nbf_len = len(self.nbF[factor_id])
                 assert var_iter_index == nbf_len
-                self.nbV[var_id].append(Neighbor(iter=nbv_len, node=factor_id, dual=nbf_len))
-                self.nbF[factor_id].append(Neighbor(iter=nbf_len, node=var_id, dual=nbv_len))
+                self.nbV[var_id].append(
+                    Neighbor(
+                        iter=nbv_len,
+                        node=factor_id,
+                        dual=nbf_len))
+                self.nbF[factor_id].append(
+                    Neighbor(
+                        iter=nbf_len,
+                        node=var_id,
+                        dual=nbv_len))
 
         # Parse properties.
         self.logdomain = bool(int(props.get('logdomain', 0)))
@@ -239,21 +271,14 @@ class BP:
     def construct(self):
         # Create edge properties
         self._edges = []
-        self._edge2lut = []
-
         for i in range(self.nrVars):
             self._edges.append([])
-            if self.updates == 'SEQMAX':
-                self._edge2lut.append([])
-            for I in self.nbV[i]:
-                newEP = EdgeProp(index=None,
-                                 message=Prob.uniform(self.model.get_variable(i).domain.size()),
-                                 newMessage=Prob.uniform(self.model.get_variable(i).domain.size()),
-                                 residual=0.0)
-
+            for _ in self.nbV[i]:
+                newEP = EdgeProp(
+                    index=None, message=Prob.uniform(
+                        self.model.get_variable(i).domain.size()), newMessage=Prob.uniform(
+                        self.model.get_variable(i).domain.size()), residual=0.0)
                 self._edges[i].append(newEP)
-                if self.updates == 'SEQMAX':
-                    self._edge2lut[i].append(self._lut.insert((newEP.residual, (i, len(self._edges[i]) - 1))))
 
         # Create old beliefs
         self._oldBeliefsV = []
@@ -261,7 +286,10 @@ class BP:
             self._oldBeliefsV.append(LDFactor.uniform(self.model, [i]))
         self._oldBeliefsF = []
         for I in range(self.nrFactors):
-            self._oldBeliefsF.append(LDFactor.uniform(self.model, self.factors[I].var_idx))
+            self._oldBeliefsF.append(
+                LDFactor.uniform(
+                    self.model,
+                    self.factors[I].var_idx))
 
         # Create update sequence
         self._updateSeq = []
@@ -280,16 +308,24 @@ class BP:
         self._iters = 0
 
     def findMaxResidual(self):
-        assert len(self._lut) > 0
-        largestEl = self._lut[-1]
-        return largestEl.second
+        # TODO: optimize with a lookup table.
+        max_r = -np.inf
+        best_edge = None
+        for i in range(self.nrVars):
+            for _I in range(len(self.nbV[i])):
+                if self._edges[i][_I].residual > max_r:
+                    max_r = self._edges[i][_I].residual
+                    best_edge = i, _I
+        return best_edge
 
-    def calcIncomingMessageProduct(self, I: int, without_i: bool, i: int) -> Prob:
+    def calcIncomingMessageProduct(
+            self,
+            I: int,
+            without_i: bool,
+            i: int) -> Prob:
         Fprod = self.factors[I].clone()
         if self.logdomain:
             Fprod.p.takeLog()
-
-        print("CIMP I=%d without_i=%s i=%i init=%s" % (I, without_i, i, Fprod.p))
 
         # Calculate product of incoming messages and factor I
         for j in self.nbF[I]:
@@ -297,8 +333,10 @@ class BP:
                 continue
 
             # prod_j will be the product of messages coming into j
-            prod_j = Prob.same_value(self.model.get_variable(j.node).domain.size(),
-                                     0.0 if self.logdomain else 1.0)
+            prod_j = Prob.same_value(
+                self.model.get_variable(
+                    j.node).domain.size(),
+                0.0 if self.logdomain else 1.0)
             for J in self.nbV[j.node]:
                 if J.node != I:  # for all J in nb(j) \ I
                     if self.logdomain:
@@ -311,15 +349,12 @@ class BP:
                 Fprod += LDFactor(self.model, [j.node], prod_j)
             else:
                 Fprod *= LDFactor(self.model, [j.node], prod_j)
-
-            print("CIMP after nb %d: %s, prod_j=%s" % (j.node, Fprod.p, prod_j))
         return Fprod.p
 
     def calcNewMessage(self, i: int, _I: int):
         # calculate updated message I->i
         I = self.nbV[i][_I].node
 
-        marg = None
         if len(self.factors[I].var_idx) == 1:  # optimization
             marg = self.factors[I].p.clone()
         else:
@@ -327,7 +362,7 @@ class BP:
             Fprod.p = self.calcIncomingMessageProduct(I, True, i)
 
             if self.logdomain:
-                Fprod.p -= Fprod.p.max()
+                Fprod.p._p -= Fprod.p.max()
                 Fprod.p.takeExp()
 
             # Marginalize onto i
@@ -344,20 +379,27 @@ class BP:
 
         # Update the residual if necessary
         if self.updates == 'SEQMAX':
-            self.updateResidual(i, _I, dist(self._edges[i][_I].newMessage, self._edges[i][_I].message, 'DISTLINF'))
+            self.updateResidual(
+                i,
+                _I,
+                dist(
+                    self._edges[i][_I].newMessage,
+                    self._edges[i][_I].message,
+                    'DISTLINF'))
 
     # BP::run does not check for NANs for performance reasons
     # Somehow NaNs do not often occur in BP...
     def run(self):
-        if self.verbose >= 1:
-            print("Starting " + self.identify() + "...")
-
         tic = time.time()
 
-        # do several passes over the network until maximum number of iterations has
-        # been reached or until the maximum belief difference is smaller than tolerance
+        # Do several passes over the network until maximum number of iterations has
+        # been reached or until the maximum belief difference is smaller than
+        # tolerance
         maxDiff = np.inf
-        while (self._iters < self.maxiter) and maxDiff > self.tol and (time.time() - tic) < self.maxtime:
+        while (
+            self._iters < self.maxiter) and maxDiff > self.tol and (
+            time.time() -
+                tic) < self.maxtime:
             if self.updates == 'SEQMAX':
                 if self._iters == 0:
                     # do the first pass
@@ -371,7 +413,8 @@ class BP:
                     self.updateMessage(i, _I)
 
                     # I->i has been updated, which means that residuals for all
-                    # J->j with J in nb[i]\I and j in nb[J]\i have to be updated
+                    # J->j with J in nb[i]\I and j in nb[J]\i have to be
+                    # updated
                     for J in self.nbV[i]:
                         if J.iter != _I:
                             for j in self.nbF[J.node]:
@@ -400,30 +443,28 @@ class BP:
             maxDiff = -np.inf
             for i in range(self.nrVars):
                 b = self.beliefV(i).clone()
-                maxDiff = max(maxDiff, dist(b.p, self._oldBeliefsV[i].p, 'DISTLINF'))
+                maxDiff = max(
+                    maxDiff,
+                    dist(
+                        b.p,
+                        self._oldBeliefsV[i].p,
+                        'DISTLINF'))
                 self._oldBeliefsV[i] = b
             for I in range(self.nrFactors):
                 b = self.beliefF(I).clone()
-                maxDiff = max(maxDiff, dist(b.p, self._oldBeliefsF[I].p, 'DISTLINF'))
+                maxDiff = max(
+                    maxDiff,
+                    dist(
+                        b.p,
+                        self._oldBeliefsF[I].p,
+                        'DISTLINF'))
                 self._oldBeliefsF[I] = b
 
-            if self.verbose >= 3:
-                print("%s::run:  maxdiff %f after %d passes" % (self.name(), maxDiff, self._iters + 1))
-
             self._iters += 1
+            #print("maxdiff %e after %d passes" % (maxDiff, self._iters))
 
         if maxDiff > self._maxdiff:
             self._maxdiff = maxDiff
-
-        if self.verbose >= 1:
-            if maxDiff > self.tol:
-                if self.verbose >= 1:
-                    print("%s::run: WARNING: not converged after %d passes (%f seconds)...final maxdiff:%f" % (
-                        self.name(), self._iters, time.time() - tic, maxDiff))
-            else:
-                if self.verbose >= 3:
-                    print('%s::run: converged in %d passes (%f seconds).' % (
-                        self.name(), self._iters, time.time() - tic))
         return maxDiff
 
     def calcBeliefV(self, i: int) -> Prob:
@@ -440,7 +481,7 @@ class BP:
         p = self.calcBeliefV(i)
 
         if self.logdomain:
-            p -= p.max()
+            p._p -= p._p.max()
             p.takeExp()
         p.normalize()
         return LDFactor(self.model, [i], p)
@@ -449,7 +490,7 @@ class BP:
         p = self.calcBeliefF(I)
 
         if self.logdomain:
-            p -= p.max()
+            p._p -= p.max()
             p.takeExp()
         p.normalize()
 
@@ -475,7 +516,8 @@ class BP:
         return ans
 
     def marg_prob(self):
-        max_domain_size = np.max([self.var_size(i) for i in range(self.nrVars)])
+        max_domain_size = np.max([self.var_size(i)
+                                  for i in range(self.nrVars)])
         ans = np.zeros((self.nrVars, max_domain_size), dtype=np.float64)
         for var_id in range(self.nrVars):
             ans[var_id, 0:self.var_size(var_id)] = self.beliefV(var_id).p._p
@@ -486,7 +528,6 @@ class BP:
 
     def updateMessage(self, i: int, _I: int):
         if recordSentMessages:
-            print("%d->%d:%s" % (i, _I, self._edges[i][_I].newMessage._p))
             self._sentMessages.append((i, _I))
         if self.damping == 0.0:
             self._edges[i][_I].message = self._edges[i][_I].newMessage.clone()
@@ -495,23 +536,19 @@ class BP:
         else:
             d = self.damping
             if self.logdomain:
-                self._edges[i][_I].message = (self._edges[i][_I].message * d) + (
-                        self._edges[i][_I].newMessage * (1.0 - d))
+                self._edges[i][_I].message._p = (self._edges[i][_I].message._p * d) + (
+                    self._edges[i][_I].newMessage._p * (1.0 - d))
             else:
-                self._edges[i][_I].message = (self._edges[i][_I].message ** d) * (
-                        self._edges[i][_I].newMessage ** (1.0 - d))
+                self._edges[i][_I].message._p = (self._edges[i][_I].message._p ** d) * (
+                    self._edges[i][_I].newMessage._p ** (1.0 - d))
             if self.updates == 'SEQMAX':
-                self.updateResidual(i, _I, dist(self._edges[i][_I].newMessage, self._edges[i][_I].message, 'DISTLINF'))
+                self.updateResidual(
+                    i,
+                    _I,
+                    dist(
+                        self._edges[i][_I].newMessage,
+                        self._edges[i][_I].message,
+                        'DISTLINF'))
 
     def updateResidual(self, i, _I, r):
         self._edges[i][_I].residual = r
-
-        # rearrange look-up table (delete and reinsert new key)
-        self._lut.erase(self._edge2lut[i][_I])
-        self._edge2lut[i][_I] = self._lut.insert((r, (i, _I)))
-
-    def identify(self) -> str:
-        return 'BP'
-
-    def name(self) -> str:
-        return 'BP'

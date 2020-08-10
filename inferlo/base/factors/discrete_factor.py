@@ -25,8 +25,9 @@ class DiscreteFactor(Factor):
         values = np.array(values)
         expected_shape = [self.model[i].domain.size() for i in
                           self.var_idx]
-        assert list(values.shape) == expected_shape, (
-            "Got values of shape %s, but variables imply %s." % (values.shape, expected_shape))
+        assert list(
+            values.shape) == expected_shape, ("Got values of shape %s, but variables imply %s." %
+                                              (values.shape, expected_shape))
         #assert np.min(values) >= 0, "Factors should be non-negative."
         self.values = values
 
@@ -67,19 +68,16 @@ class DiscreteFactor(Factor):
 
     def marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
         assert len(self.var_idx) <= 26
-        subscript_idx = {self.var_idx[i]: chr(65 + i) for i in range(len(self.var_idx))}
+        subscript_idx = {self.var_idx[i]: chr(
+            65 + i) for i in range(len(self.var_idx))}
         old_subscripts = ''.join([subscript_idx[i] for i in self.var_idx])
         new_subscripts = ''.join([subscript_idx[i] for i in new_var_idx])
-        new_values = np.einsum(old_subscripts + '->' + new_subscripts, self.values)
+        new_values = np.einsum(
+            old_subscripts +
+            '->' +
+            new_subscripts,
+            self.values)
         return DiscreteFactor(self.model, new_var_idx, new_values)
 
     def max_marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
         raise ValueError("Not implemented.")
-
-    def as_function_factor(self):
-        return FunctionFactor(self.model, self.var_idx, lambda x: self.value(x))
-
-    def libdai_vs(self) -> np.ndarray:
-        """Flattened values for libDAI."""
-        rev_perm = list(range(len(self.var_idx)))[::-1]
-        return self.values.transpose(rev_perm).reshape(-1)

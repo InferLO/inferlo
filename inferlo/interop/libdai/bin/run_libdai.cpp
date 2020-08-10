@@ -8,7 +8,7 @@
 #include <dai/decmap.h>
 #include <dai/jtree.h>
 
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 void print_marginal_probs(const dai::FactorGraph& fg, const dai::InfAlg* inf_alg, const std::string& file_name) {
   int max_domain_size = 1;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    if (DEBUG) {
+    if (DEBUG && algorithm_name == "BP") {
         dai::BP bp = *((dai::BP*)inf_alg);
         std::cerr << "Sent messages:\n";
         for(const std::pair<std::size_t, std::size_t>& msg: bp.getSentMessages()) {

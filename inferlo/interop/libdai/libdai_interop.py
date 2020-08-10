@@ -6,6 +6,7 @@ import copy
 import os
 import subprocess
 import time
+import warnings
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Dict
 
@@ -150,6 +151,17 @@ class LibDaiInterop():
         factors = list(model.get_factors())
         assert all([f.is_discrete() for f in factors])
         factors = [DiscreteFactor.from_factor(f) for f in factors]
+
+        vars_in_factors = set([i for f in factors for i in f.var_idx])
+        all_vars = set(range(model.num_variables))
+        unused_vars = all_vars - vars_in_factors
+        if len(unused_vars) > 0:
+            warnings.warn(
+                "Not all variables are referenced in factors, will add dummy unit factors for them.")
+            for var_id in unused_vars:
+                size = model.get_variable(var_id).domain.size()
+                factors.append(DiscreteFactor(model, [var_id], np.ones(size)))
+
         with open(file_path, "w") as file:
             file.write("%d\n\n" % len(factors))
             for f in factors:
@@ -166,7 +178,8 @@ class LibDaiInterop():
                         ' '.join(map(str, domain_sizes))]
 
         value_lines = []
-        flat_values = factor.libdai_vs()
+        rev_perm = list(range(len(factor.var_idx)))[::-1]
+        flat_values = factor.values.transpose(rev_perm).reshape(-1)
         for i in range(len(flat_values)):
             if abs(flat_values[i]) > 1e-9:
                 value_lines.append("%d %.10f" % (i, flat_values[i]))
@@ -243,4 +256,6 @@ class LibDaiInterop():
         self.stderr = process.stderr.read().decode("utf-8")
 
         if process.returncode != 0:
-            raise ValueError("libDAI failed with error message: %s" % self.stderr)
+            raise ValueError(
+                "libDAI failed with error message: %s" %
+                self.stderr)
