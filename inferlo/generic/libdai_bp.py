@@ -11,14 +11,14 @@ from inferlo.base.factors.discrete_factor import DiscreteFactor, FunctionFactor
 if TYPE_CHECKING:
     from inferlo import GraphModel
 
-DAI_BP_FAST = False
+
 recordSentMessages = True
 
 
 class Prob:
     @staticmethod
     def uniform(n):
-        return Prob(np.ones(n, dtype=np.float64) / n)
+        return Prob.same_value(n, 1.0/n)
 
     @staticmethod
     def same_value(n: int, val: float):
@@ -109,9 +109,6 @@ class LDFactor:
         self.var_idx = var_idx
         self.p = p
 
-        if len(var_idx) > 0:
-            assert isinstance(var_idx[0], int)
-
     @staticmethod
     def uniform(model: GraphModel, var_idx: List[int]):
         total_domain_size = 1
@@ -130,20 +127,22 @@ class LDFactor:
         inferlo_tensor = libdai_tensor.transpose(rev_perm)
         return DiscreteFactor(self.model, self.var_idx, inferlo_tensor)
 
-    @staticmethod
-    def combine_factors(factor1: LDFactor, factor2: LDFactor, func: Callable[[float, float], float]) -> LDFactor:
-        result = FunctionFactor.combine_factors(
-            factor1.to_inferlo_factor().as_function_factor(),
-            factor2.to_inferlo_factor().as_function_factor(),
-            func
-        )
-        return LDFactor.from_inferlo_factor(DiscreteFactor.from_factor(result))
+    def combine_with_factor(self, other: LDFactor, func: Callable[[float, float], float]):
+        # Check that variables of the other factor are subset of variables of the given factor.
+        for i in other.var_idx:
+            assert i in self.var_idx
+
+        # Now, update every value of given factor with corresponding value of the other factor.
+        for idx in range(len(self.p._p)):
+            j = other.encode_value_index(self.decode_value_index(idx))
+            self.p._p[idx] = func(self.p._p[idx], other.p._p[j])
+        return self
 
     def __iadd__(self, other: LDFactor):
-        return LDFactor.combine_factors(self, other, lambda x, y: x + y)
+        return self.combine_with_factor(other, lambda x, y: x + y)
 
     def __imul__(self, other: LDFactor):
-        return LDFactor.combine_factors(self, other, lambda x, y: x * y)
+        return self.combine_with_factor(other, lambda x, y: x * y)
 
     def marginal(self, new_var_idx, normed=True) -> LDFactor:
         result = self.to_inferlo_factor().marginal(new_var_idx)
@@ -161,6 +160,24 @@ class LDFactor:
 
     def clone(self):
         return LDFactor(self.model, self.var_idx, self.p.clone())
+
+    def decode_value_index(self, idx):
+        """Returns dict from variable id to variable value."""
+        ans = dict()
+        for var_id in self.var_idx:
+            size = self.model.get_variable(var_id).domain.size()
+            ans[var_id] = idx % size
+            idx //= size
+        return ans
+
+    def encode_value_index(self, var_values: Dict[int, int]):
+        ans = 0
+        base = 1
+        for var_id in self.var_idx:
+            size = self.model.get_variable(var_id).domain.size()
+            ans += base * var_values[var_id]
+            base *= size
+        return ans
 
     def __str__(self):
         return "%s %s" % (self.var_idx, self.p._p)
@@ -234,9 +251,6 @@ class BP:
                                  newMessage=Prob.uniform(self.model.get_variable(i).domain.size()),
                                  residual=0.0)
 
-                if DAI_BP_FAST:
-                    raise ValueError('Fast not supported yet.')
-
                 self._edges[i].append(newEP)
                 if self.updates == 'SEQMAX':
                     self._edge2lut[i].append(self._lut.insert((newEP.residual, (i, len(self._edges[i]) - 1))))
@@ -275,31 +289,30 @@ class BP:
         if self.logdomain:
             Fprod.p.takeLog()
 
-        print("CIMP %d %s" % (I, Fprod.p))
+        print("CIMP I=%d without_i=%s i=%i init=%s" % (I, without_i, i, Fprod.p))
 
         # Calculate product of incoming messages and factor I
         for j in self.nbF[I]:
-            if not (without_i and (j == i)):
-                # prod_j will be the product of messages coming into j
-                prod_j = Prob.same_value(self.model.get_variable(j.node).domain.size(),
-                                         0.0 if self.logdomain else 1.0)
-                for J in self.nbV[j.node]:
-                    if J != I:  # for all J in nb(j) \ I
-                        if self.logdomain:
-                            prod_j += self._edges[j.node][J.iter].message
-                        else:
-                            prod_j *= self._edges[j.node][J.iter].message
+            if without_i and (j.node == i):
+                continue
 
-                # multiply prod with prod_j
-                if not DAI_BP_FAST:
-                    # UNOPTIMIZED (SIMPLE TO READ, BUT SLOW) VERSION
+            # prod_j will be the product of messages coming into j
+            prod_j = Prob.same_value(self.model.get_variable(j.node).domain.size(),
+                                     0.0 if self.logdomain else 1.0)
+            for J in self.nbV[j.node]:
+                if J.node != I:  # for all J in nb(j) \ I
                     if self.logdomain:
-                        Fprod += LDFactor(self.model, [j.node], prod_j)
+                        prod_j += self._edges[j.node][J.iter].message
                     else:
-                        Fprod *= LDFactor(self.model, [j.node], prod_j)
-                else:
-                    raise ValueError('Fast not supported yet.')
-            print("CIMP after nb %d: %s" % (j.node, Fprod.p))
+                        prod_j *= self._edges[j.node][J.iter].message
+
+            # multiply prod with prod_j
+            if self.logdomain:
+                Fprod += LDFactor(self.model, [j.node], prod_j)
+            else:
+                Fprod *= LDFactor(self.model, [j.node], prod_j)
+
+            print("CIMP after nb %d: %s, prod_j=%s" % (j.node, Fprod.p, prod_j))
         return Fprod.p
 
     def calcNewMessage(self, i: int, _I: int):
@@ -311,21 +324,17 @@ class BP:
             marg = self.factors[I].p.clone()
         else:
             Fprod = self.factors[I].clone()
-            prod = self.calcIncomingMessageProduct(I, True, i)
+            Fprod.p = self.calcIncomingMessageProduct(I, True, i)
 
             if self.logdomain:
-                prod -= prod.max()
-                prod.takeExp()
+                Fprod.p -= Fprod.p.max()
+                Fprod.p.takeExp()
 
             # Marginalize onto i
-            if not DAI_BP_FAST:
-                # UNOPTIMIZED (SIMPLE TO READ, BUT SLOW) VERSION
-                if self.inference == 'SUMPROD':
-                    marg = Fprod.marginal([i]).p
-                else:
-                    marg = Fprod.maxMarginal([i]).p
+            if self.inference == 'SUMPROD':
+                marg = Fprod.marginal([i]).p
             else:
-                raise ValueError('Fast not supported yet.')
+                marg = Fprod.maxMarginal([i]).p
 
         # Store result
         if self.logdomain:
@@ -464,6 +473,16 @@ class BP:
         for I in range(self.nrFactors):
             ans -= dist(self.beliefF(I).p, self.factors[I].p, 'DISTKL')
         return ans
+
+    def marg_prob(self):
+        max_domain_size = np.max([self.var_size(i) for i in range(self.nrVars)])
+        ans = np.zeros((self.nrVars, max_domain_size), dtype=np.float64)
+        for var_id in range(self.nrVars):
+            ans[var_id, 0:self.var_size(var_id)] = self.beliefV(var_id).p._p
+        return ans
+
+    def var_size(self, var_idx):
+        return self.model.get_variable(var_idx).domain.size()
 
     def updateMessage(self, i: int, _I: int):
         if recordSentMessages:

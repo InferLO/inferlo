@@ -53,7 +53,7 @@ class LibDaiInterop():
         support calculating most likely state, exception will be thrown.
 
         For documentation on particular algorithms, refer to libDAI
-        documntation: https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/.
+        documentation: https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/.
 
     Options
         Almost every algorithm requires some parameters. Parameters are passed
