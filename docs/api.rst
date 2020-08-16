@@ -62,6 +62,7 @@ Inference algorithms
     inferlo.pairwise.inference.path_dp.infer_path_dp
     inferlo.pairwise.inference.tree_dp.infer_tree_dp
     inferlo.forney.edge_elimination.infer_edge_elimination
+    inferlo.generic.libdai_bp.BP
     inferlo.generic.message_passing.infer_generic_message_passing
 
 Optimization algorithms
@@ -118,11 +119,11 @@ useful for testing and benchmarking.
 .. autosummary::
     :toctree: generated/
 
-    inferlo.pairwise.testing.clique_potts_model
-    inferlo.pairwise.testing.grid_potts_model
-    inferlo.pairwise.testing.line_potts_model
-    inferlo.pairwise.testing.tree_potts_model
-    inferlo.pairwise.testing.pairwise_model_on_graph
+    inferlo.testing.clique_potts_model
+    inferlo.testing.grid_potts_model
+    inferlo.testing.line_potts_model
+    inferlo.testing.tree_potts_model
+    inferlo.testing.pairwise_model_on_graph
 
 
 Interoperation

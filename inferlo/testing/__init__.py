@@ -1,4 +1,4 @@
-"""Testing utils for pairwise models."""
+"""Testing utils."""
 from .model_generators import (
     clique_potts_model,
     cross_potts_model,
