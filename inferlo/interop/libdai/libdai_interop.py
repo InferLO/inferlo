@@ -157,7 +157,8 @@ class LibDaiInterop():
         unused_vars = all_vars - vars_in_factors
         if len(unused_vars) > 0:
             warnings.warn(
-                "Not all variables are referenced in factors, will add dummy unit factors for them.")
+                "Not all variables are referenced in factors, will add dummy "
+                "unit factors for them. Unused variables: %s" % unused_vars)
             for var_id in unused_vars:
                 size = model.get_variable(var_id).domain.size()
                 factors.append(DiscreteFactor(model, [var_id], np.ones(size)))

@@ -19,6 +19,8 @@ def infer_generic_message_passing(model: GraphModel,
     :param max_iter: Maximal number of iterations.
     :return: Inference result.
 
+    Warning! This does not work correctly on non-trees.
+
     Reference
         [1] Kschischang, Frey, Loeliger,
         "Factor graphs and the sum-product algorithm",

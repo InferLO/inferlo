@@ -7,16 +7,15 @@ from typing import List, TYPE_CHECKING
 import numpy as np
 
 from inferlo.base.factors.factor import Factor
-from inferlo.base.factors.function_factor import FunctionFactor
 
 if TYPE_CHECKING:
-    from inferlo.base import GraphModel, Variable
-
-# TODO: make immutable.
+    from inferlo.base import GraphModel
 
 
 class DiscreteFactor(Factor):
     """A factor of several discrete variables."""
+
+    # TODO: make immutable.
 
     def __init__(self, model: GraphModel, var_idx: List[int],
                  values: np.ndarray):
@@ -25,10 +24,10 @@ class DiscreteFactor(Factor):
         values = np.array(values)
         expected_shape = [self.model[i].domain.size() for i in
                           self.var_idx]
-        assert list(
-            values.shape) == expected_shape, ("Got values of shape %s, but variables imply %s." %
-                                              (values.shape, expected_shape))
-        #assert np.min(values) >= 0, "Factors should be non-negative."
+        assert list(values.shape) == expected_shape, (
+                "Got values of shape %s, but variables imply %s." %
+                (values.shape, expected_shape))
+        assert np.min(values) >= 0, "Factors should be non-negative."
         self.values = values
 
     def value(self, x: List[float]):
@@ -67,6 +66,7 @@ class DiscreteFactor(Factor):
         return new_factor
 
     def marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
+        """Marginalizes factor on subset of variables."""
         assert len(self.var_idx) <= 26
         subscript_idx = {self.var_idx[i]: chr(
             65 + i) for i in range(len(self.var_idx))}
@@ -80,4 +80,5 @@ class DiscreteFactor(Factor):
         return DiscreteFactor(self.model, new_var_idx, new_values)
 
     def max_marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
+        """Marginalizes factor on subset of variables, using MAX-PROD."""
         raise ValueError("Not implemented.")
