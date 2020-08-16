@@ -5,6 +5,7 @@ from .model_generators import (
     grid_potts_model,
     line_potts_model,
     pairwise_model_on_graph,
+    random_generic_model,
     tree_potts_model,
 )
 from .test_utils import assert_results_close

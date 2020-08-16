@@ -547,10 +547,10 @@ class BP:
             new_msg = self._edges[i][_I].new_message.p
             if self.logdomain:
                 self._edges[i][_I].message.p = (
-                        (old_msg * d) + (new_msg * (1.0 - d)))
+                    (old_msg * d) + (new_msg * (1.0 - d)))
             else:
                 self._edges[i][_I].message.p = (
-                        (old_msg ** d) * (new_msg ** (1.0 - d)))
+                    (old_msg ** d) * (new_msg ** (1.0 - d)))
             if self.updates == 'SEQMAX':
                 new_res = dist_linf(
                     self._edges[i][_I].new_message,

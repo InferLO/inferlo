@@ -3,8 +3,8 @@
 import numpy as np
 
 from inferlo.pairwise.bruteforce import infer_bruteforce
-from inferlo.pairwise.testing import (assert_results_close, grid_potts_model,
-                                      line_potts_model, clique_potts_model)
+from inferlo.testing import (assert_results_close, grid_potts_model,
+                             line_potts_model, clique_potts_model)
 
 
 def test_grid_3x3():

@@ -4,38 +4,16 @@ import warnings
 
 import numpy as np
 
-from inferlo import GenericGraphModel, DiscreteDomain, DiscreteFactor
 from inferlo.generic.libdai_bp import BP
 from inferlo.interop import LibDaiInterop
-from inferlo.pairwise.testing import (assert_results_close, tree_potts_model,
-                                      grid_potts_model)
-
-
-def _random_generic_model(num_variables=10,
-                          num_factors=10,
-                          max_domain_size=3,
-                          max_factor_size=3):
-    model = GenericGraphModel(num_variables=num_variables)
-    for var_id in range(num_variables):
-        domain_size = 2 + np.random.randint(max_domain_size - 1)
-        model.get_variable(var_id).domain = DiscreteDomain.range(domain_size)
-    for _ in range(num_factors):
-        factor_size = 1 + np.random.randint(max_factor_size)
-        var_idx = np.random.choice(
-            num_variables,
-            size=factor_size,
-            replace=False)
-        values_shape = [model.get_variable(i).domain.size() for i in var_idx]
-        values = np.random.random(size=values_shape)
-        factor = DiscreteFactor(model, var_idx, values)
-        model.add_factor(factor)
-    return model
+from inferlo.testing import (assert_results_close, tree_potts_model,
+                             grid_potts_model, random_generic_model)
 
 
 # This test verifies that InferLO's algorithm is numerically equivalent to
 # libDAI's BP algorithm.
 def test_libdai_bp_regression():
-    model = _random_generic_model(
+    model = random_generic_model(
         num_variables=20,
         num_factors=20,
         max_domain_size=4,
@@ -86,3 +64,15 @@ def test_grid():
         result_bp,
         log_pf_tol=0.1,
         mp_mse_tol=2e-3)
+
+
+def test_small_model():
+    # Generate small random model and compare Z with bruteforce result.
+    model = random_generic_model(
+        num_variables=10,
+        num_factors=4,
+        max_domain_size=2,
+        max_factor_size=3)
+    true_log_z = np.log(model.part_func_bruteforce())
+    bp_log_z = BP.infer(model).log_pf
+    assert np.allclose(true_log_z, bp_log_z)

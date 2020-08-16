@@ -6,8 +6,8 @@ import networkx
 import numpy as np
 
 from inferlo import PairWiseFiniteModel
-from inferlo.pairwise.testing import (tree_potts_model, assert_results_close,
-                                      grid_potts_model)
+from inferlo.testing import (tree_potts_model, assert_results_close,
+                             grid_potts_model)
 
 
 def test_tree_exact():

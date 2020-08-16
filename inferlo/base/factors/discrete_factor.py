@@ -25,8 +25,8 @@ class DiscreteFactor(Factor):
         expected_shape = [self.model[i].domain.size() for i in
                           self.var_idx]
         assert list(values.shape) == expected_shape, (
-                "Got values of shape %s, but variables imply %s." %
-                (values.shape, expected_shape))
+            "Got values of shape %s, but variables imply %s." %
+            (values.shape, expected_shape))
         assert np.min(values) >= 0, "Factors should be non-negative."
         self.values = values
 

@@ -3,8 +3,8 @@
 import numpy as np
 
 from inferlo import PairWiseFiniteModel
-from inferlo.pairwise.testing import (tree_potts_model,
-                                      line_potts_model, assert_results_close)
+from inferlo.testing import (tree_potts_model,
+                             line_potts_model, assert_results_close)
 
 
 def test_vert15_alph2():

@@ -5,7 +5,7 @@ import numpy as np
 from inferlo.base import DiscreteFactor
 from inferlo.pairwise import PairWiseFiniteModel
 from inferlo.base.inference_result import InferenceResult
-from inferlo.pairwise.testing import assert_results_close
+from inferlo.testing import assert_results_close
 
 
 def test_build_from_factors():

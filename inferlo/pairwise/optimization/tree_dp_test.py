@@ -3,7 +3,7 @@
 import numpy as np
 
 from inferlo import PairWiseFiniteModel
-from inferlo.pairwise.testing import tree_potts_model
+from inferlo.testing import tree_potts_model
 
 
 def test_tree_12x2():

@@ -3,9 +3,9 @@
 import numpy as np
 
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
-from inferlo.pairwise.testing import (assert_results_close, line_potts_model,
-                                      tree_potts_model, grid_potts_model,
-                                      clique_potts_model)
+from inferlo.testing import (assert_results_close, line_potts_model,
+                             tree_potts_model, grid_potts_model,
+                             clique_potts_model)
 
 
 def test_isolated_exact():

@@ -122,6 +122,7 @@ useful for testing and benchmarking.
     inferlo.testing.clique_potts_model
     inferlo.testing.grid_potts_model
     inferlo.testing.line_potts_model
+    inferlo.testing.random_generic_model
     inferlo.testing.tree_potts_model
     inferlo.testing.pairwise_model_on_graph
 

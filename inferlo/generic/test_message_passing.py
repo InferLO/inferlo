@@ -4,7 +4,7 @@ import numpy as np
 
 import inferlo
 from inferlo.generic.message_passing import infer_generic_message_passing
-from inferlo.pairwise.testing import tree_potts_model, assert_results_close
+from inferlo.testing import tree_potts_model, assert_results_close
 
 
 def test_non_pairwise():

@@ -4,10 +4,10 @@ import numpy as np
 
 from inferlo.pairwise.junction_tree import (max_likelihood_junction_tree,
                                             infer_junction_tree)
-from inferlo.pairwise.testing import (clique_potts_model, tree_potts_model,
-                                      grid_potts_model, assert_results_close)
-from inferlo.pairwise.testing.model_generators import cross_potts_model
-from inferlo.pairwise.testing.test_utils import check_samples
+from inferlo.testing import (clique_potts_model, tree_potts_model,
+                             grid_potts_model, assert_results_close)
+from inferlo.testing.model_generators import cross_potts_model
+from inferlo.testing.test_utils import check_samples
 
 
 def test_inference_clique_10x2():

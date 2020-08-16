@@ -6,7 +6,7 @@ import numpy as np
 
 from inferlo import PairWiseFiniteModel, GenericGraphModel, DiscreteDomain
 from inferlo.interop import LibDaiInterop
-from inferlo.pairwise.testing import tree_potts_model, assert_results_close
+from inferlo.testing import tree_potts_model, assert_results_close
 
 
 # Warning! If LibDAI is not installed, all tests will silently pass without

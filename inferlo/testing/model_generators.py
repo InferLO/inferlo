@@ -3,6 +3,9 @@
 import networkx
 import numpy as np
 
+from inferlo.base.domain import DiscreteDomain
+from inferlo.base.factors.discrete_factor import DiscreteFactor
+from inferlo.base.generic_graph_model import GenericGraphModel
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 
 
@@ -160,3 +163,38 @@ def cross_potts_model(length=20, width=2, al_size=2, seed=0):
     return pairwise_model_on_graph(make_cross(length, width),
                                    al_size=al_size,
                                    seed=seed)
+
+
+def random_generic_model(num_variables=10,
+                         num_factors=10,
+                         max_domain_size=3,
+                         max_factor_size=3,
+                         seed=0) -> GenericGraphModel:
+    """Generates random discrete graphical model of arbitrary structure.
+
+    You can specify number of variables and factors. Variables will have
+    different domain sizes, and factors will have different number of
+     variables.
+
+    :param num_variables: Number of variables.
+    :param num_factors: Number of factors.
+    :param max_domain_size: Maximal size of domain. For every variable, domain
+        size will be chosen at random between 2 and this value.
+    :param max_factor_size: Maximal size of factor. For every factor, number of
+        variables in it will be chosen at random between 1 and this value.
+    """
+    np.random.seed(seed)
+    model = GenericGraphModel(num_variables=num_variables)
+    for var_id in range(num_variables):
+        domain_size = 2 + np.random.randint(max_domain_size - 1)
+        model.get_variable(var_id).domain = DiscreteDomain.range(domain_size)
+    for _ in range(num_factors):
+        factor_size = 1 + np.random.randint(max_factor_size)
+        var_idx = np.random.choice(num_variables,
+                                   size=factor_size,
+                                   replace=False)
+        values_shape = [model.get_variable(i).domain.size() for i in var_idx]
+        values = np.random.random(size=values_shape)
+        factor = DiscreteFactor(model, var_idx, values)
+        model.add_factor(factor)
+    return model

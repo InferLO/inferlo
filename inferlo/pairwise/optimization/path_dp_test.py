@@ -4,7 +4,7 @@ import numpy as np
 
 from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.optimization.path_dp import max_lh_path_dp
-from inferlo.pairwise.testing import grid_potts_model, tree_potts_model, \
+from inferlo.testing import grid_potts_model, tree_potts_model, \
     line_potts_model
 
 
