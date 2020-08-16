@@ -29,7 +29,7 @@ from ..graphs.fast_dfs import FastDfsResult
 
 if TYPE_CHECKING:
     from inferlo.base.factors import Factor
-    from inferlo.pairwise.inference_result import InferenceResult
+    from inferlo.base.inference_result import InferenceResult
 
 
 class PairWiseFiniteModel(GraphModel):

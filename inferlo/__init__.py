@@ -7,6 +7,7 @@ from .base import (
     FunctionFactor,
     GenericGraphModel,
     GraphModel,
+    InferenceResult,
     RealDomain,
     Variable,
 )

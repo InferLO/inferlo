@@ -74,7 +74,7 @@ def test_tree():
     model = tree_potts_model(gr_size=100, al_size=3)
     true_result = model.infer(algorithm='tree_dp')
     result_bp = BP.infer(model)
-    assert_results_close(true_result, result_bp)
+    assert_results_close(true_result, result_bp, log_pf_tol=2e-9)
 
 
 def test_grid():

@@ -8,7 +8,7 @@ import numba
 import numpy as np
 from scipy.special import softmax, logsumexp
 
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 from inferlo.pairwise.utils import decode_state
 
 if TYPE_CHECKING:

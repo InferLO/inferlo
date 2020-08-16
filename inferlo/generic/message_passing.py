@@ -5,7 +5,7 @@ import numpy as np
 
 from inferlo.base import GraphModel
 from inferlo.base.factors import DiscreteFactor
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 
 
 def infer_generic_message_passing(model: GraphModel,

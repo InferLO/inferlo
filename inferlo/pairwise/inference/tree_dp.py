@@ -8,7 +8,7 @@ import numba
 import numpy as np
 from scipy.special import logsumexp
 
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 from inferlo.utils.special_functions import logsumexp_1d
 
 if TYPE_CHECKING:

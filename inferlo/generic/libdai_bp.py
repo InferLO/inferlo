@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, List, Callable, Dict
 import numpy as np
 
 from inferlo.base.factors.discrete_factor import DiscreteFactor
-from inferlo.pairwise import InferenceResult
+from inferlo.base import InferenceResult
 
 if TYPE_CHECKING:
     from inferlo import GraphModel

@@ -9,7 +9,7 @@ import numpy as np
 from networkx.algorithms.approximation.treewidth import (treewidth_min_fill_in,
                                                          treewidth_min_degree)
 
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 from inferlo.pairwise.utils import decode_state, get_marginal_states
 
 if TYPE_CHECKING:

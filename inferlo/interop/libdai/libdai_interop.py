@@ -6,14 +6,13 @@ import copy
 import os
 import subprocess
 import time
-import warnings
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Dict
 
 import numpy as np
 
 from inferlo.base.factors import DiscreteFactor
-from inferlo.pairwise import InferenceResult
+from inferlo.base import InferenceResult
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -156,7 +155,7 @@ class LibDaiInterop():
         all_vars = set(range(model.num_variables))
         unused_vars = all_vars - vars_in_factors
         if len(unused_vars) > 0:
-            warnings.warn(
+            print(
                 "Not all variables are referenced in factors, will add dummy "
                 "unit factors for them. Unused variables: %s" % unused_vars)
             for var_id in unused_vars:

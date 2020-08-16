@@ -31,9 +31,9 @@ Also contains data classes representing results of computations.
     inferlo.Factor
     inferlo.DiscreteFactor
     inferlo.FunctionFactor
+    inferlo.InferenceResult
     inferlo.RealDomain
     inferlo.Variable
-    inferlo.pairwise.InferenceResult
 
 
 Algorithms on graphical models
