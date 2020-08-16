@@ -174,7 +174,7 @@ def random_generic_model(num_variables=10,
 
     You can specify number of variables and factors. Variables will have
     different domain sizes, and factors will have different number of
-     variables.
+    variables.
 
     :param num_variables: Number of variables.
     :param num_factors: Number of factors.
