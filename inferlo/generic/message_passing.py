@@ -131,4 +131,3 @@ def infer_generic_message_passing(model: GraphModel,
 
     pf = np.sum(ans, axis=1)[0]
     return InferenceResult(log_pf=np.log(pf), marg_prob=ans / pf)
-    # some comment.

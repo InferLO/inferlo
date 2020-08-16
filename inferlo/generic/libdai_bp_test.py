@@ -19,7 +19,7 @@ def test_libdai_bp_regression():
         max_domain_size=4,
         max_factor_size=3)
     libdai = LibDaiInterop()
-    if not libdai.is_libdai_ready:
+    if not libdai.is_libdai_ready():
         warnings.warn(
             "LibDAI not installed - won't run test_libdai_bp_regression.")
         return
