@@ -1,28 +1,26 @@
 # Copyright (c) 2020, The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
-import warnings
-
 import numpy as np
+import pytest
 
 from inferlo.generic.libdai_bp import BP
 from inferlo.interop import LibDaiInterop
 from inferlo.testing import (assert_results_close, tree_potts_model,
                              grid_potts_model, random_generic_model)
 
+libdai = LibDaiInterop()
+
 
 # This test verifies that InferLO's algorithm is numerically equivalent to
 # libDAI's BP algorithm.
+@pytest.mark.skipif(not libdai.is_libdai_ready(),
+                    reason="libDAI is not installed on the system.")
 def test_libdai_bp_regression():
     model = random_generic_model(
         num_variables=20,
         num_factors=20,
         max_domain_size=4,
         max_factor_size=3)
-    libdai = LibDaiInterop()
-    if not libdai.is_libdai_ready():
-        warnings.warn(
-            "LibDAI not installed - won't run test_libdai_bp_regression.")
-        return
     default_opts = {
         'tol': 1e-9,
         'logdomain': 0,
