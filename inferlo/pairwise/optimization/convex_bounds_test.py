@@ -4,7 +4,7 @@ import numpy as np
 
 from inferlo import PairWiseFiniteModel
 from inferlo.pairwise.optimization.convex_bounds import lp_relaxation
-from inferlo.pairwise.testing import grid_potts_model
+from inferlo.testing import grid_potts_model
 
 
 def test_grid_4x4x2():

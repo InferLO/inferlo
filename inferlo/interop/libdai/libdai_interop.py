@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, List, Dict
 import numpy as np
 
 from inferlo.base.factors import DiscreteFactor
-from inferlo.pairwise import InferenceResult
+from inferlo.base import InferenceResult
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -53,7 +53,7 @@ class LibDaiInterop():
         support calculating most likely state, exception will be thrown.
 
         For documentation on particular algorithms, refer to libDAI
-        documntation: https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/.
+        documentation: https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/.
 
     Options
         Almost every algorithm requires some parameters. Parameters are passed
@@ -150,6 +150,18 @@ class LibDaiInterop():
         factors = list(model.get_factors())
         assert all([f.is_discrete() for f in factors])
         factors = [DiscreteFactor.from_factor(f) for f in factors]
+
+        vars_in_factors = set([i for f in factors for i in f.var_idx])
+        all_vars = set(range(model.num_variables))
+        unused_vars = all_vars - vars_in_factors
+        if len(unused_vars) > 0:
+            print(
+                "Not all variables are referenced in factors, will add dummy "
+                "unit factors for them. Unused variables: %s" % unused_vars)
+            for var_id in unused_vars:
+                size = model.get_variable(var_id).domain.size()
+                factors.append(DiscreteFactor(model, [var_id], np.ones(size)))
+
         with open(file_path, "w") as file:
             file.write("%d\n\n" % len(factors))
             for f in factors:
@@ -167,8 +179,7 @@ class LibDaiInterop():
 
         value_lines = []
         rev_perm = list(range(len(factor.var_idx)))[::-1]
-        values = factor.values.transpose(rev_perm)
-        flat_values = values.reshape(-1)
+        flat_values = factor.values.transpose(rev_perm).reshape(-1)
         for i in range(len(flat_values)):
             if abs(flat_values[i]) > 1e-9:
                 value_lines.append("%d %.10f" % (i, flat_values[i]))
@@ -195,6 +206,8 @@ class LibDaiInterop():
         self._run(model, 'infer', algorithm, options)
         log_z = float(self.stdout)
         marg_probs = np.loadtxt(self.output_file)
+        if len(marg_probs.shape) == 1:
+            marg_probs = np.array([marg_probs])
         return InferenceResult(log_z, marg_probs)
 
     def max_likelihood(self, model: GraphModel, algorithm,
@@ -239,8 +252,10 @@ class LibDaiInterop():
         process.wait()
         # Store true running time, which doesn't include conversions and IO.
         self.true_running_time = time.time() - start_time
+        self.stdout = process.stdout.read().decode("utf-8")
+        self.stderr = process.stderr.read().decode("utf-8")
 
         if process.returncode != 0:
-            msg = process.stderr.read().decode("utf-8")
-            raise ValueError("libDAI failed with error message: %s" % msg)
-        self.stdout = process.stdout.read().decode("utf-8")
+            raise ValueError(
+                "libDAI failed with error message: %s" %
+                self.stderr)

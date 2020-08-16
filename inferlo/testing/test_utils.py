@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo.pairwise import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 
 
 def assert_results_close(res1: InferenceResult,

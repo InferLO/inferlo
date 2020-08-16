@@ -9,7 +9,7 @@ import numpy as np
 from scipy.special import logsumexp
 
 from inferlo.graphs.path_decomposition import path_decomposition
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 from inferlo.pairwise.utils import (get_marginal_states,
                                     decode_all_states)
 

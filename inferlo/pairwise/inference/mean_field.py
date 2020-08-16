@@ -9,7 +9,7 @@ import numba
 import numpy as np
 
 from inferlo.utils import special_functions
-from inferlo.pairwise.inference_result import InferenceResult
+from inferlo.base.inference_result import InferenceResult
 
 if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel

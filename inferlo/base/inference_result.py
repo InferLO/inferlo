@@ -4,7 +4,7 @@ from __future__ import annotations
 
 
 class InferenceResult:
-    """Inference result for PairwiseFiniteModel.
+    """Inference result for discrete graphical model.
 
     Inference result consists of log Z (logarithm of partition function) and
     marginal probabilities.

@@ -21,7 +21,7 @@ class Factor(abc.ABC):
         """
         self.model = model
         assert len(set(var_idx)) == len(var_idx)  # No duplicate indices.
-        self.var_idx = var_idx
+        self.var_idx = list(var_idx)
 
     @abc.abstractmethod
     def value(self, values: List[float]):

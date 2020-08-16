@@ -7,7 +7,7 @@ from inferlo import PairWiseFiniteModel
 from inferlo.forney.edge_elimination import (convolve_factor,
                                              convolve_two_factors,
                                              infer_edge_elimination)
-from inferlo.pairwise.testing import tree_potts_model, grid_potts_model
+from inferlo.testing import tree_potts_model, grid_potts_model
 
 
 def test_convolve_factor():

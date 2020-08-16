@@ -3,8 +3,8 @@
 import numpy as np
 
 from inferlo import PairWiseFiniteModel
-from inferlo.pairwise.testing import tree_potts_model, line_potts_model
-from inferlo.pairwise.testing.test_utils import check_samples
+from inferlo.testing import tree_potts_model, line_potts_model
+from inferlo.testing.test_utils import check_samples
 
 
 def test_empirical_probabilities():
