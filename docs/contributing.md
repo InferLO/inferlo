@@ -27,6 +27,10 @@ Check that tests pass:
 pytest
 ```
 
+### Git
+
+If you never worked with Git before, you will have to learn some Git basics. First of all,
+read [Git Handbook](https://guides.github.com/introduction/git-handbook/) and bookmark or print [Git cheet sheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet/). To really understand how Git works, check out [this site](https://git-scm.com/book/en/v2).
 
 ### Development cycle
 
