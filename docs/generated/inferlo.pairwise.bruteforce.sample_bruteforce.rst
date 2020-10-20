@@ -1,0 +1,6 @@
+inferlo.pairwise.bruteforce.sample\_bruteforce
+==============================================
+
+.. currentmodule:: inferlo.pairwise.bruteforce
+
+.. autofunction:: sample_bruteforce

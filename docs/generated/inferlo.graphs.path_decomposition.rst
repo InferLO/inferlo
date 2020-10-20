@@ -1,0 +1,6 @@
+inferlo.graphs.path\_decomposition
+==================================
+
+.. currentmodule:: inferlo.graphs
+
+.. autofunction:: path_decomposition

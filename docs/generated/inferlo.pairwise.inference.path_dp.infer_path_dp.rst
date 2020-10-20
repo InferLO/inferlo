@@ -1,0 +1,6 @@
+inferlo.pairwise.inference.path\_dp.infer\_path\_dp
+===================================================
+
+.. currentmodule:: inferlo.pairwise.inference.path_dp
+
+.. autofunction:: infer_path_dp

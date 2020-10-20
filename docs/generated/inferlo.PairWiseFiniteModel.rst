@@ -1,0 +1,50 @@
+inferlo.PairWiseFiniteModel
+===========================
+
+.. currentmodule:: inferlo
+
+.. autoclass:: PairWiseFiniteModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PairWiseFiniteModel.__init__
+      ~PairWiseFiniteModel.add_factor
+      ~PairWiseFiniteModel.add_interaction
+      ~PairWiseFiniteModel.create
+      ~PairWiseFiniteModel.decode_state
+      ~PairWiseFiniteModel.draw_factor_graph
+      ~PairWiseFiniteModel.draw_pairwise_graph
+      ~PairWiseFiniteModel.encode_state
+      ~PairWiseFiniteModel.evaluate
+      ~PairWiseFiniteModel.get_all_interactions
+      ~PairWiseFiniteModel.get_dfs_result
+      ~PairWiseFiniteModel.get_edges_array
+      ~PairWiseFiniteModel.get_edges_connected
+      ~PairWiseFiniteModel.get_factor_graph
+      ~PairWiseFiniteModel.get_factors
+      ~PairWiseFiniteModel.get_graph
+      ~PairWiseFiniteModel.get_interaction_matrix
+      ~PairWiseFiniteModel.get_interactions_for_edges
+      ~PairWiseFiniteModel.get_subgraph_factor_values
+      ~PairWiseFiniteModel.get_symbolic_variables
+      ~PairWiseFiniteModel.get_variable
+      ~PairWiseFiniteModel.get_variables
+      ~PairWiseFiniteModel.has_edge
+      ~PairWiseFiniteModel.infer
+      ~PairWiseFiniteModel.is_graph_acyclic
+      ~PairWiseFiniteModel.max_likelihood
+      ~PairWiseFiniteModel.part_func_bruteforce
+      ~PairWiseFiniteModel.sample
+      ~PairWiseFiniteModel.set_field
+   
+   
+
+   
+   
+   

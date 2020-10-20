@@ -1,0 +1,6 @@
+inferlo.pairwise.optimization.tree\_dp.max\_likelihood\_tree\_dp
+================================================================
+
+.. currentmodule:: inferlo.pairwise.optimization.tree_dp
+
+.. autofunction:: max_likelihood_tree_dp

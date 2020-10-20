@@ -1,0 +1,6 @@
+inferlo.pairwise.inference.mean\_field.infer\_mean\_field
+=========================================================
+
+.. currentmodule:: inferlo.pairwise.inference.mean_field
+
+.. autofunction:: infer_mean_field

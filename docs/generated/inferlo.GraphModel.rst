@@ -1,0 +1,34 @@
+inferlo.GraphModel
+==================
+
+.. currentmodule:: inferlo
+
+.. autoclass:: GraphModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GraphModel.__init__
+      ~GraphModel.add_factor
+      ~GraphModel.draw_factor_graph
+      ~GraphModel.evaluate
+      ~GraphModel.get_factor_graph
+      ~GraphModel.get_factors
+      ~GraphModel.get_symbolic_variables
+      ~GraphModel.get_variable
+      ~GraphModel.get_variables
+      ~GraphModel.infer
+      ~GraphModel.max_likelihood
+      ~GraphModel.part_func_bruteforce
+      ~GraphModel.sample
+   
+   
+
+   
+   
+   

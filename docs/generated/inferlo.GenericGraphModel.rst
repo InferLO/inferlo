@@ -1,0 +1,34 @@
+inferlo.GenericGraphModel
+=========================
+
+.. currentmodule:: inferlo
+
+.. autoclass:: GenericGraphModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GenericGraphModel.__init__
+      ~GenericGraphModel.add_factor
+      ~GenericGraphModel.draw_factor_graph
+      ~GenericGraphModel.evaluate
+      ~GenericGraphModel.get_factor_graph
+      ~GenericGraphModel.get_factors
+      ~GenericGraphModel.get_symbolic_variables
+      ~GenericGraphModel.get_variable
+      ~GenericGraphModel.get_variables
+      ~GenericGraphModel.infer
+      ~GenericGraphModel.max_likelihood
+      ~GenericGraphModel.part_func_bruteforce
+      ~GenericGraphModel.sample
+   
+   
+
+   
+   
+   

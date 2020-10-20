@@ -1,0 +1,6 @@
+inferlo.pairwise.bruteforce.infer\_bruteforce
+=============================================
+
+.. currentmodule:: inferlo.pairwise.bruteforce
+
+.. autofunction:: infer_bruteforce

@@ -1,0 +1,39 @@
+inferlo.NormalFactorGraphModel
+==============================
+
+.. currentmodule:: inferlo
+
+.. autoclass:: NormalFactorGraphModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NormalFactorGraphModel.__init__
+      ~NormalFactorGraphModel.add_factor
+      ~NormalFactorGraphModel.build
+      ~NormalFactorGraphModel.check_built
+      ~NormalFactorGraphModel.draw_edge_variable_graph
+      ~NormalFactorGraphModel.draw_factor_graph
+      ~NormalFactorGraphModel.evaluate
+      ~NormalFactorGraphModel.from_model
+      ~NormalFactorGraphModel.get_edge_variable_graph
+      ~NormalFactorGraphModel.get_factor_graph
+      ~NormalFactorGraphModel.get_factors
+      ~NormalFactorGraphModel.get_symbolic_variables
+      ~NormalFactorGraphModel.get_variable
+      ~NormalFactorGraphModel.get_variables
+      ~NormalFactorGraphModel.infer
+      ~NormalFactorGraphModel.max_likelihood
+      ~NormalFactorGraphModel.part_func_bruteforce
+      ~NormalFactorGraphModel.sample
+   
+   
+
+   
+   
+   
