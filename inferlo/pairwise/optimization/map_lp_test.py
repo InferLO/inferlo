@@ -12,7 +12,8 @@ def test_grid_4x4x2():
     lp_res = map_lp(model)
     max_lh_ub = lp_res.upper_bound
     max_lh_lb = lp_res.lower_bound
-    assert (max_lh_ub >= np.log(model.evaluate(max_lh_gt)) >= max_lh_lb)
+    assert (round(max_lh_ub, 3) >= round(np.log(model.evaluate(max_lh_gt)), 3)
+            >= round(max_lh_lb, 3))
 
 
 def test_grid_3x3x4():
