@@ -11,7 +11,7 @@ def test_grid_4x4x2():
     res = map_lp(nfg)
     ub = res.upper_bound
     lb = res.lower_bound
-    assert (ub >= lb)
+    assert ((ub >= lb) or (np.allclose(ub, lb)))
 
 
 def test_line():
