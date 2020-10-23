@@ -116,6 +116,10 @@ do that. Pylint performs series of more clever checks. Both
 checks are mandatory - if they fail, continuous integration won't let
 yuo tom mege code to master.
 
+### Code style
+
+Please follow [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
+
 ### Documentation
 
 We use [sphinx](https://www.sphinx-doc.org/en/master/) to automatically 
