@@ -78,8 +78,8 @@ def map_lp(model: PairWiseFiniteModel) -> map_lp_result:
         for a in range(model.al_size):
             for b in range(model.al_size):
                 J = model.get_interaction_matrix(edge[0], edge[1])
-                objective += J[a, b] * \
-                        edge_beliefs[edge_list.index(edge)][a, b]
+                objective += J[a, b] * edge_beliefs[
+                    edge_list.index(edge)][a, b]
 
     # normalization constraints
     for edge in edge_list:
