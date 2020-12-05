@@ -8,7 +8,7 @@ with open('requirements.txt', 'r', encoding='utf-8') as req_file:
 
 setuptools.setup(
     name="inferlo",
-    version="0.1.0",
+    version="0.2.0",
     author="The InferLO Developers",
     description="Inference, Learning & Optimization with Graphical Models",
     long_description=long_description,
