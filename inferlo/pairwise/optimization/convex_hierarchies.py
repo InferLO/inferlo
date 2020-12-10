@@ -5,8 +5,9 @@ import cvxpy as cp
 from inferlo import PairWiseFiniteModel
 
 sherali_adams_result = namedtuple('sherali_adams_result', ['upper_bound',
-                                                            'projection'
-                                                          ])
+                                                           'projection'
+                                                           ])
+
 
 def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
     """
@@ -35,8 +36,8 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
 
     # check level value
     if ((not isinstance(level, int)) or (level < 3) or (level > var_size)):
-            print("Incorrect value of hierarchy level! Setting level to 3..")
-            level = 3
+        print("Incorrect value of hierarchy level! Setting level to 3..")
+        level = 3
 
     # introduce cluster variables and constraints
     clusters = {}
@@ -56,19 +57,25 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
 
             # add marginalization constraints
             for cluster_subset_size in range(1, cluster_size):
-                all_cluster_subsets = list(combinations(list(cluster_ids),  cluster_subset_size))
-                subset_values = list(product(range(al_size), repeat=cluster_subset_size))
+                all_cluster_subsets = list(combinations(
+                    list(cluster_ids),  cluster_subset_size))
+                subset_values = list(product(
+                    range(al_size), repeat=cluster_subset_size))
 
                 for subset in all_cluster_subsets:
                     subset_ids = list(subset)
                     for subset_x in subset_values:
                         marginal_sum = 0.0
                         for value, cp_variable in cluster.items():
-                            consistency = [value[cluster_ids.index(subset_ids[i])] == subset_x[i] for i in range(cluster_subset_size)]
+                            consistency = [value[
+                                               cluster_ids.index(subset_ids[i])
+                                           ] == subset_x[i]
+                                           for i in range(cluster_subset_size)]
                             if sum(consistency) == len(subset):
                                 marginal_sum += cp_variable
 
-                        constraints += [marginal_sum == clusters[subset][subset_x]]
+                        constraints += [marginal_sum ==
+                                        clusters[subset][subset_x]]
 
     # define objective
     objective = 0
@@ -76,7 +83,8 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
     # add field in every node
     for node in range(var_size):
         for letter in range(al_size):
-            objective += model.field[node, letter] * clusters[(node,)][(letter,)]
+            objective += model.field[node, letter] * \
+                         clusters[(node,)][(letter,)]
 
     # add pairwise interactions
     # a and b iterate over all values of the finite field
@@ -104,7 +112,8 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
 
 lasserre_result = namedtuple('lasserre_result', ['upper_bound',
                                                  'moment_matrix'
-                                                ])
+                                                 ])
+
 
 class Indexing:
     """
@@ -132,9 +141,15 @@ class Indexing:
             values = list(product(range(q), repeat=current_level))
             self.values[current_level] = values
             self.clusters[current_level] = clusters
-            self.first_index.append(self.first_index[-1] + len(values) * len(clusters))
+            self.first_index.append(self.first_index[-1] +
+                                    len(values) * len(clusters))
 
     def find(self, cluster, value):
+        """
+        Computes index of cluster in the moment matrix.
+        A method to index clusters of variables described
+        in the docstring for Indexing class.
+        """
         info = {}
         level = len(list(cluster))
         info['level'] = level
@@ -142,11 +157,19 @@ class Indexing:
         info['cluster_index'] = self.clusters[level].index(cluster)
         info['value_index'] = self.values[level].index(value)
         info['value_total'] = len(self.values[level])
-        info['index'] = info['level_index'] + info['cluster_index'] * info['value_total'] + info['value_index']
+        info['index'] = info['level_index'] + \
+            info['cluster_index'] * info['value_total'] + \
+            info['value_index']
 
         return info
 
+
 def compatible(cluster_a, value_a, cluster_b, value_b):
+    """
+    Checks compatibility of clusters of variables.
+    Compatibility means that values agree on common
+    variables.
+    """
     for node in list(cluster_a):
         position_a = cluster_a.index(node)
         if node in list(cluster_b):
@@ -155,7 +178,16 @@ def compatible(cluster_a, value_a, cluster_b, value_b):
                 return False
     return True
 
+
 def union(cluster_a, value_a, cluster_b, value_b):
+    """
+    Returns union of compatible clusters.
+    Compatibility means that values agree on common
+    variables.
+
+    The set of variable indices is the set union
+    of variables in both clusters.
+    """
     cluster_a_list = list(cluster_a)
     value_a_list = list(value_a)
     cluster_b_list = list(cluster_b)
@@ -171,6 +203,7 @@ def union(cluster_a, value_a, cluster_b, value_b):
             index = cluster_b_list.index(cluster_ab[i])
             value_ab.append(value_b_list[index])
     return tuple(cluster_ab), tuple(value_ab)
+
 
 def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
     """
@@ -215,7 +248,8 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
             # add normalization constraint
             constraints += [sum(list(cluster.values())) == 1]
 
-    moment_matrix = cp.Variable((ind.first_index[-1], ind.first_index[-1]), symmetric=True)
+    moment_matrix = cp.Variable((ind.first_index[-1], ind.first_index[-1]),
+                                symmetric=True)
     constraints += [moment_matrix >> 0]
     constraints += [moment_matrix[0, 0] == 1]
 
@@ -232,19 +266,27 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
                     b = ind.find(cluster_b, value_b)
 
                     if (cluster_a == cluster_b) and (value_a == value_b):
-                        constraints += [moment_matrix[a['index'],  b['index']] == a_variable]
-                    elif (cluster_a != cluster_b) and (compatible(cluster_a, value_a, cluster_b, value_b)):
-                        cluster_ab, value_ab = union(cluster_a, value_a, cluster_b, value_b)
+                        constraints += [moment_matrix[
+                                            a['index'],  b['index']
+                                        ] == a_variable]
+                    elif (cluster_a != cluster_b) and \
+                            (compatible(cluster_a, value_a,
+                                        cluster_b, value_b)):
+                        cluster_ab, value_ab = union(cluster_a, value_a,
+                                                     cluster_b, value_b)
                         if cluster_ab in clusters.keys():
                             variable_ab = clusters[cluster_ab][value_ab]
-                            constraints += [moment_matrix[a['index'], b['index']] == variable_ab]
+                            constraints += [moment_matrix[
+                                                a['index'], b['index']
+                                            ] == variable_ab]
 
     objective = 0.0
 
     # add field in every node
     for node in range(var_size):
         for letter in range(al_size):
-            objective += model.field[node, letter] * clusters[(node,)][(letter,)]
+            objective += model.field[node, letter] * \
+                        clusters[(node,)][(letter,)]
 
     # add pairwise interactions
     # a and b iterate over all values of the finite field
