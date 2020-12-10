@@ -48,7 +48,7 @@ def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
         on MAP value as the solution of the dual relaxation.
 
         More details may be found in "MAP Estimation,
-        Linear Programming andBeliefPropagation with
+        Linear Programming and BeliefPropagation with
         Convex Free Energies" by Yair Weiss, Chen Yanover and Talya
         Meltzer. https://arxiv.org/pdf/1206.5286.pdf
 
