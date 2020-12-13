@@ -18,7 +18,7 @@ def test_line_potts_4x3_sherali_adams():
     max_lh_gt = model.max_likelihood(algorithm='tree_dp')
     sa_res = sherali_adams(model, level=3)
     max_lh_ub = sa_res.upper_bound
-    assert np.allclose(max_lh_ub, np.log(model.evaluate(max_lh_gt)))
+    assert np.allclose(max_lh_ub, np.log(model.evaluate(max_lh_gt)), atol=2e-3)
 
 
 @pytest.mark.skipif(sys.platform == "win32",

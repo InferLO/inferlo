@@ -14,6 +14,7 @@ Classes representing different kinds of graphical models.
     inferlo.GraphModel
     inferlo.NormalFactorGraphModel
     inferlo.PairWiseFiniteModel
+    inferlo.GaussianModel
 
 
 
@@ -64,6 +65,7 @@ Inference algorithms
     inferlo.forney.edge_elimination.infer_edge_elimination
     inferlo.generic.libdai_bp.BP
     inferlo.generic.message_passing.infer_generic_message_passing
+    inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
 
 Optimization algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -75,6 +77,11 @@ Optimization algorithms
     inferlo.pairwise.junction_tree.max_likelihood_junction_tree
     inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp
     inferlo.pairwise.optimization.path_dp.max_lh_path_dp
+    inferlo.pairwise.optimization.convex_bounds.lp_relaxation
+    inferlo.pairwise.optimization.map_lp.map_lp
+    inferlo.forney.optimization.nfg_map_lp.map_lp
+    inferlo.pairwise.optimization.convex_hierarchies.sherali_adams
+    inferlo.pairwise.optimization.convex_hierarchies.lasserre
 
 Sampling algorithms
 ^^^^^^^^^^^^^^^^^^^

@@ -40,6 +40,7 @@ def gaussian_BP_iteration(model, J_delta, h_delta, J_wave, h_wave):
 
 def gaussian_BP(model, tol=1e-9, max_iter=1e5):
     """Inference with Gaussian Belief Propagation.
+
     Exact results are guaranteed only for models which satisfy one
     of sufficient conditions (such as diagonal dominance, etc.)
 
