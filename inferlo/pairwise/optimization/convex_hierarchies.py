@@ -1,6 +1,7 @@
 from collections import namedtuple
 from itertools import product, combinations
 import cvxpy as cp
+import networkx as nx
 
 from inferlo import PairWiseFiniteModel
 
@@ -76,6 +77,147 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
 
                         constraints += [marginal_sum ==
                                         clusters[subset][subset_x]]
+
+    # define objective
+    objective = 0
+
+    # add field in every node
+    for node in range(var_size):
+        for letter in range(al_size):
+            objective += model.field[node, letter] * \
+                         clusters[(node,)][(letter,)]
+
+    # add pairwise interactions
+    # a and b iterate over all values of the finite field
+    for edge in edge_list:
+        for a in range(model.al_size):
+            for b in range(model.al_size):
+                J = model.get_interaction_matrix(edge[0], edge[1])
+                if (edge[0] <= edge[1]):
+                    objective += J[a, b] * clusters[(edge[0], edge[1])][(a, b)]
+                else:
+                    objective += J[a, b] * clusters[(edge[1], edge[0])][(b, a)]
+
+    prob = cp.Problem(cp.Maximize(objective), constraints)
+    prob.solve(solver=cp.SCS, eps=1e-8)
+
+    projected_variables = []
+    for node in range(var_size):
+        projected_variables.append(clusters[(node,)].values())
+
+    return sherali_adams_result(
+        upper_bound=prob.value,
+        projection=projected_variables
+    )
+
+
+def minimal_cycle(model: PairWiseFiniteModel) -> sherali_adams_result:
+    """
+    This is an implementation of Cycle relaxation. In fact,
+    cycle relaxation is a simplified version of the third
+    level of Sherali-Adams hierarchy. It may result in worse
+    upper bounds but has much fewer constraints and solved
+    faster.
+
+    The idea behind this relaxation is to consider all cycles
+    in the graph and to add cycle-to-edge marginalization
+    constraints to the local consistency constraints.
+
+    In some cases cycle relaxation coincides with the third
+    level of Sherali-Adams. It may also be shown that instead
+    of all cycles constraints, it is enough to consider only
+    chordless cycles. In this code we consider the set of
+    minimal cycles found by networkx.
+
+    More on LP hierarchies may be found in D.Sontag's thesis
+    "Approximate Inference in Graphical Models using LP
+    relaxations".
+    https://people.csail.mit.edu/dsontag/papers/sontag_phd_thesis.pdf
+    """
+    al_size = model.al_size
+    var_size = model.gr_size
+    edge_list = model.edges
+
+    # check if graph is acyclic
+    if model.is_graph_acyclic():
+        print("Graph is acyclic!")
+        print("Cycle relaxation is equivalent to the local LP relaxation.")
+
+    # introduce cluster variables and constraints
+    clusters = {}
+    constraints = []
+
+    # add local consistency constraints first
+    for cluster_size in [1, 2]:
+        variables = list(combinations(range(var_size), cluster_size))
+        values = list(product(range(al_size), repeat=cluster_size))
+
+        for cluster_ids in variables:
+            cluster = {}
+            for x in values:
+                cluster[x] = cp.Variable(nonneg=True)
+            clusters[cluster_ids] = cluster
+
+            # add normalization constraint
+            constraints += [sum(list(cluster.values())) == 1]
+
+            # add marginalization constraints
+            for cluster_subset_size in range(1, cluster_size):
+                all_cluster_subsets = list(combinations(
+                    list(cluster_ids),  cluster_subset_size))
+                subset_values = list(product(
+                    range(al_size), repeat=cluster_subset_size))
+
+                for subset in all_cluster_subsets:
+                    subset_ids = list(subset)
+                    for subset_x in subset_values:
+                        marginal_sum = 0.0
+                        for value, cp_variable in cluster.items():
+                            consistency = [value[
+                                               cluster_ids.index(subset_ids[i])
+                                           ] == subset_x[i]
+                                           for i in range(cluster_subset_size)]
+                            if sum(consistency) == len(subset):
+                                marginal_sum += cp_variable
+
+                        constraints += [marginal_sum ==
+                                        clusters[subset][subset_x]]
+
+    # add cycle consistency
+    graph = model.get_graph()
+    cycles = nx.cycle_basis(graph)
+
+    for cycle in cycles:
+        cycle.append(cycle[0])
+        cycle_edges = []
+        for i in range(len(cycle)-1):
+            edge = [cycle[i], cycle[i+1]]
+            edge.sort()
+            cycle_edges.append(tuple(edge))
+
+        cycle_values = list(product(range(al_size), repeat=len(cycle)))
+        cluster_ids = tuple(sorted(cycle))
+        cluster = {}
+        for x in cycle_values:
+            cluster[x] = cp.Variable(nonneg=True)
+        clusters[cluster_ids] = cluster
+
+        # add normalization constraint
+        constraints += [sum(list(cluster.values())) == 1]
+
+        # add marginalization constraints
+        for edge in cycle_edges:
+            edge_values = list(product(range(al_size), repeat=2))
+            first_node_position = cluster_ids.index(edge[0])
+            second_node_position = cluster_ids.index(edge[1])
+            for edge_value in edge_values:
+                marginal_sum = 0.0
+                edge_variable = clusters[edge][edge_value]
+                for x in cycle_values:
+                    if (x[first_node_position] == edge_value[0]) \
+                            and (x[second_node_position] == edge_value[1]):
+                        marginal_sum += clusters[cluster_ids][x]
+                constraints += [marginal_sum == edge_variable]
 
     # define objective
     objective = 0
