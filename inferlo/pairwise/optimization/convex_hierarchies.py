@@ -43,7 +43,7 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
     # introduce cluster variables and constraints
     clusters = {}
     constraints = []
-    for cluster_size in range(1, level+1):
+    for cluster_size in range(1, level + 1):
         variables = list(combinations(range(var_size), cluster_size))
         values = list(product(range(al_size), repeat=cluster_size))
 
@@ -59,7 +59,7 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
             # add marginalization constraints
             for cluster_subset_size in range(1, cluster_size):
                 all_cluster_subsets = list(combinations(
-                    list(cluster_ids),  cluster_subset_size))
+                    list(cluster_ids), cluster_subset_size))
                 subset_values = list(product(
                     range(al_size), repeat=cluster_subset_size))
 
@@ -69,9 +69,9 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
                         marginal_sum = 0.0
                         for value, cp_variable in cluster.items():
                             consistency = [value[
-                                               cluster_ids.index(subset_ids[i])
-                                           ] == subset_x[i]
-                                           for i in range(cluster_subset_size)]
+                                cluster_ids.index(subset_ids[i])
+                            ] == subset_x[i]
+                                for i in range(cluster_subset_size)]
                             if sum(consistency) == len(subset):
                                 marginal_sum += cp_variable
 
@@ -85,7 +85,7 @@ def sherali_adams(model: PairWiseFiniteModel, level=3) -> sherali_adams_result:
     for node in range(var_size):
         for letter in range(al_size):
             objective += model.field[node, letter] * \
-                         clusters[(node,)][(letter,)]
+                clusters[(node,)][(letter,)]
 
     # add pairwise interactions
     # a and b iterate over all values of the finite field
@@ -164,7 +164,7 @@ def minimal_cycle(model: PairWiseFiniteModel) -> sherali_adams_result:
             # add marginalization constraints
             for cluster_subset_size in range(1, cluster_size):
                 all_cluster_subsets = list(combinations(
-                    list(cluster_ids),  cluster_subset_size))
+                    list(cluster_ids), cluster_subset_size))
                 subset_values = list(product(
                     range(al_size), repeat=cluster_subset_size))
 
@@ -174,9 +174,9 @@ def minimal_cycle(model: PairWiseFiniteModel) -> sherali_adams_result:
                         marginal_sum = 0.0
                         for value, cp_variable in cluster.items():
                             consistency = [value[
-                                               cluster_ids.index(subset_ids[i])
-                                           ] == subset_x[i]
-                                           for i in range(cluster_subset_size)]
+                                cluster_ids.index(subset_ids[i])
+                            ] == subset_x[i]
+                                for i in range(cluster_subset_size)]
                             if sum(consistency) == len(subset):
                                 marginal_sum += cp_variable
 
@@ -190,9 +190,8 @@ def minimal_cycle(model: PairWiseFiniteModel) -> sherali_adams_result:
     for cycle in cycles:
         cycle.append(cycle[0])
         cycle_edges = []
-        for i in range(len(cycle)-1):
-            edge = [cycle[i], cycle[i+1]]
-            edge.sort()
+        for i in range(len(cycle) - 1):
+            edge = sorted([cycle[i], cycle[i + 1]])
             cycle_edges.append(tuple(edge))
 
         cycle_values = list(product(range(al_size), repeat=len(cycle)))
@@ -226,7 +225,7 @@ def minimal_cycle(model: PairWiseFiniteModel) -> sherali_adams_result:
     for node in range(var_size):
         for letter in range(al_size):
             objective += model.field[node, letter] * \
-                         clusters[(node,)][(letter,)]
+                clusters[(node,)][(letter,)]
 
     # add pairwise interactions
     # a and b iterate over all values of the finite field
@@ -278,7 +277,7 @@ class Indexing:
     first_index = [0, 1]
 
     def __init__(self, n, q, level=1):
-        for current_level in range(1, level+1):
+        for current_level in range(1, level + 1):
             clusters = list(combinations(range(n), current_level))
             values = list(product(range(q), repeat=current_level))
             self.values[current_level] = values
@@ -335,8 +334,7 @@ def union(cluster_a, value_a, cluster_b, value_b):
     cluster_b_list = list(cluster_b)
     value_b_list = list(value_b)
     value_ab = []
-    cluster_ab = list(set(cluster_a_list + cluster_b_list))
-    cluster_ab.sort()
+    cluster_ab = sorted(set(cluster_a_list + cluster_b_list))
     for i in range(len(cluster_ab)):
         if cluster_ab[i] in cluster_a_list:
             index = cluster_a_list.index(cluster_ab[i])
@@ -401,7 +399,7 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
         for value_a in clusters[cluster_a].keys():
             a = ind.find(cluster_a, value_a)
             a_variable = clusters[cluster_a][value_a]
-            constraints += [moment_matrix[0,  a['index']] == a_variable]
+            constraints += [moment_matrix[0, a['index']] == a_variable]
 
             for cluster_b in clusters_list:
                 for value_b in clusters[cluster_b].keys():
@@ -409,8 +407,8 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
 
                     if (cluster_a == cluster_b) and (value_a == value_b):
                         constraints += [moment_matrix[
-                                            a['index'],  b['index']
-                                        ] == a_variable]
+                            a['index'], b['index']
+                        ] == a_variable]
                     elif (cluster_a != cluster_b) and \
                             (compatible(cluster_a, value_a,
                                         cluster_b, value_b)):
@@ -419,8 +417,8 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
                         if cluster_ab in clusters.keys():
                             variable_ab = clusters[cluster_ab][value_ab]
                             constraints += [moment_matrix[
-                                                a['index'], b['index']
-                                            ] == variable_ab]
+                                a['index'], b['index']
+                            ] == variable_ab]
 
     objective = 0.0
 
@@ -428,7 +426,7 @@ def lasserre(model: PairWiseFiniteModel, level=1) -> lasserre_result:
     for node in range(var_size):
         for letter in range(al_size):
             objective += model.field[node, letter] * \
-                        clusters[(node,)][(letter,)]
+                clusters[(node,)][(letter,)]
 
     # add pairwise interactions
     # a and b iterate over all values of the finite field
