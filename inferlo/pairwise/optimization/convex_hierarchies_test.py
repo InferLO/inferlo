@@ -19,7 +19,7 @@ def test_line_potts_4x3_sherali_adams():
     assert np.allclose(max_lh_ub, np.log(model.evaluate(max_lh_gt)))
 
 
-@pytest.mark.skipif(sys.platform == 'Windows',
+@pytest.mark.skipif(sys.platform == "win32",
                     reason="SCS is unstable")
 def test_line_potts_4x2_lasserre():
     """
