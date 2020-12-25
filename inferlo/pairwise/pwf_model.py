@@ -478,7 +478,7 @@ class PairWiseFiniteModel(GraphModel):
             al_size = self.al_size
 
             # write cardinalities
-            for var in range(self.gr_size):
+            for vertex in range(self.gr_size):
                 cardinalities += (str(al_size)+" ")
             cardinalities += ("\n")
             file.write(cardinalities)
