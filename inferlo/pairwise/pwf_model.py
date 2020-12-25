@@ -458,3 +458,66 @@ class PairWiseFiniteModel(GraphModel):
         for u, v, j in edges:
             a += j[all_states[:, u], all_states[:, v]]
         return a
+
+    def save_uai(self, path, name="pwf_model", precision=3):
+        """
+        Converts finite-domain pairwise model
+        to UAI format. Detailed description of UAI format
+        may be found at the website:
+        https://www.cs.huji.ac.il/project/PASCAL/fileFormat.php
+
+        :param path: path to store output .uai file
+               name: filename, default is "pwf_model.uai"
+               precision: number of digits in factor values.
+        """
+
+        with open(path+"/"+name+".uai", "w+") as file:
+            file.write("MARKOV\n")
+            file.write(str(self.gr_size)+"\n")
+            cardinalities = ""
+            al_size = self.al_size
+
+            # write cardinalities
+            for var in range(self.gr_size):
+                cardinalities += (str(al_size)+" ")
+            cardinalities += ("\n")
+            file.write(cardinalities)
+
+            # write factor-variables adjacency
+            file.write(str(self.gr_size + len(self.edges)) + "\n")
+            for vertex in range(self.gr_size):
+                file.write("1 "+str(vertex)+"\n")
+            for edge in self.edges:
+                pairwise_clique = "2 "
+                pairwise_clique += str(edge[0]) + " " + str(edge[1])
+                file.write(pairwise_clique + "\n")
+            file.write("\n")
+
+            # write function tables for field
+            for vertex in range(self.gr_size):
+                field_table = " "
+                file.write(str(al_size) + "\n")
+                for letter in range(al_size):
+                    field_value = self.field[vertex, letter]
+                    field_value = round(field_value, precision)
+                    field_table += str(field_value)
+                    field_table += " "
+                field_table += "\n"
+                file.write(field_table)
+                file.write("\n")
+
+            # write function tables for edges
+            for edge in self.edges:
+                field_table = " "
+                file.write(str(al_size**2) + "\n")
+                J = self.get_interaction_matrix(edge[0], edge[1])
+                for letter_0 in range(al_size):
+                    for letter_1 in range(al_size):
+                        coeff = J[letter_0, letter_1]
+                        field_value = coeff * letter_0 * letter_1
+                        field_value = round(field_value, precision)
+                        field_table += str(field_value)
+                        field_table += " "
+                field_table += "\n"
+                file.write(field_table)
+                file.write("\n")

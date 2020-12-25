@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable
 
+from itertools import product
 import networkx as nx
 import numpy as np
 
@@ -222,3 +223,55 @@ class NormalFactorGraphModel(GraphModel):
     def check_built(self):
         """Checks that model is built."""
         assert self.built, "Model is not built, call build()."
+
+    def save_uai(self, path, name="nfg_model", precision=3):
+        """
+        Converts finite-domain forney-style model
+        to UAI format. Detailed description of UAI format
+        may be found at the website:
+        https://www.cs.huji.ac.il/project/PASCAL/fileFormat.php
+
+        :param path: path to store output .uai file
+               name: filename, default is "nfg_model.uai"
+               precision: number of digits in factor values.
+        """
+
+        with open(path+"/"+name+".uai", "w+") as file:
+            file.write("MARKOV\n")
+            file.write(str(len(self.edges))+"\n")
+            cardinalities = ""
+            al_size = self._default_domain.size()
+
+            # write cardinalities
+            for var in range(len(self.edges)):
+                cardinalities += (str(al_size)+" ")
+            cardinalities += ("\n")
+            file.write(cardinalities)
+
+            # write factor-variables adjacency
+            file.write(str(len(self.factors)) + "\n")
+            for factor in self.factors:
+                var_idx = factor.var_idx
+                factor_line = str(len(var_idx)) + " "
+                for var in var_idx:
+                    factor_line += str(var)
+                    factor_line += " "
+                factor_line += "\n"
+                file.write(factor_line)
+            file.write("\n")
+
+            # write function tables for every factor
+            for factor in self.factors:
+                var_idx = factor.var_idx
+                factor_table = " "
+                var_values = list(product(range(al_size),
+                                          repeat=len(factor.var_idx)))
+                file.write(str(len(var_values)) + "\n")
+                for values in var_values:
+                    factor_value = factor.value(values)
+                    factor_value = round(factor_value, precision)
+                    factor_table += str(factor_value)
+                    factor_table += " "
+                factor_table += "\n"
+                file.write(factor_table)
+                file.write("\n")
