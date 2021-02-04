@@ -1,10 +1,16 @@
-import numpy as np
-from functools import reduce
-from numpy import exp, log, amax, amin, squeeze
 from copy import copy
+from functools import reduce
+
+import numpy as np
+from numpy import exp, log, amax, amin, squeeze
 
 
 class Factor:
+    """
+    Factor representation used by algorithms taken from
+    https://github.com/sungsoo-ahn/bucket-renormalization
+    TODO: use Inferlo's DiscreteFactor instead.
+    """
     def __init__(self, name=None, variables=[], **kwargs):
         if name:
             self.name = name

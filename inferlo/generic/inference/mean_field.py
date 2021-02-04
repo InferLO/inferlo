@@ -1,7 +1,12 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 from copy import copy
+
 import numpy as np
 
+from inferlo.base.graph_model import GraphModel
 from .factor import Factor, product_over_, entropy
+from .graphical_model import GraphicalModel
 
 
 def default_message_name(prefix="_M"):
@@ -13,8 +18,8 @@ default_message_name.cnt = 0
 
 
 class MeanField:
-    def __init__(self, model, **kwargs):
-        self.model = model.copy()
+    def __init__(self, model:GraphModel, **kwargs):
+        self.model = GraphicalModel.from_inferlo_model(model).copy()
 
         mean_field_init_method = kwargs.get("mean_field_init_method")
         if mean_field_init_method == "random":
@@ -27,7 +32,7 @@ class MeanField:
         self.mean_fields = {}
         for var in self.model.variables:
             self.mean_fields[var] = Factor.initialize_with_(
-                default_message_name(), [var], init_np_func, model.get_cardinality_for_(var)
+                default_message_name(), [var], init_np_func, self.model.get_cardinality_for_(var)
             )
             self.mean_fields[var].normalize()
 

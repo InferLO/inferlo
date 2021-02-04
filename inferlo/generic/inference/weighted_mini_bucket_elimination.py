@@ -1,10 +1,14 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
-from inferlo.generic.inference.factor import product_over_, Factor
+
+from inferlo.base.graph_model import GraphModel
+from .factor import product_over_, Factor
 from .mini_bucket_elimination import MiniBucketElimination
 
 
 class WeightedMiniBucketElimination(MiniBucketElimination):
-    def __init__(self, model, **kwargs):
+    def __init__(self, model: GraphModel, **kwargs):
         super(WeightedMiniBucketElimination, self).__init__(model, **kwargs)
 
         self.initialize_holder_weights()
@@ -208,7 +212,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         for rvar in self.variables_replicated_from_[variable]:
             self.holder_weights_for_[rvar] *= np.exp(
                 -self.holder_weight_step_size * (
-                            entropy_for_[rvar] - average_entropy)
+                        entropy_for_[rvar] - average_entropy)
             )
             holder_weight_sum += self.holder_weights_for_[rvar]
 

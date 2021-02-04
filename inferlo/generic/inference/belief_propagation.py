@@ -1,7 +1,9 @@
 import numpy as np
 from copy import copy
 
-from inferlo.generic.inference.factor import Factor, product_over_, entropy
+from inferlo import GraphModel
+from .factor import Factor, product_over_, entropy
+from .graphical_model import GraphicalModel
 import random
 
 
@@ -25,30 +27,35 @@ class BeliefPropagation:
         for fac in model.factors:
             for var in fac.variables:
                 self.messages[(fac, var)] = Factor.initialize_with_(
-                    default_message_name(), [var], init_np_func, model.get_cardinality_for_(var)
+                    default_message_name(), [var], init_np_func,
+                    model.get_cardinality_for_(var)
                 )
                 self.messages[(fac, var)].normalize()
 
         for fac in model.factors:
             for var in fac.variables:
                 self.messages[(var, fac)] = Factor.initialize_with_(
-                    default_message_name(), [var], init_np_func, model.get_cardinality_for_(var)
+                    default_message_name(), [var], init_np_func,
+                    model.get_cardinality_for_(var)
                 )
                 self.messages[(var, fac)].normalize()
 
     def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1):
         for t in range(max_iter):
-            old_messages = {key: item.copy() for key, item in self.messages.items()}
+            old_messages = {key: item.copy() for key, item in
+                            self.messages.items()}
             self._update_messages(damp_ratio)
             if self._is_converged(converge_thr, self.messages, old_messages):
                 break
 
         self.beliefs = {}
         for var in self.model.variables:
-            self.beliefs[var] = product_over_(*self._message_to_(var)).normalize(inplace=False)
+            self.beliefs[var] = product_over_(
+                *self._message_to_(var)).normalize(inplace=False)
 
         for fac in self.model.factors:
-            self.beliefs[fac] = product_over_(fac, *self._message_to_(fac)).normalize(inplace=False)
+            self.beliefs[fac] = product_over_(fac, *self._message_to_(
+                fac)).normalize(inplace=False)
 
         logZ = self.get_logZ()
         return logZ
@@ -70,25 +77,32 @@ class BeliefPropagation:
         for fac in factor_order:
             for var in fac.variables:
                 next_message = (
-                    product_over_(fac, *[msg for msg in self._message_to_(fac, except_objs=[var])])
-                    .marginalize_except_([var], inplace=False)
-                    .normalize(inplace=False)
+                    product_over_(fac, *[msg for msg in self._message_to_(fac,
+                                                                          except_objs=[
+                                                                              var])])
+                        .marginalize_except_([var], inplace=False)
+                        .normalize(inplace=False)
                 )
                 self.messages[(fac, var)] = (
-                    damp_ratio * self.messages[(fac, var)] + (1 - damp_ratio) * next_message
+                        damp_ratio * self.messages[(fac, var)] + (
+                        1 - damp_ratio) * next_message
                 )
 
         variable_order = copy(self.model.variables)
         random.shuffle(variable_order)
         for var in variable_order:
             for fac in self.factors_adj_to_[var]:
-                messages_to_var_except_fac = self._message_to_(var, except_objs=[fac])
+                messages_to_var_except_fac = self._message_to_(var,
+                                                               except_objs=[
+                                                                   fac])
                 if messages_to_var_except_fac:
-                    next_message = product_over_(*messages_to_var_except_fac).normalize(
+                    next_message = product_over_(
+                        *messages_to_var_except_fac).normalize(
                         inplace=False
                     )
                     self.messages[(var, fac)] = (
-                        damp_ratio * self.messages[(var, fac)] + (1 - damp_ratio) * next_message
+                            damp_ratio * self.messages[(var, fac)] + (
+                            1 - damp_ratio) * next_message
                     )
 
     def _is_converged(self, converge_thr, messages, new_messages):
@@ -106,7 +120,8 @@ class BeliefPropagation:
 
     def _message_to_(self, obj, except_objs=[]):
         if obj in self.model.factors:
-            return [self.messages[(var, obj)] for var in obj.variables if var not in except_objs]
+            return [self.messages[(var, obj)] for var in obj.variables if
+                    var not in except_objs]
         elif obj in self.model.variables:
             return [
                 self.messages[(fac, obj)]
@@ -115,6 +130,10 @@ class BeliefPropagation:
             ]
         else:
             raise TypeError("Object {obj} not in the model.".format(obj=obj))
+
+    @staticmethod
+    def create(model: GraphModel) -> 'BeliefPropagation':
+        return BeliefPropagation(GraphicalModel.from_inferlo_model(model))
 
 
 class IterativeJoinGraphPropagation(BeliefPropagation):
@@ -146,7 +165,8 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
                 mini_buckets = []
                 for fac in facs:
                     mini_bucket = next(
-                        (mb for mb in mini_buckets if get_bucket_size(mb + [fac]) < ibound), False
+                        (mb for mb in mini_buckets if
+                         get_bucket_size(mb + [fac]) < ibound), False
                     )
                     if mini_bucket:
                         mini_bucket.append(fac)
@@ -160,3 +180,9 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
                         print("empty mini-bucket")
 
         super(IterativeJoinGraphPropagation, self).__init__(model)
+
+    @staticmethod
+    def create(model: GraphModel,
+               ibound: int) -> 'IterativeJoinGraphPropagation':
+        return IterativeJoinGraphPropagation(
+            GraphicalModel.from_inferlo_model(model), ibound)

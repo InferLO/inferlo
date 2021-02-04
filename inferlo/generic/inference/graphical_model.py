@@ -1,12 +1,18 @@
 from copy import copy
-from .factor import Factor, product_over_
-import numpy as np
-from functools import reduce
 
-from ... import DiscreteFactor, GraphModel
+import numpy as np
+
+from inferlo.base.factors.discrete_factor import DiscreteFactor
+from inferlo.base.graph_model import GraphModel
+from .factor import Factor, product_over_
 
 
 class GraphicalModel:
+    """
+    Graphical model representation used by algorithms taken from
+    https://github.com/sungsoo-ahn/bucket-renormalization
+    TODO: use Inferlo's GraphModel instead.
+    """
     def __init__(self, variables=[], factors=[]):
         if variables:
             self.variables = variables
@@ -109,7 +115,7 @@ class GraphicalModel:
     GM related operations
     """
 
-    def copy(self):
+    def copy(self) -> 'GraphicalModel':
         return GraphicalModel(copy(self.variables), [factor.copy() for factor in self.factors])
 
     def summary(self):
@@ -121,29 +127,29 @@ class GraphicalModel:
         for fac in self.factors:
             print(fac)
 
+    @staticmethod
+    def from_inferlo_model(inferlo_model: GraphModel) -> 'GraphicalModel':
+        model = GraphicalModel()
+        model.name = 'generated_from_inferlo'
 
-def from_inferlo_model(inferlo_model: GraphModel) -> GraphicalModel:
-    model = GraphicalModel()
-    model.name = 'generated_from_inferlo'
+        cardinalities = dict()
+        for t in range(inferlo_model.num_variables):
+            newvar = "V" + str(t)
+            model.add_variable(newvar)
+            cardinalities[newvar] = inferlo_model.get_variable(t).domain.size()
 
-    cardinalities = dict()
-    for t in range(inferlo_model.num_variables):
-        newvar = "V" + str(t)
-        model.add_variable(newvar)
-        cardinalities[newvar] = inferlo_model.get_variable(t).domain.size()
+        factors = list(inferlo_model.get_factors())
+        for factor_id in range(len(factors)):
+            factor = DiscreteFactor.from_factor(factors[factor_id])
+            factor_variables = []
+            for var_id in factor.var_idx:
+                factor_variables.append("V" + str(var_id))
 
-    factors = list(inferlo_model.get_factors())
-    for factor_id in range(len(factors)):
-        factor = DiscreteFactor.from_factor(factors[factor_id])
-        factor_variables = []
-        for var_id in factor.var_idx:
-            factor_variables.append("V" + str(var_id))
+            model.add_factor(Factor(name="F" + str(factor_id),
+                                    variables=factor_variables,
+                                    values=factor.values))
 
-        model.add_factor(Factor(name="F" + str(factor_id),
-                                variables=factor_variables,
-                                values=factor.values))
-
-    return model
+        return model
 
 def check_forney(gm):
     for variable in gm.variables:

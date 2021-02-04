@@ -1,15 +1,20 @@
-import numpy as np
-from copy import copy
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 import random
+from copy import copy
 from functools import reduce
 
+import numpy as np
+
+from inferlo.base.graph_model import GraphModel
 from .factor import Factor, product_over_
+from .graphical_model import GraphicalModel
 
 
 class MiniBucketElimination:
-    def __init__(self, model=None, **kwargs):
+    def __init__(self, model: GraphModel = None, **kwargs):
         self.base_logZ = 0.0
-        self.model = model.copy()
+        self.model = GraphicalModel.from_inferlo_model(model).copy()
         if "elimination_order" in kwargs:
             self.elimination_order = copy(kwargs["elimination_order"])
         else:
@@ -19,8 +24,10 @@ class MiniBucketElimination:
             self.renormalize_model(**kwargs)
         else:
             self.renormalized_model = kwargs["renormalized_model"].copy()
-            self.renormalized_elimination_order = kwargs["renormalized_elimination_order"]
-            self.variables_replicated_from_ = kwargs["variables_replicated_from_"]
+            self.renormalized_elimination_order = kwargs[
+                "renormalized_elimination_order"]
+            self.variables_replicated_from_ = kwargs[
+                "variables_replicated_from_"]
             self.base_logZ = kwargs["base_logZ"]
 
         self.initialize_relation()
@@ -39,29 +46,37 @@ class MiniBucketElimination:
         return mbr
 
     def initialize_relation(self):
-        variable_upper_to_ = {var: None for var in self.renormalized_model.variables}
-        variables_lower_to_ = {var: [] for var in self.renormalized_model.variables}
-        factor_upper_to_ = {var: Factor.scalar(1.0) for var in self.renormalized_model.variables}
-        upper_candidate_for_ = {var: set() for var in self.renormalized_model.variables}
+        variable_upper_to_ = {var: None for var in
+                              self.renormalized_model.variables}
+        variables_lower_to_ = {var: [] for var in
+                               self.renormalized_model.variables}
+        factor_upper_to_ = {var: Factor.scalar(1.0) for var in
+                            self.renormalized_model.variables}
+        upper_candidate_for_ = {var: set() for var in
+                                self.renormalized_model.variables}
 
         for fac in self.renormalized_model.factors:
-            lower_var = min(fac.variables, key=self.renormalized_elimination_order.index)
+            lower_var = min(fac.variables,
+                            key=self.renormalized_elimination_order.index)
             factor_upper_to_[lower_var] = fac
-            upper_candidate_for_[lower_var] = upper_candidate_for_[lower_var].union(
+            upper_candidate_for_[lower_var] = upper_candidate_for_[
+                lower_var].union(
                 set(fac.variables)
             )
 
         for var in self.renormalized_elimination_order:
             m_vars = sorted(
-                upper_candidate_for_[var], key=self.renormalized_elimination_order.index
+                upper_candidate_for_[var],
+                key=self.renormalized_elimination_order.index
             )
-            upper_candidate_for_[var] = copy(m_vars[m_vars.index(var) + 1 :])
+            upper_candidate_for_[var] = copy(m_vars[m_vars.index(var) + 1:])
             if m_vars.index(var) + 1 < len(m_vars):
                 upper_var = m_vars[m_vars.index(var) + 1]
                 variable_upper_to_[var] = upper_var
                 variables_lower_to_[upper_var].append(var)
-                upper_candidate_for_[upper_var] = upper_candidate_for_[upper_var].union(
-                    m_vars[m_vars.index(var) + 1 :]
+                upper_candidate_for_[upper_var] = upper_candidate_for_[
+                    upper_var].union(
+                    m_vars[m_vars.index(var) + 1:]
                 )
 
         self.variable_upper_to_ = variable_upper_to_
@@ -105,13 +120,14 @@ class MiniBucketElimination:
         working_factorss = [[fac] for fac in renormalized_model.factors]
         eliminated_variables = []
         for t in range(len(self.model.variables)):
-            uneliminated_variables = sorted(set(self.model.variables) - set(eliminated_variables))
+            uneliminated_variables = sorted(
+                set(self.model.variables) - set(eliminated_variables))
             candidate_mini_buckets_for_ = dict()
 
             bucket_for_ = {cand_var: [] for cand_var in uneliminated_variables}
             for facs in working_factorss:
                 for cand_var in self.get_variables_in_(
-                    [[fac] for fac in facs], eliminated=eliminated_variables
+                        [[fac] for fac in facs], eliminated=eliminated_variables
                 ):
                     bucket_for_[cand_var].append(facs)
 
@@ -145,12 +161,14 @@ class MiniBucketElimination:
 
             eliminated_variables.append(var)
             mini_buckets.sort(
-                key=lambda mb: self.get_bucket_size(mb, eliminated=eliminated_variables)
+                key=lambda mb: self.get_bucket_size(mb,
+                                                    eliminated=eliminated_variables)
             )
 
             remove_idx = []
             for working_facs_idx, working_facs in enumerate(working_factorss):
-                if var in self.get_variables_in_([[fac] for fac in working_facs]):
+                if var in self.get_variables_in_(
+                        [[fac] for fac in working_facs]):
                     remove_idx.append(working_facs_idx)
 
             for i in reversed(sorted(remove_idx)):
@@ -162,7 +180,8 @@ class MiniBucketElimination:
 
                 replicated_var = var + "_" + str(i)
                 variables_replicated_from_[var].append(replicated_var)
-                factors_adj_to_[replicated_var] = [fac for fac in mb_facs if var in fac.variables]
+                factors_adj_to_[replicated_var] = [fac for fac in mb_facs if
+                                                   var in fac.variables]
 
         for var in elimination_order:
             for replicated_var in variables_replicated_from_[var]:
@@ -175,7 +194,8 @@ class MiniBucketElimination:
 
         factors_upper_to_ = {var: [] for var in renormalized_model.variables}
         for fac in renormalized_model.factors:
-            lower_var = min(fac.variables, key=renormalized_elimination_order.index)
+            lower_var = min(fac.variables,
+                            key=renormalized_elimination_order.index)
             factors_upper_to_[lower_var].append(fac)
 
         for var, facs in factors_upper_to_.items():
@@ -217,7 +237,8 @@ class MiniBucketElimination:
                 lambda vars1, vars2: set(vars1).union(set(vars2)),
                 [fac.variables for facs in bucket for fac in facs],
             )
-            variables_in_bucket = sorted(set(variables_in_bucket) - set(eliminated))
+            variables_in_bucket = sorted(
+                set(variables_in_bucket) - set(eliminated))
             return list(variables_in_bucket)
         else:
             return []

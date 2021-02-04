@@ -1,7 +1,11 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 import random
 from copy import copy
 
-from inferlo.generic.inference.factor  import Factor, product_over_
+from inferlo.base.graph_model import GraphModel
+from .factor import Factor, product_over_
+from .graphical_model import GraphicalModel
 
 
 class BucketElimination:
@@ -21,7 +25,8 @@ class BucketElimination:
         max_ibound = 0
         for var in elimination_order:
             max_ibound = max(
-                max_ibound, get_bucket_size([fac for fac in eliminated_model.get_adj_factors(var)])
+                max_ibound, get_bucket_size(
+                    [fac for fac in eliminated_model.get_adj_factors(var)])
             )
             eliminated_model.contract_variable(var)
         Z = Factor.scalar(1.0)
@@ -50,7 +55,8 @@ class BucketElimination:
             if var not in exception_variables:
                 max_ibound = max(
                     max_ibound,
-                    get_bucket_size([fac for fac in eliminated_model.get_adj_factors(var)]),
+                    get_bucket_size(
+                        [fac for fac in eliminated_model.get_adj_factors(var)]),
                 )
                 eliminated_model.contract_variable(var)
 
@@ -59,6 +65,10 @@ class BucketElimination:
             final_factor.transpose_by_(exception_variables)
 
         return final_factor
+
+    @staticmethod
+    def create(model: GraphModel) -> 'BucketElimination':
+        return BucketElimination(GraphicalModel.from_inferlo_model(model))
 
 
 def get_bucket_size(bucket):
