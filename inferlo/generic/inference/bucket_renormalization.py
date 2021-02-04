@@ -1,12 +1,9 @@
 import numpy as np
-from copy import copy
-import random
-import sys
 
-sys.path.extend(["graphical_model/"])
-from factor import Factor, default_factor_name, product_over_
-from bucket_elimination import BucketElimination
-from mini_bucket_elimination import MiniBucketElimination
+
+from .factor import Factor, default_factor_name, product_over_
+from .bucket_elimination import BucketElimination
+from .mini_bucket_elimination import MiniBucketElimination
 from sklearn.utils.extmath import randomized_svd
 
 

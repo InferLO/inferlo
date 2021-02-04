@@ -1,10 +1,7 @@
-import sys
 from copy import copy
 import numpy as np
-import time
 
-sys.path.extend(["graphical_model/"])
-from factor import Factor, product_over_, entropy
+from .factor import Factor, product_over_, entropy
 
 
 def default_message_name(prefix="_M"):

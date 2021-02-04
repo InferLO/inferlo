@@ -2,11 +2,8 @@ import numpy as np
 from copy import copy
 import random
 from functools import reduce
-import sys
 
-sys.path.extend(["graphical_model/"])
-from factor import Factor, product_over_
-from bucket_elimination import BucketElimination
+from .factor import Factor, product_over_
 
 
 class MiniBucketElimination:

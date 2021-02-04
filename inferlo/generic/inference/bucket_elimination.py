@@ -1,11 +1,7 @@
-import sys
-import numpy as np
 import random
-from functools import reduce
 from copy import copy
 
-sys.path.extend(["graphical_model/"])
-from factor import Factor, product_over_
+from inferlo.generic.inference.factor  import Factor, product_over_
 
 
 class BucketElimination:

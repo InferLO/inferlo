@@ -1,12 +1,8 @@
 import numpy as np
 from copy import copy
-from functools import reduce
-import sys
 
-sys.path.extend(["graphical_model/"])
-from factor import Factor, product_over_, entropy
+from inferlo.generic.inference.factor import Factor, product_over_, entropy
 import random
-import time
 
 
 def default_message_name(prefix="_M"):
