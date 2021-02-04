@@ -65,6 +65,21 @@ class DiscreteFactor(Factor):
         new_factor.name = factor.get_name()
         return new_factor
 
+    @staticmethod
+    def from_flat_values(model: GraphModel,
+                         var_idx: List[int],
+                         values_flat: np.ndarray):
+        """Creates factor specified by list of values.
+
+        :param model: GM to which this factor belongs.
+        :param var_idx: Indices of variables.
+        :param values_flat: 1D list of values.
+          Last variable is "least significant".
+        """
+        shape = [model[i].domain.size() for i in var_idx]
+        values = values_flat.reshape(shape)
+        return DiscreteFactor(model, var_idx, values)
+
     def marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
         """Marginalizes factor on subset of variables."""
         assert len(self.var_idx) <= 26
