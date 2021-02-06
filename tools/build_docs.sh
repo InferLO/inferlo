@@ -21,6 +21,8 @@ sphinx-build -M html "${docs_conf_dir}" "${out_dir}" -W --keep-going
 # Cleanup newly generated temporary files.
 rm -rf "${docs_conf_dir}/generated"
 
+touch ${docs_conf_dir}/_build/html/.nojekyll
+
 echo
 echo Index Page:
 echo "file://$(pwd)/${out_dir}/html/index.html"

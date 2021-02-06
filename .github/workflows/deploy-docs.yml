@@ -26,5 +26,5 @@ jobs:
         with:
           publish_dir: ./docs/build/_html
           external_repository: InferLO/docs
-          publish_branch: master
+          publish_branch: main
           deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
