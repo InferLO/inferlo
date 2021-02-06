@@ -12,15 +12,15 @@ def test_all_tree_30():
     true_log_pf = model.infer(algorithm="tree_dp").log_pf
     assert np.allclose(inf.mean_field(model), true_log_pf, atol=40.0)
     assert np.allclose(inf.belief_propagation(model), true_log_pf, atol=1e-5)
-    assert np.allclose(
-        inf.iterative_join_graph_propagation(model),
-        true_log_pf)
-    assert np.allclose(inf.mini_bucket_elimination(model), true_log_pf)
-    assert np.allclose(inf.bucket_elimination(model), true_log_pf)
-    assert np.allclose(
-        inf.weighted_mini_bucket_elimination(model),
-        true_log_pf)
-    assert np.allclose(inf.bucket_renormalization(model), true_log_pf)
+    assert np.allclose(inf.iterative_join_graph_propagation(model),
+                       true_log_pf, atol=1e-5)
+    assert np.allclose(inf.mini_bucket_elimination(model), true_log_pf,
+                       atol=1e-5)
+    assert np.allclose(inf.bucket_elimination(model), true_log_pf, atol=1e-5)
+    assert np.allclose(inf.weighted_mini_bucket_elimination(model),
+                       true_log_pf, atol=0.5)
+    assert np.allclose(inf.bucket_renormalization(model), true_log_pf,
+                       atol=1e-5)
 
 
 def test_all_grid_6x6():
@@ -28,20 +28,17 @@ def test_all_grid_6x6():
     true_log_pf = model.infer(algorithm="junction_tree").log_pf
     assert np.allclose(inf.mean_field(model), true_log_pf, atol=20.0)
     assert np.allclose(inf.belief_propagation(model), true_log_pf, atol=0.1)
-    assert np.allclose(
-        inf.iterative_join_graph_propagation(model),
-        true_log_pf)
+    assert np.allclose(inf.iterative_join_graph_propagation(model),
+                       true_log_pf, atol=1e-5)
     assert np.allclose(inf.mini_bucket_elimination(model), true_log_pf,
                        atol=10.0)
-    assert np.allclose(inf.bucket_elimination(model), true_log_pf)
-    assert np.allclose(
-        inf.weighted_mini_bucket_elimination(model),
-        true_log_pf,
-        atol=10.0)
-    assert np.allclose(
-        inf.bucket_renormalization(model),
-        true_log_pf,
-        atol=0.1)
+    assert np.allclose(inf.bucket_elimination(model), true_log_pf, atol=1e-5)
+    assert np.allclose(inf.weighted_mini_bucket_elimination(model),
+                       true_log_pf,
+                       atol=10.0)
+    assert np.allclose(inf.bucket_renormalization(model),
+                       true_log_pf,
+                       atol=0.1)
 
 
 def test_all_clique_6():
@@ -49,16 +46,16 @@ def test_all_clique_6():
     true_log_pf = model.infer(algorithm="junction_tree").log_pf
     assert np.allclose(inf.mean_field(model), true_log_pf, atol=10.0)
     assert np.allclose(inf.belief_propagation(model), true_log_pf, atol=0.1)
-    assert np.allclose(
-        inf.iterative_join_graph_propagation(model),
-        true_log_pf,
-        atol=1e-4)
-    assert np.allclose(inf.mini_bucket_elimination(model), true_log_pf)
-    assert np.allclose(inf.bucket_elimination(model), true_log_pf)
-    assert np.allclose(
-        inf.weighted_mini_bucket_elimination(model),
-        true_log_pf)
-    assert np.allclose(inf.bucket_renormalization(model), true_log_pf)
+    assert np.allclose(inf.iterative_join_graph_propagation(model),
+                       true_log_pf,
+                       atol=1e-4)
+    assert np.allclose(inf.mini_bucket_elimination(model), true_log_pf,
+                       atol=1e-5)
+    assert np.allclose(inf.bucket_elimination(model), true_log_pf, atol=1e-5)
+    assert np.allclose(inf.weighted_mini_bucket_elimination(model),
+                       true_log_pf, atol=1e-5)
+    assert np.allclose(inf.bucket_renormalization(model), true_log_pf,
+                       atol=1e-5)
 
 
 def test_wmbe_grid_9x9():
