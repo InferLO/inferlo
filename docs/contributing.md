@@ -124,7 +124,7 @@ Please follow [Google Python Style Guide](https://google.github.io/styleguide/py
 
 We use [sphinx](https://www.sphinx-doc.org/en/master/) to automatically 
 build the documentation. Documentation is authomatically exported to 
-ReadTheDocs.
+[ReadTheDocs](https://inferlo.readthedocs.io/).
 
 In particular, pydocs are automatically converted to "API reference" section in
 documentation. If you are adding new public class or function to the library,

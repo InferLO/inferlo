@@ -10,6 +10,7 @@ Classes representing different kinds of graphical models.
 .. autosummary::
     :toctree: generated/
 
+    inferlo.GaussianModel
     inferlo.GenericGraphModel
     inferlo.GraphModel
     inferlo.NormalFactorGraphModel
@@ -66,12 +67,11 @@ Inference algorithms
     inferlo.generic.message_passing.infer_generic_message_passing
     inferlo.generic.inference.belief_propagation
     inferlo.generic.inference.bucket_elimination
+    inferlo.generic.inference.bucket_renormalization
     inferlo.generic.inference.iterative_join_graph_propagation
-    inferlo.generic.inference.global_bucket_renormalization
     inferlo.generic.inference.mean_field
     inferlo.generic.inference.mini_bucket_elimination
-    inferlo.generic.inference.mini_bucket_renormalization
-    inferlo.generic.weighted_mini_bucket_elimination
+    inferlo.generic.inference.weighted_mini_bucket_elimination
 
 Optimization algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -155,3 +155,19 @@ Helpers to load public datasets with graphical models.
 
     inferlo.datasets.DatasetLoader
     inferlo.datasets.UaiReader
+
+Unassigned
+''''''''''''''''
+
+Following methods should be put into one of categories above
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo
+    inferlo.forney.optimization.nfg_map_lp.map_lp
+    inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
+    inferlo.pairwise.optimization.convex_bounds.lp_relaxation
+    inferlo.pairwise.optimization.convex_hierarchies.lasserre
+    inferlo.pairwise.optimization.convex_hierarchies.sherali_adams
+    inferlo.pairwise.optimization.map_lp.map_lp
