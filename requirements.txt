@@ -1,5 +1,5 @@
 numpy>=1.17
-cvxpy>=1.1.1,!=1.18
+cvxpy>=1.1.1,!=1.1.8
 networkx>=2.4
 numba>=0.51
 scipy>=1.4
