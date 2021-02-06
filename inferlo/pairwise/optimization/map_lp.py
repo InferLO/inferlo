@@ -13,49 +13,51 @@ map_lp_result = namedtuple('map_lp_result', ['upper_bound',
 
 
 def map_lp(model: PairWiseFiniteModel) -> map_lp_result:
-    """
-        This function implements linear programming (LP) relaxation
-        of maximum a posteriori assignment problem (MAP) for
-        pairwise graphical model with finite alphabet.
+    """LP relaxation of MAP problem for pairwise model.
 
-        The goal of MAP estimation is to find most probable
-        assignment of original variables by maximizing probability
-        density function. For the case of pairwise finite model it
-        reduces to maximization of quadratic function over finite
-        field.
+    This function implements linear programming (LP) relaxation
+    of maximum a posteriori assignment problem (MAP) for
+    pairwise graphical model with finite alphabet.
 
-        For every node, we introduce Q non-negative belief variables
-        where Q is the size of the alphabet. Every such variable
-        is our 'belief' that variable at node takes particular value.
+    The goal of MAP estimation is to find most probable
+    assignment of original variables by maximizing probability
+    density function. For the case of pairwise finite model it
+    reduces to maximization of quadratic function over finite
+    field.
 
-        Analogously, for every edge we introduce Q*Q pairwise beliefs.
+    For every node, we introduce Q non-negative belief variables
+    where Q is the size of the alphabet. Every such variable
+    is our 'belief' that variable at node takes particular value.
 
-        For both node and edge beliefs we require normalization
-        constraints: 1) for every node, the sum of beliefs equals one
-        and 2) for every edge the sum of edge-beliefs equals one.
+    Analogously, for every edge we introduce Q*Q pairwise beliefs.
 
-        We also add marginalization constraint: for every edge,
-        summing edge beliefs over one of the nodes must equal
-        to the node belief of the second node.
+    For both node and edge beliefs we require normalization
+    constraints: 1) for every node, the sum of beliefs equals one
+    and 2) for every edge the sum of edge-beliefs equals one.
 
-        Finally we get a linear program and its solution is an
-        upper bound on the MAP value. We restore the lower bound
-        on MAP value as the solution of the dual relaxation.
+    We also add marginalization constraint: for every edge,
+    summing edge beliefs over one of the nodes must equal
+    to the node belief of the second node.
 
-        More details may be found in "MAP Estimation,
-        Linear Programming and BeliefPropagation with
-        Convex Free Energies" by Yair Weiss, Chen Yanover and Talya
-        Meltzer. https://arxiv.org/pdf/1206.5286.pdf
+    Finally we get a linear program and its solution is an
+    upper bound on the MAP value. We restore the lower bound
+    on MAP value as the solution of the dual relaxation.
 
-        The output of the function is:
-        1) upper bound on MAP value (solution of LP)
-        2) lower bound on MAP value (dual solution)
-        3) Optimal values of node beliefs
-        4) Optimal values of edge beliefs
-        5) Optimal values of dual variables that correspond to
-          normalization constraints
-        6) Optimal values of dual variables that correspond to
-          marginalization constraints
+    More details may be found in "MAP Estimation,
+    Linear Programming and BeliefPropagation with
+    Convex Free Energies" by Yair Weiss, Chen Yanover and Talya
+    Meltzer. https://arxiv.org/pdf/1206.5286.pdf
+
+    The output of the function is:
+
+    1. upper bound on MAP value (solution of LP);
+    2. lower bound on MAP value (dual solution);
+    3. Optimal values of node beliefs;
+    4. Optimal values of edge beliefs;
+    5. Optimal values of dual variables that correspond to normalization
+       constraints;
+    6. Optimal values of dual variables that correspond to marginalization
+       constraints.
     """
 
     edge_list = model.edges

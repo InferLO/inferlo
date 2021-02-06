@@ -23,25 +23,30 @@ def lp_relaxation(model: PairWiseFiniteModel) -> LPRelaxResult:
     :param model: Model for which to find most likely state.
     :return: Solution of LP relaxation of the Max Likelihood problem.
 
-    1) Reformulates the original problem of maximizing
-            sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]])
-    as a binary optimization problem by introducing new variables
-    y_i,a and z_i,j,a,b:
-        maximize (sum_i sum_a F[i][a] * y_i,a) +
-                 (sum_i sum_j sum_a sum_b 0.5*sum J[i][j][a][b] * z_i,j,a,b))
-        subject to y_i,a in {0, 1}
-                z_i,j,a,b in {0, 1}
-                (for all i) sum_a y_i,a = 1
-                z_i,j,a,b <= y_i,a
-                z_i,j,a,b <= y_j,b
-                z_i,j,a,b >= y_i,a + y_j,b - 1
+    1. Reformulates the original problem of maximizing
+       ``sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]])``
+       as a binary optimization problem by introducing new variables
+       ``y_i,a`` and ``z_i,j,a,b``:
 
-    2) Solves the LP relaxation by relaxing binary constraints to
-                y_i,a in [0, 1]
-                z_i,j,a,b in [0, 1]
+       maximize ``(sum_i sum_a F[i][a] * y_i,a) +
+       (sum_i sum_j sum_a sum_b 0.5*sum J[i][j][a][b] * z_i,j,a,b))``
 
-    Note that z will be reshaped to matrix.
-    (cvxpy do not support tensor variables)
+       subject to
+
+       * ``y_i,a in {0, 1}``
+       * ``z_i,j,a,b in {0, 1}``
+       * ``(for all i) sum_a y_i,a = 1``
+       * ``z_i,j,a,b <= y_i,a``
+       * ``z_i,j,a,b <= y_j,b``
+       * ``z_i,j,a,b >= y_i,a + y_j,b - 1``
+
+    2. Solves the LP relaxation by relaxing binary constraints to
+
+       * ``y_i,a in [0, 1]``
+       * ``z_i,j,a,b in [0, 1]``
+
+    Note that ``z`` will be reshaped to matrix.
+    (cvxpy does not support tensor variables)
     """
     edge_list = model.edges
 

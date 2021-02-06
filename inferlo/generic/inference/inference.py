@@ -31,17 +31,27 @@ def _convert(inferlo_model: GraphModel) -> GraphicalModel:
     return model
 
 
-def belief_propagation(model: GraphModel) -> float:
-    """Inference with Belief Propagation.
+def belief_propagation(model: GraphModel,
+                       max_iter: int = 1000,
+                       converge_thr: float = 1e-5,
+                       damp_ratio: float = 0.1) -> float:
+    """Inference with (loopy) Belief Propagation.
 
     Estimates partition function using Loopy Belief Propagation algorithm.
 
-    Original implementation from https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py
-
     :param model: Model for which to perform inference.
+    :param max_iter: Number of iterations.
+    :param converge_thr: Convergence threshold.
+    :param damp_ratio: Damp ratio.
     :return: Natural logarithm of estimated partition function.
+
+    References
+        [1] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
     """
-    return BeliefPropagation(_convert(model)).run()
+    algo = BeliefPropagation(_convert(model))
+    return algo.run(max_iter=max_iter, converge_thr=converge_thr,
+             damp_ratio=damp_ratio)
 
 
 def bucket_elimination(model: GraphModel) -> float:
@@ -49,16 +59,16 @@ def bucket_elimination(model: GraphModel) -> float:
 
     Estimates partition function using Bucket Elimination algorithm.
 
-    Original implementation from https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py
-
     :param model: Model for which to perform inference.
     :return: Natural logarithm of estimated partition function.
 
-    Reference
-        Dechter, Rina.
-        Bucket elimination: A unifying framework for reasoning.
-        Artificial Intelligence, 113(1):41–85, 1999.
+    References
+        [1] Rina Dechter.
+        Bucket elimination: A unifying framework for reasoning. 1999.
         https://arxiv.org/abs/1302.3572
+
+        [2] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py>`_.
     """
     return BucketElimination(_convert(model)).run()
 
@@ -68,6 +78,8 @@ def bucket_renormalization(model: GraphModel,
                            max_iter: int = 1) -> float:
     """Inference with Bucket Renormalization.
 
+    Estimates partition function using Bucket Renormalization algorithm.
+
     :param model: Model for which to perform inference.
     :param ibound: Maximal size of mini-bucket.
     :param max_iter: Number of optimization iterations. 0 corresponds to
@@ -75,43 +87,79 @@ def bucket_renormalization(model: GraphModel,
         Renormalization. Default is 1.
     :return: Natural logarithm of estimated partition function.
 
-    Reference
-        Sungsoo Ahn, Michael Chertkov, Adrian Weller, Jinwoo Shin
-        Bucket Renormalization for Approximate Inference, 2018.
+    References
+        [1] Sungsoo Ahn, Michael Chertkov, Adrian Weller, Jinwoo Shin.
+        Bucket Renormalization for Approximate Inference. 2018.
         https://arxiv.org/abs/1803.05104
+
+        [2] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_renormalization.py>`_.
     """
     algo = BucketRenormalization(_convert(model), ibound=ibound)
     return algo.run(max_iter=max_iter)
 
 
 def iterative_join_graph_propagation(model: GraphModel,
-                                     ibound: int = 10) -> float:
+                                     ibound: int = 10,
+                                     max_iter: int = 1000,
+                                     converge_thr: float = 1e-5,
+                                     damp_ratio: float = 0.1) -> float:
     """Inference with Iterative Join Graph Propagation.
 
+    Estimates partition function using Iterative Join Graph Propagation
+      algorithm, which belongs to the class of Generalized Belief Propagation
+      methods.
+
     :param model: Model for which to perform inference.
+    :param max_iter: Number of iterations.
+    :param converge_thr: Convergence threshold.
+    :param damp_ratio: Damp ratio.
     :return: Natural logarithm of estimated partition function.
 
+    References
+        [1] Rina Dechter, Kalev Kask, Robert Mateescu.
+        Iterative Join-Graph Propagation. 2012.
+        https://arxiv.org/abs/1301.0564
 
-    https://arxiv.org/abs/1301.0564
+        [2] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
     """
-    return IterativeJoinGraphPropagation(_convert(model), ibound=ibound).run()
+    algo = IterativeJoinGraphPropagation(_convert(model), ibound=ibound)
+    return algo.run(max_iter=max_iter, converge_thr=converge_thr,
+                    damp_ratio=damp_ratio)
 
 
 def mean_field(model: GraphModel) -> float:
     """Inference with Mean Field.
 
+    Estimates partition function using Mean Field approximation.
+
     :param model: Model for which to perform inference.
     :return: Natural logarithm of estimated partition function.
+
+    References
+        [1] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mean_field.py>`_.
     """
     return MeanField(_convert(model)).run()
 
 
 def mini_bucket_elimination(model: GraphModel, ibound: int = 10) -> float:
-    """Inference with Mean Field.
+    """Inference with Mini Bucket Elimination.
+
+    Estimates partition function using Mini Bucket Elimination algorithm.
 
     :param model: Model for which to perform inference.
-    :param ibound:
+    :param ibound: Maximal size of mini-bucket.
     :return: Natural logarithm of estimated partition function.
+
+    References
+        [1] Rina Dechter, Irina Rish.
+        Mini-buckets: A general scheme for bounded inference. 2003.
+        https://dl.acm.org/doi/abs/10.1145/636865.636866
+
+        [2] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py>`_.
     """
     return MiniBucketElimination(_convert(model), ibound=ibound).run()
 
@@ -120,8 +168,17 @@ def weighted_mini_bucket_elimination(model: GraphModel,
                                      ibound: int = 10) -> float:
     """Inference with Weighted Mini Bucket Elimination.
 
+    Estimates partition function using MWeighted Mini Bucket Elimination
+      algorithm.
+
     :param model: Model for which to perform inference.
-    :param ibound:
+    :param ibound: Maximal size of mini-bucket.
     :return: Natural logarithm of estimated partition function.
+
+    References
+        [1] Qiang Liu, Alexander T. Ihler.
+        Bounding the Partition Function using Holder's Inequality. 2011.
+        [2] `Original implementation
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/weighted_mini_bucket_elimination.py>`_.
     """
     return WeightedMiniBucketElimination(_convert(model), ibound=ibound).run()

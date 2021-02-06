@@ -56,12 +56,6 @@ Inference algorithms
 .. autosummary::
     :toctree: generated/
 
-    inferlo.pairwise.bruteforce.infer_bruteforce
-    inferlo.pairwise.junction_tree.infer_junction_tree
-    inferlo.pairwise.inference.mean_field.infer_mean_field
-    inferlo.pairwise.inference.message_passing.infer_message_passing
-    inferlo.pairwise.inference.path_dp.infer_path_dp
-    inferlo.pairwise.inference.tree_dp.infer_tree_dp
     inferlo.forney.edge_elimination.infer_edge_elimination
     inferlo.generic.libdai_bp.BP
     inferlo.generic.message_passing.infer_generic_message_passing
@@ -72,6 +66,13 @@ Inference algorithms
     inferlo.generic.inference.mean_field
     inferlo.generic.inference.mini_bucket_elimination
     inferlo.generic.inference.weighted_mini_bucket_elimination
+    inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
+    inferlo.pairwise.bruteforce.infer_bruteforce
+    inferlo.pairwise.junction_tree.infer_junction_tree
+    inferlo.pairwise.inference.mean_field.infer_mean_field
+    inferlo.pairwise.inference.message_passing.infer_message_passing
+    inferlo.pairwise.inference.path_dp.infer_path_dp
+    inferlo.pairwise.inference.tree_dp.infer_tree_dp
 
 Optimization algorithms
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -79,10 +80,15 @@ Optimization algorithms
 .. autosummary::
     :toctree: generated/
 
+    inferlo.forney.optimization.nfg_map_lp.map_lp
     inferlo.pairwise.bruteforce.max_lh_bruteforce
     inferlo.pairwise.junction_tree.max_likelihood_junction_tree
-    inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp
+    inferlo.pairwise.optimization.convex_bounds.lp_relaxation
+    inferlo.pairwise.optimization.convex_hierarchies.lasserre
+    inferlo.pairwise.optimization.convex_hierarchies.sherali_adams
+    inferlo.pairwise.optimization.map_lp.map_lp
     inferlo.pairwise.optimization.path_dp.max_lh_path_dp
+    inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp
 
 Sampling algorithms
 ^^^^^^^^^^^^^^^^^^^
@@ -155,19 +161,3 @@ Helpers to load public datasets with graphical models.
 
     inferlo.datasets.DatasetLoader
     inferlo.datasets.UaiReader
-
-Misc
-''''''''''''''''
-
-Following methods should be put into one of categories above
-
-.. autosummary::
-    :toctree: generated/
-
-    inferlo
-    inferlo.forney.optimization.nfg_map_lp.map_lp
-    inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
-    inferlo.pairwise.optimization.convex_bounds.lp_relaxation
-    inferlo.pairwise.optimization.convex_hierarchies.lasserre
-    inferlo.pairwise.optimization.convex_hierarchies.sherali_adams
-    inferlo.pairwise.optimization.map_lp.map_lp

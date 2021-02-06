@@ -57,4 +57,4 @@ def test_bucket_renormalization_grid_9x9():
     model = grid_potts_model(9, 9, al_size=2, seed=0)
     true_log_pf = model.infer(algorithm="path_dp").log_pf
     assert np.allclose(inf.weighted_mini_bucket_elimination(model), true_log_pf,
-                       atol=1.0)
+                       atol=2.0)
