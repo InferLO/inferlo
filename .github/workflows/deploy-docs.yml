@@ -1,0 +1,32 @@
+name: Deploy docs
+
+on:
+  push:
+    branches: [ master, docs_fix ]
+
+jobs:
+  deploy-docs:
+    name: Deploy documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          sudo apt-get install pandoc
+          pip install -r docs/requirements.txt
+      - name: Build the docs
+        run: |
+          cd docs
+          make html
+      - name: Push documentation to GitHub Pages
+        uses: sugatpoudel/git-deploy@v0.1
+        with:
+          changes: docs/build/_html
+          repository: git@github.com:InferLO/docs.git
+          ssh_key: ${{ secrets.DOCS_DEPLOY_KEY }}
+          name: fedimser
+          email: fedimser@gmail.com
