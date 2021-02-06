@@ -1,9 +1,7 @@
-name: Continuous integration
+name: Deploy docs
 
 on:
   push:
-    branches: [ master, docs_fix ]
-  pull_request:
     branches: [ master, docs_fix ]
 
 jobs:
