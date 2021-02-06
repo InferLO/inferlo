@@ -92,7 +92,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
     # Don't reference model from this point to ensure we don't modify it.
 
     num_edges = len(edges)
-    edge_exists = np.ones(num_edges, dtype=np.bool)
+    edge_exists = np.ones(num_edges, dtype=bool)
 
     # Heuristic to find which edge to eliminate. Will pick edge of least cost.
     def edge_cost(edge_id):

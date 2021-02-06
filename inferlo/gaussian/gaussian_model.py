@@ -1,3 +1,5 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 from __future__ import annotations
 from functools import partial
 from collections import defaultdict

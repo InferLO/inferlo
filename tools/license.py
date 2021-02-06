@@ -1,11 +1,12 @@
 import os
 
-license_notice = \
-    """# Copyright (c) 2020, The InferLO authors. All rights reserved.
-# Licensed under the Apache License, Version 2.0 - see LICENSE file.
-"""
+LICENSE_NOTICE = ''.join([
+    '# Copyright (c) The InferLO authors. All rights reserved.\n'
+    '# Licensed under the Apache License, Version 2.0 - see LICENSE.\n'
+])
 
-license_name = 'Apache License'
+LICENSE_NAME = 'Apache License'
+assert LICENSE_NAME in LICENSE_NOTICE
 
 
 def needs_license(file_name):
@@ -15,14 +16,14 @@ def needs_license(file_name):
         return False
     with open(file_name, encoding='utf-8') as f:
         content = f.read()
-    return not license_name in content
+    return not LICENSE_NAME in content
 
 
 def append_license(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
         content = ''.join(f.readlines())
     with open(file_name, 'w', encoding='utf-8') as f:
-        f.write(license_notice + content)
+        f.write(LICENSE_NOTICE + content)
 
 
 if __name__ == "__main__":
@@ -35,3 +36,4 @@ if __name__ == "__main__":
                 files_need_license.append(file_name)
     for file_name in files_need_license:
         append_license(file_name)
+        print("Appended license to %s" % file_name)

@@ -31,7 +31,7 @@ def build_multi_delta(var_num, al_size, nodes1, nodes2):
     :return: Square boolean matrix of size al_size ** var_num.
     """
     ans_size = al_size ** var_num
-    ans = np.ones((ans_size, ans_size), dtype=np.bool)
+    ans = np.ones((ans_size, ans_size), dtype=bool)
     for i in range(len(nodes1)):
         for j in range(len(nodes2)):
             if nodes1[i] != nodes2[j]:
