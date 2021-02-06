@@ -16,7 +16,6 @@ import sys
 from sphinx_markdown_parser.parser import MarkdownParser
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-sys.path.insert(0, os.path.dirname(__file__))
 
 
 def setup(app):
