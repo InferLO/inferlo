@@ -1,6 +1,6 @@
 cvxpy==1.1.7 # Temporarily, until 1.1.9 is released.
 networkx>=2.4
 numba>=0.52.0
-numpy>=1.17,!=1.20.0
+numpy>=1.17
 scipy>=1.4
 # no change.
