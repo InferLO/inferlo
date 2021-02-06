@@ -61,7 +61,7 @@ jobs:
           architecture: 'x64'
       - name: Install requirements
         run: |
-          xcode-select --install # See https://apple.stackexchange.com/questions/254380
+          xcode-select --reset # See https://github.com/cvxgrp/scs/issues/130
           pip install -r requirements.txt
           pip install pytest>=5.3
       - name: Pytest check
