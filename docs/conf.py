@@ -15,8 +15,8 @@ import sys
 
 from sphinx_markdown_parser.parser import MarkdownParser
 
-inferlo_root_path = os.path.dirname(os.path.dirname(__file__))
-sys.path.insert(0, inferlo_root_path)
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.dirname(__file__))
 
 
 def setup(app):

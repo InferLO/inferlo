@@ -15,7 +15,6 @@ Classes representing different kinds of graphical models.
     inferlo.GraphModel
     inferlo.NormalFactorGraphModel
     inferlo.PairWiseFiniteModel
-    inferlo.GaussianModel
 
 
 

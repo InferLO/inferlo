@@ -16,7 +16,7 @@ rm -rf "${docs_conf_dir}/generated"
 rm -rf "${out_dir}"
 
 # Regenerate docs.
-sphinx-build -M html "${docs_conf_dir}" "${out_dir}" -W --keep-going $CPUS
+sphinx-build -M html "${docs_conf_dir}" "${out_dir}" -W --keep-going
 
 # Cleanup newly generated temporary files.
 rm -rf "${docs_conf_dir}/generated"
