@@ -1,5 +1,5 @@
 # Requirements needed to build documentation.
-numpy
+ipython
 sphinx
 sphinx_rtd_theme
 sphinx_markdown_parser
