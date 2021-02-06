@@ -2,6 +2,7 @@
 # Licensed under the Apache License, Version 2.0.
 import os
 from dataclasses import dataclass
+import tempfile
 
 import numpy as np
 import wget
@@ -75,8 +76,13 @@ class DatasetLoader:
     """Loads graphical models from named datasets."""
 
     def __init__(self, data_dir=None):
+        """
+        :param data_dir: Where to store cached datasets. Specify if you want
+          datasets being cached locally. If not set, default system temporary
+          directory will be used.
+        """
         if data_dir is None:
-            data_dir = os.path.join(os.getcwd(), 'data')
+            data_dir = os.path.join(tempfile.gettempdir(), 'inferlo_data')
         self.data_dir = data_dir
         if not os.path.exists(self.data_dir):
             os.mkdir(self.data_dir)

@@ -27,7 +27,3 @@ docs/generated
 *.ipynb
 !/docs/tutorials/*.ipynb
 !/docs/examples/*.ipynb
-
-# Data
-data/*
-inferlo/datasets/data/*
