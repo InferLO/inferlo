@@ -156,7 +156,7 @@ Helpers to load public datasets with graphical models.
     inferlo.datasets.DatasetLoader
     inferlo.datasets.UaiReader
 
-Unassigned
+Misc
 ''''''''''''''''
 
 Following methods should be put into one of categories above
