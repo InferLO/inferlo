@@ -1,4 +1,4 @@
-cvxpy>=1.1.1,!=1.1.8
+cvxpy==1.1.7
 llvmlite>=0.33.0dev0,<0.34 # Temporary match numba's requrement.
 networkx>=2.4
 numba>=0.50.1, <0.51
