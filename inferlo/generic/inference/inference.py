@@ -1,3 +1,5 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 from inferlo import GraphModel, DiscreteFactor
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .bucket_elimination import BucketElimination
@@ -53,22 +55,30 @@ def bucket_elimination(model: GraphModel) -> float:
     :return: Natural logarithm of estimated partition function.
 
     Reference
-        Yedidia, Jonathan S, Freeman, William T, and Weiss, Yair.
-        Generalized belief propagation. In Advances in neural
-        information processing systems, pp. 689–695, 2001
-        https://ieeexplore.ieee.org/document/910572
+        Dechter, Rina.
+        Bucket elimination: A unifying framework for reasoning.
+        Artificial Intelligence, 113(1):41–85, 1999.
+        https://arxiv.org/abs/1302.3572
     """
     return BucketElimination(_convert(model)).run()
 
 
 def bucket_renormalization(model: GraphModel,
                            ibound: int = 10,
-                           max_iter: int = 0) -> float:
-    """
-    Reference: Bucket Renormalization for Approximate Inference, 2018.
-      https://arxiv.org/abs/1803.05104
+                           max_iter: int = 1) -> float:
+    """Inference with Bucket Renormalization.
 
-    max_iter: 0-"MBR", 1-"GBR".
+    :param model: Model for which to perform inference.
+    :param ibound: Maximal size of mini-bucket.
+    :param max_iter: Number of optimization iterations. 0 corresponds to
+        Mini-Bucket Renormalization. 1 corresponds to Global-Bucket
+        Renormalization. Default is 1.
+    :return: Natural logarithm of estimated partition function.
+
+    Reference
+        Sungsoo Ahn, Michael Chertkov, Adrian Weller, Jinwoo Shin
+        Bucket Renormalization for Approximate Inference, 2018.
+        https://arxiv.org/abs/1803.05104
     """
     algo = BucketRenormalization(_convert(model), ibound=ibound)
     return algo.run(max_iter=max_iter)

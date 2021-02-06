@@ -1,10 +1,9 @@
 from .inference import (belief_propagation,
                         bucket_elimination,
+                        bucket_renormalization,
                         iterative_join_graph_propagation,
-                        global_bucket_renormalization,
                         mean_field,
                         mini_bucket_elimination,
-                        mini_bucket_renormalization,
                         weighted_mini_bucket_elimination)
 
 """

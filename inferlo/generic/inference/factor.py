@@ -1,3 +1,5 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 from copy import copy
 from functools import reduce
 
@@ -9,7 +11,7 @@ class Factor:
     """
     Factor representation used by algorithms taken from
     https://github.com/sungsoo-ahn/bucket-renormalization
-    TODO: use Inferlo's DiscreteFactor instead.
+    TODO(fedimser): use Inferlo's DiscreteFactor instead.
     """
 
     def __init__(self, name=None, variables=[], **kwargs):

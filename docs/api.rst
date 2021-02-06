@@ -144,3 +144,14 @@ These classes are repossible for interoperation with other GM libraries.
     :toctree: generated/
 
     inferlo.interop.LibDaiInterop
+
+Datasets
+''''''''''''''''
+
+Helpers to load public datasets with graphical models.
+
+.. autosummary::
+    :toctree: generated/
+
+    inferlo.datasets.DatasetLoader
+    inferlo.datasets.UaiReader

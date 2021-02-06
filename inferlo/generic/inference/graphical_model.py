@@ -1,17 +1,17 @@
+# Copyright (c) The InferLO authors. All rights reserved.
+# Licensed under the Apache License, Version 2.0 - see LICENSE.
 from copy import copy
 
 import numpy as np
 
-from inferlo.base.factors.discrete_factor import DiscreteFactor
-from inferlo.base.graph_model import GraphModel
-from .factor import Factor, product_over_
+from .factor import product_over_
 
 
 class GraphicalModel:
     """
     Graphical model representation used by algorithms taken from
     https://github.com/sungsoo-ahn/bucket-renormalization
-    TODO: use Inferlo's GraphModel instead.
+    TODO(fedimser): use Inferlo's GraphModel instead.
     """
     def __init__(self, variables=[], factors=[]):
         if variables:

@@ -94,8 +94,18 @@ class DatasetLoader:
             assert os.path.exists(path)
         return path
 
-    def load_uai_dataset(self, dataset_name):
-        """Loads named dataset from UAI competition."""
+    def load_uai_dataset(self, dataset_name) -> Dataset:
+        """Loads named dataset from UAI competition.
+
+        :param dataset_name: Name of dataset, e.g. "Promedus_11.uai". For full
+            list of UAI datasets, see http://sli.ics.uci.edu/~ihler/uai-data/.
+            Not all of them are currently supported.
+        :return: `Dataset` object, containing graphical model
+            (as `GenericGraphModel` object), true logarithm of the partition
+            function and true marginals.
+        """
+        if dataset_name not in UAI_PF:
+            raise ValueError("Unknown UAI dataset: " + dataset_name)
         data_file = self.load_file_(UAI_PROB_URL, dataset_name)
         model = self.uai_reader.read_model(data_file)
 
@@ -105,18 +115,3 @@ class DatasetLoader:
         return Dataset(model=model,
                        true_marginals=marginals,
                        true_log_pf=UAI_PF[dataset_name] * np.log(10))
-
-def load_uai_dataset(dataset_name):
-    return DatasetLoader().load_uai_dataset(dataset_name)
-
-def promedus(dataset_id) -> Dataset:
-    """Loads UAI "Promedus" datatset with given ID."""
-    assert dataset_id >= 11 and dataset_id <= 38, "Invalid dataset ID"
-    return load_uai_dataset('Promedus_%d.uai' % dataset_id)
-
-
-def linkage(dataset_id) -> Dataset:
-    """Loads UAI "Linkage" datatset with given ID."""
-    assert dataset_id >= 11 and dataset_id <= 27, "Invalid dataset ID"
-    return load_uai_dataset('linkage_%d.uai' % dataset_id)
-
