@@ -11,6 +11,7 @@ class Factor:
     https://github.com/sungsoo-ahn/bucket-renormalization
     TODO: use Inferlo's DiscreteFactor instead.
     """
+
     def __init__(self, name=None, variables=[], **kwargs):
         if name:
             self.name = name
@@ -32,7 +33,8 @@ class Factor:
         if len(variables) != self.log_values.ndim:
             raise ValueError(
                 "Shape {shape} of {name} does not match number {variable_num}.".format(
-                    shape=self.log_values.shape, name=name, variable_num=len(variables)
+                    shape=self.log_values.shape, name=name,
+                    variable_num=len(variables)
                 )
             )
 
@@ -48,7 +50,8 @@ class Factor:
     @values.setter
     def values(self, values):
         if (values < -1e-15).any():
-            raise ValueError("value of factor cannot be negative:{}".format(values))
+            raise ValueError(
+                "value of factor cannot be negative:{}".format(values))
         elif (values < 0).any():
             values[values < 0.0] = 0.0
 
@@ -64,8 +67,10 @@ class Factor:
         self.__log_values = log_values
 
     @classmethod
-    def initialize_with_(cls, name, variables, numpy_func, cardinality, **kwargs):
-        return cls(name=name, variables=variables, values=numpy_func(cardinality), **kwargs)
+    def initialize_with_(cls, name, variables, numpy_func, cardinality,
+                         **kwargs):
+        return cls(name=name, variables=variables,
+                   values=numpy_func(cardinality), **kwargs)
 
     @classmethod
     def full_like_(cls, factor, value):
@@ -83,7 +88,8 @@ class Factor:
         return self.cardinality[self.variables.index(variable)]
 
     def get_cardinalities_for_(self, variables):
-        return [self.cardinality[self.variables.index(variable)] for variable in variables]
+        return [self.cardinality[self.variables.index(variable)] for variable in
+                variables]
 
     def copy(self, rename=False):
         if rename:
@@ -134,16 +140,20 @@ class Factor:
         if not inplace:
             return fac
 
-    def marginalize(self, variables=None, operator="sum", inplace=True, **kwargs):
+    def marginalize(self, variables=None, operator="sum", inplace=True,
+                    **kwargs):
         fac = self if inplace else self.copy()
         if not variables:
             variables = self.variables
         for var in variables:
             if var not in fac.variables:
-                raise ValueError("{variable} not in scope.".format(variable=var))
+                raise ValueError(
+                    "{variable} not in scope.".format(variable=var))
 
-        variable_indices = tuple([fac.variables.index(var) for var in variables])
-        index_to_keep = sorted(set(range(len(self.variables))) - set(variable_indices))
+        variable_indices = tuple(
+            [fac.variables.index(var) for var in variables])
+        index_to_keep = sorted(
+            set(range(len(self.variables))) - set(variable_indices))
 
         fac.variables = [fac.variables[index] for index in index_to_keep]
         fac.cardinality = [fac.cardinality[index] for index in index_to_keep]
@@ -154,7 +164,8 @@ class Factor:
             w = kwargs["weight"]
             if w != 0:
                 fac.log_values /= w
-                fac.log_values = logsumexp(fac.log_values, axis=variable_indices)
+                fac.log_values = logsumexp(fac.log_values,
+                                           axis=variable_indices)
                 fac.log_values *= w
             else:
                 fac.log_values = amax(fac.log_values, axis=variable_indices)
@@ -168,11 +179,14 @@ class Factor:
         if not inplace:
             return fac
 
-    def marginalize_except_(self, variables, operator="sum", inplace=True, **kwargs):
+    def marginalize_except_(self, variables, operator="sum", inplace=True,
+                            **kwargs):
         fac = self if inplace else self.copy()
-        variables_to_marginalize = [var for var in fac.variables if var not in variables]
+        variables_to_marginalize = [var for var in fac.variables if
+                                    var not in variables]
         if variables_to_marginalize:
-            fac.marginalize(variables=variables_to_marginalize, operator=operator, **kwargs)
+            fac.marginalize(variables=variables_to_marginalize,
+                            operator=operator, **kwargs)
 
         fac.transpose_by_(variables)
 
@@ -186,7 +200,8 @@ class Factor:
 
         fac = self if inplace else self.copy()
 
-        variable_indices = tuple([fac.variables.index(variable) for variable in variables])
+        variable_indices = tuple(
+            [fac.variables.index(variable) for variable in variables])
 
         zero_indices = ~np.isfinite(fac.log_values)
         with np.errstate(invalid="ignore"):
@@ -211,7 +226,8 @@ class Factor:
             max_a = max(amax(a1), amax(fac.log_values))
             with np.errstate(invalid="raise"):
                 try:
-                    fac.log_values = log(exp(a1 - max_a) + exp(fac.log_values - max_a))
+                    fac.log_values = log(
+                        exp(a1 - max_a) + exp(fac.log_values - max_a))
                 except:
                     print(a1)
                     print(fac.log_values)
@@ -249,20 +265,15 @@ class Factor:
             fac1 = fac1.copy()
             extra_variables = set(fac1.variables) - set(fac.variables)
             if extra_variables:
-                slice_ = [slice(None)] * len(fac.variables)
-                slice_.extend([np.newaxis] * len(extra_variables))
-                fac.log_values = fac.log_values[slice_]
-
+                fac.log_values = add_dims(fac.log_values, len(extra_variables))
                 fac.variables.extend(extra_variables)
                 new_variable_card = fac1.get_cardinalities_for_(extra_variables)
                 fac.cardinality = np.append(fac.cardinality, new_variable_card)
 
             extra_variables = set(fac.variables) - set(fac1.variables)
             if extra_variables:
-                slice_ = [slice(None)] * len(fac1.variables)
-                slice_.extend([np.newaxis] * len(extra_variables))
-
-                fac1.log_values = fac1.log_values[slice_]
+                fac1.log_values = add_dims(fac1.log_values,
+                                           len(extra_variables))
                 fac1.variables.extend(extra_variables)
             for axis in range(fac.log_values.ndim):
                 exchange_index = fac1.variables.index(fac.variables[axis])
@@ -288,20 +299,15 @@ class Factor:
             fac1 = fac1.copy()
             extra_variables = set(fac1.variables) - set(fac.variables)
             if extra_variables:
-                slice_ = [slice(None)] * len(fac.variables)
-                slice_.extend([np.newaxis] * len(extra_variables))
-
-                fac.log_values = fac.log_values[slice_]
+                fac.log_values = add_dims(fac.log_values, len(extra_variables))
                 fac.variables.extend(extra_variables)
                 new_variable_card = fac1.get_cardinalities_for_(extra_variables)
                 fac.cardinality = np.append(fac.cardinality, new_variable_card)
 
             extra_variables = set(fac.variables) - set(fac1.variables)
             if extra_variables:
-                slice_ = [slice(None)] * len(fac1.variables)
-                slice_.extend([np.newaxis] * len(extra_variables))
-
-                fac1.log_values = fac1.log_values[slice_]
+                fac1.log_values = add_dims(fac1.log_values,
+                                           len(extra_variables))
                 fac1.variables.extend(extra_variables)
             for axis in range(fac.log_values.ndim):
                 exchange_index = fac1.variables.index(fac.variables[axis])
@@ -354,7 +360,7 @@ class Factor:
         if not issubclass(type(self), type(other)):
             return False
         if self.name == other.name and tuple(sorted(self.variables)) == tuple(
-            sorted(other.variables)
+                sorted(other.variables)
         ):
             return True
         else:
@@ -367,7 +373,13 @@ class Factor:
         return hash(self.name.join(sorted(self.variables)))
 
     def __repr__(self):
-        return "Factor: " + self.name + " Variables: " + ", ".join(self.variables)
+        return "Factor: " + self.name + " Variables: " + ", ".join(
+            self.variables)
+
+
+def add_dims(a: np.array, extra_dims):
+    """Reshapes array by adding dimensions on the right."""
+    return a.reshape(*a.shape, *([1] * extra_dims))
 
 
 def logsumexp(a, axis=None, keepdims=False):

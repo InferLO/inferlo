@@ -18,8 +18,8 @@ default_message_name.cnt = 0
 
 
 class MeanField:
-    def __init__(self, model:GraphModel, **kwargs):
-        self.model = GraphicalModel.from_inferlo_model(model).copy()
+    def __init__(self, model: GraphicalModel, **kwargs):
+        self.model = model.copy()
 
         mean_field_init_method = kwargs.get("mean_field_init_method")
         if mean_field_init_method == "random":

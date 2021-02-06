@@ -3,19 +3,15 @@
 import numpy as np
 from sklearn.utils.extmath import randomized_svd
 
-from inferlo.base.graph_model import GraphModel
 from .bucket_elimination import BucketElimination
 from .factor import Factor, default_factor_name, product_over_
+from .graphical_model import GraphicalModel
 from .mini_bucket_elimination import MiniBucketElimination
 
 
 class BucketRenormalization(MiniBucketElimination):
-    """
-    Reference: Bucket Renormalization for Approximate Inference, 2018.
-      https://arxiv.org/abs/1803.05104
-    """
 
-    def __init__(self, model: 'GraphModel', **kwargs):
+    def __init__(self, model: GraphicalModel, **kwargs):
         super(BucketRenormalization, self).__init__(model, **kwargs)
         self.initialize_projectors()
 

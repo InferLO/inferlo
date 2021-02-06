@@ -127,30 +127,6 @@ class GraphicalModel:
         for fac in self.factors:
             print(fac)
 
-    @staticmethod
-    def from_inferlo_model(inferlo_model: GraphModel) -> 'GraphicalModel':
-        model = GraphicalModel()
-        model.name = 'generated_from_inferlo'
-
-        cardinalities = dict()
-        for t in range(inferlo_model.num_variables):
-            newvar = "V" + str(t)
-            model.add_variable(newvar)
-            cardinalities[newvar] = inferlo_model.get_variable(t).domain.size()
-
-        factors = list(inferlo_model.get_factors())
-        for factor_id in range(len(factors)):
-            factor = DiscreteFactor.from_factor(factors[factor_id])
-            factor_variables = []
-            for var_id in factor.var_idx:
-                factor_variables.append("V" + str(var_id))
-
-            model.add_factor(Factor(name="F" + str(factor_id),
-                                    variables=factor_variables,
-                                    values=factor.values))
-
-        return model
-
 def check_forney(gm):
     for variable in gm.variables:
         if gm.degree(variable) != 2:

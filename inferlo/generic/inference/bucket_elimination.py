@@ -66,10 +66,6 @@ class BucketElimination:
 
         return final_factor
 
-    @staticmethod
-    def create(model: GraphModel) -> 'BucketElimination':
-        return BucketElimination(GraphicalModel.from_inferlo_model(model))
-
 
 def get_bucket_size(bucket):
     s = set()

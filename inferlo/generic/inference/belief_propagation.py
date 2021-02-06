@@ -1,9 +1,7 @@
 import numpy as np
 from copy import copy
 
-from inferlo import GraphModel
 from .factor import Factor, product_over_, entropy
-from .graphical_model import GraphicalModel
 import random
 
 
@@ -71,7 +69,6 @@ class BeliefPropagation:
         return logZ
 
     def _update_messages(self, damp_ratio):
-        temp_messages = dict()
         factor_order = copy(self.model.factors)
         random.shuffle(factor_order)
         for fac in factor_order:
@@ -131,10 +128,6 @@ class BeliefPropagation:
         else:
             raise TypeError("Object {obj} not in the model.".format(obj=obj))
 
-    @staticmethod
-    def create(model: GraphModel) -> 'BeliefPropagation':
-        return BeliefPropagation(GraphicalModel.from_inferlo_model(model))
-
 
 class IterativeJoinGraphPropagation(BeliefPropagation):
     def __init__(self, model, ibound):
@@ -180,9 +173,3 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
                         print("empty mini-bucket")
 
         super(IterativeJoinGraphPropagation, self).__init__(model)
-
-    @staticmethod
-    def create(model: GraphModel,
-               ibound: int) -> 'IterativeJoinGraphPropagation':
-        return IterativeJoinGraphPropagation(
-            GraphicalModel.from_inferlo_model(model), ibound)

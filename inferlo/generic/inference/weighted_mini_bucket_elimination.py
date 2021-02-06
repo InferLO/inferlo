@@ -2,13 +2,13 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
 
-from inferlo.base.graph_model import GraphModel
 from .factor import product_over_, Factor
+from .graphical_model import GraphicalModel
 from .mini_bucket_elimination import MiniBucketElimination
 
 
 class WeightedMiniBucketElimination(MiniBucketElimination):
-    def __init__(self, model: GraphModel, **kwargs):
+    def __init__(self, model: GraphicalModel, **kwargs):
         super(WeightedMiniBucketElimination, self).__init__(model, **kwargs)
 
         self.initialize_holder_weights()

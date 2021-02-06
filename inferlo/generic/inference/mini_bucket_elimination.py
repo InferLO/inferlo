@@ -12,9 +12,9 @@ from .graphical_model import GraphicalModel
 
 
 class MiniBucketElimination:
-    def __init__(self, model: GraphModel = None, **kwargs):
+    def __init__(self, model: GraphicalModel = None, **kwargs):
         self.base_logZ = 0.0
-        self.model = GraphicalModel.from_inferlo_model(model).copy()
+        self.model = model.copy()
         if "elimination_order" in kwargs:
             self.elimination_order = copy(kwargs["elimination_order"])
         else:
