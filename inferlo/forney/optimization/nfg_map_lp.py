@@ -16,7 +16,7 @@ map_lp_result = namedtuple('map_lp_result', ['upper_bound',
 
 
 def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
-    """LP relaxation of MAP for NFG model.
+    """LP relaxation of MAP problem for NFG model.
 
     This function implements linear programming (LP) relaxation
     of maximum a posteriori assignment problem (MAP) for
@@ -53,16 +53,17 @@ def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
     Convex Free Energies" by Yair Weiss, Chen Yanover and Talya
     Meltzer. https://arxiv.org/pdf/1206.5286.pdf
 
-    The output of the function is:
+    :param model: Model for which to solve MAP problem.
 
-    1. upper bound on MAP value (solution of LP);
-    2. lower bound on MAP value (dual solution);
-    3. Optimal values of factor beliefs;
-    4. Optimal values of variable beliefs;
-    5. Optimal values of dual variables that correspond to normalization
-       constraints;
-    6. Optimal values of dual variables that correspond to marginalization
-       constraints.
+    :return: Object with the following fields:
+      ``upper_bound`` - upper bound on MAP value (solution of LP);
+      ``lower_bound`` - lower bound on MAP value (dual solution);
+      ``factor_beliefs`` - optimal values of factor beliefs;
+      ``variable_beliefs`` - optimal values of variable beliefs;
+      ``normalization_duals`` - optimal values of dual variables that \
+      correspond to normalization constraints;
+      ``marginalization_duals`` - optimal values of dual variables that
+      correspond to marginalization constraints.
     """
 
     al_size = model._default_domain.size()

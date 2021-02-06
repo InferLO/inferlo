@@ -48,16 +48,17 @@ def map_lp(model: PairWiseFiniteModel) -> map_lp_result:
     Convex Free Energies" by Yair Weiss, Chen Yanover and Talya
     Meltzer. https://arxiv.org/pdf/1206.5286.pdf
 
-    The output of the function is:
+    :param model: Model for which to solve MAP problem.
 
-    1. upper bound on MAP value (solution of LP);
-    2. lower bound on MAP value (dual solution);
-    3. Optimal values of node beliefs;
-    4. Optimal values of edge beliefs;
-    5. Optimal values of dual variables that correspond to normalization
-       constraints;
-    6. Optimal values of dual variables that correspond to marginalization
-       constraints.
+    :return: Object with the following fields:
+      ``upper_bound`` - upper bound on MAP value (solution of LP);
+      ``lower_bound`` - lower bound on MAP value (dual solution);
+      ``node_beliefs`` - optimal values of node beliefs;
+      ``edge_beliefs`` - optimal values of edge beliefs;
+      ``normalization_duals`` - optimal values of dual variables that
+      correspond to normalization constraints;
+      ``marginalization_duals`` - optimal values of dual variables that
+      correspond to marginalization constraints.
     """
 
     edge_list = model.edges
