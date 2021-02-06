@@ -64,6 +64,4 @@ jobs:
           sudo apt-get install pandoc
           pip install -r docs/requirements.txt
       - name: Build the docs
-        run: |
-          cd docs
-          make html
+        run: tools/check_style.sh
