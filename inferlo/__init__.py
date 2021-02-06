@@ -12,4 +12,5 @@ from .base import (
     Variable,
 )
 from .forney import NormalFactorGraphModel
+from .gaussian import GaussianModel
 from .pairwise import PairWiseFiniteModel
