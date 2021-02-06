@@ -19,7 +19,7 @@ jobs:
           sudo apt-get install pandoc
           pip install -r docs/requirements.txt
       - name: Build the docs
-        run: tools/check_style.sh
+        run: tools/build_docs.sh
       - name: Push documentation to GitHub Pages
         uses: sugatpoudel/git-deploy@v0.1
         with:
