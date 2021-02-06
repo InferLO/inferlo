@@ -8,17 +8,19 @@ from .mini_bucket_elimination import MiniBucketElimination
 
 
 class WeightedMiniBucketElimination(MiniBucketElimination):
+    """Weighted Mini Bucket Elimination algorithm."""
+
     def __init__(self, model: GraphicalModel, **kwargs):
         super(WeightedMiniBucketElimination, self).__init__(model, **kwargs)
 
-        self.initialize_holder_weights()
+        self._initialize_holder_weights()
         self.reparameterization_step_size = 0.1
         self.holder_weight_step_size = 0.1
         self.messages = dict()
 
-    def initialize_holder_weights(self):
+    def _initialize_holder_weights(self):
         holder_weights_for_ = dict()
-        for var, rep_vars in self.variables_replicated_from_.items():
+        for _, rep_vars in self.variables_replicated_from_.items():
             for rep_var in rep_vars:
                 holder_weights_for_[rep_var] = 1.0 / len(rep_vars)
 
@@ -26,6 +28,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
 
     def run(self, max_iter=10, update_weight=True, update_reparam=True,
             verbose=False):
+        """Runs the algorithm, returns log(Z)."""
         for var in self.elimination_order:
             for rvar in self.variables_replicated_from_[var]:
                 self._forward_pass_for_(rvar)
@@ -40,8 +43,8 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         for t in range(max_iter):
             if verbose:
                 print("{}/{}".format(t, max_iter))
-                print(self.get_logZ())
-            converge_flag = self.update_parameters(
+                print(self._get_log_z())
+            converge_flag = self._update_parameters(
                 update_weight=update_weight, update_reparam=update_reparam
             )
             if converge_flag:
@@ -51,9 +54,9 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         for var in self.renormalized_elimination_order:
             self._forward_pass_for_(var)
 
-        return self.get_logZ()
+        return self._get_log_z()
 
-    def update_parameters(self, update_weight=False, update_reparam=True):
+    def _update_parameters(self, update_weight=False, update_reparam=True):
         converge_flag = False
         for var in self.elimination_order:
             # if len(self.variables_replicated_from_[var]) > 1:
@@ -86,7 +89,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
 
         return converge_flag
 
-    def get_logZ(self):
+    def _get_log_z(self):
         logZ = self.base_logZ
         for var in self.renormalized_elimination_order:
             if not self.variable_upper_to_[var]:
@@ -95,7 +98,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
 
         return logZ
 
-    def get_marginals_upper_to_(self, variable):
+    def _get_marginals_upper_to(self, variable):
         marginal = product_over_(self.factor_upper_to_[variable],
                                  *self._messages_to_(variable))
         marginal.pow(1 / self.holder_weights_for_[variable])
@@ -106,8 +109,8 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
     def _forward_pass_for_(self, variable):
         upper_variable = self.variable_upper_to_[variable]
         message = product_over_(
-            self.factor_upper_to_[variable], *self._upper_messages_to_(variable)
-        )
+            self.factor_upper_to_[variable],
+            *self._upper_messages_to_(variable))
         message.marginalize(
             [variable], operator="weighted_sum",
             weight=self.holder_weights_for_[variable]
@@ -120,16 +123,10 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         message = product_over_(self.factor_upper_to_[variable],
                                 *self._messages_to_(variable))
         message.pow(
-            self.holder_weights_for_[lower_variable] / self.holder_weights_for_[
-                variable])
+            self.holder_weights_for_[lower_variable] /
+            self.holder_weights_for_[variable])
         message.div(self.messages[(lower_variable, variable)])
 
-        # variables_in_factor_upper_to_lower_variable = copy(self.factor_upper_to_[lower_variable].variables)
-        # variables_to_marginalize = list(set(message.variables)
-        #                                - set(variables_in_factor_upper_to_lower_variable))
-        # message.marginalize(variables_to_marginalize,
-        #                    operator = 'weighted_sum',
-        #                    weight = self.holder_weights_for_[lower_variable])
         lower_upper_factor = self.factor_upper_to_[lower_variable]
         variables_to_marginalize = list(
             set(message.variables) - set(lower_upper_factor.variables))
@@ -138,38 +135,14 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             operator="weighted_sum",
             weight=self.holder_weights_for_[lower_variable],
         )
-        # variables_not_to_marginalize = self.upper_candidate_for_[lower_variable]
-        # message.marginalize_except_(variables_not_to_marginalize,
-        #                            operator = 'weighted_sum',
-        #                            weight = self.holder_weights_for_[lower_variable])
         message.name = "M_{}<-{}".format(lower_variable, variable)
         self.messages[(variable, lower_variable)] = message
-
-    """
-    def _update_reparameterization_for_(self, variable):
-        belief_from_ = dict()
-        average_belief = 0.0
-        for rvar in self.variables_replicated_from_[variable]:
-            belief_from_[rvar] = self.get_marginals_upper_to_(rvar)
-            belief_from_[rvar].marginalize_except_([rvar])
-            belief_from_[rvar].variables = [variable]
-            average_belief = average_belief + belief_from_[rvar].values
-
-        average_belief =  (1.0/len(self.variables_replicated_from_[variable])) * average_belief
-
-        for rvar in self.variables_replicated_from_[variable]:
-            temp_log_val = (- self.reparameterization_step_size / len(self.factors_adj_to_[rvar])) * (belief_from_[rvar].values - average_belief)
-            temp = Factor('', [rvar], log_values = temp_log_val)
-            for fac in self.factors_adj_to_[rvar]:
-                fac.product(temp)
-    """
 
     def _update_reparameterization_for_(self, variable):
         belief_from_ = dict()
         log_average_belief = 0.0
-        average_weight = 0.0
         for rvar in self.variables_replicated_from_[variable]:
-            belief_from_[rvar] = self.get_marginals_upper_to_(rvar)
+            belief_from_[rvar] = self._get_marginals_upper_to(rvar)
             belief_from_[rvar].marginalize_except_([rvar])
             belief_from_[rvar].variables = [variable]
             belief_from_[rvar].normalize()
@@ -180,8 +153,8 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
 
         converge_flag = True
         for rvar in self.variables_replicated_from_[variable]:
-            if np.sum(np.abs(-belief_from_[
-                rvar].log_values + log_average_belief)) > 1e-2:
+            if np.sum(np.abs(-belief_from_[rvar].log_values +
+                             log_average_belief)) > 1e-2:
                 converge_flag = False
                 temp_log_val = (self.holder_weights_for_[rvar]) * (
                         -belief_from_[rvar].log_values + log_average_belief
@@ -195,9 +168,10 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         entropy_for_ = dict()
         average_entropy = 0.0
         for rvar in self.variables_replicated_from_[variable]:
-            belief_from_rvar = self.get_marginals_upper_to_(rvar)
+            belief_from_rvar = self._get_marginals_upper_to(rvar)
             b_values = belief_from_rvar.values
-            cb_values = belief_from_rvar.normalize([rvar], inplace=False).values
+            cb_values = belief_from_rvar.normalize(
+                [rvar], inplace=False).values
 
             b_values.ravel()
             cb_values.ravel()

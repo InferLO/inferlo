@@ -3,15 +3,17 @@
 import random
 from copy import copy
 from functools import reduce
+from typing import List
 
 import numpy as np
 
-from inferlo.base.graph_model import GraphModel
 from .factor import Factor, product_over_
 from .graphical_model import GraphicalModel
 
 
 class MiniBucketElimination:
+    """Mini-Bucket elimination algorithm."""
+
     def __init__(self, model: GraphicalModel = None, **kwargs):
         self.base_logZ = 0.0
         self.model = model.copy()
@@ -21,7 +23,7 @@ class MiniBucketElimination:
             self.elimination_order = []
 
         if "renormalized_model" not in kwargs:
-            self.renormalize_model(**kwargs)
+            self._renormalize_model(**kwargs)
         else:
             self.renormalized_model = kwargs["renormalized_model"].copy()
             self.renormalized_elimination_order = kwargs[
@@ -30,22 +32,9 @@ class MiniBucketElimination:
                 "variables_replicated_from_"]
             self.base_logZ = kwargs["base_logZ"]
 
-        self.initialize_relation()
+        self._initialize_relation()
 
-    @classmethod
-    def initialize_with_(cls, mbr):
-        return cls(
-            mbr.model,
-            elimination_order=mbr.elimination_order,
-            renormalized_model=mbr.renormalized_model,
-            renormalized_elimination_order=mbr.renormalized_elimination_order,
-            variables_replicated_from_=mbr.variables_replicated_from_,
-            base_logZ=mbr.base_logZ,
-        )
-
-        return mbr
-
-    def initialize_relation(self):
+    def _initialize_relation(self):
         variable_upper_to_ = {var: None for var in
                               self.renormalized_model.variables}
         variables_lower_to_ = {var: [] for var in
@@ -89,8 +78,9 @@ class MiniBucketElimination:
         self.factor_upper_to_ = factor_upper_to_
         # self.upper_candidate_for_ = upper_candidate_for_
 
-    def renormalize_model(self, **kwargs):
+    def _renormalize_model(self, **kwargs):
         ibound = kwargs["ibound"]
+        use_min_fill = True
         if "elimination_order_method" in kwargs:
             if kwargs["elimination_order_method"] == "random":
                 elimination_order = copy(self.model.variables)
@@ -126,25 +116,22 @@ class MiniBucketElimination:
 
             bucket_for_ = {cand_var: [] for cand_var in uneliminated_variables}
             for facs in working_factorss:
-                for cand_var in self.get_variables_in_(
-                        [[fac] for fac in facs], eliminated=eliminated_variables
-                ):
+                for cand_var in self._get_variables_in(
+                        [[fac] for fac in facs],
+                        eliminated=eliminated_variables):
                     bucket_for_[cand_var].append(facs)
 
             for cand_var in uneliminated_variables:
                 candidate_mini_buckets_for_[cand_var] = []
                 for facs in bucket_for_[cand_var]:
-                    mini_bucket = next(
-                        (
-                            mb
-                            for mb in candidate_mini_buckets_for_[cand_var]
-                            if self.get_bucket_size(
-                                mb + [facs], eliminated=eliminated_variables + [cand_var]
-                            )
-                            < ibound
-                        ),
-                        False,
-                    )
+                    mini_bucket = None
+                    for mb in candidate_mini_buckets_for_[cand_var]:
+                        eliminated = eliminated_variables + [cand_var]
+                        if self.get_bucket_size(mb + [facs],
+                                                eliminated=eliminated) < ibound:
+                            mini_bucket = mb
+                            break
+
                     if mini_bucket:
                         mini_bucket.append(facs)
                     else:
@@ -152,8 +139,8 @@ class MiniBucketElimination:
 
             if use_min_fill:
                 var, mini_buckets = min(
-                    candidate_mini_buckets_for_.items(), key=lambda x: len(x[1])
-                )
+                    candidate_mini_buckets_for_.items(), key=lambda x: len(
+                        x[1]))
                 elimination_order.append(var)
             else:
                 var = elimination_order[t]
@@ -161,13 +148,12 @@ class MiniBucketElimination:
 
             eliminated_variables.append(var)
             mini_buckets.sort(
-                key=lambda mb: self.get_bucket_size(mb,
-                                                    eliminated=eliminated_variables)
-            )
+                key=lambda mb: self.get_bucket_size(
+                    mb, eliminated=eliminated_variables))
 
             remove_idx = []
             for working_facs_idx, working_facs in enumerate(working_factorss):
-                if var in self.get_variables_in_(
+                if var in self._get_variables_in(
                         [[fac] for fac in working_facs]):
                     remove_idx.append(working_facs_idx)
 
@@ -217,6 +203,7 @@ class MiniBucketElimination:
         self.base_logZ = base_logZ
 
     def run(self):
+        """Runs the algorithm, returns log(Z)."""
         working_model = self.renormalized_model.copy()
         for var in self.elimination_order:
             for i, rvar in enumerate(self.variables_replicated_from_[var]):
@@ -231,7 +218,9 @@ class MiniBucketElimination:
 
         return logZ
 
-    def get_variables_in_(self, bucket, eliminated=[]):
+    def _get_variables_in(self, bucket, eliminated=None):
+        if eliminated is None:
+            eliminated = []
         if [fac.variables for facs in bucket for fac in facs]:
             variables_in_bucket = reduce(
                 lambda vars1, vars2: set(vars1).union(set(vars2)),
@@ -243,11 +232,12 @@ class MiniBucketElimination:
         else:
             return []
 
-    def get_bucket_size(self, bucket, eliminated=[]):
-        variables_in_bucket = self.get_variables_in_(bucket, eliminated)
+    def get_bucket_size(self, bucket: List[Factor], eliminated=None):
+        """Counts variables referenced by factors in given bucket."""
+        if eliminated is None:
+            eliminated = []
+        variables_in_bucket = self._get_variables_in(bucket, eliminated)
         if variables_in_bucket:
-            return len(
-                variables_in_bucket
-            )  # np.prod([self.model.get_cardinality_for_(var) for var in variables_in_bucket])
+            return len(variables_in_bucket)
         else:
             return 0

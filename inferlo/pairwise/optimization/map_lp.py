@@ -86,8 +86,8 @@ def map_lp(model: PairWiseFiniteModel) -> map_lp_result:
     # normalization constraints
     for edge in edge_list:
         constraints += [sum([edge_beliefs[edge_list.index(edge)][a, b]
-                        for a in range(model.al_size)
-                        for b in range(model.al_size)]) == 1]
+                             for a in range(model.al_size)
+                             for b in range(model.al_size)]) == 1]
 
     # marginalization constraints
     for edge in edge_list:

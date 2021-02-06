@@ -1,19 +1,22 @@
-import numpy as np
+import random
 from copy import copy
 
+import numpy as np
+
 from .factor import Factor, product_over_, entropy
-import random
 
 
-def default_message_name(prefix="_M"):
-    default_message_name.cnt += 1
-    return prefix + str(default_message_name.cnt)
+def _default_message_name(prefix="_M"):
+    _default_message_name.cnt += 1
+    return prefix + str(_default_message_name.cnt)
 
 
-default_message_name.cnt = 0
+_default_message_name.cnt = 0
 
 
 class BeliefPropagation:
+    """Belief Propagation algorithm."""
+
     def __init__(self, model):
         self.model = model.copy()
         init_np_func = np.ones
@@ -25,7 +28,7 @@ class BeliefPropagation:
         for fac in model.factors:
             for var in fac.variables:
                 self.messages[(fac, var)] = Factor.initialize_with_(
-                    default_message_name(), [var], init_np_func,
+                    _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )
                 self.messages[(fac, var)].normalize()
@@ -33,13 +36,14 @@ class BeliefPropagation:
         for fac in model.factors:
             for var in fac.variables:
                 self.messages[(var, fac)] = Factor.initialize_with_(
-                    default_message_name(), [var], init_np_func,
+                    _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )
                 self.messages[(var, fac)].normalize()
 
-    def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1):
-        for t in range(max_iter):
+    def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1) -> float:
+        """Runs the algorithm, returns log(Z)."""
+        for _ in range(max_iter):
             old_messages = {key: item.copy() for key, item in
                             self.messages.items()}
             self._update_messages(damp_ratio)
@@ -55,10 +59,10 @@ class BeliefPropagation:
             self.beliefs[fac] = product_over_(fac, *self._message_to_(
                 fac)).normalize(inplace=False)
 
-        logZ = self.get_logZ()
+        logZ = self._get_log_z()
         return logZ
 
-    def get_logZ(self):
+    def _get_log_z(self):
         logZ = 0.0
         for var in self.model.variables:
             logZ += (1 - self.model.degree(var)) * entropy(self.beliefs[var])
@@ -69,21 +73,21 @@ class BeliefPropagation:
         return logZ
 
     def _update_messages(self, damp_ratio):
+        dr = damp_ratio
         factor_order = copy(self.model.factors)
         random.shuffle(factor_order)
+
+        def update_message(key, msg):
+            self.messages[key] = dr * self.messages[key] + (1 - dr) * msg
+
         for fac in factor_order:
             for var in fac.variables:
-                next_message = (
-                    product_over_(fac, *[msg for msg in self._message_to_(fac,
-                                                                          except_objs=[
-                                                                              var])])
-                        .marginalize_except_([var], inplace=False)
-                        .normalize(inplace=False)
-                )
-                self.messages[(fac, var)] = (
-                        damp_ratio * self.messages[(fac, var)] + (
-                        1 - damp_ratio) * next_message
-                )
+                messages = [msg for msg in
+                            self._message_to_(fac, except_objs=[var])]
+                next_message = (product_over_(fac, *messages)
+                                .marginalize_except_([var], inplace=False)
+                                .normalize(inplace=False))
+                update_message((fac, var), next_message)
 
         variable_order = copy(self.model.variables)
         random.shuffle(variable_order)
@@ -97,10 +101,7 @@ class BeliefPropagation:
                         *messages_to_var_except_fac).normalize(
                         inplace=False
                     )
-                    self.messages[(var, fac)] = (
-                            damp_ratio * self.messages[(var, fac)] + (
-                            1 - damp_ratio) * next_message
-                    )
+                    update_message((var, fac), next_message)
 
     def _is_converged(self, converge_thr, messages, new_messages):
         for var in self.model.variables:
@@ -115,7 +116,9 @@ class BeliefPropagation:
 
         return True
 
-    def _message_to_(self, obj, except_objs=[]):
+    def _message_to_(self, obj, except_objs=None):
+        if except_objs is None:
+            except_objs = []
         if obj in self.model.factors:
             return [self.messages[(var, obj)] for var in obj.variables if
                     var not in except_objs]
@@ -130,6 +133,7 @@ class BeliefPropagation:
 
 
 class IterativeJoinGraphPropagation(BeliefPropagation):
+    """Iterative Join Graph Propagation algorithm."""
     def __init__(self, model, ibound):
         self.org_model = model.copy()
         model = model.copy()
@@ -140,11 +144,13 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
             def get_bucket_size(facs):
                 adj_adj_vars = [fac.variables for fac in facs]
                 a = set()
-                for vars in adj_adj_vars:
-                    a = a.union(vars)
+                for variables in adj_adj_vars:
+                    a = a.union(variables)
                 return len(a)
 
-            get_key = lambda var: get_bucket_size(model.get_adj_factors(var))
+            def get_key(var):
+                return get_bucket_size(
+                    model.get_adj_factors(var))
 
             var = min(unelminated_variables, key=get_key)
             unelminated_variables.pop(unelminated_variables.index(var))

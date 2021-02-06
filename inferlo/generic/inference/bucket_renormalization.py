@@ -10,12 +10,13 @@ from .mini_bucket_elimination import MiniBucketElimination
 
 
 class BucketRenormalization(MiniBucketElimination):
+    """Bucket Renormalization algorithm."""
 
     def __init__(self, model: GraphicalModel, **kwargs):
         super(BucketRenormalization, self).__init__(model, **kwargs)
-        self.initialize_projectors()
+        self._initialize_projectors()
 
-    def initialize_projectors(self):
+    def _initialize_projectors(self):
         replications = dict()
         working_model = self.renormalized_model.copy()
         for var in self.elimination_order:
@@ -31,7 +32,7 @@ class BucketRenormalization(MiniBucketElimination):
                     projector.name = "P_{}".format(rvar)
 
                     replications[rvar] = (
-                    main_rvar, replicated_projector, projector)
+                        main_rvar, replicated_projector, projector)
                     main_projectors.append(projector)
 
                     working_model.add_factors_from(
@@ -43,7 +44,7 @@ class BucketRenormalization(MiniBucketElimination):
 
         self.replications = replications
 
-    def optimize(self):
+    def _optimize(self):
         for var in reversed(self.renormalized_elimination_order):
             if var in self.replications.keys():
                 mb_var, projector, mb_projector = self.replications[var]
@@ -66,15 +67,15 @@ class BucketRenormalization(MiniBucketElimination):
                 self.renormalized_model.add_factors_from(
                     [new_projector, new_mb_projector])
                 self.replications[var] = (
-                mb_var, new_projector, new_mb_projector)
+                    mb_var, new_projector, new_mb_projector)
 
     def run(self, max_iter=10):
-        for t in range(max_iter):
-            self.optimize()
+        """Runs the algorithm, returns log(Z)."""
+        for _ in range(max_iter):
+            self._optimize()
+        return self._get_logZ()
 
-        return self.get_logZ()
-
-    def get_logZ(self):
+    def _get_logZ(self):
         be = BucketElimination(self.renormalized_model)
         logZ = self.base_logZ
         logZ += be.run(

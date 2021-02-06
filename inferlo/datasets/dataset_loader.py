@@ -1,16 +1,17 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0.
+import os
 from dataclasses import dataclass
 
-from inferlo import GraphModel, GenericGraphModel
 import numpy as np
-import os
 import wget
 
+from inferlo import GenericGraphModel
 from inferlo.datasets.uai_reader import UaiReader
 
-UAI_PROB_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/MAR_prob'
-UAI_SOL_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/MAR_sol'
+REPO_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/'
+UAI_PROB_URL = REPO_URL + 'MAR_prob'
+UAI_SOL_URL = REPO_URL + 'MAR_sol'
 
 # Copied from http://sli.ics.uci.edu/~ihler/uai-data/
 # Values here are log10.

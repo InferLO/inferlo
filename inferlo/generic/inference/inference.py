@@ -12,10 +12,10 @@ from .weighted_mini_bucket_elimination import WeightedMiniBucketElimination
 
 
 def _convert(inferlo_model: GraphModel) -> GraphicalModel:
-    model = GraphicalModel()
+    model = GraphicalModel([], [])
     cardinalities = dict()
     for t in range(inferlo_model.num_variables):
-        newvar = "V" + str(t)
+        newvar = "V%d" % t
         model.add_variable(newvar)
         cardinalities[newvar] = inferlo_model.get_variable(t).domain.size()
 
@@ -24,8 +24,8 @@ def _convert(inferlo_model: GraphModel) -> GraphicalModel:
         factor = DiscreteFactor.from_factor(factors[factor_id])
         factor_variables = []
         for var_id in factor.var_idx:
-            factor_variables.append("V" + str(var_id))
-        model.add_factor(Factor(name="F" + str(factor_id),
+            factor_variables.append("V%d" % var_id)
+        model.add_factor(Factor(name="F%d" % factor_id,
                                 variables=factor_variables,
                                 values=factor.values))
     return model
@@ -51,7 +51,7 @@ def belief_propagation(model: GraphModel,
     """
     algo = BeliefPropagation(_convert(model))
     return algo.run(max_iter=max_iter, converge_thr=converge_thr,
-             damp_ratio=damp_ratio)
+                    damp_ratio=damp_ratio)
 
 
 def bucket_elimination(model: GraphModel) -> float:
@@ -129,12 +129,16 @@ def iterative_join_graph_propagation(model: GraphModel,
                     damp_ratio=damp_ratio)
 
 
-def mean_field(model: GraphModel) -> float:
+def mean_field(model: GraphModel,
+               max_iter: int = 1000,
+               converge_thr: float = 1e-2) -> float:
     """Inference with Mean Field.
 
     Estimates partition function using Mean Field approximation.
 
     :param model: Model for which to perform inference.
+    :param max_iter: Maximal number of iterations.
+    :param converge_thr: Convergence threshold.
     :return: Natural logarithm of estimated partition function.
 
     References
