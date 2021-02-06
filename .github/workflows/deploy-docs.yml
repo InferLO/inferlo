@@ -22,10 +22,9 @@ jobs:
       - name: Build the docs
         run: tools/build_docs.sh
       - name: Push documentation to GitHub Pages
-        uses: sugatpoudel/git-deploy@v0.1
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          changes: docs/build/_html
-          repository: git@github.com:InferLO/docs.git
-          ssh_key: ${{ secrets.DOCS_DEPLOY_KEY }}
-          name: fedimser
-          email: fedimser@gmail.com
+          publish_dir: ./docs/build/_html
+          external_repository: InferLO/docs
+          publish_branch: master
+          deploy_key: ${{ secrets.DOCS_DEPLOY_KEY }}
