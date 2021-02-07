@@ -172,8 +172,8 @@ def weighted_mini_bucket_elimination(model: GraphModel,
                                      ibound: int = 10) -> float:
     """Inference with Weighted Mini Bucket Elimination.
 
-    Estimates partition function using MWeighted Mini Bucket Elimination
-      algorithm.
+    Estimates partition function using Weighted Mini Bucket Elimination
+    algorithm.
 
     :param model: Model for which to perform inference.
     :param ibound: Maximal size of mini-bucket.

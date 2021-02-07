@@ -17,7 +17,7 @@ __pycache__
 inferlo/interop/libdai/tmp
 
 # Sphinx
-_build
+docs/_build
 docs/generated
 
 # Ignore generated Jupyter files
