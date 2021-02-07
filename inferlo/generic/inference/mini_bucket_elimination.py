@@ -127,8 +127,8 @@ class MiniBucketElimination:
                     mini_bucket = None
                     for mb in candidate_mini_buckets_for_[cand_var]:
                         eliminated = eliminated_variables + [cand_var]
-                        if self.get_bucket_size(mb + [facs],
-                                                eliminated=eliminated) < ibound:
+                        if self.get_bucket_size(
+                                mb + [facs], eliminated=eliminated) < ibound:
                             mini_bucket = mb
                             break
 

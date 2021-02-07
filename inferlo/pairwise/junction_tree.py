@@ -10,6 +10,7 @@ from networkx.algorithms.approximation.treewidth import (treewidth_min_fill_in,
                                                          treewidth_min_degree)
 
 from inferlo.base.inference_result import InferenceResult
+from inferlo.pairwise.bruteforce import TooMuchStatesError
 from inferlo.pairwise.utils import decode_state, get_marginal_states
 
 if TYPE_CHECKING:
@@ -153,7 +154,9 @@ def to_junction_tree_model(model, algorithm) -> JunctionizedModel:
 
     new_gr_size = len(jt_nodes)  # New graph size.
     new_al_size = model.al_size ** sv_size  # New alphabet size.
-    assert new_al_size <= 1e6, "New domain size is too large."
+    if new_al_size > 1e6:
+        raise TooMuchStatesError(
+            "New domain size is too large: %d." % new_al_size)
 
     # Build edge list in terms of indices in new graph.
     nodes_lookup = {jt_nodes[i]: i for i in range(len(jt_nodes))}

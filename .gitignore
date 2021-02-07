@@ -26,4 +26,4 @@ docs/generated
 # Ignore Jupyter notebooks, except in documentation.
 *.ipynb
 !/docs/tutorials/*.ipynb
-!/docs/examples/*.ipynb
+!/docs/experiments/*.ipynb

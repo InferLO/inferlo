@@ -2,10 +2,13 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import random
 from copy import copy
+from typing import Dict, Tuple, List
 
 import numpy as np
 
 from .factor import Factor, product_over_, entropy
+from .graphical_model import GraphicalModel
+from ... import InferenceResult
 
 
 def _default_message_name(prefix="_M"):
@@ -22,11 +25,10 @@ class BeliefPropagation:
     def __init__(self, model):
         self.model = model.copy()
         init_np_func = np.ones
-        self.factors_adj_to_ = {
-            var: self.model.get_adj_factors(var) for var in self.model.variables
-        }
+        self.factors_adj_to_ = {var: self.model.get_adj_factors(
+            var) for var in self.model.variables}
 
-        self.messages = dict()
+        self.messages = dict()  # type: Dict[Tuple, Factor]
         for fac in model.factors:
             for var in fac.variables:
                 self.messages[(fac, var)] = Factor.initialize_with_(
@@ -43,7 +45,7 @@ class BeliefPropagation:
                 )
                 self.messages[(var, fac)].normalize()
 
-    def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1) -> float:
+    def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1):
         """Runs the algorithm, returns log(Z)."""
         for _ in range(max_iter):
             old_messages = {key: item.copy() for key, item in
@@ -61,18 +63,32 @@ class BeliefPropagation:
             self.beliefs[fac] = product_over_(fac, *self._message_to_(
                 fac)).normalize(inplace=False)
 
-        logZ = self._get_log_z()
-        return logZ
-
-    def _get_log_z(self):
-        logZ = 0.0
+    def get_log_z(self):
+        """Calculates partition function based on beliefs."""
+        log_z = 0.0
         for var in self.model.variables:
-            logZ += (1 - self.model.degree(var)) * entropy(self.beliefs[var])
-
+            log_z += (1 - self.model.degree(var)) * entropy(self.beliefs[var])
         for fac in self.model.factors:
-            logZ += entropy(self.beliefs[fac], fac)
+            log_z += entropy(self.beliefs[fac], fac)
+        return log_z
 
-        return logZ
+    def get_marginal_probabilities(self) -> np.array:
+        """Calculates marginal probabilities based on beliefs."""
+
+        def to_np_array(marginals: List[np.array]):
+            max_card = max(len(m) for m in marginals)
+            result = np.zeros((len(marginals), max_card))
+            for i in range(len(marginals)):
+                result[i, 0:len(marginals[i])] = marginals[i]
+            return result
+
+        return to_np_array(
+            [self.beliefs[var].values for var in self.model.variables])
+
+    def get_inference_result(self) -> InferenceResult:
+        """Extracts inference result (partition functions and marginals)."""
+        return InferenceResult(log_pf=self.get_log_z(),
+                               marg_prob=self.get_marginal_probabilities())
 
     def _update_messages(self, damp_ratio):
         dr = damp_ratio
@@ -136,7 +152,8 @@ class BeliefPropagation:
 
 class IterativeJoinGraphPropagation(BeliefPropagation):
     """Iterative Join Graph Propagation algorithm."""
-    def __init__(self, model, ibound):
+
+    def __init__(self, model: GraphicalModel, ibound: int):
         self.org_model = model.copy()
         model = model.copy()
 
@@ -151,8 +168,7 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
                 return len(a)
 
             def get_key(var):
-                return get_bucket_size(
-                    model.get_adj_factors(var))
+                return get_bucket_size(model.get_adj_factors(var))
 
             var = min(unelminated_variables, key=get_key)
             unelminated_variables.pop(unelminated_variables.index(var))

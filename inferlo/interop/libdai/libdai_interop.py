@@ -5,14 +5,15 @@ from __future__ import annotations
 import copy
 import os
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Dict
 
 import numpy as np
 
-from inferlo.base.factors import DiscreteFactor
 from inferlo.base import InferenceResult
+from inferlo.base.factors import DiscreteFactor
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -47,9 +48,26 @@ class LibDaiInterop():
         libDAI supports several inference algorithms, identified by codename.
         For full list of algorithms, see LibDaiInterop.ALL_ALGORITHMS.
 
+        List of supported algorithms with their full names:
+
+        * BP - (Loopy) Belief Propagation;
+        * CBP - Conditioned Belief Propagation;
+        * DECMAP - Decimation algorithm;
+        * EXACT - Exact inference by brute force enumeration;
+        * FBP - Fractional Belief Propagation;
+        * GIBBS - Gibbs sampler;
+        * GLC - Generalized Loop Corrected Belief Propagation;
+        * HAK - Double-loop Generalized Belief Propagation;
+        * JTREE - Exact inference by junction-tree methods;
+        * LC - Loop Corrected Belief Propagation;
+        * MF - Mean Field;
+        * MR - Approximate inference algorithm by Montanari and Rizzo;
+        * TREEEP - Tree Expectation Propagation;
+        * TRWBP - Tree-Reweighted Belief Propagation;
+
         All algorithms support calculating marginal probabilties, not all of
         them support calculating logZ or most likely state. If algorithm
-        doesn't support calculating logZ, you'l get 0. If algorithms doesn't
+        doesn't support calculating logZ, you'll get 0. If algorithms doesn't
         support calculating most likely state, exception will be thrown.
 
         For documentation on particular algorithms, refer to libDAI
@@ -114,7 +132,7 @@ class LibDaiInterop():
         import inferlo.interop.libdai as libdai_module
         path = Path(libdai_module.__file__).parent
         self.bin_path = os.path.join(path, 'bin')
-        self.tmp_path = os.path.join(path, 'tmp')
+        self.tmp_path = os.path.join(tempfile.gettempdir(), 'inferlo_libdai')
         if not os.path.exists(self.tmp_path):
             os.makedirs(self.tmp_path)
         self.exe_path = os.path.join(self.bin_path, 'run_libdai.exe')

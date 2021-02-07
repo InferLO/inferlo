@@ -20,10 +20,10 @@ Documentation
 
 .. toctree::
     :maxdepth: 1
-    :caption: Examples
+    :caption: Experiments
 
-    examples/inferlo_libdai.ipynb
-
+    experiments/inferlo_libdai.ipynb
+    experiments/bucket_renormalization.ipynb
 	
 .. toctree::
     :maxdepth: 1

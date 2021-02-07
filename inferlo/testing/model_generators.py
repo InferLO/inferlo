@@ -120,6 +120,37 @@ def pairwise_model_on_graph(graph, al_size=2, zero_field=False, seed=0):
     return PairWiseFiniteModel.create(field, edges, interactions)
 
 
+def ising_model_on_graph(graph: networkx.Graph,
+                         field_range=0.1,
+                         interaction_range=0.1,
+                         seed=0) -> PairWiseFiniteModel:
+    """Builds random Ising model on given graph.
+
+    :param graph: Graph for the model. Vertices are variables,
+      nodes are interactions.
+    :param field_range: Fields will be sampled uniformly from
+      ``[-field_range, field_range]``.
+    :param interaction_range: Interactions will be sampled uniformly from
+      ``[-interaction_range, interaction_range]``.
+    :param seed: Random seed.
+    :return: Generated model.
+    """
+    # Remap arbitrary variable labels to integers.
+    nodes = list(graph.nodes)
+    var_index = {nodes[i]: i for i in range(len(nodes))}
+    edges = [(var_index[u], var_index[v]) for u, v in graph.edges()]
+
+    np.random.seed(seed)
+    field = np.random.uniform(low=-field_range, high=field_range,
+                              size=(len(nodes),))
+    field = np.einsum('a,b->ab', field, [-1, 1])
+    inter = np.random.uniform(low=-interaction_range, high=interaction_range,
+                              size=(len(edges),))
+    inter = np.einsum('a,bc->abc', inter, [[1, -1], [-1, 1]])
+
+    return PairWiseFiniteModel.create(field, edges, inter)
+
+
 def make_cross(length=20, width=2) -> networkx.Graph:
     """Builds graph which looks like a cross.
 

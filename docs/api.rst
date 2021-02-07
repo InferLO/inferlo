@@ -135,10 +135,11 @@ useful for testing and benchmarking.
 
     inferlo.testing.clique_potts_model
     inferlo.testing.grid_potts_model
+    inferlo.testing.ising_model_on_graph
+    inferlo.testing.pairwise_model_on_graph
     inferlo.testing.line_potts_model
     inferlo.testing.random_generic_model
     inferlo.testing.tree_potts_model
-    inferlo.testing.pairwise_model_on_graph
 
 
 Interoperation
