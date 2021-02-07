@@ -24,6 +24,7 @@ from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
 from .utils import decode_state, encode_state, decode_all_states
+from ..generic.inference import belief_propagation
 from ..graphs import fast_dfs
 from ..graphs.fast_dfs import FastDfsResult
 
@@ -273,7 +274,7 @@ class PairWiseFiniteModel(GraphModel):
             try:
                 return infer_junction_tree(self)
             except TooMuchStatesError:
-                return infer_message_passing(self)
+                return belief_propagation(self)
         elif algorithm == 'bruteforce':
             return infer_bruteforce(self)
         elif algorithm == 'mean_field':
@@ -370,7 +371,7 @@ class PairWiseFiniteModel(GraphModel):
 
     @staticmethod
     def create(field: np.ndarray,
-               edges: Union[np.ndarra, List],
+               edges: Union[np.ndarray, List],
                interactions: np.ndarray):
         """Creates PairwiseFiniteModel from compact representation.
 
@@ -480,7 +481,7 @@ class PairWiseFiniteModel(GraphModel):
         # Validate model.
         if al_size > 1000:
             raise ValueError("Not all variables are discrete.")
-        if max (len(f.var_idx) for f in old_factors) > 2:
+        if max(len(f.var_idx) for f in old_factors) > 2:
             raise ValueError("Model is not pairwise.")
 
         new_model = PairWiseFiniteModel(original_model.num_variables, al_size)

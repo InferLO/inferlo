@@ -147,8 +147,8 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             belief_from_[rvar].variables = [variable]
             belief_from_[rvar].normalize()
             log_average_belief = (
-                    log_average_belief + self.holder_weights_for_[rvar] *
-                    belief_from_[rvar].log_values
+                log_average_belief + self.holder_weights_for_[rvar] *
+                belief_from_[rvar].log_values
             )
 
         converge_flag = True
@@ -157,7 +157,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
                              log_average_belief)) > 1e-2:
                 converge_flag = False
                 temp_log_val = (self.holder_weights_for_[rvar]) * (
-                        -belief_from_[rvar].log_values + log_average_belief
+                    -belief_from_[rvar].log_values + log_average_belief
                 )
                 temp = Factor("", [rvar], log_values=temp_log_val)
                 self.factor_upper_to_[rvar].product(temp)
@@ -186,7 +186,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         for rvar in self.variables_replicated_from_[variable]:
             self.holder_weights_for_[rvar] *= np.exp(
                 -self.holder_weight_step_size * (
-                        entropy_for_[rvar] - average_entropy)
+                    entropy_for_[rvar] - average_entropy)
             )
             holder_weight_sum += self.holder_weights_for_[rvar]
 
@@ -197,7 +197,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         if self.variable_upper_to_[variable]:
             upper_variable = self.variable_upper_to_[variable]
             return [self.messages[
-                        (upper_variable, variable)]] + self._upper_messages_to_(
+                (upper_variable, variable)]] + self._upper_messages_to_(
                 variable)
         else:
             return self._upper_messages_to_(variable)

@@ -56,12 +56,16 @@ def belief_propagation(model: GraphModel,
     return algo.get_inference_result()
 
 
-def bucket_elimination(model: GraphModel) -> float:
+def bucket_elimination(model: GraphModel,
+                       elimination_order_method: str = "random") -> float:
     """Inference with Bucket Elimination.
 
     Estimates partition function using Bucket Elimination algorithm.
 
     :param model: Model for which to perform inference.
+    :param elimination_order_method: Elimination order. Can be 'random',
+      'not_random' or 'given'. If 'given', elimination order should be passed in
+      'elimination_order' argument.
     :return: Natural logarithm of estimated partition function.
 
     References
@@ -72,7 +76,8 @@ def bucket_elimination(model: GraphModel) -> float:
         [2] `Original implementation
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py>`_.
     """
-    return BucketElimination(_convert(model)).run()
+    algo = BucketElimination(_convert(model))
+    return algo.run(elimination_order_method=elimination_order_method)
 
 
 def bucket_renormalization(model: GraphModel,

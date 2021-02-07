@@ -25,9 +25,8 @@ class BeliefPropagation:
     def __init__(self, model):
         self.model = model.copy()
         init_np_func = np.ones
-        self.factors_adj_to_ = {
-            var: self.model.get_adj_factors(var) for var in self.model.variables
-        }
+        self.factors_adj_to_ = {var: self.model.get_adj_factors(
+            var) for var in self.model.variables}
 
         self.messages = dict()  # type: Dict[Tuple, Factor]
         for fac in model.factors:
