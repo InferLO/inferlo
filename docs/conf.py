@@ -15,8 +15,7 @@ import sys
 
 from sphinx_markdown_parser.parser import MarkdownParser
 
-inferlo_root_path = os.path.dirname(os.path.dirname(__file__))
-sys.path.insert(0, inferlo_root_path)
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 
 def setup(app):
@@ -48,6 +47,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'IPython.sphinxext.ipython_console_highlighting',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

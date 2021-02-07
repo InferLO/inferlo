@@ -38,7 +38,7 @@ def test_all_grid_6x6():
                        atol=10.0)
     assert np.allclose(inf.bucket_renormalization(model),
                        true_log_pf,
-                       atol=0.1)
+                       atol=1.0)
 
 
 def test_all_clique_6():

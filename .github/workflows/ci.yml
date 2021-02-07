@@ -62,8 +62,7 @@ jobs:
       - name: Install requirements
         run: |
           sudo apt-get install pandoc
+          pip install -r requirements.txt
           pip install -r docs/requirements.txt
       - name: Build the docs
-        run: |
-          cd docs
-          make html
+        run: tools/build_docs.sh
