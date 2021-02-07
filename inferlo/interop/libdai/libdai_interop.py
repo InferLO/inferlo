@@ -5,14 +5,15 @@ from __future__ import annotations
 import copy
 import os
 import subprocess
+import tempfile
 import time
 from pathlib import Path
 from typing import TYPE_CHECKING, List, Dict
 
 import numpy as np
 
-from inferlo.base.factors import DiscreteFactor
 from inferlo.base import InferenceResult
+from inferlo.base.factors import DiscreteFactor
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -114,7 +115,7 @@ class LibDaiInterop():
         import inferlo.interop.libdai as libdai_module
         path = Path(libdai_module.__file__).parent
         self.bin_path = os.path.join(path, 'bin')
-        self.tmp_path = os.path.join(path, 'tmp')
+        self.tmp_path = os.path.join(tempfile.gettempdir(), 'inferlo_libdai')
         if not os.path.exists(self.tmp_path):
             os.makedirs(self.tmp_path)
         self.exe_path = os.path.join(self.bin_path, 'run_libdai.exe')
