@@ -70,7 +70,7 @@ def test_wmbe_grid_9x9():
     assert np.allclose(
         inf.bucket_renormalization(model),
         true_log_pf,
-        atol=2.0)
+        atol=4.0)
 
 
 def test_bucket_renormalization_grid_9x9():
