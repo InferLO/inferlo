@@ -12,7 +12,7 @@ Library can be installed using pip: `pip install inferlo`
 
 ### Documentation
 
-Documentation is available at https://inferlo.readthedocs.io.
+Documentation is available at https://inferlo.github.io/inferlo.
 
 ### Contributing
 
