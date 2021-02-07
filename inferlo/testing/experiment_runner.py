@@ -36,9 +36,9 @@ class ExperimentRunner:
         params_list = []
         for key, val in params.items():
             assert isinstance(key, str)
-            param = key + ':' + str(val)
-            assert len(param.split(':')) == 2
-            assert ',' not in param
+            param = key + '=' + str(val)
+            assert len(param.split('=')) == 2
+            assert '&' not in param
             params_list.append(param)
         params_list.sort()
         directory = os.path.join(self.dir, func.__name__)
@@ -88,8 +88,8 @@ class ExperimentRunner:
         results = []
         for file_name in os.listdir(directory):
             assert file_name[-4:] == '.dat'
-            tokens = file_name[:-4].split(',')
-            tokens = [t.split(':') for t in tokens]
+            tokens = file_name[:-4].split('&')
+            tokens = [t.split('=') for t in tokens]
             params = {t[0]: _get_value(t[1]) for t in tokens}
             if _params_match(params):
                 result = self._load_result(os.path.join(directory, file_name))
