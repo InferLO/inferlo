@@ -112,9 +112,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -289,70 +290,73 @@ proportional to <code class="docutils literal notranslate"><span class="pre">exp
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
 <td><p>Returns value of non-normalized pdf in point.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_all_interactions" title="inferlo.PairWiseFiniteModel.get_all_interactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_interactions</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.from_model" title="inferlo.PairWiseFiniteModel.from_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_model</span></code></a>(original_model)</p></td>
+<td><p>Constructs Pairwise Finite model which is equivalent to given model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_all_interactions" title="inferlo.PairWiseFiniteModel.get_all_interactions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_interactions</span></code></a>()</p></td>
 <td><p>Returns all interaction matrices in compact form.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_dfs_result" title="inferlo.PairWiseFiniteModel.get_dfs_result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dfs_result</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_dfs_result" title="inferlo.PairWiseFiniteModel.get_dfs_result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dfs_result</span></code></a>()</p></td>
 <td><p>Performs DFS for interaction graph.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_edges_array" title="inferlo.PairWiseFiniteModel.get_edges_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_array</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_edges_array" title="inferlo.PairWiseFiniteModel.get_edges_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_array</span></code></a>()</p></td>
 <td><p>Returns edge list as np.array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_edges_connected" title="inferlo.PairWiseFiniteModel.get_edges_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_connected</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_edges_connected" title="inferlo.PairWiseFiniteModel.get_edges_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_connected</span></code></a>()</p></td>
 <td><p>Returns edges, ensuring that graph is connected.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factor_graph</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factor_graph</span></code>()</p></td>
 <td><p>Builds factor graph for the model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_factors" title="inferlo.PairWiseFiniteModel.get_factors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factors</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_factors" title="inferlo.PairWiseFiniteModel.get_factors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factors</span></code></a>()</p></td>
 <td><p>Generates explicit list of factors.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_graph" title="inferlo.PairWiseFiniteModel.get_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_graph</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_graph" title="inferlo.PairWiseFiniteModel.get_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_graph</span></code></a>()</p></td>
 <td><p>Returns interaction graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_interaction_matrix" title="inferlo.PairWiseFiniteModel.get_interaction_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_interaction_matrix</span></code></a>(u, v)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_interaction_matrix" title="inferlo.PairWiseFiniteModel.get_interaction_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_interaction_matrix</span></code></a>(u, v)</p></td>
 <td><p>Returns interaction matrix between nodes u and v.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_interactions_for_edges" title="inferlo.PairWiseFiniteModel.get_interactions_for_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_interactions_for_edges</span></code></a>(edges)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_interactions_for_edges" title="inferlo.PairWiseFiniteModel.get_interactions_for_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_interactions_for_edges</span></code></a>(edges)</p></td>
 <td><p>Returns interaction for given edges.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_max_domain_size</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_max_domain_size</span></code>()</p></td>
 <td><p>Returns the biggest domain size over all variables.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_subgraph_factor_values" title="inferlo.PairWiseFiniteModel.get_subgraph_factor_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subgraph_factor_values</span></code></a>(vars_idx[, vars_skip])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.get_subgraph_factor_values" title="inferlo.PairWiseFiniteModel.get_subgraph_factor_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_subgraph_factor_values</span></code></a>(vars_idx[, vars_skip])</p></td>
 <td><p>Calculates factor values for subgraph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_symbolic_variables</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_symbolic_variables</span></code>()</p></td>
 <td><p>Prepares variables for usage in expressions.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variable</span></code>(idx)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variable</span></code>(idx)</p></td>
 <td><p>Returns variable by its index.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variables</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variables</span></code>()</p></td>
 <td><p>Returns all variables.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.has_edge" title="inferlo.PairWiseFiniteModel.has_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_edge</span></code></a>(u, v)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.has_edge" title="inferlo.PairWiseFiniteModel.has_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_edge</span></code></a>(u, v)</p></td>
 <td><p>Whether there is edge between vertices u and v.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.infer" title="inferlo.PairWiseFiniteModel.infer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">infer</span></code></a>([algorithm])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.infer" title="inferlo.PairWiseFiniteModel.infer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">infer</span></code></a>([algorithm])</p></td>
 <td><p>Performs inference.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.is_graph_acyclic" title="inferlo.PairWiseFiniteModel.is_graph_acyclic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_graph_acyclic</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.is_graph_acyclic" title="inferlo.PairWiseFiniteModel.is_graph_acyclic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_graph_acyclic</span></code></a>()</p></td>
 <td><p>Whether interaction graph is acyclic.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.max_likelihood" title="inferlo.PairWiseFiniteModel.max_likelihood"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood</span></code></a>([algorithm])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.max_likelihood" title="inferlo.PairWiseFiniteModel.max_likelihood"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood</span></code></a>([algorithm])</p></td>
 <td><p>Finds the most probable state.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood_bruteforce</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood_bruteforce</span></code>()</p></td>
 <td><p>Evaluates most likely state in a  very inefficient way.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">part_func_bruteforce</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">part_func_bruteforce</span></code>()</p></td>
 <td><p>Evaluates partition function in very inefficient way.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.sample" title="inferlo.PairWiseFiniteModel.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>([num_samples, algorithm])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.sample" title="inferlo.PairWiseFiniteModel.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>([num_samples, algorithm])</p></td>
 <td><p>Draws i.i.d.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.set_field" title="inferlo.PairWiseFiniteModel.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(field)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.PairWiseFiniteModel.set_field" title="inferlo.PairWiseFiniteModel.set_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_field</span></code></a>(field)</p></td>
 <td><p>Sets values of field (biases) in all vertices.</p></td>
 </tr>
 </tbody>
@@ -374,7 +378,7 @@ will be added to it (old interaction isn’t discarded).</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.create">
-<em class="property">static </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field</span><span class="p">:</span> <span class="n">np.ndarray</span></em>, <em class="sig-param"><span class="n">edges</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>np.ndarra<span class="p">, </span>List<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">interactions</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.create" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">edges</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>numpy.ndarray<span class="p">, </span>List<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">interactions</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates PairwiseFiniteModel from compact representation.</p>
 <p>Infers number of variables and size of alphabet from shape of
 <code class="docutils literal notranslate"><span class="pre">field</span></code>.</p>
@@ -412,6 +416,17 @@ interactions between variables <code class="docutils literal notranslate"><span 
 <dt id="inferlo.PairWiseFiniteModel.encode_state">
 <code class="sig-name descname">encode_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.encode_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.encode_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns state represented by its integer id.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.PairWiseFiniteModel.from_model">
+<em class="property">static </em><code class="sig-name descname">from_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em><span class="sig-paren">)</span> &#x2192; inferlo.pairwise.pwf_model.PairWiseFiniteModel<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.from_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.from_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs Pairwise Finite model which is equivalent to given model.</p>
+<p>All variables must be discrete. All factors must depend on at most 2
+variables.</p>
+<p>New model will have the same number of variables and factors. If
+variables in original model have different domain sizes, in new model
+they will be extended to have the same domain size.</p>
 </dd></dl>
 
 <dl class="py method">

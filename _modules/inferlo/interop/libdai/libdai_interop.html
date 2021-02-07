@@ -94,9 +94,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -174,14 +175,15 @@
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">inferlo.base.factors</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
 <span class="kn">from</span> <span class="nn">inferlo.base</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+<span class="kn">from</span> <span class="nn">inferlo.base.factors</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span>
@@ -216,9 +218,26 @@
 <span class="sd">        libDAI supports several inference algorithms, identified by codename.</span>
 <span class="sd">        For full list of algorithms, see LibDaiInterop.ALL_ALGORITHMS.</span>
 
+<span class="sd">        List of supported algorithms with their full names:</span>
+
+<span class="sd">        * BP - (Loopy) Belief Propagation;</span>
+<span class="sd">        * CBP - Conditioned Belief Propagation;</span>
+<span class="sd">        * DECMAP - Decimation algorithm;</span>
+<span class="sd">        * EXACT - Exact inference by brute force enumeration;</span>
+<span class="sd">        * FBP - Fractional Belief Propagation;</span>
+<span class="sd">        * GIBBS - Gibbs sampler;</span>
+<span class="sd">        * GLC - Generalized Loop Corrected Belief Propagation;</span>
+<span class="sd">        * HAK - Double-loop Generalized Belief Propagation;</span>
+<span class="sd">        * JTREE - Exact inference by junction-tree methods;</span>
+<span class="sd">        * LC - Loop Corrected Belief Propagation;</span>
+<span class="sd">        * MF - Mean Field;</span>
+<span class="sd">        * MR - Approximate inference algorithm by Montanari and Rizzo;</span>
+<span class="sd">        * TREEEP - Tree Expectation Propagation;</span>
+<span class="sd">        * TRWBP - Tree-Reweighted Belief Propagation;</span>
+
 <span class="sd">        All algorithms support calculating marginal probabilties, not all of</span>
 <span class="sd">        them support calculating logZ or most likely state. If algorithm</span>
-<span class="sd">        doesn&#39;t support calculating logZ, you&#39;l get 0. If algorithms doesn&#39;t</span>
+<span class="sd">        doesn&#39;t support calculating logZ, you&#39;ll get 0. If algorithms doesn&#39;t</span>
 <span class="sd">        support calculating most likely state, exception will be thrown.</span>
 
 <span class="sd">        For documentation on particular algorithms, refer to libDAI</span>
@@ -283,7 +302,7 @@
         <span class="kn">import</span> <span class="nn">inferlo.interop.libdai</span> <span class="k">as</span> <span class="nn">libdai_module</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">libdai_module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bin_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;tmp&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s1">&#39;inferlo_libdai&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exe_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_path</span><span class="p">,</span> <span class="s1">&#39;run_libdai.exe&#39;</span><span class="p">)</span>

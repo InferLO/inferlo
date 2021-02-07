@@ -94,9 +94,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -193,6 +194,7 @@
 <span class="kn">from</span> <span class="nn">.optimization.tree_dp</span> <span class="kn">import</span> <span class="n">max_likelihood_tree_dp</span>
 <span class="kn">from</span> <span class="nn">.sampling.tree_dp</span> <span class="kn">import</span> <span class="n">sample_tree_dp</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">decode_state</span><span class="p">,</span> <span class="n">encode_state</span><span class="p">,</span> <span class="n">decode_all_states</span>
+<span class="kn">from</span> <span class="nn">..generic.inference</span> <span class="kn">import</span> <span class="n">belief_propagation</span>
 <span class="kn">from</span> <span class="nn">..graphs</span> <span class="kn">import</span> <span class="n">fast_dfs</span>
 <span class="kn">from</span> <span class="nn">..graphs.fast_dfs</span> <span class="kn">import</span> <span class="n">FastDfsResult</span>
 
@@ -440,9 +442,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_graph_acyclic</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">infer_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">infer_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">infer_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">TooMuchStatesError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">infer_message_passing</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">belief_propagation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;bruteforce&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;mean_field&#39;</span><span class="p">:</span>
@@ -539,7 +541,7 @@
 
 <div class="viewcode-block" id="PairWiseFiniteModel.create"><a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.create">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-               <span class="n">edges</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarra</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
+               <span class="n">edges</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
                <span class="n">interactions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates PairwiseFiniteModel from compact representation.</span>
 
@@ -626,7 +628,40 @@
             <span class="n">a</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">vars_idx</span><span class="p">[</span><span class="n">u</span><span class="p">]][</span><span class="n">all_states</span><span class="p">[:,</span> <span class="n">u</span><span class="p">]]</span>
         <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
             <span class="n">a</span> <span class="o">+=</span> <span class="n">j</span><span class="p">[</span><span class="n">all_states</span><span class="p">[:,</span> <span class="n">u</span><span class="p">],</span> <span class="n">all_states</span><span class="p">[:,</span> <span class="n">v</span><span class="p">]]</span>
-        <span class="k">return</span> <span class="n">a</span></div></div>
+        <span class="k">return</span> <span class="n">a</span></div>
+
+<div class="viewcode-block" id="PairWiseFiniteModel.from_model"><a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.from_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_model</span><span class="p">(</span><span class="n">original_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Constructs Pairwise Finite model which is equivalent to given model.</span>
+
+<span class="sd">        All variables must be discrete. All factors must depend on at most 2</span>
+<span class="sd">        variables.</span>
+
+<span class="sd">        New model will have the same number of variables and factors. If</span>
+<span class="sd">        variables in original model have different domain sizes, in new model</span>
+<span class="sd">        they will be extended to have the same domain size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">al_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">original_model</span><span class="o">.</span><span class="n">get_variables</span><span class="p">())</span>
+        <span class="n">old_factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">original_model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">())</span>
+
+        <span class="k">def</span> <span class="nf">pad_tensor</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="n">padding</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="n">al_size</span> <span class="o">-</span> <span class="n">dim</span><span class="p">]</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+
+        <span class="c1"># Validate model.</span>
+        <span class="k">if</span> <span class="n">al_size</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not all variables are discrete.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">old_factors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model is not pairwise.&quot;</span><span class="p">)</span>
+
+        <span class="n">new_model</span> <span class="o">=</span> <span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="n">original_model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">old_factor</span> <span class="ow">in</span> <span class="n">old_factors</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">old_factor</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">pad_tensor</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">new_factor</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">old_factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+            <span class="n">new_model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">new_factor</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_model</span></div></div>
 </pre></div>
 
            </div>

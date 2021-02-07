@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>inferlo.pairwise.bruteforce.sample_bruteforce &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.testing.ising_model_on_graph &mdash; InferLO 0.1.0 documentation</title>
   
 
   
@@ -42,8 +42,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="inferlo.pairwise.junction_tree.sample_junction_tree" href="inferlo.pairwise.junction_tree.sample_junction_tree.html" />
-    <link rel="prev" title="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp" href="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp.html" /> 
+    <link rel="next" title="inferlo.testing.pairwise_model_on_graph" href="inferlo.testing.pairwise_model_on_graph.html" />
+    <link rel="prev" title="inferlo.testing.grid_potts_model" href="inferlo.testing.grid_potts_model.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,20 +93,18 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api.html#optimization-algorithms">Optimization algorithms</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="../api.html#sampling-algorithms">Sampling algorithms</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.pairwise.bruteforce.sample_bruteforce</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.sample_junction_tree.html">inferlo.pairwise.junction_tree.sample_junction_tree</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.sampling.tree_dp.sample_tree_dp.html">inferlo.pairwise.sampling.tree_dp.sample_tree_dp</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../api.html#model-conversion-algorithms">Model conversion algorithms</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#model-generators">Model generators</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.clique_potts_model.html">inferlo.testing.clique_potts_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.grid_potts_model.html">inferlo.testing.grid_potts_model</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.testing.ising_model_on_graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.pairwise_model_on_graph.html">inferlo.testing.pairwise_model_on_graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.line_potts_model.html">inferlo.testing.line_potts_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.random_generic_model.html">inferlo.testing.random_generic_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.testing.tree_potts_model.html">inferlo.testing.tree_potts_model</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#datasets">Datasets</a></li>
 </ul>
@@ -174,13 +172,13 @@
         
           <li><a href="../api.html">API Reference</a> &raquo;</li>
         
-      <li>inferlo.pairwise.bruteforce.sample_bruteforce</li>
+      <li>inferlo.testing.ising_model_on_graph</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/generated/inferlo.pairwise.bruteforce.sample_bruteforce.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/inferlo.testing.ising_model_on_graph.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -217,24 +215,26 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="inferlo-pairwise-bruteforce-sample-bruteforce">
-<h1>inferlo.pairwise.bruteforce.sample_bruteforce<a class="headerlink" href="#inferlo-pairwise-bruteforce-sample-bruteforce" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="inferlo-testing-ising-model-on-graph">
+<h1>inferlo.testing.ising_model_on_graph<a class="headerlink" href="#inferlo-testing-ising-model-on-graph" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="inferlo.pairwise.bruteforce.sample_bruteforce">
-<code class="sig-prename descclassname">inferlo.pairwise.bruteforce.</code><code class="sig-name descname">sample_bruteforce</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span></em>, <em class="sig-param"><span class="n">num_samples</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; np.array<a class="reference internal" href="../_modules/inferlo/pairwise/bruteforce.html#sample_bruteforce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.bruteforce.sample_bruteforce" title="Permalink to this definition">¶</a></dt>
-<dd><p>Samples from Pairwise Finite model.</p>
-<p>Explicitly calculates probabilities of every state and uses them to sample
-from categorical distribution.</p>
+<dt id="inferlo.testing.ising_model_on_graph">
+<code class="sig-prename descclassname">inferlo.testing.</code><code class="sig-name descname">ising_model_on_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">graph</span><span class="p">:</span> <span class="n">networkx.classes.graph.Graph</span></em>, <em class="sig-param"><span class="n">field_range</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">interaction_range</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span> &#x2192; inferlo.pairwise.pwf_model.PairWiseFiniteModel<a class="reference internal" href="../_modules/inferlo/testing/model_generators.html#ising_model_on_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.testing.ising_model_on_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds random Ising model on given graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Model to sample from.</p></li>
-<li><p><strong>num_samples</strong> – Number of samples.</p></li>
+<li><p><strong>graph</strong> – Graph for the model. Vertices are variables,
+nodes are interactions.</p></li>
+<li><p><strong>field_range</strong> – Fields will be sampled uniformly from
+<code class="docutils literal notranslate"><span class="pre">[-field_range,</span> <span class="pre">field_range]</span></code>.</p></li>
+<li><p><strong>interaction_range</strong> – Interactions will be sampled uniformly from
+<code class="docutils literal notranslate"><span class="pre">[-interaction_range,</span> <span class="pre">interaction_range]</span></code>.</p></li>
+<li><p><strong>seed</strong> – Random seed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">np.array</span></code> of type <code class="docutils literal notranslate"><span class="pre">np.int32</span></code> and shape
-<code class="docutils literal notranslate"><span class="pre">(num_samples,</span> <span class="pre">gr_size)</span></code>. Every row is an independent sample.</p>
+<dd class="field-even"><p>Generated model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -247,8 +247,8 @@ from categorical distribution.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="inferlo.pairwise.junction_tree.sample_junction_tree.html" class="btn btn-neutral float-right" title="inferlo.pairwise.junction_tree.sample_junction_tree" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp.html" class="btn btn-neutral float-left" title="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inferlo.testing.pairwise_model_on_graph.html" class="btn btn-neutral float-right" title="inferlo.testing.pairwise_model_on_graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.testing.grid_potts_model.html" class="btn btn-neutral float-left" title="inferlo.testing.grid_potts_model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

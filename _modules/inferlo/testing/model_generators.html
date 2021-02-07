@@ -94,9 +94,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -287,6 +288,37 @@
     <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
     <span class="n">interactions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">),</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">interactions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ising_model_on_graph"><a class="viewcode-back" href="../../../generated/inferlo.testing.ising_model_on_graph.html#inferlo.testing.ising_model_on_graph">[docs]</a><span class="k">def</span> <span class="nf">ising_model_on_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span>
+                         <span class="n">field_range</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                         <span class="n">interaction_range</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                         <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Builds random Ising model on given graph.</span>
+
+<span class="sd">    :param graph: Graph for the model. Vertices are variables,</span>
+<span class="sd">      nodes are interactions.</span>
+<span class="sd">    :param field_range: Fields will be sampled uniformly from</span>
+<span class="sd">      ``[-field_range, field_range]``.</span>
+<span class="sd">    :param interaction_range: Interactions will be sampled uniformly from</span>
+<span class="sd">      ``[-interaction_range, interaction_range]``.</span>
+<span class="sd">    :param seed: Random seed.</span>
+<span class="sd">    :return: Generated model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Remap arbitrary variable labels to integers.</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">var_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))}</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="n">var_index</span><span class="p">[</span><span class="n">u</span><span class="p">],</span> <span class="n">var_index</span><span class="p">[</span><span class="n">v</span><span class="p">])</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()]</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">field_range</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">field_range</span><span class="p">,</span>
+                              <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">),))</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;a,b-&gt;ab&#39;</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">interaction_range</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">interaction_range</span><span class="p">,</span>
+                              <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">),))</span>
+    <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;a,bc-&gt;abc&#39;</span><span class="p">,</span> <span class="n">inter</span><span class="p">,</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+    <span class="k">return</span> <span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">inter</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">make_cross</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>

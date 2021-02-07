@@ -43,7 +43,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="inferlo.datasets.DatasetLoader" href="inferlo.datasets.DatasetLoader.html" />
-    <link rel="prev" title="inferlo.testing.pairwise_model_on_graph" href="inferlo.testing.pairwise_model_on_graph.html" /> 
+    <link rel="prev" title="inferlo.testing.tree_potts_model" href="inferlo.testing.tree_potts_model.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -108,9 +108,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -234,9 +235,26 @@ functionality. We don’t use in any of inferlo’s algorithms.</p>
 <dl>
 <dt>Algorithms</dt><dd><p>libDAI supports several inference algorithms, identified by codename.
 For full list of algorithms, see LibDaiInterop.ALL_ALGORITHMS.</p>
+<p>List of supported algorithms with their full names:</p>
+<ul class="simple">
+<li><p>BP - (Loopy) Belief Propagation;</p></li>
+<li><p>CBP - Conditioned Belief Propagation;</p></li>
+<li><p>DECMAP - Decimation algorithm;</p></li>
+<li><p>EXACT - Exact inference by brute force enumeration;</p></li>
+<li><p>FBP - Fractional Belief Propagation;</p></li>
+<li><p>GIBBS - Gibbs sampler;</p></li>
+<li><p>GLC - Generalized Loop Corrected Belief Propagation;</p></li>
+<li><p>HAK - Double-loop Generalized Belief Propagation;</p></li>
+<li><p>JTREE - Exact inference by junction-tree methods;</p></li>
+<li><p>LC - Loop Corrected Belief Propagation;</p></li>
+<li><p>MF - Mean Field;</p></li>
+<li><p>MR - Approximate inference algorithm by Montanari and Rizzo;</p></li>
+<li><p>TREEEP - Tree Expectation Propagation;</p></li>
+<li><p>TRWBP - Tree-Reweighted Belief Propagation;</p></li>
+</ul>
 <p>All algorithms support calculating marginal probabilties, not all of
 them support calculating logZ or most likely state. If algorithm
-doesn’t support calculating logZ, you’l get 0. If algorithms doesn’t
+doesn’t support calculating logZ, you’ll get 0. If algorithms doesn’t
 support calculating most likely state, exception will be thrown.</p>
 <p>For documentation on particular algorithms, refer to libDAI
 documentation: <a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/">https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/</a>.</p>
@@ -392,7 +410,7 @@ be padded with zeroes.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="inferlo.datasets.DatasetLoader.html" class="btn btn-neutral float-right" title="inferlo.datasets.DatasetLoader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="inferlo.testing.pairwise_model_on_graph.html" class="btn btn-neutral float-left" title="inferlo.testing.pairwise_model_on_graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inferlo.testing.tree_potts_model.html" class="btn btn-neutral float-left" title="inferlo.testing.tree_potts_model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

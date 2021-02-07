@@ -22,6 +22,7 @@
       ~PairWiseFiniteModel.draw_pairwise_graph
       ~PairWiseFiniteModel.encode_state
       ~PairWiseFiniteModel.evaluate
+      ~PairWiseFiniteModel.from_model
       ~PairWiseFiniteModel.get_all_interactions
       ~PairWiseFiniteModel.get_dfs_result
       ~PairWiseFiniteModel.get_edges_array

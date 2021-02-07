@@ -94,9 +94,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -169,7 +170,7 @@
   <h1>Source code for inferlo.generic.inference.inference</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE.</span>
-<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">DiscreteFactor</span><span class="p">,</span> <span class="n">InferenceResult</span>
 <span class="kn">from</span> <span class="nn">.belief_propagation</span> <span class="kn">import</span> <span class="n">BeliefPropagation</span><span class="p">,</span> <span class="n">IterativeJoinGraphPropagation</span>
 <span class="kn">from</span> <span class="nn">.bucket_elimination</span> <span class="kn">import</span> <span class="n">BucketElimination</span>
 <span class="kn">from</span> <span class="nn">.bucket_renormalization</span> <span class="kn">import</span> <span class="n">BucketRenormalization</span>
@@ -203,7 +204,7 @@
 <div class="viewcode-block" id="belief_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.belief_propagation.html#inferlo.generic.inference.belief_propagation">[docs]</a><span class="k">def</span> <span class="nf">belief_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
                        <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
-                       <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+                       <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Inference with (loopy) Belief Propagation.</span>
 
 <span class="sd">    Estimates partition function using Loopy Belief Propagation algorithm.</span>
@@ -212,23 +213,29 @@
 <span class="sd">    :param max_iter: Number of iterations.</span>
 <span class="sd">    :param converge_thr: Convergence threshold.</span>
 <span class="sd">    :param damp_ratio: Damp ratio.</span>
-<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+<span class="sd">    :return: Inference result.</span>
 
 <span class="sd">    References</span>
 <span class="sd">        [1] `Original implementation</span>
 <span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py&gt;`_.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">algo</span> <span class="o">=</span> <span class="n">BeliefPropagation</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
-                    <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span></div>
+    <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+             <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
+             <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_inference_result</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.bucket_elimination.html#inferlo.generic.inference.bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.bucket_elimination.html#inferlo.generic.inference.bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                       <span class="n">elimination_order_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;random&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination.</span>
 
 <span class="sd">    Estimates partition function using Bucket Elimination algorithm.</span>
 
 <span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param elimination_order_method: Elimination order. Can be &#39;random&#39;,</span>
+<span class="sd">      &#39;not_random&#39; or &#39;given&#39;. If &#39;given&#39;, elimination order should be passed in</span>
+<span class="sd">      &#39;elimination_order&#39; argument.</span>
 <span class="sd">    :return: Natural logarithm of estimated partition function.</span>
 
 <span class="sd">    References</span>
@@ -239,7 +246,8 @@
 <span class="sd">        [2] `Original implementation</span>
 <span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py&gt;`_.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">BucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">BucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">elimination_order_method</span><span class="o">=</span><span class="n">elimination_order_method</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="bucket_renormalization"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.bucket_renormalization.html#inferlo.generic.inference.bucket_renormalization">[docs]</a><span class="k">def</span> <span class="nf">bucket_renormalization</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
@@ -268,11 +276,12 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="iterative_join_graph_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.iterative_join_graph_propagation.html#inferlo.generic.inference.iterative_join_graph_propagation">[docs]</a><span class="k">def</span> <span class="nf">iterative_join_graph_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
-                                     <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-                                     <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
-                                     <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
-                                     <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="iterative_join_graph_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.iterative_join_graph_propagation.html#inferlo.generic.inference.iterative_join_graph_propagation">[docs]</a><span class="k">def</span> <span class="nf">iterative_join_graph_propagation</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+        <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
+        <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Inference with Iterative Join Graph Propagation.</span>
 
 <span class="sd">    Estimates partition function using Iterative Join Graph Propagation</span>
@@ -280,6 +289,7 @@
 <span class="sd">      methods.</span>
 
 <span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
 <span class="sd">    :param max_iter: Number of iterations.</span>
 <span class="sd">    :param converge_thr: Convergence threshold.</span>
 <span class="sd">    :param damp_ratio: Damp ratio.</span>
@@ -294,8 +304,10 @@
 <span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py&gt;`_.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">algo</span> <span class="o">=</span> <span class="n">IterativeJoinGraphPropagation</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
-                    <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span></div>
+    <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+             <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
+             <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_log_z</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="mean_field"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.mean_field.html#inferlo.generic.inference.mean_field">[docs]</a><span class="k">def</span> <span class="nf">mean_field</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>

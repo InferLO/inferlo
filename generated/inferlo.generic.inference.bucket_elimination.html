@@ -130,9 +130,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -234,12 +235,17 @@
 <h1>inferlo.generic.inference.bucket_elimination<a class="headerlink" href="#inferlo-generic-inference-bucket-elimination" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="inferlo.generic.inference.bucket_elimination">
-<code class="sig-prename descclassname">inferlo.generic.inference.</code><code class="sig-name descname">bucket_elimination</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.generic.inference.bucket_elimination" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">inferlo.generic.inference.</code><code class="sig-name descname">bucket_elimination</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em>, <em class="sig-param"><span class="n">elimination_order_method</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'random'</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.generic.inference.bucket_elimination" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inference with Bucket Elimination.</p>
 <p>Estimates partition function using Bucket Elimination algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>model</strong> – Model for which to perform inference.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – Model for which to perform inference.</p></li>
+<li><p><strong>elimination_order_method</strong> – Elimination order. Can be ‘random’,
+‘not_random’ or ‘given’. If ‘given’, elimination order should be passed in
+‘elimination_order’ argument.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>

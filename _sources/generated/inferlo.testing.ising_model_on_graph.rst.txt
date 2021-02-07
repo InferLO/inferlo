@@ -1,0 +1,6 @@
+﻿inferlo.testing.ising\_model\_on\_graph
+=======================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: ising_model_on_graph

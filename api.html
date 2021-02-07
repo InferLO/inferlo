@@ -163,10 +163,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#model-generators">Model generators</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.clique_potts_model.html">inferlo.testing.clique_potts_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.grid_potts_model.html">inferlo.testing.grid_potts_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.ising_model_on_graph.html">inferlo.testing.ising_model_on_graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.pairwise_model_on_graph.html">inferlo.testing.pairwise_model_on_graph</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.line_potts_model.html">inferlo.testing.line_potts_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.random_generic_model.html">inferlo.testing.random_generic_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.tree_potts_model.html">inferlo.testing.tree_potts_model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/inferlo.testing.pairwise_model_on_graph.html">inferlo.testing.pairwise_model_on_graph</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#interoperation">Interoperation</a><ul>
@@ -185,9 +186,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -533,6 +535,12 @@ useful for testing and benchmarking.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.testing.grid_potts_model.html#inferlo.testing.grid_potts_model" title="inferlo.testing.grid_potts_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.grid_potts_model</span></code></a>(height, width)</p></td>
 <td><p>Generates random PairWiseFinteModel on a grid.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.testing.ising_model_on_graph.html#inferlo.testing.ising_model_on_graph" title="inferlo.testing.ising_model_on_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.ising_model_on_graph</span></code></a>(graph)</p></td>
+<td><p>Builds random Ising model on given graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.testing.pairwise_model_on_graph.html#inferlo.testing.pairwise_model_on_graph" title="inferlo.testing.pairwise_model_on_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.pairwise_model_on_graph</span></code></a>(graph)</p></td>
+<td><p>Builds random pairwise model with given interaction graph.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.testing.line_potts_model.html#inferlo.testing.line_potts_model" title="inferlo.testing.line_potts_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.line_potts_model</span></code></a>([gr_size, …])</p></td>
 <td><p>Generates random PairWiseFinteModel on a line graph.</p></td>
 </tr>
@@ -541,9 +549,6 @@ useful for testing and benchmarking.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.testing.tree_potts_model.html#inferlo.testing.tree_potts_model" title="inferlo.testing.tree_potts_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.tree_potts_model</span></code></a>([gr_size, …])</p></td>
 <td><p>Generates random PairWiseFinteModel on a random tree.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.testing.pairwise_model_on_graph.html#inferlo.testing.pairwise_model_on_graph" title="inferlo.testing.pairwise_model_on_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.testing.pairwise_model_on_graph</span></code></a>(graph)</p></td>
-<td><p>Builds random pairwise model with given interaction graph.</p></td>
 </tr>
 </tbody>
 </table>
