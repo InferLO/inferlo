@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.inference.mean_field.infer_mean_field &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="inferlo.pairwise.inference.message_passing.infer_message_passing" href="inferlo.pairwise.inference.message_passing.infer_message_passing.html" />
+    <link rel="prev" title="inferlo.pairwise.junction_tree.infer_junction_tree" href="inferlo.pairwise.junction_tree.infer_junction_tree.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="inferlo.forney.edge_elimination.infer_edge_elimination.html">inferlo.forney.edge_elimination.infer_edge_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.belief_propagation.html">inferlo.generic.inference.belief_propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.bucket_elimination.html">inferlo.generic.inference.bucket_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.bucket_renormalization.html">inferlo.generic.inference.bucket_renormalization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.iterative_join_graph_propagation.html">inferlo.generic.inference.iterative_join_graph_propagation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.mean_field.html">inferlo.generic.inference.mean_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.mini_bucket_elimination.html">inferlo.generic.inference.mini_bucket_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.weighted_mini_bucket_elimination.html">inferlo.generic.inference.weighted_mini_bucket_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.bruteforce.infer_bruteforce.html">inferlo.pairwise.bruteforce.infer_bruteforce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.infer_junction_tree.html">inferlo.pairwise.junction_tree.infer_junction_tree</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.pairwise.inference.mean_field.infer_mean_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.message_passing.infer_message_passing.html">inferlo.pairwise.inference.message_passing.infer_message_passing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.path_dp.infer_path_dp.html">inferlo.pairwise.inference.path_dp.infer_path_dp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.tree_dp.infer_tree_dp.html">inferlo.pairwise.inference.tree_dp.infer_tree_dp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#optimization-algorithms">Optimization algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#sampling-algorithms">Sampling algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#model-conversion-algorithms">Model conversion algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#datasets">Datasets</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.inference.mean_field.infer_mean_field</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/generated/inferlo.pairwise.inference.mean_field.infer_mean_field.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="inferlo-pairwise-inference-mean-field-infer-mean-field">
+<h1>inferlo.pairwise.inference.mean_field.infer_mean_field<a class="headerlink" href="#inferlo-pairwise-inference-mean-field-infer-mean-field" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="inferlo.pairwise.inference.mean_field.infer_mean_field">
+<code class="sig-prename descclassname">inferlo.pairwise.inference.mean_field.</code><code class="sig-name descname">infer_mean_field</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span></em>, <em class="sig-param"><span class="n">iters_wait</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">num_attempts</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span> &#x2192; InferenceResult<a class="reference internal" href="../_modules/inferlo/pairwise/inference/mean_field.html#infer_mean_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.inference.mean_field.infer_mean_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inference with Naive Mean Field.</p>
+<p>Uses Naive Mean Field Algorithm. Time complexity is proportional to
+<cite>gr_size * num_iters</cite>, where <cite>gr_size</cite> is number of variables, <cite>num_iters</cite>
+is number of iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – Potts model for which to perform inference.</p></li>
+<li><p><strong>iters_wait</strong> – Algorithm stops if result doesn’t improve for that long.</p></li>
+<li><p><strong>max_iter</strong> – Maximal number of iterations.</p></li>
+<li><p><strong>num_attempts</strong> – How many times try optimization from new random point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>InferenceResult object. <cite>log_pf</cite> is guaranteed to be lower bound
+for logarithm of the true partition function. <cite>marg_prob</cite> is
+approximation for marginal probabilities.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="inferlo.pairwise.inference.message_passing.infer_message_passing.html" class="btn btn-neutral float-right" title="inferlo.pairwise.inference.message_passing.infer_message_passing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.pairwise.junction_tree.infer_junction_tree.html" class="btn btn-neutral float-left" title="inferlo.pairwise.junction_tree.infer_junction_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

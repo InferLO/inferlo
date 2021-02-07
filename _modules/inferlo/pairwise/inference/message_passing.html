@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.inference.message_passing &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.inference.message_passing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.pairwise.inference.message_passing</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">import</span> <span class="nn">networkx</span>
+<span class="kn">import</span> <span class="nn">numba</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>
+
+<span class="kn">from</span> <span class="nn">inferlo.base.inference_result</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+<span class="kn">from</span> <span class="nn">inferlo.utils.special_functions</span> <span class="kn">import</span> <span class="n">logsumexp_1d</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">inferlo.pairwise</span> <span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
+
+
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4[:](i4[:,:])&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_build_edge_lookup</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Builds edge lookup.</span>
+
+<span class="sd">    Edges must be sorted by end vertex (ascending).</span>
+
+<span class="sd">    Returns array indicating where is the first edge ending on given vertex.</span>
+<span class="sd">    In other words, all edges ending on vertex are</span>
+<span class="sd">    ``sorted_edges[edge_lookup[v]:edge_lookup[v+1], :]``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gr_size</span> <span class="o">=</span> <span class="n">sorted_edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c1"># For each vertex, contains interval of edge ids for edges</span>
+    <span class="c1"># starting with this vertex.</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">gr_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">sorted_edges</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sorted_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">sorted_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">ans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;f8[:,:](i4[:,:],f8[:,:,:],f8[:,:],i8)&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_message_passing</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">,</span> <span class="n">intrn</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Runs message passing algorithm.</span>
+
+<span class="sd">    Terminates if `max_iter` steps were made or if converged.</span>
+
+<span class="sd">    :param dir_edges: Directed edges. Even though graph is undirected, every</span>
+<span class="sd">      edge (u,v) must appear in this list twice as (u,v) and (v,u).</span>
+<span class="sd">    :param intrn: Interaction matrices corresponding to dir_edges.</span>
+<span class="sd">    :param field: Field.</span>
+<span class="sd">    :param max_iter: Maximal number of iterations. Can perform less if</span>
+<span class="sd">      converges earlier.</span>
+<span class="sd">    :return: Logarithm of mu describing marginal probabilities associated</span>
+<span class="sd">      with directed edges. See formula (2.5) in [1], except here we work with</span>
+<span class="sd">      logarithms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edge_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">)</span>
+    <span class="n">al_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Initialize initial guess with zeros. Since those are logarithms, it</span>
+    <span class="c1"># corresponds to probabilities all proportional to 1, i.e. equal.</span>
+    <span class="c1"># `lmu` is logarithm of mu, defined in formula (2.5) in [1].</span>
+    <span class="n">lmu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">edge_num</span><span class="p">,</span> <span class="n">al_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">new_lmu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">lmu</span><span class="p">)</span>
+
+    <span class="n">edge_lookup</span> <span class="o">=</span> <span class="n">_build_edge_lookup</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="c1"># This loop is one iteration of message passing.</span>
+        <span class="c1"># It implements formulas (2.8a) and (2.8b) from ref. [1].</span>
+        <span class="k">for</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">edge_num</span><span class="p">):</span>
+            <span class="n">t</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">dir_edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">xs</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">terms</span> <span class="o">=</span> <span class="n">intrn</span><span class="p">[</span><span class="n">edge_id</span><span class="p">,</span> <span class="p">:,</span> <span class="n">xs</span><span class="p">]</span> <span class="o">+</span> <span class="n">field</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="k">for</span> <span class="n">next_edge_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">edge_lookup</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">edge_lookup</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]):</span>
+                    <span class="c1"># dir_edges[next_edge_id] is (u, t).</span>
+                    <span class="c1"># We should skip edge (s, t).</span>
+                    <span class="k">if</span> <span class="n">dir_edges</span><span class="p">[</span><span class="n">next_edge_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">:</span>
+                        <span class="n">terms</span> <span class="o">+=</span> <span class="n">lmu</span><span class="p">[</span><span class="n">next_edge_id</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">new_lmu</span><span class="p">[</span><span class="n">edge_id</span><span class="p">,</span> <span class="n">xs</span><span class="p">]</span> <span class="o">=</span> <span class="n">logsumexp_1d</span><span class="p">(</span><span class="n">terms</span><span class="p">)</span>
+
+        <span class="c1"># If converged, return. Both mu and new_mu contain correct result.</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_lmu</span> <span class="o">-</span> <span class="n">lmu</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">1e-9</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="c1"># If not converged, repeat again with new mu as old mu.</span>
+        <span class="n">lmu</span><span class="p">[:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">new_lmu</span>
+
+    <span class="k">return</span> <span class="n">lmu</span>
+
+
+<div class="viewcode-block" id="infer_message_passing"><a class="viewcode-back" href="../../../../generated/inferlo.pairwise.inference.message_passing.infer_message_passing.html#inferlo.pairwise.inference.message_passing.infer_message_passing">[docs]</a><span class="k">def</span> <span class="nf">infer_message_passing</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span>
+                          <span class="n">max_iter</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Message Passing.</span>
+
+<span class="sd">    For acyclic graph returns exact partition function and marginal</span>
+<span class="sd">        probabilities. For graph with loops may return good approximation to</span>
+<span class="sd">        the true marginal probabilities, but partition function will be a</span>
+<span class="sd">        useless number.</span>
+<span class="sd">    This is an iterative algorithm which terminates when it converged or when</span>
+<span class="sd">        `max_iter` iterations were made.</span>
+
+<span class="sd">    :param model: Pairwise model for which to perform inference.</span>
+<span class="sd">    :param max_iter: How many iterations without convergence should happen for</span>
+<span class="sd">        algorithm to terminate. Defaults to maximal diameter of connected</span>
+<span class="sd">        component.</span>
+<span class="sd">    :return: InferenceResult object.</span>
+
+<span class="sd">    Reference</span>
+<span class="sd">        [1] Wainwright, Jordan. Graphical Models, Exponential Families, and</span>
+<span class="sd">        Variational Inference. 2008. Section 2.5.1 (p. 26).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">max_iter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_edges_connected</span><span class="p">())</span>
+        <span class="n">max_iter</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">diameter</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+    <span class="c1"># Build list of directed edges.</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_edges_connected</span><span class="p">()</span>
+    <span class="n">dir_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">edges</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
+
+    <span class="c1"># Sort edges by end vertex. This ensures that edges ending with the same</span>
+    <span class="c1"># vertex are sequential, which allows for efficient lookup.</span>
+    <span class="n">dir_edges</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="s1">&#39;i4,i4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Compact representation of interactions.</span>
+    <span class="n">intrn</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_interactions_for_edges</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">)</span>
+
+    <span class="c1"># Main algorithm.</span>
+    <span class="n">lmu</span> <span class="o">=</span> <span class="n">_message_passing</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">,</span> <span class="n">intrn</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">)</span>
+
+    <span class="c1"># Restore partition function for fixed values in nodes.</span>
+    <span class="n">log_marg_pf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">)):</span>
+        <span class="n">log_marg_pf</span><span class="p">[</span><span class="n">dir_edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">lmu</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+
+    <span class="n">log_pf</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">log_marg_pf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">marg_prob</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">log_marg_pf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">marg_prob</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">log_pf</span><span class="p">),</span> <span class="n">marg_prob</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

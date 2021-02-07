@@ -1,0 +1,6 @@
+﻿inferlo.pairwise.optimization.map\_lp.map\_lp
+=============================================
+
+.. currentmodule:: inferlo.pairwise.optimization.map_lp
+
+.. autofunction:: map_lp

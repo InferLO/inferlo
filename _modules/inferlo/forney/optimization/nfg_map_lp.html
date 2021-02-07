@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.forney.optimization.nfg_map_lp &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.forney.optimization.nfg_map_lp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.forney.optimization.nfg_map_lp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE.</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="kn">from</span> <span class="nn">inferlo.forney.nfg_model</span> <span class="kn">import</span> <span class="n">NormalFactorGraphModel</span>
+
+<span class="n">map_lp_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;map_lp_result&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;lower_bound&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;factor_beliefs&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;variable_beliefs&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;normalization_duals&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;marginalization_duals&#39;</span>
+                                             <span class="p">])</span>
+
+
+<div class="viewcode-block" id="map_lp"><a class="viewcode-back" href="../../../../generated/inferlo.forney.optimization.nfg_map_lp.map_lp.html#inferlo.forney.optimization.nfg_map_lp.map_lp">[docs]</a><span class="k">def</span> <span class="nf">map_lp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">NormalFactorGraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">map_lp_result</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;LP relaxation of MAP problem for NFG model.</span>
+
+<span class="sd">    This function implements linear programming (LP) relaxation</span>
+<span class="sd">    of maximum a posteriori assignment problem (MAP) for</span>
+<span class="sd">    normal factor graph with finite alphabet.</span>
+
+<span class="sd">    The goal of MAP estimation is to find most probable</span>
+<span class="sd">    assignment of original variables by maximizing probability</span>
+<span class="sd">    density function. For the case of pairwise finite model it</span>
+<span class="sd">    reduces to maximization of polynomial over finite</span>
+<span class="sd">    field.</span>
+
+<span class="sd">    For every variable, we introduce Q non-negative belief variables</span>
+<span class="sd">    where Q is the size of the alphabet. Every such variable</span>
+<span class="sd">    is our &#39;belief&#39; that variable at node takes particular value.</span>
+
+<span class="sd">    Analogously, for every factor we introduce Q^deg beliefs</span>
+<span class="sd">    where deg is a number of variables in factor.</span>
+
+<span class="sd">    For both node and edge beliefs we require normalization</span>
+<span class="sd">    constraints: 1) for every variable, the sum of beliefs</span>
+<span class="sd">    equals one and 2) for every factor the sum of beliefs</span>
+<span class="sd">    equals one.</span>
+
+<span class="sd">    We also add marginalization constraint: for every factor,</span>
+<span class="sd">    summing factor beliefs over all except one node must equal</span>
+<span class="sd">    to the node belief at that node.</span>
+
+<span class="sd">    Finally we get a linear program and its solution is an</span>
+<span class="sd">    upper bound on the MAP value. We restore the lower bound</span>
+<span class="sd">    on MAP value as the solution of the dual relaxation.</span>
+
+<span class="sd">    More details may be found in &quot;MAP Estimation,</span>
+<span class="sd">    Linear Programming and BeliefPropagation with</span>
+<span class="sd">    Convex Free Energies&quot; by Yair Weiss, Chen Yanover and Talya</span>
+<span class="sd">    Meltzer. https://arxiv.org/pdf/1206.5286.pdf</span>
+
+<span class="sd">    :param model: Model for which to solve MAP problem.</span>
+
+<span class="sd">    :return: Object with the following fields:</span>
+<span class="sd">      ``upper_bound`` - upper bound on MAP value (solution of LP);</span>
+<span class="sd">      ``lower_bound`` - lower bound on MAP value (dual solution);</span>
+<span class="sd">      ``factor_beliefs`` - optimal values of factor beliefs;</span>
+<span class="sd">      ``variable_beliefs`` - optimal values of variable beliefs;</span>
+<span class="sd">      ``normalization_duals`` - optimal values of dual variables that \</span>
+<span class="sd">      correspond to normalization constraints;</span>
+<span class="sd">      ``marginalization_duals`` - optimal values of dual variables that</span>
+<span class="sd">      correspond to marginalization constraints.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_default_domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">var_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+
+    <span class="n">factor_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">factors</span>
+
+    <span class="n">variable_beliefs</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">var_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">),</span> <span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">factor_beliefs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">)):</span>
+        <span class="n">curr_factor_beliefs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span>
+                                <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+            <span class="n">curr_factor_beliefs</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">factor_beliefs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_factor_beliefs</span><span class="p">)</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># add objective</span>
+    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">)):</span>
+        <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span>
+                                <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">objective</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor_beliefs</span><span class="p">[</span><span class="n">factor</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="c1"># normalization constraints</span>
+    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">)):</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span>
+                                <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+            <span class="n">expr</span> <span class="o">+=</span> <span class="n">factor_beliefs</span><span class="p">[</span><span class="n">factor</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">expr</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># marginalization constraints</span>
+    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                    <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span>
+                            <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">temp</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+                <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">var_vals</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+                    <span class="n">expr</span> <span class="o">+=</span> <span class="n">factor_beliefs</span><span class="p">[</span><span class="n">factor</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+                <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">expr</span> <span class="o">==</span>
+                                <span class="n">variable_beliefs</span><span class="p">[</span>
+                                    <span class="n">factor_list</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="n">variable</span><span class="p">],</span> <span class="n">a</span><span class="p">]]</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">objective</span><span class="p">),</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">SCS</span><span class="p">)</span>
+
+    <span class="n">normal_dual_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">constraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dual_value</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">))]</span>
+    <span class="n">marginal_dual_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">constraints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dual_value</span>
+                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">constraints</span><span class="p">))]</span>
+    <span class="n">dual_objective</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">normal_dual_vars</span><span class="p">)</span>
+
+    <span class="n">factor_beliefs_result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">)):</span>
+        <span class="n">curr_factor_beliefs_result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">var_vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span>
+                                <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">factor_list</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">var_vals</span><span class="p">:</span>
+            <span class="n">curr_factor_beliefs_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor_beliefs</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">map_lp_result</span><span class="p">(</span>
+        <span class="n">upper_bound</span><span class="o">=</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">lower_bound</span><span class="o">=</span><span class="n">dual_objective</span><span class="p">,</span>
+        <span class="n">factor_beliefs</span><span class="o">=</span><span class="n">factor_beliefs_result</span><span class="p">,</span>
+        <span class="n">variable_beliefs</span><span class="o">=</span><span class="n">variable_beliefs</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">normalization_duals</span><span class="o">=</span><span class="n">normal_dual_vars</span><span class="p">,</span>
+        <span class="n">marginalization_duals</span><span class="o">=</span><span class="n">marginal_dual_vars</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿inferlo.testing.pairwise\_model\_on\_graph
+==========================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: pairwise_model_on_graph

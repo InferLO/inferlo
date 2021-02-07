@@ -1,0 +1,45 @@
+﻿inferlo.GaussianModel
+=====================
+
+.. currentmodule:: inferlo
+
+.. autoclass:: GaussianModel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GaussianModel.__init__
+      ~GaussianModel.add_factor
+      ~GaussianModel.draw_factor_graph
+      ~GaussianModel.evaluate
+      ~GaussianModel.get_factor_graph
+      ~GaussianModel.get_factors
+      ~GaussianModel.get_max_domain_size
+      ~GaussianModel.get_symbolic_variables
+      ~GaussianModel.get_variable
+      ~GaussianModel.get_variables
+      ~GaussianModel.infer
+      ~GaussianModel.max_likelihood
+      ~GaussianModel.max_likelihood_bruteforce
+      ~GaussianModel.part_func_bruteforce
+      ~GaussianModel.sample
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GaussianModel.G
+      ~GaussianModel.J
+      ~GaussianModel.h
+      ~GaussianModel.n
+   
+   

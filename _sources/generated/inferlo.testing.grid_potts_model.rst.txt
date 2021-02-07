@@ -1,0 +1,6 @@
+﻿inferlo.testing.grid\_potts\_model
+==================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: grid_potts_model

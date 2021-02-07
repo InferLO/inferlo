@@ -1,0 +1,6 @@
+﻿inferlo.generic.inference.iterative\_join\_graph\_propagation
+=============================================================
+
+.. currentmodule:: inferlo.generic.inference
+
+.. autofunction:: iterative_join_graph_propagation

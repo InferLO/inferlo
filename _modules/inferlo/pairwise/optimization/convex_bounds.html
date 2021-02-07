@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.optimization.convex_bounds &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.optimization.convex_bounds</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.pairwise.optimization.convex_bounds</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
+
+
+<span class="n">LPRelaxResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;LPRelaxResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;lower_bound&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;rounded_solution&#39;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="lp_relaxation"><a class="viewcode-back" href="../../../../generated/inferlo.pairwise.optimization.convex_bounds.lp_relaxation.html#inferlo.pairwise.optimization.convex_bounds.lp_relaxation">[docs]</a><span class="k">def</span> <span class="nf">lp_relaxation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LPRelaxResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Max Likelihood for pairwise model by solving LP relaxation.</span>
+
+<span class="sd">    1) Reformulates the original problem of maximizing</span>
+<span class="sd">    ``sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]])``</span>
+<span class="sd">    as a binary optimization problem by introducing new variables</span>
+<span class="sd">    ``y_i``, ``a`` and ``z_i,j,a,b``::</span>
+
+<span class="sd">        maximize (sum_i sum_a F[i][a] * y_i,a) +</span>
+<span class="sd">                 (sum_i sum_j sum_a sum_b 0.5*sum J[i][j][a][b] * z_i,j,a,b))</span>
+<span class="sd">        subject to y_i,a in {0, 1}</span>
+<span class="sd">                z_i,j,a,b in {0, 1}</span>
+<span class="sd">                (for all i) sum_a y_i,a = 1</span>
+<span class="sd">                z_i,j,a,b &lt;= y_i,a</span>
+<span class="sd">                z_i,j,a,b &lt;= y_j,b</span>
+<span class="sd">                z_i,j,a,b &gt;= y_i,a + y_j,b - 1</span>
+
+<span class="sd">    2) Solves the LP relaxation by relaxing binary constraints</span>
+<span class="sd">    to::</span>
+
+<span class="sd">        y_i,a in [0, 1]</span>
+<span class="sd">        z_i,j,a,b in [0, 1]</span>
+
+<span class="sd">    Note that ``z`` will be reshaped to matrix (cvxpy does not support tensor</span>
+<span class="sd">    variables).</span>
+
+<span class="sd">    :param model: Model for which to find most likely state.</span>
+<span class="sd">    :return: Solution of LP relaxation of the Max Likelihood problem.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">edges</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">),</span> <span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">),</span> <span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cons</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># add field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>
+
+    <span class="c1"># add pairwise</span>
+    <span class="c1"># a and b iterate over all values of the finite field</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">J</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_interaction_matrix</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">obj</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[</span><span class="n">edge_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)][</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+
+    <span class="c1"># add y constraints:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">):</span>
+        <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># add z constraints</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="n">z</span><span class="p">[</span><span class="n">edge_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)][</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="n">z</span><span class="p">[</span><span class="n">edge_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)][</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">]]</span>
+                <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="n">z</span><span class="p">[</span><span class="n">edge_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)][</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">]]</span>
+                <span class="n">cons</span> <span class="o">+=</span> <span class="p">[</span><span class="n">z</span><span class="p">[</span><span class="n">edge_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)][</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">&gt;=</span>
+                         <span class="n">y</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="n">cons</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">SCS</span><span class="p">)</span>
+
+    <span class="c1"># in fact, rounding LP relaxation is sampling</span>
+    <span class="n">rounded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                         <span class="n">high</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">,</span>
+                                         <span class="n">size</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">))</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">rounded</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">LPRelaxResult</span><span class="p">(</span>
+        <span class="n">upper_bound</span><span class="o">=</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">lower_bound</span><span class="o">=</span><span class="n">lower</span><span class="p">,</span>
+        <span class="n">rounded_solution</span><span class="o">=</span><span class="n">rounded</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

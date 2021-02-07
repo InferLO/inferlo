@@ -1,0 +1,6 @@
+﻿inferlo.generic.inference.mean\_field
+=====================================
+
+.. currentmodule:: inferlo.generic.inference
+
+.. autofunction:: mean_field

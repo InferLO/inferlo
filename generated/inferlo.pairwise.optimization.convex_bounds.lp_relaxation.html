@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.optimization.convex_bounds.lp_relaxation &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="inferlo.pairwise.optimization.convex_hierarchies.lasserre" href="inferlo.pairwise.optimization.convex_hierarchies.lasserre.html" />
+    <link rel="prev" title="inferlo.pairwise.junction_tree.max_likelihood_junction_tree" href="inferlo.pairwise.junction_tree.max_likelihood_junction_tree.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#optimization-algorithms">Optimization algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="inferlo.forney.optimization.nfg_map_lp.map_lp.html">inferlo.forney.optimization.nfg_map_lp.map_lp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.bruteforce.max_lh_bruteforce.html">inferlo.pairwise.bruteforce.max_lh_bruteforce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.max_likelihood_junction_tree.html">inferlo.pairwise.junction_tree.max_likelihood_junction_tree</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.pairwise.optimization.convex_bounds.lp_relaxation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.convex_hierarchies.lasserre.html">inferlo.pairwise.optimization.convex_hierarchies.lasserre</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams.html">inferlo.pairwise.optimization.convex_hierarchies.sherali_adams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.map_lp.map_lp.html">inferlo.pairwise.optimization.map_lp.map_lp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.path_dp.max_lh_path_dp.html">inferlo.pairwise.optimization.path_dp.max_lh_path_dp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp.html">inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#sampling-algorithms">Sampling algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#model-conversion-algorithms">Model conversion algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#datasets">Datasets</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.optimization.convex_bounds.lp_relaxation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/generated/inferlo.pairwise.optimization.convex_bounds.lp_relaxation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="inferlo-pairwise-optimization-convex-bounds-lp-relaxation">
+<h1>inferlo.pairwise.optimization.convex_bounds.lp_relaxation<a class="headerlink" href="#inferlo-pairwise-optimization-convex-bounds-lp-relaxation" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="inferlo.pairwise.optimization.convex_bounds.lp_relaxation">
+<code class="sig-prename descclassname">inferlo.pairwise.optimization.convex_bounds.</code><code class="sig-name descname">lp_relaxation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span></em><span class="sig-paren">)</span> &#x2192; LPRelaxResult<a class="reference internal" href="../_modules/inferlo/pairwise/optimization/convex_bounds.html#lp_relaxation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.optimization.convex_bounds.lp_relaxation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max Likelihood for pairwise model by solving LP relaxation.</p>
+<p>1) Reformulates the original problem of maximizing
+<code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">F[i][X_i]</span> <span class="pre">+</span> <span class="pre">0.5*sum</span> <span class="pre">J[i][j][X[i]][X[j]])</span></code>
+as a binary optimization problem by introducing new variables
+<code class="docutils literal notranslate"><span class="pre">y_i</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">z_i,j,a,b</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">maximize</span> <span class="p">(</span><span class="n">sum_i</span> <span class="n">sum_a</span> <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">*</span> <span class="n">y_i</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span>
+         <span class="p">(</span><span class="n">sum_i</span> <span class="n">sum_j</span> <span class="n">sum_a</span> <span class="n">sum_b</span> <span class="mf">0.5</span><span class="o">*</span><span class="nb">sum</span> <span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<span class="n">subject</span> <span class="n">to</span> <span class="n">y_i</span><span class="p">,</span><span class="n">a</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="p">(</span><span class="k">for</span> <span class="nb">all</span> <span class="n">i</span><span class="p">)</span> <span class="n">sum_a</span> <span class="n">y_i</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">y_i</span><span class="p">,</span><span class="n">a</span>
+        <span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">y_j</span><span class="p">,</span><span class="n">b</span>
+        <span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">y_i</span><span class="p">,</span><span class="n">a</span> <span class="o">+</span> <span class="n">y_j</span><span class="p">,</span><span class="n">b</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>2) Solves the LP relaxation by relaxing binary constraints
+to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_i</span><span class="p">,</span><span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">z_i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">z</span></code> will be reshaped to matrix (cvxpy does not support tensor
+variables).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – Model for which to find most likely state.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Solution of LP relaxation of the Max Likelihood problem.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="inferlo.pairwise.optimization.convex_hierarchies.lasserre.html" class="btn btn-neutral float-right" title="inferlo.pairwise.optimization.convex_hierarchies.lasserre" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.pairwise.junction_tree.max_likelihood_junction_tree.html" class="btn btn-neutral float-left" title="inferlo.pairwise.junction_tree.max_likelihood_junction_tree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

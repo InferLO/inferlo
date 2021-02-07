@@ -1,0 +1,6 @@
+﻿inferlo.gaussian.inference.gaussian\_belief\_propagation.gaussian\_BP
+=====================================================================
+
+.. currentmodule:: inferlo.gaussian.inference.gaussian_belief_propagation
+
+.. autofunction:: gaussian_BP

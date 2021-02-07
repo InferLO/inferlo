@@ -1,0 +1,6 @@
+﻿inferlo.testing.tree\_potts\_model
+==================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: tree_potts_model

@@ -1,0 +1,28 @@
+﻿inferlo.generic.libdai\_bp.BP
+=============================
+
+.. currentmodule:: inferlo.generic.libdai_bp
+
+.. autoclass:: BP
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BP.__init__
+      ~BP.find_max_residual
+      ~BP.infer
+      ~BP.init
+      ~BP.log_z
+      ~BP.marg_prob
+      ~BP.run
+   
+   
+
+   
+   
+   

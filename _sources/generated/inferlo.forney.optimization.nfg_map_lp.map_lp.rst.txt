@@ -1,0 +1,6 @@
+﻿inferlo.forney.optimization.nfg\_map\_lp.map\_lp
+================================================
+
+.. currentmodule:: inferlo.forney.optimization.nfg_map_lp
+
+.. autofunction:: map_lp

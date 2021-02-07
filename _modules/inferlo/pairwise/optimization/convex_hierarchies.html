@@ -1,0 +1,666 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.optimization.convex_hierarchies &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.optimization.convex_hierarchies</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.pairwise.optimization.convex_hierarchies</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE.</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">combinations</span>
+<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
+
+<span class="n">sherali_adams_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sherali_adams_result&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
+                                                           <span class="s1">&#39;projection&#39;</span>
+                                                           <span class="p">])</span>
+
+
+<div class="viewcode-block" id="sherali_adams"><a class="viewcode-back" href="../../../../generated/inferlo.pairwise.optimization.convex_hierarchies.sherali_adams.html#inferlo.pairwise.optimization.convex_hierarchies.sherali_adams">[docs]</a><span class="k">def</span> <span class="nf">sherali_adams</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sherali_adams_result</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is an implementation of Sherali-Adams hierarchy, also called</span>
+<span class="sd">    lift-and-project method. This method produces hierarchy of linear</span>
+<span class="sd">    programming (LP) relaxations for the most probable state estimation</span>
+<span class="sd">    (MAP problem).</span>
+
+<span class="sd">    Let k be the level of hierarchy. Then for every cluster of variables</span>
+<span class="sd">    of size k, we introduce a new variable. All these variables,</span>
+<span class="sd">    called lifted variables, should satisfy normalization,</span>
+<span class="sd">    marginalization constraints and be non-negative.</span>
+
+<span class="sd">    After solving the corresponding LP, we get upper bound to the</span>
+<span class="sd">    energy function at a most probable state and extract projected</span>
+<span class="sd">    variable that correspond to single nodes of the model.</span>
+
+<span class="sd">    More on LP hierarchies may be found in D.Sontag&#39;s thesis</span>
+<span class="sd">    &quot;Approximate Inference in Graphical Models using LP</span>
+<span class="sd">    relaxations&quot;.</span>
+<span class="sd">    https://people.csail.mit.edu/dsontag/papers/sontag_phd_thesis.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span>
+    <span class="n">var_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span>
+    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">edges</span>
+
+    <span class="c1"># check level value</span>
+    <span class="k">if</span> <span class="p">((</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">level</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">level</span> <span class="o">&gt;</span> <span class="n">var_size</span><span class="p">)):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incorrect value of hierarchy level! Setting level to 3..&quot;</span><span class="p">)</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="c1"># introduce cluster variables and constraints</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cluster_size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">),</span> <span class="n">cluster_size</span><span class="p">))</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">cluster_ids</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="n">cluster</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="n">cluster</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+
+            <span class="c1"># add normalization constraint</span>
+            <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># add marginalization constraints</span>
+            <span class="k">for</span> <span class="n">cluster_subset_size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">cluster_size</span><span class="p">):</span>
+                <span class="n">all_cluster_subsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span>
+                    <span class="nb">list</span><span class="p">(</span><span class="n">cluster_ids</span><span class="p">),</span> <span class="n">cluster_subset_size</span><span class="p">))</span>
+                <span class="n">subset_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span>
+                    <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">cluster_subset_size</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">all_cluster_subsets</span><span class="p">:</span>
+                    <span class="n">subset_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">subset_x</span> <span class="ow">in</span> <span class="n">subset_values</span><span class="p">:</span>
+                        <span class="n">marginal_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+                        <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">cp_variable</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">consistency</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span>
+                                <span class="n">cluster_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">subset_ids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                            <span class="p">]</span> <span class="o">==</span> <span class="n">subset_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cluster_subset_size</span><span class="p">)]</span>
+                            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">consistency</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">):</span>
+                                <span class="n">marginal_sum</span> <span class="o">+=</span> <span class="n">cp_variable</span>
+
+                        <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">marginal_sum</span> <span class="o">==</span>
+                                        <span class="n">clusters</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">subset_x</span><span class="p">]]</span>
+
+    <span class="c1"># define objective</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># add field in every node</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="n">objective</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">node</span><span class="p">,</span> <span class="n">letter</span><span class="p">]</span> <span class="o">*</span> \
+                <span class="n">clusters</span><span class="p">[(</span><span class="n">node</span><span class="p">,)][(</span><span class="n">letter</span><span class="p">,)]</span>
+
+    <span class="c1"># add pairwise interactions</span>
+    <span class="c1"># a and b iterate over all values of the finite field</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">J</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_interaction_matrix</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">objective</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">clusters</span><span class="p">[(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])][(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">objective</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">clusters</span><span class="p">[(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])][(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)]</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">objective</span><span class="p">),</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">SCS</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+
+    <span class="n">projected_variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">):</span>
+        <span class="n">projected_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clusters</span><span class="p">[(</span><span class="n">node</span><span class="p">,)]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">sherali_adams_result</span><span class="p">(</span>
+        <span class="n">upper_bound</span><span class="o">=</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">projection</span><span class="o">=</span><span class="n">projected_variables</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">minimal_cycle</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sherali_adams_result</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is an implementation of Cycle relaxation. In fact,</span>
+<span class="sd">    cycle relaxation is a simplified version of the third</span>
+<span class="sd">    level of Sherali-Adams hierarchy. It may result in worse</span>
+<span class="sd">    upper bounds but has much fewer constraints and solved</span>
+<span class="sd">    faster.</span>
+
+<span class="sd">    The idea behind this relaxation is to consider all cycles</span>
+<span class="sd">    in the graph and to add cycle-to-edge marginalization</span>
+<span class="sd">    constraints to the local consistency constraints.</span>
+
+<span class="sd">    In some cases cycle relaxation coincides with the third</span>
+<span class="sd">    level of Sherali-Adams. It may also be shown that instead</span>
+<span class="sd">    of all cycles constraints, it is enough to consider only</span>
+<span class="sd">    chordless cycles. In this code we consider the set of</span>
+<span class="sd">    minimal cycles found by networkx.</span>
+
+<span class="sd">    More on LP hierarchies may be found in D.Sontag&#39;s thesis</span>
+<span class="sd">    &quot;Approximate Inference in Graphical Models using LP</span>
+<span class="sd">    relaxations&quot;.</span>
+<span class="sd">    https://people.csail.mit.edu/dsontag/papers/sontag_phd_thesis.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span>
+    <span class="n">var_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span>
+    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">edges</span>
+
+    <span class="c1"># check if graph is acyclic</span>
+    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">is_graph_acyclic</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Graph is acyclic!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cycle relaxation is equivalent to the local LP relaxation.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># introduce cluster variables and constraints</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># add local consistency constraints first</span>
+    <span class="k">for</span> <span class="n">cluster_size</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">),</span> <span class="n">cluster_size</span><span class="p">))</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">cluster_size</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">cluster_ids</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
+            <span class="n">cluster</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="n">cluster</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+
+            <span class="c1"># add normalization constraint</span>
+            <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># add marginalization constraints</span>
+            <span class="k">for</span> <span class="n">cluster_subset_size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">cluster_size</span><span class="p">):</span>
+                <span class="n">all_cluster_subsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span>
+                    <span class="nb">list</span><span class="p">(</span><span class="n">cluster_ids</span><span class="p">),</span> <span class="n">cluster_subset_size</span><span class="p">))</span>
+                <span class="n">subset_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span>
+                    <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">cluster_subset_size</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">all_cluster_subsets</span><span class="p">:</span>
+                    <span class="n">subset_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">subset_x</span> <span class="ow">in</span> <span class="n">subset_values</span><span class="p">:</span>
+                        <span class="n">marginal_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+                        <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">cp_variable</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">consistency</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span>
+                                <span class="n">cluster_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">subset_ids</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                            <span class="p">]</span> <span class="o">==</span> <span class="n">subset_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cluster_subset_size</span><span class="p">)]</span>
+                            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">consistency</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">):</span>
+                                <span class="n">marginal_sum</span> <span class="o">+=</span> <span class="n">cp_variable</span>
+
+                        <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">marginal_sum</span> <span class="o">==</span>
+                                        <span class="n">clusters</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">subset_x</span><span class="p">]]</span>
+
+    <span class="c1"># add cycle consistency</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span>
+    <span class="n">cycles</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">cycle_basis</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">cycles</span><span class="p">:</span>
+        <span class="n">cycle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cycle</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">cycle_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cycle</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">edge</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">cycle</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cycle</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]])</span>
+            <span class="n">cycle_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">edge</span><span class="p">))</span>
+
+        <span class="n">cycle_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">cycle</span><span class="p">)))</span>
+        <span class="n">cluster_ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">cycle</span><span class="p">))</span>
+        <span class="n">cluster</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cycle_values</span><span class="p">:</span>
+            <span class="n">cluster</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+
+        <span class="c1"># add normalization constraint</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># add marginalization constraints</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">cycle_edges</span><span class="p">:</span>
+            <span class="n">edge_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">first_node_position</span> <span class="o">=</span> <span class="n">cluster_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">second_node_position</span> <span class="o">=</span> <span class="n">cluster_ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">edge_value</span> <span class="ow">in</span> <span class="n">edge_values</span><span class="p">:</span>
+                <span class="n">marginal_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">edge_variable</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">edge</span><span class="p">][</span><span class="n">edge_value</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cycle_values</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">first_node_position</span><span class="p">]</span> <span class="o">==</span> <span class="n">edge_value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> \
+                            <span class="ow">and</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">second_node_position</span><span class="p">]</span> <span class="o">==</span> <span class="n">edge_value</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">marginal_sum</span> <span class="o">+=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ids</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+                <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">marginal_sum</span> <span class="o">==</span> <span class="n">edge_variable</span><span class="p">]</span>
+
+    <span class="c1"># define objective</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># add field in every node</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="n">objective</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">node</span><span class="p">,</span> <span class="n">letter</span><span class="p">]</span> <span class="o">*</span> \
+                <span class="n">clusters</span><span class="p">[(</span><span class="n">node</span><span class="p">,)][(</span><span class="n">letter</span><span class="p">,)]</span>
+
+    <span class="c1"># add pairwise interactions</span>
+    <span class="c1"># a and b iterate over all values of the finite field</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">J</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_interaction_matrix</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">objective</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">clusters</span><span class="p">[(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])][(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">objective</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">clusters</span><span class="p">[(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])][(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)]</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">objective</span><span class="p">),</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">SCS</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+
+    <span class="n">projected_variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">):</span>
+        <span class="n">projected_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clusters</span><span class="p">[(</span><span class="n">node</span><span class="p">,)]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">sherali_adams_result</span><span class="p">(</span>
+        <span class="n">upper_bound</span><span class="o">=</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">projection</span><span class="o">=</span><span class="n">projected_variables</span>
+    <span class="p">)</span>
+
+
+<span class="n">lasserre_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;lasserre_result&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
+                                                 <span class="s1">&#39;moment_matrix&#39;</span>
+                                                 <span class="p">])</span>
+
+
+<span class="k">class</span> <span class="nc">Indexing</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used to correctly extract indices of moment</span>
+<span class="sd">    matrices by cluster indices and corresponding values.</span>
+
+<span class="sd">    The first index corresponds to empty set and equals one.</span>
+<span class="sd">    Then we list all clusters of size one. For the first</span>
+<span class="sd">    cluster we have q indicator variables where q is the</span>
+<span class="sd">    size of alphabet. Totally we have n*q clusters of size</span>
+<span class="sd">    one where n is the number of variables in model.</span>
+
+<span class="sd">    Then we list clusters by size one by one. Totally</span>
+<span class="sd">    we have q^t * Bin(n, t) indices that correspond to</span>
+<span class="sd">    clusters of size t. We denote Bin(n, t)  the number of</span>
+<span class="sd">    combinations with t elements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">first_index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">current_level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">clusters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">current_level</span><span class="p">))</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">current_level</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">current_level</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="n">current_level</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">first_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+                                    <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes index of cluster in the moment matrix.</span>
+<span class="sd">        A method to index clusters of variables described</span>
+<span class="sd">        in the docstring for Indexing class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cluster</span><span class="p">))</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;level_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_index</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]]</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;cluster_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;value_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;value_total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">])</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;level_index&#39;</span><span class="p">]</span> <span class="o">+</span> \
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;cluster_index&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;value_total&#39;</span><span class="p">]</span> <span class="o">+</span> \
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;value_index&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">info</span>
+
+
+<span class="k">def</span> <span class="nf">compatible</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">,</span> <span class="n">value_a</span><span class="p">,</span> <span class="n">cluster_b</span><span class="p">,</span> <span class="n">value_b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks compatibility of clusters of variables.</span>
+<span class="sd">    Compatibility means that values agree on common</span>
+<span class="sd">    variables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">):</span>
+        <span class="n">position_a</span> <span class="o">=</span> <span class="n">cluster_a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_b</span><span class="p">):</span>
+            <span class="n">position_b</span> <span class="o">=</span> <span class="n">cluster_b</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value_a</span><span class="p">[</span><span class="n">position_a</span><span class="p">]</span> <span class="o">!=</span> <span class="n">value_b</span><span class="p">[</span><span class="n">position_b</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">,</span> <span class="n">value_a</span><span class="p">,</span> <span class="n">cluster_b</span><span class="p">,</span> <span class="n">value_b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns union of compatible clusters.</span>
+<span class="sd">    Compatibility means that values agree on common</span>
+<span class="sd">    variables.</span>
+
+<span class="sd">    The set of variable indices is the set union</span>
+<span class="sd">    of variables in both clusters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cluster_a_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">)</span>
+    <span class="n">value_a_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value_a</span><span class="p">)</span>
+    <span class="n">cluster_b_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_b</span><span class="p">)</span>
+    <span class="n">value_b_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value_b</span><span class="p">)</span>
+    <span class="n">value_ab</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cluster_ab</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cluster_a_list</span> <span class="o">+</span> <span class="n">cluster_b_list</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_ab</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">cluster_ab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">cluster_a_list</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">cluster_a_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cluster_ab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">value_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value_a_list</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">cluster_b_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cluster_ab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">value_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value_b_list</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">cluster_ab</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">value_ab</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="lasserre"><a class="viewcode-back" href="../../../../generated/inferlo.pairwise.optimization.convex_hierarchies.lasserre.html#inferlo.pairwise.optimization.convex_hierarchies.lasserre">[docs]</a><span class="k">def</span> <span class="nf">lasserre</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">lasserre_result</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is an implementation of Lasserre hierarchy. This method p</span>
+<span class="sd">    roduces hierarchy of semidefinite programming (SDP) relaxations</span>
+<span class="sd">    for the most probable state estimation (MAP problem).</span>
+
+<span class="sd">    Let k be the level of hierarchy. Then we consider all clusters</span>
+<span class="sd">    of variables of size k, and construct their moment matrix.</span>
+<span class="sd">    Denote alphabet size by q. Then for every cluster of size t we</span>
+<span class="sd">    introduce q^t indicator binary variables and get moment matrix.</span>
+
+<span class="sd">    After solving the corresponding SDP, we get upper bound to the</span>
+<span class="sd">    energy function at a most probable state and extract the</span>
+<span class="sd">    resulting moment matrix.</span>
+
+<span class="sd">    More on Lasserre hierarchies may be found in M.Wainwright and</span>
+<span class="sd">    M. Jordan&#39;s book &quot;Graphical Models, Exponential Families, and</span>
+<span class="sd">    Variational Inference&quot;, section 9.</span>
+<span class="sd">    https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">var_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span>
+    <span class="n">al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span>
+    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">edges</span>
+
+    <span class="c1"># check level value</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">level</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">level</span> <span class="o">&gt;</span> <span class="n">var_size</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incorrect value of hierarchy level! Setting level to 1..&quot;</span><span class="p">)</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># introduce cluster variables</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">Indexing</span><span class="p">(</span><span class="n">var_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cluster_size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">cluster_ids</span> <span class="ow">in</span> <span class="n">ind</span><span class="o">.</span><span class="n">clusters</span><span class="p">[</span><span class="n">cluster_size</span><span class="p">]:</span>
+            <span class="n">cluster</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ind</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">cluster_size</span><span class="p">]:</span>
+                <span class="n">cluster</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ids</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+
+            <span class="c1"># add normalization constraint</span>
+            <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">moment_matrix</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">ind</span><span class="o">.</span><span class="n">first_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ind</span><span class="o">.</span><span class="n">first_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                                <span class="n">symmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">moment_matrix</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">moment_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># add moment matrix elements constraints</span>
+    <span class="n">clusters_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">cluster_a</span> <span class="ow">in</span> <span class="n">clusters_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">value_a</span> <span class="ow">in</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_a</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">,</span> <span class="n">value_a</span><span class="p">)</span>
+            <span class="n">a_variable</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_a</span><span class="p">][</span><span class="n">value_a</span><span class="p">]</span>
+            <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">moment_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="n">a_variable</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">cluster_b</span> <span class="ow">in</span> <span class="n">clusters_list</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">value_b</span> <span class="ow">in</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_b</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">b</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">cluster_b</span><span class="p">,</span> <span class="n">value_b</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="n">cluster_a</span> <span class="o">==</span> <span class="n">cluster_b</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">value_a</span> <span class="o">==</span> <span class="n">value_b</span><span class="p">):</span>
+                        <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">moment_matrix</span><span class="p">[</span>
+                            <span class="n">a</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">==</span> <span class="n">a_variable</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="p">(</span><span class="n">cluster_a</span> <span class="o">!=</span> <span class="n">cluster_b</span><span class="p">)</span> <span class="ow">and</span> \
+                            <span class="p">(</span><span class="n">compatible</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">,</span> <span class="n">value_a</span><span class="p">,</span>
+                                        <span class="n">cluster_b</span><span class="p">,</span> <span class="n">value_b</span><span class="p">)):</span>
+                        <span class="n">cluster_ab</span><span class="p">,</span> <span class="n">value_ab</span> <span class="o">=</span> <span class="n">union</span><span class="p">(</span><span class="n">cluster_a</span><span class="p">,</span> <span class="n">value_a</span><span class="p">,</span>
+                                                     <span class="n">cluster_b</span><span class="p">,</span> <span class="n">value_b</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">cluster_ab</span> <span class="ow">in</span> <span class="n">clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">variable_ab</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_ab</span><span class="p">][</span><span class="n">value_ab</span><span class="p">]</span>
+                            <span class="n">constraints</span> <span class="o">+=</span> <span class="p">[</span><span class="n">moment_matrix</span><span class="p">[</span>
+                                <span class="n">a</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+                            <span class="p">]</span> <span class="o">==</span> <span class="n">variable_ab</span><span class="p">]</span>
+
+    <span class="n">objective</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="c1"># add field in every node</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="n">objective</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">node</span><span class="p">,</span> <span class="n">letter</span><span class="p">]</span> <span class="o">*</span> \
+                <span class="n">clusters</span><span class="p">[(</span><span class="n">node</span><span class="p">,)][(</span><span class="n">letter</span><span class="p">,)]</span>
+
+    <span class="c1"># add pairwise interactions</span>
+    <span class="c1"># a and b iterate over all values of the finite field</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">):</span>
+                <span class="n">J</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_interaction_matrix</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">a_info</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">find</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="p">(</span><span class="n">a</span><span class="p">,))</span>
+                <span class="n">a_index</span> <span class="o">=</span> <span class="n">a_info</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+                <span class="n">b_info</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">find</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">],),</span> <span class="p">(</span><span class="n">b</span><span class="p">,))</span>
+                <span class="n">b_index</span> <span class="o">=</span> <span class="n">b_info</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span>
+                <span class="n">objective</span> <span class="o">+=</span> <span class="n">J</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">*</span> <span class="n">moment_matrix</span><span class="p">[</span><span class="n">a_index</span><span class="p">,</span> <span class="n">b_index</span><span class="p">]</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">Maximize</span><span class="p">(</span><span class="n">objective</span><span class="p">),</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">SCS</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lasserre_result</span><span class="p">(</span>
+        <span class="n">upper_bound</span><span class="o">=</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">moment_matrix</span><span class="o">=</span><span class="n">moment_matrix</span><span class="o">.</span><span class="n">value</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

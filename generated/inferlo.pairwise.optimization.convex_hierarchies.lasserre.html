@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.pairwise.optimization.convex_hierarchies.lasserre &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams" href="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams.html" />
+    <link rel="prev" title="inferlo.pairwise.optimization.convex_bounds.lp_relaxation" href="inferlo.pairwise.optimization.convex_bounds.lp_relaxation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../api.html#optimization-algorithms">Optimization algorithms</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="inferlo.forney.optimization.nfg_map_lp.map_lp.html">inferlo.forney.optimization.nfg_map_lp.map_lp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.bruteforce.max_lh_bruteforce.html">inferlo.pairwise.bruteforce.max_lh_bruteforce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.max_likelihood_junction_tree.html">inferlo.pairwise.junction_tree.max_likelihood_junction_tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.convex_bounds.lp_relaxation.html">inferlo.pairwise.optimization.convex_bounds.lp_relaxation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.pairwise.optimization.convex_hierarchies.lasserre</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams.html">inferlo.pairwise.optimization.convex_hierarchies.sherali_adams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.map_lp.map_lp.html">inferlo.pairwise.optimization.map_lp.map_lp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.path_dp.max_lh_path_dp.html">inferlo.pairwise.optimization.path_dp.max_lh_path_dp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp.html">inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#sampling-algorithms">Sampling algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api.html#model-conversion-algorithms">Model conversion algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#datasets">Datasets</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>inferlo.pairwise.optimization.convex_hierarchies.lasserre</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/generated/inferlo.pairwise.optimization.convex_hierarchies.lasserre.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="inferlo-pairwise-optimization-convex-hierarchies-lasserre">
+<h1>inferlo.pairwise.optimization.convex_hierarchies.lasserre<a class="headerlink" href="#inferlo-pairwise-optimization-convex-hierarchies-lasserre" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="inferlo.pairwise.optimization.convex_hierarchies.lasserre">
+<code class="sig-prename descclassname">inferlo.pairwise.optimization.convex_hierarchies.</code><code class="sig-name descname">lasserre</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">inferlo.pairwise.pwf_model.PairWiseFiniteModel</span></em>, <em class="sig-param"><span class="n">level</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span> &#x2192; inferlo.pairwise.optimization.convex_hierarchies.lasserre_result<a class="reference internal" href="../_modules/inferlo/pairwise/optimization/convex_hierarchies.html#lasserre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.optimization.convex_hierarchies.lasserre" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an implementation of Lasserre hierarchy. This method p
+roduces hierarchy of semidefinite programming (SDP) relaxations
+for the most probable state estimation (MAP problem).</p>
+<p>Let k be the level of hierarchy. Then we consider all clusters
+of variables of size k, and construct their moment matrix.
+Denote alphabet size by q. Then for every cluster of size t we
+introduce q^t indicator binary variables and get moment matrix.</p>
+<p>After solving the corresponding SDP, we get upper bound to the
+energy function at a most probable state and extract the
+resulting moment matrix.</p>
+<p>More on Lasserre hierarchies may be found in M.Wainwright and
+M. Jordan’s book “Graphical Models, Exponential Families, and
+Variational Inference”, section 9.
+<a class="reference external" href="https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf">https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf</a></p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams.html" class="btn btn-neutral float-right" title="inferlo.pairwise.optimization.convex_hierarchies.sherali_adams" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.pairwise.optimization.convex_bounds.lp_relaxation.html" class="btn btn-neutral float-left" title="inferlo.pairwise.optimization.convex_bounds.lp_relaxation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.datasets.UaiReader &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting started with InferLO" href="../tutorials/getting_started.html" />
+    <link rel="prev" title="inferlo.datasets.DatasetLoader" href="inferlo.datasets.DatasetLoader.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#datasets">Datasets</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="inferlo.datasets.DatasetLoader.html">inferlo.datasets.DatasetLoader</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.datasets.UaiReader</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>inferlo.datasets.UaiReader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/generated/inferlo.datasets.UaiReader.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="inferlo-datasets-uaireader">
+<h1>inferlo.datasets.UaiReader<a class="headerlink" href="#inferlo-datasets-uaireader" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="inferlo.datasets.UaiReader">
+<em class="property">class </em><code class="sig-prename descclassname">inferlo.datasets.</code><code class="sig-name descname">UaiReader</code><a class="reference internal" href="../_modules/inferlo/datasets/uai_reader.html#UaiReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.UaiReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads files in UAI format.</p>
+<dl class="py method">
+<dt id="inferlo.datasets.UaiReader.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/datasets/uai_reader.html#UaiReader.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.UaiReader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.datasets.UaiReader.__init__" title="inferlo.datasets.UaiReader.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.datasets.UaiReader.read_marginals" title="inferlo.datasets.UaiReader.read_marginals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_marginals</span></code></a>(path)</p></td>
+<td><p>Reads true marginals form a file in UAI format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.datasets.UaiReader.read_model" title="inferlo.datasets.UaiReader.read_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_model</span></code></a>(path)</p></td>
+<td><p>Reads Graphical model form a file in UAI format.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="inferlo.datasets.UaiReader.read_marginals">
+<code class="sig-name descname">read_marginals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span> &#x2192; numpy.array<a class="reference internal" href="../_modules/inferlo/datasets/uai_reader.html#UaiReader.read_marginals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.UaiReader.read_marginals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads true marginals form a file in UAI format.</p>
+<p>Format description:
+<a class="reference external" href="http://www.hlt.utdallas.edu/~vgogate/uai14-competition/resformat.html">http://www.hlt.utdallas.edu/~vgogate/uai14-competition/resformat.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – Local path to text file with true marginals in UAI format.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D numpy array. First dimension is number of variables,
+second is maximal domain size of a variable. <code class="docutils literal notranslate"><span class="pre">result[i][j]</span></code> is a
+probability that <code class="docutils literal notranslate"><span class="pre">i</span></code>-th variable takes <code class="docutils literal notranslate"><span class="pre">j</span></code>-th value (or 0 if this
+variable’s domain size is less than <code class="docutils literal notranslate"><span class="pre">j+1</span></code>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.datasets.UaiReader.read_model">
+<code class="sig-name descname">read_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span> &#x2192; inferlo.base.generic_graph_model.GenericGraphModel<a class="reference internal" href="../_modules/inferlo/datasets/uai_reader.html#UaiReader.read_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.UaiReader.read_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads Graphical model form a file in UAI format.</p>
+<p>Format description:
+<a class="reference external" href="http://www.hlt.utdallas.edu/~vgogate/uai14-competition/modelformat.html">http://www.hlt.utdallas.edu/~vgogate/uai14-competition/modelformat.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> – Local path to text file with GM in UAI format.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Graphical model read from the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../tutorials/getting_started.html" class="btn btn-neutral float-right" title="Getting started with InferLO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.datasets.DatasetLoader.html" class="btn btn-neutral float-left" title="inferlo.datasets.DatasetLoader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

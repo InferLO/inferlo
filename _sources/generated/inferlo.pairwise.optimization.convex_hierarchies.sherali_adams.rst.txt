@@ -1,0 +1,6 @@
+﻿inferlo.pairwise.optimization.convex\_hierarchies.sherali\_adams
+================================================================
+
+.. currentmodule:: inferlo.pairwise.optimization.convex_hierarchies
+
+.. autofunction:: sherali_adams

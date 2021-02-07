@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.generic.inference.inference &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.generic.inference.inference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.generic.inference.inference</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE.</span>
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">.belief_propagation</span> <span class="kn">import</span> <span class="n">BeliefPropagation</span><span class="p">,</span> <span class="n">IterativeJoinGraphPropagation</span>
+<span class="kn">from</span> <span class="nn">.bucket_elimination</span> <span class="kn">import</span> <span class="n">BucketElimination</span>
+<span class="kn">from</span> <span class="nn">.bucket_renormalization</span> <span class="kn">import</span> <span class="n">BucketRenormalization</span>
+<span class="kn">from</span> <span class="nn">.factor</span> <span class="kn">import</span> <span class="n">Factor</span>
+<span class="kn">from</span> <span class="nn">.graphical_model</span> <span class="kn">import</span> <span class="n">GraphicalModel</span>
+<span class="kn">from</span> <span class="nn">.mean_field</span> <span class="kn">import</span> <span class="n">MeanField</span>
+<span class="kn">from</span> <span class="nn">.mini_bucket_elimination</span> <span class="kn">import</span> <span class="n">MiniBucketElimination</span>
+<span class="kn">from</span> <span class="nn">.weighted_mini_bucket_elimination</span> <span class="kn">import</span> <span class="n">WeightedMiniBucketElimination</span>
+
+
+<span class="k">def</span> <span class="nf">_convert</span><span class="p">(</span><span class="n">inferlo_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphicalModel</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GraphicalModel</span><span class="p">([],</span> <span class="p">[])</span>
+    <span class="n">cardinalities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">inferlo_model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">):</span>
+        <span class="n">newvar</span> <span class="o">=</span> <span class="s2">&quot;V</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">t</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">newvar</span><span class="p">)</span>
+        <span class="n">cardinalities</span><span class="p">[</span><span class="n">newvar</span><span class="p">]</span> <span class="o">=</span> <span class="n">inferlo_model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+    <span class="n">factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inferlo_model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">factors</span><span class="p">[</span><span class="n">factor_id</span><span class="p">])</span>
+        <span class="n">factor_variables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
+            <span class="n">factor_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;V</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">var_id</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">Factor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;F</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">factor_id</span><span class="p">,</span>
+                                <span class="n">variables</span><span class="o">=</span><span class="n">factor_variables</span><span class="p">,</span>
+                                <span class="n">values</span><span class="o">=</span><span class="n">factor</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+
+<div class="viewcode-block" id="belief_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.belief_propagation.html#inferlo.generic.inference.belief_propagation">[docs]</a><span class="k">def</span> <span class="nf">belief_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                       <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                       <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
+                       <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with (loopy) Belief Propagation.</span>
+
+<span class="sd">    Estimates partition function using Loopy Belief Propagation algorithm.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param max_iter: Number of iterations.</span>
+<span class="sd">    :param converge_thr: Convergence threshold.</span>
+<span class="sd">    :param damp_ratio: Damp ratio.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">BeliefPropagation</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
+                    <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.bucket_elimination.html#inferlo.generic.inference.bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination.</span>
+
+<span class="sd">    Estimates partition function using Bucket Elimination algorithm.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] Rina Dechter.</span>
+<span class="sd">        Bucket elimination: A unifying framework for reasoning. 1999.</span>
+<span class="sd">        https://arxiv.org/abs/1302.3572</span>
+
+<span class="sd">        [2] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">BucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="bucket_renormalization"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.bucket_renormalization.html#inferlo.generic.inference.bucket_renormalization">[docs]</a><span class="k">def</span> <span class="nf">bucket_renormalization</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                           <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                           <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Bucket Renormalization.</span>
+
+<span class="sd">    Estimates partition function using Bucket Renormalization algorithm.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
+<span class="sd">    :param max_iter: Number of optimization iterations. 0 corresponds to</span>
+<span class="sd">        Mini-Bucket Renormalization. 1 corresponds to Global-Bucket</span>
+<span class="sd">        Renormalization. Default is 1.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] Sungsoo Ahn, Michael Chertkov, Adrian Weller, Jinwoo Shin.</span>
+<span class="sd">        Bucket Renormalization for Approximate Inference. 2018.</span>
+<span class="sd">        https://arxiv.org/abs/1803.05104</span>
+
+<span class="sd">        [2] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_renormalization.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">BucketRenormalization</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="iterative_join_graph_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.iterative_join_graph_propagation.html#inferlo.generic.inference.iterative_join_graph_propagation">[docs]</a><span class="k">def</span> <span class="nf">iterative_join_graph_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                                     <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                                     <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+                                     <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
+                                     <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Iterative Join Graph Propagation.</span>
+
+<span class="sd">    Estimates partition function using Iterative Join Graph Propagation</span>
+<span class="sd">      algorithm, which belongs to the class of Generalized Belief Propagation</span>
+<span class="sd">      methods.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param max_iter: Number of iterations.</span>
+<span class="sd">    :param converge_thr: Convergence threshold.</span>
+<span class="sd">    :param damp_ratio: Damp ratio.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] Rina Dechter, Kalev Kask, Robert Mateescu.</span>
+<span class="sd">        Iterative Join-Graph Propagation. 2012.</span>
+<span class="sd">        https://arxiv.org/abs/1301.0564</span>
+
+<span class="sd">        [2] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">IterativeJoinGraphPropagation</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">converge_thr</span><span class="o">=</span><span class="n">converge_thr</span><span class="p">,</span>
+                    <span class="n">damp_ratio</span><span class="o">=</span><span class="n">damp_ratio</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mean_field"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.mean_field.html#inferlo.generic.inference.mean_field">[docs]</a><span class="k">def</span> <span class="nf">mean_field</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+               <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+               <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Mean Field.</span>
+
+<span class="sd">    Estimates partition function using Mean Field approximation.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param max_iter: Maximal number of iterations.</span>
+<span class="sd">    :param converge_thr: Convergence threshold.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mean_field.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MeanField</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="mini_bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.mini_bucket_elimination.html#inferlo.generic.inference.mini_bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Mini Bucket Elimination.</span>
+
+<span class="sd">    Estimates partition function using Mini Bucket Elimination algorithm.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] Rina Dechter, Irina Rish.</span>
+<span class="sd">        Mini-buckets: A general scheme for bounded inference. 2003.</span>
+<span class="sd">        https://dl.acm.org/doi/abs/10.1145/636865.636866</span>
+
+<span class="sd">        [2] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MiniBucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="weighted_mini_bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.weighted_mini_bucket_elimination.html#inferlo.generic.inference.weighted_mini_bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">weighted_mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                                     <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Weighted Mini Bucket Elimination.</span>
+
+<span class="sd">    Estimates partition function using MWeighted Mini Bucket Elimination</span>
+<span class="sd">      algorithm.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
+<span class="sd">    :return: Natural logarithm of estimated partition function.</span>
+
+<span class="sd">    References</span>
+<span class="sd">        [1] Qiang Liu, Alexander T. Ihler.</span>
+<span class="sd">        Bounding the Partition Function using Holder&#39;s Inequality. 2011.</span>
+<span class="sd">        [2] `Original implementation</span>
+<span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/weighted_mini_bucket_elimination.py&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">WeightedMiniBucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿inferlo.generic.message\_passing.infer\_generic\_message\_passing
+=================================================================
+
+.. currentmodule:: inferlo.generic.message_passing
+
+.. autofunction:: infer_generic_message_passing

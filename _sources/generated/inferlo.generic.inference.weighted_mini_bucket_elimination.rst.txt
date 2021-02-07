@@ -1,0 +1,6 @@
+﻿inferlo.generic.inference.weighted\_mini\_bucket\_elimination
+=============================================================
+
+.. currentmodule:: inferlo.generic.inference
+
+.. autofunction:: weighted_mini_bucket_elimination

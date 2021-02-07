@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.interop.libdai.libdai_interop &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.interop.libdai.libdai_interop</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.interop.libdai.libdai_interop</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">inferlo.base.factors</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">inferlo.base</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span>
+
+
+<div class="viewcode-block" id="LibDaiInterop"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop">[docs]</a><span class="k">class</span> <span class="nc">LibDaiInterop</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Interoperation with libDAI.</span>
+
+<span class="sd">    See https://staff.fnwi.uva.nl/j.m.mooij/libDAI/</span>
+
+<span class="sd">    Interoperation uses file interface. We created a simple C++ file which</span>
+<span class="sd">    reads model from file, solves problem for it using libDAI and writes output</span>
+<span class="sd">    to another file. This Python file is reponsible for converting model to</span>
+<span class="sd">    libDAI format, writing input file, invoking libDAI and reading the output</span>
+<span class="sd">    file.</span>
+
+<span class="sd">    To use it, you will have to install libDAI on your own:</span>
+
+<span class="sd">    1. Get libDAI:</span>
+<span class="sd">    ``git clone https://bitbucket.org/jorism/libdai.git``.</span>
+
+<span class="sd">    2. Build libDAI following instructions in README.</span>
+<span class="sd">    3. Specify path to libdai dir in ``bin/build.sh``.</span>
+<span class="sd">    4. Run ``build.sh``.</span>
+
+<span class="sd">    This works on Ubuntu, wasn&#39;t checked for other platforms.</span>
+
+<span class="sd">    We use libDAI only for verification and benchmarking of inferlo&#39;s own</span>
+<span class="sd">    functionality. We don&#39;t use in any of inferlo&#39;s algorithms.</span>
+
+<span class="sd">    Algorithms</span>
+<span class="sd">        libDAI supports several inference algorithms, identified by codename.</span>
+<span class="sd">        For full list of algorithms, see LibDaiInterop.ALL_ALGORITHMS.</span>
+
+<span class="sd">        All algorithms support calculating marginal probabilties, not all of</span>
+<span class="sd">        them support calculating logZ or most likely state. If algorithm</span>
+<span class="sd">        doesn&#39;t support calculating logZ, you&#39;l get 0. If algorithms doesn&#39;t</span>
+<span class="sd">        support calculating most likely state, exception will be thrown.</span>
+
+<span class="sd">        For documentation on particular algorithms, refer to libDAI</span>
+<span class="sd">        documentation: https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/.</span>
+
+<span class="sd">    Options</span>
+<span class="sd">        Almost every algorithm requires some parameters. Parameters are passed</span>
+<span class="sd">        to algorithm as dict, where keys are string parameter names. Value can</span>
+<span class="sd">        be number, enum value (represented by its name), or nested set of</span>
+<span class="sd">        parameters - then it&#39;s encoded in format &quot;[key1=val1,key2=val2]&quot;.</span>
+
+<span class="sd">        For documentation on options for every particular algorithm, refer to</span>
+<span class="sd">        libDAI documentation and look for Properties class nested in class</span>
+<span class="sd">        implementing that inference algorithm.</span>
+
+<span class="sd">        If not specified, default options will be used. You can access default</span>
+<span class="sd">        options for all algorithms as LibDaiInterop.DEFAULT_OPTIONS. These</span>
+<span class="sd">        options aren&#39;t &quot;recommended&quot;, they just specify minimal set of options</span>
+<span class="sd">        which makes all algorithms work.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: All algorithms.</span>
+    <span class="n">ALL_ALGORITHMS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;CBP&#39;</span><span class="p">,</span> <span class="s1">&#39;DECMAP&#39;</span><span class="p">,</span> <span class="s1">&#39;EXACT&#39;</span><span class="p">,</span> <span class="s1">&#39;FBP&#39;</span><span class="p">,</span> <span class="s1">&#39;GIBBS&#39;</span><span class="p">,</span> <span class="s1">&#39;GLC&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;HAK&#39;</span><span class="p">,</span> <span class="s1">&#39;JTREE&#39;</span><span class="p">,</span> <span class="s1">&#39;LC&#39;</span><span class="p">,</span> <span class="s1">&#39;MF&#39;</span><span class="p">,</span> <span class="s1">&#39;MR&#39;</span><span class="p">,</span> <span class="s1">&#39;TREEEP&#39;</span><span class="p">,</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">]</span>
+
+    <span class="c1">#: Algorithms which can be used for Maximum Likelihood problem.</span>
+    <span class="n">ML_ALGORITHMS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;DECMAP&#39;</span><span class="p">,</span> <span class="s1">&#39;EXACT&#39;</span><span class="p">,</span> <span class="s1">&#39;FBP&#39;</span><span class="p">,</span> <span class="s1">&#39;GIBBS&#39;</span><span class="p">,</span> <span class="s1">&#39;JTREE&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;TREEEP&#39;</span><span class="p">,</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">]</span>
+
+    <span class="c1">#: Default options for all algorithms.</span>
+    <span class="n">DEFAULT_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;EXACT&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(),</span>
+        <span class="s1">&#39;MF&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+        <span class="s1">&#39;BP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQRND&#39;</span><span class="p">,</span> <span class="s1">&#39;logdomain&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span>
+        <span class="s1">&#39;MR&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;FULL&#39;</span><span class="p">,</span> <span class="s1">&#39;inits&#39;</span><span class="p">:</span> <span class="s1">&#39;RESPPROP&#39;</span><span class="p">,</span> <span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">},</span>
+        <span class="s1">&#39;HAK&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;clusters&#39;</span><span class="p">:</span> <span class="s1">&#39;BETHE&#39;</span><span class="p">,</span> <span class="s1">&#39;doubleloop&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span>
+                <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">},</span>
+        <span class="s1">&#39;LC&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQRND&#39;</span><span class="p">,</span> <span class="s1">&#39;cavity&#39;</span><span class="p">:</span> <span class="s1">&#39;FULL&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+               <span class="s1">&#39;cavainame&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;cavaiopts&#39;</span><span class="p">:</span> <span class="s1">&#39;[tol=1e-9,logdomain=0,updates=SEQRND]&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;JTREE&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;HUGIN&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;DECMAP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;ianame&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;iaopts&#39;</span><span class="p">:</span> <span class="s1">&#39;[tol=1e-9,logdomain=0,updates=SEQRND]&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;FBP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;logdomain&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQFIX&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;GLC&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;cavity&#39;</span><span class="p">:</span> <span class="s1">&#39;FULL&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQFIX&#39;</span><span class="p">,</span> <span class="s1">&#39;rgntype&#39;</span><span class="p">:</span> <span class="s1">&#39;SINGLE&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cavainame&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;cavaiopts&#39;</span><span class="p">:</span> <span class="s1">&#39;[tol=1e-9,logdomain=0,updates=SEQRND]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;inainame&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;inaiopts&#39;</span><span class="p">:</span> <span class="s1">&#39;[tol=1e-9,logdomain=0,updates=SEQRND]&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;GIBBS&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">},</span>
+        <span class="s1">&#39;TREEEP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ORG&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;TRWBP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQFIX&#39;</span><span class="p">,</span> <span class="s1">&#39;logdomain&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="s1">&#39;CBP&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQFIX&#39;</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+                <span class="s1">&#39;rec_tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;min_max_adj&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+                <span class="s1">&#39;choose&#39;</span><span class="p">:</span> <span class="s1">&#39;CHOOSE_RANDOM&#39;</span><span class="p">,</span> <span class="s1">&#39;recursion&#39;</span><span class="p">:</span> <span class="s1">&#39;REC_FIXED&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;clamp&#39;</span><span class="p">:</span> <span class="s1">&#39;CLAMP_VAR&#39;</span><span class="p">,</span> <span class="s1">&#39;bbp_props&#39;</span><span class="p">:</span> <span class="s1">&#39;[]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;bbp_cfn&#39;</span><span class="p">:</span> <span class="s1">&#39;CFN_GIBBS_B&#39;</span><span class="p">}}</span>
+
+<div class="viewcode-block" id="LibDaiInterop.__init__"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">inferlo.interop.libdai</span> <span class="k">as</span> <span class="nn">libdai_module</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">libdai_module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;tmp&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exe_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_path</span><span class="p">,</span> <span class="s1">&#39;run_libdai.exe&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">,</span> <span class="s1">&#39;input.fg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tmp_path</span><span class="p">,</span> <span class="s1">&#39;output.txt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Check that executable file can be executed.</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exe_path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">exe_path</span><span class="p">,</span> <span class="s1">&#39;problem=x&#39;</span><span class="p">],</span>
+                                           <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
+                                           <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+                <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LibDaiInterop.is_libdai_ready"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.is_libdai_ready">[docs]</a>    <span class="k">def</span> <span class="nf">is_libdai_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether LibDAI is ready to work.</span>
+
+<span class="sd">        This means run_libdai executable is built and can be executed by OS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready</span></div>
+
+<div class="viewcode-block" id="LibDaiInterop.write_fg_file"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.write_fg_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">write_fg_file</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Writes model to FG file.</span>
+
+<span class="sd">        See format definition at</span>
+<span class="sd">        https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/fileformats.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">())</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">is_discrete</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">])</span>
+        <span class="n">factors</span> <span class="o">=</span> <span class="p">[</span><span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">]</span>
+
+        <span class="n">vars_in_factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">var_idx</span><span class="p">])</span>
+        <span class="n">all_vars</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">))</span>
+        <span class="n">unused_vars</span> <span class="o">=</span> <span class="n">all_vars</span> <span class="o">-</span> <span class="n">vars_in_factors</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unused_vars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Not all variables are referenced in factors, will add dummy &quot;</span>
+                <span class="s2">&quot;unit factors for them. Unused variables: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">unused_vars</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">unused_vars</span><span class="p">:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+                <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">var_id</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">size</span><span class="p">)))</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">_to_fg_factor</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_to_fg_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">:</span> <span class="n">DiscreteFactor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Encodes discrete factor in libDAI FG format.&quot;&quot;&quot;</span>
+        <span class="n">domain_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">factor</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
+                        <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">]</span>
+        <span class="n">header_lines</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)),</span>
+                        <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)),</span>
+                        <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">domain_sizes</span><span class="p">))]</span>
+
+        <span class="n">value_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rev_perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">flat_values</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rev_perm</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flat_values</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">flat_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">1e-9</span><span class="p">:</span>
+                <span class="n">value_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%.10f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">flat_values</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">header_lines</span> <span class="o">+</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">value_lines</span><span class="p">))]</span> <span class="o">+</span> <span class="n">value_lines</span>
+
+<div class="viewcode-block" id="LibDaiInterop.infer"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.infer">[docs]</a>    <span class="k">def</span> <span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+              <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Inference with libDAI.</span>
+
+<span class="sd">        Calculates logarithm of partition function and marginal probabilities.</span>
+
+<span class="sd">        :param model: Model, for which to perform inference. All factors must</span>
+<span class="sd">           be discrete.</span>
+<span class="sd">        :param model: Inference algorithm. Must be one of</span>
+<span class="sd">          ``LibDaiInterop.ALL_ALGORITHMS``.</span>
+<span class="sd">        :param options: libDAI options.</span>
+<span class="sd">        :return: InferenceResult containing log partition function and marginal</span>
+<span class="sd">          probabilities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">ALL_ALGORITHMS</span>
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">DEFAULT_OPTIONS</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;infer&#39;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="n">log_z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="n">marg_probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">marg_probs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">marg_probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">marg_probs</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_z</span><span class="p">,</span> <span class="n">marg_probs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LibDaiInterop.max_likelihood"><a class="viewcode-back" href="../../../../generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.max_likelihood">[docs]</a>    <span class="k">def</span> <span class="nf">max_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+                       <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates most likely state with libDAI.</span>
+
+<span class="sd">        :param model: Model, for which to perform inference. All factors must</span>
+<span class="sd">           be discrete.</span>
+<span class="sd">        :param model: Inference algorithm. Must be one of</span>
+<span class="sd">          ``LibDaiInterop.ML_ALGORITHMS``.</span>
+<span class="sd">        :param options: libDAI options.</span>
+<span class="sd">        :return: Marginal probabilities. Array of shape (number of variables,</span>
+<span class="sd">          number of variables). If variables are from different domains, second</span>
+<span class="sd">          dimension will be equal to maximal domain size, and for variables</span>
+<span class="sd">          having less possible values, probabilities for impossible values will</span>
+<span class="sd">          be padded with zeroes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">ML_ALGORITHMS</span>
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">DEFAULT_OPTIONS</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;inference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;MAXPROD&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;max_likelihood&#39;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">problem</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+             <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Invokes run_libdai for given model and problem.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready</span><span class="p">,</span> <span class="s2">&quot;libDAI is not ready.&quot;</span>
+        <span class="n">LibDaiInterop</span><span class="o">.</span><span class="n">write_fg_file</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+
+        <span class="n">encoded_options</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="n">encoded_options</span> <span class="o">=</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="n">encoded_options</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span>
+
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">exe_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+                  <span class="n">problem</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">encoded_options</span><span class="p">],</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="c1"># Store true running time, which doesn&#39;t include conversions and IO.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">true_running_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;libDAI failed with error message: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

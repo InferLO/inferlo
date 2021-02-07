@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.testing.model_generators &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.testing.model_generators</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.testing.model_generators</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">import</span> <span class="nn">networkx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">inferlo.base.domain</span> <span class="kn">import</span> <span class="n">DiscreteDomain</span>
+<span class="kn">from</span> <span class="nn">inferlo.base.factors.discrete_factor</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">inferlo.base.generic_graph_model</span> <span class="kn">import</span> <span class="n">GenericGraphModel</span>
+<span class="kn">from</span> <span class="nn">inferlo.pairwise.pwf_model</span> <span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
+
+
+<div class="viewcode-block" id="grid_potts_model"><a class="viewcode-back" href="../../../generated/inferlo.testing.grid_potts_model.html#inferlo.testing.grid_potts_model">[docs]</a><span class="k">def</span> <span class="nf">grid_potts_model</span><span class="p">(</span>
+        <span class="n">height</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">,</span>
+        <span class="n">al_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span>
+        <span class="n">zero_field</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates random PairWiseFinteModel on a grid.</span>
+
+<span class="sd">    :param height: Heigth of the grid.</span>
+<span class="sd">    :param width: Wwidth of the grid.</span>
+<span class="sd">    :param al_size: Alphabet size.</span>
+<span class="sd">    :param seed: Random seed.</span>
+<span class="sd">    :param zero_field: Whether model should be zero-field.</span>
+<span class="sd">    :return: Generated Potts Model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">gr_size</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span>
+    <span class="n">edges_num</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">-</span> <span class="n">width</span> <span class="o">-</span> <span class="n">height</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">+</span> <span class="n">y</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="n">width</span><span class="p">))</span>  <span class="c1"># down</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="o">!=</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># right</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">zero_field</span><span class="p">:</span>
+        <span class="n">field</span> <span class="o">*=</span> <span class="mi">0</span>
+    <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">edges_num</span><span class="p">,</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span> <span class="o">*</span> <span class="mf">5.0</span>
+    <span class="k">return</span> <span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">inter</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tree_potts_model"><a class="viewcode-back" href="../../../generated/inferlo.testing.tree_potts_model.html#inferlo.testing.tree_potts_model">[docs]</a><span class="k">def</span> <span class="nf">tree_potts_model</span><span class="p">(</span><span class="n">gr_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span> <span class="n">same_j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">zero_field</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates random PairWiseFinteModel on a random tree.</span>
+
+<span class="sd">    :param gr_size: Size of the graph (number of variables).</span>
+<span class="sd">    :param al_size: Alphabet size.</span>
+<span class="sd">    :param seed: Random set.</span>
+<span class="sd">    :param same_j: If set, interaction matrix for all edges.</span>
+<span class="sd">    :param zero_field: Whether model should be zero-field.</span>
+<span class="sd">    :return: Generated Potts Model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">trees</span><span class="o">.</span><span class="n">random_tree</span><span class="p">(</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">zero_field</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span> <span class="o">+</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span> <span class="o">*</span> <span class="mf">5.0</span>
+        <span class="k">if</span> <span class="n">same_j</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">same_j</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add_interaction</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="line_potts_model"><a class="viewcode-back" href="../../../generated/inferlo.testing.line_potts_model.html#inferlo.testing.line_potts_model">[docs]</a><span class="k">def</span> <span class="nf">line_potts_model</span><span class="p">(</span><span class="n">gr_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span> <span class="n">same_j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                     <span class="n">zero_field</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates random PairWiseFinteModel on a line graph.</span>
+
+<span class="sd">    :param gr_size: Size of the graph (number of variables).</span>
+<span class="sd">    :param al_size: Alphabet size.</span>
+<span class="sd">    :param seed: Random seed.</span>
+<span class="sd">    :param same_j: If set, interaction matrix for all edges.</span>
+<span class="sd">    :param zero_field: Whether model should be zero-field.</span>
+<span class="sd">    :return: Generated model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">zero_field</span><span class="p">:</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.0</span> <span class="o">+</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">gr_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span> <span class="o">*</span> <span class="mf">5.0</span>
+    <span class="k">if</span> <span class="n">same_j</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">same_j</span><span class="p">,</span> <span class="p">(</span><span class="n">gr_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">inter</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="clique_potts_model"><a class="viewcode-back" href="../../../generated/inferlo.testing.clique_potts_model.html#inferlo.testing.clique_potts_model">[docs]</a><span class="k">def</span> <span class="nf">clique_potts_model</span><span class="p">(</span><span class="n">gr_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates random PairWiseFinteModel on a clique.&quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span> <span class="o">+</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gr_size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">gr_size</span><span class="p">):</span>
+            <span class="n">inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span> <span class="o">*</span> <span class="mf">5.0</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add_interaction</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">inter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="pairwise_model_on_graph"><a class="viewcode-back" href="../../../generated/inferlo.testing.pairwise_model_on_graph.html#inferlo.testing.pairwise_model_on_graph">[docs]</a><span class="k">def</span> <span class="nf">pairwise_model_on_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zero_field</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Builds random pairwise model with given interaction graph.</span>
+
+<span class="sd">    :param graph: Interaction graph. Nodes must be labeled with consecutive</span>
+<span class="sd">      integers, starting with 0.</span>
+<span class="sd">    :param al_size: Alphabet size.</span>
+<span class="sd">    :param zero_field: Whether model should be zero-field.</span>
+<span class="sd">    :param seed: Random seed.</span>
+<span class="sd">    :return: Generated model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">gr_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">zero_field</span><span class="p">:</span>
+        <span class="n">field</span> <span class="o">*=</span> <span class="mi">0</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()))</span>
+    <span class="n">interactions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">),</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">interactions</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">make_cross</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Builds graph which looks like a cross.</span>
+
+<span class="sd">    Result graph has (2*length-width)*width vertices.</span>
+
+<span class="sd">    For example, this is a cross of width 3:</span>
+<span class="sd">           ...</span>
+<span class="sd">           +++</span>
+<span class="sd">           +++</span>
+<span class="sd">    ...+++++++++++...</span>
+<span class="sd">    ...+++++++++++...</span>
+<span class="sd">    ...+++++++++++...</span>
+<span class="sd">           +++</span>
+<span class="sd">           +++</span>
+<span class="sd">           ...</span>
+<span class="sd">    :param length: Length of a cross.</span>
+<span class="sd">    :param width: Width of a cross.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">width</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">length</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">width</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">node_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))}</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)))</span>
+
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)</span> <span class="ow">in</span> <span class="n">node_index</span><span class="p">:</span>
+                <span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">node_index</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)],</span>
+                               <span class="n">node_index</span><span class="p">[(</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">graph</span>
+
+
+<span class="k">def</span> <span class="nf">cross_potts_model</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Builds random Potts model with cross-like interactionn graph.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pairwise_model_on_graph</span><span class="p">(</span><span class="n">make_cross</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span>
+                                   <span class="n">al_size</span><span class="o">=</span><span class="n">al_size</span><span class="p">,</span>
+                                   <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="random_generic_model"><a class="viewcode-back" href="../../../generated/inferlo.testing.random_generic_model.html#inferlo.testing.random_generic_model">[docs]</a><span class="k">def</span> <span class="nf">random_generic_model</span><span class="p">(</span><span class="n">num_variables</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                         <span class="n">num_factors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                         <span class="n">max_domain_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                         <span class="n">max_factor_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                         <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericGraphModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates random discrete graphical model of arbitrary structure.</span>
+
+<span class="sd">    You can specify number of variables and factors. Variables will have</span>
+<span class="sd">    different domain sizes, and factors will have different number of</span>
+<span class="sd">    variables.</span>
+
+<span class="sd">    :param num_variables: Number of variables.</span>
+<span class="sd">    :param num_factors: Number of factors.</span>
+<span class="sd">    :param max_domain_size: Maximal size of domain. For every variable, domain</span>
+<span class="sd">        size will be chosen at random between 2 and this value.</span>
+<span class="sd">    :param max_factor_size: Maximal size of factor. For every factor, number of</span>
+<span class="sd">        variables in it will be chosen at random between 1 and this value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GenericGraphModel</span><span class="p">(</span><span class="n">num_variables</span><span class="o">=</span><span class="n">num_variables</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_variables</span><span class="p">):</span>
+        <span class="n">domain_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">max_domain_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">domain_size</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_factors</span><span class="p">):</span>
+        <span class="n">factor_size</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">max_factor_size</span><span class="p">)</span>
+        <span class="n">var_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_variables</span><span class="p">,</span>
+                                   <span class="n">size</span><span class="o">=</span><span class="n">factor_size</span><span class="p">,</span>
+                                   <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">values_shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_idx</span><span class="p">]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">values_shape</span><span class="p">)</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

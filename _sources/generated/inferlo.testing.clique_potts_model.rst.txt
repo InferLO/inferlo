@@ -1,0 +1,6 @@
+﻿inferlo.testing.clique\_potts\_model
+====================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: clique_potts_model

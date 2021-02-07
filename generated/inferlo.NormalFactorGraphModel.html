@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.NormalFactorGraphModel &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="inferlo.PairWiseFiniteModel" href="inferlo.PairWiseFiniteModel.html" />
+    <link rel="prev" title="inferlo.GraphModel" href="inferlo.GraphModel.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#graphical-models">Graphical models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="inferlo.GaussianModel.html">inferlo.GaussianModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.GenericGraphModel.html">inferlo.GenericGraphModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.GraphModel.html">inferlo.GraphModel</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.NormalFactorGraphModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inferlo.PairWiseFiniteModel.html">inferlo.PairWiseFiniteModel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithms-on-graphical-models">Algorithms on graphical models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#algorithm-on-graphs">Algorithm on graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#model-generators">Model generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#datasets">Datasets</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>inferlo.NormalFactorGraphModel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/generated/inferlo.NormalFactorGraphModel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="inferlo-normalfactorgraphmodel">
+<h1>inferlo.NormalFactorGraphModel<a class="headerlink" href="#inferlo-normalfactorgraphmodel" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="inferlo.NormalFactorGraphModel">
+<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">NormalFactorGraphModel</code><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normal Factor Graph model.</p>
+<p>Also known as Forney-style or Edge-Variable graphical model.</p>
+<p>Variables correspond to edges of a graph, factors correspond to vertices of
+a graph.</p>
+<p>Every variable appears in exactly two factors.</p>
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_variables</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">domain</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain">Domain</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes Normal Factor Graph model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_variables</strong> – Number of variables in the model.</p></li>
+<li><p><strong>domain</strong> – Default domain of each variable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.__init__" title="inferlo.NormalFactorGraphModel.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(num_variables, domain)</p></td>
+<td><p>Initializes Normal Factor Graph model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.add_factor" title="inferlo.NormalFactorGraphModel.add_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_factor</span></code></a>(factor)</p></td>
+<td><p>Add a factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.build" title="inferlo.NormalFactorGraphModel.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>()</p></td>
+<td><p>Validates the model and makes it immutable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.check_built" title="inferlo.NormalFactorGraphModel.check_built"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_built</span></code></a>()</p></td>
+<td><p>Checks that model is built.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.draw_edge_variable_graph" title="inferlo.NormalFactorGraphModel.draw_edge_variable_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edge_variable_graph</span></code></a>(ax)</p></td>
+<td><p>Draws edge-variable graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_factor_graph</span></code>(ax)</p></td>
+<td><p>Draws the factor graph.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
+<td><p>Returns value of non-normalized pdf in point.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.from_model" title="inferlo.NormalFactorGraphModel.from_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_model</span></code></a>(original_model)</p></td>
+<td><p>Constructs NFG model which is equivalent to given model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.get_edge_variable_graph" title="inferlo.NormalFactorGraphModel.get_edge_variable_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edge_variable_graph</span></code></a>()</p></td>
+<td><p>Returns edge-variable graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factor_graph</span></code>()</p></td>
+<td><p>Builds factor graph for the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.get_factors" title="inferlo.NormalFactorGraphModel.get_factors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factors</span></code></a>()</p></td>
+<td><p>Returns all factors.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_max_domain_size</span></code>()</p></td>
+<td><p>Returns the biggest domain size over all variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_symbolic_variables</span></code>()</p></td>
+<td><p>Prepares variables for usage in expressions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variable</span></code>(idx)</p></td>
+<td><p>Returns variable by its index.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variables</span></code>()</p></td>
+<td><p>Returns all variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.infer" title="inferlo.NormalFactorGraphModel.infer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">infer</span></code></a>([algorithm])</p></td>
+<td><p>Calculates partition function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.NormalFactorGraphModel.max_likelihood" title="inferlo.NormalFactorGraphModel.max_likelihood"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood</span></code></a>(algorithm, **kwargs)</p></td>
+<td><p>Finds the most probable state.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_likelihood_bruteforce</span></code>()</p></td>
+<td><p>Evaluates most likely state in a  very inefficient way.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">part_func_bruteforce</span></code>()</p></td>
+<td><p>Evaluates partition function in very inefficient way.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code>(num_samples[, algorithm])</p></td>
+<td><p>Generates samples.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.add_factor">
+<code class="sig-name descname">add_factor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">factor</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.add_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a factor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the model and makes it immutable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.check_built">
+<code class="sig-name descname">check_built</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.check_built"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.check_built" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that model is built.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.draw_edge_variable_graph">
+<code class="sig-name descname">draw_edge_variable_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.draw_edge_variable_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.draw_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws edge-variable graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.from_model">
+<em class="property">static </em><code class="sig-name descname">from_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.from_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.from_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs NFG model which is equivalent to given model.</p>
+<p>If necessary, clones variables and adds factors.</p>
+<p>Guarantees that first N variables in new model will correspond to
+variables in original model, where N is number of variables in original
+model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.get_edge_variable_graph">
+<code class="sig-name descname">get_edge_variable_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; networkx.classes.graph.Graph<a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_edge_variable_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns edge-variable graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.get_factors">
+<code class="sig-name descname">get_factors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterable<span class="p">[</span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a><span class="p">]</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all factors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.infer">
+<code class="sig-name descname">infer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.infer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates partition function.</p>
+<dl class="simple">
+<dt>Available algorithms</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">auto</span></code> - Automatic.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edge_elimination</span></code> - Edge elimination.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>algorithm</strong> – Which algorithm to use. String.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Partition function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.NormalFactorGraphModel.max_likelihood">
+<code class="sig-name descname">max_likelihood</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.max_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the most probable state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="inferlo.PairWiseFiniteModel.html" class="btn btn-neutral float-right" title="inferlo.PairWiseFiniteModel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.GraphModel.html" class="btn btn-neutral float-left" title="inferlo.GraphModel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

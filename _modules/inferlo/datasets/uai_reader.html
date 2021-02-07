@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.datasets.uai_reader &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.datasets.uai_reader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.datasets.uai_reader</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GenericGraphModel</span><span class="p">,</span> <span class="n">DiscreteDomain</span><span class="p">,</span> <span class="n">DiscreteFactor</span>
+
+
+<div class="viewcode-block" id="UaiReader"><a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader">[docs]</a><span class="k">class</span> <span class="nc">UaiReader</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Reads files in UAI format.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UaiReader.__init__"><a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+    <span class="k">def</span> <span class="nf">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">_next_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_next_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">())</span>
+
+<div class="viewcode-block" id="UaiReader.read_model"><a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.read_model">[docs]</a>    <span class="k">def</span> <span class="nf">read_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericGraphModel</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads Graphical model form a file in UAI format.</span>
+
+<span class="sd">        Format description:</span>
+<span class="sd">        http://www.hlt.utdallas.edu/~vgogate/uai14-competition/modelformat.html</span>
+
+<span class="sd">        :param path: Local path to text file with GM in UAI format.</span>
+<span class="sd">        :return: Graphical model read from the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Read model type.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">model_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;MARKOV&#39;</span><span class="p">,</span> <span class="s1">&#39;Unsupported model type: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">model_type</span>
+
+        <span class="c1"># Read variables&#39; cardinalities and initialize the model.</span>
+        <span class="n">num_vars</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">())</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GenericGraphModel</span><span class="p">(</span><span class="n">num_vars</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vars</span><span class="p">):</span>
+            <span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()))</span>
+
+        <span class="c1"># Read which variables are in which factors.</span>
+        <span class="n">num_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
+        <span class="n">var_idx_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_factors</span><span class="p">):</span>
+            <span class="n">var_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
+            <span class="n">var_idx</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_count</span><span class="p">)]</span>
+            <span class="n">var_idx_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span>
+
+        <span class="c1"># Read factors&#39; values and add factors to the model.</span>
+        <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_factors</span><span class="p">):</span>
+            <span class="n">vals_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vals_count</span><span class="p">)])</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_flat_values</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                                                     <span class="n">var_idx_list</span><span class="p">[</span><span class="n">factor_id</span><span class="p">],</span>
+                                                     <span class="n">vals</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="UaiReader.read_marginals"><a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.read_marginals">[docs]</a>    <span class="k">def</span> <span class="nf">read_marginals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads true marginals form a file in UAI format.</span>
+
+<span class="sd">        Format description:</span>
+<span class="sd">        http://www.hlt.utdallas.edu/~vgogate/uai14-competition/resformat.html</span>
+
+<span class="sd">        :param path: Local path to text file with true marginals in UAI format.</span>
+<span class="sd">        :return: 2D numpy array. First dimension is number of variables,</span>
+<span class="sd">          second is maximal domain size of a variable. ``result[i][j]`` is a</span>
+<span class="sd">          probability that ``i``-th variable takes ``j``-th value (or 0 if this</span>
+<span class="sd">          variable&#39;s domain size is less than ``j+1``).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;MAR&quot;</span>
+
+        <span class="n">vars_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
+        <span class="n">marginals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vars_num</span><span class="p">):</span>
+            <span class="n">domain_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
+            <span class="n">marginals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">domain_size</span><span class="p">)])</span>
+        <span class="n">max_domain_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">marginals</span><span class="p">])</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">vars_num</span><span class="p">,</span> <span class="n">max_domain_size</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vars_num</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">marginals</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">marginals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ans</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

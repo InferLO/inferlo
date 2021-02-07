@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.graphs.fast_dfs &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.graphs.fast_dfs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.graphs.fast_dfs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">import</span> <span class="nn">numba</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:],i4[:],i4[:])&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dfs_one_vertex</span><span class="p">(</span><span class="n">flat_adj_list</span><span class="p">,</span> <span class="n">fal_start</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">dfs_edges</span><span class="p">,</span>
+                   <span class="n">dfs_edges_count</span><span class="p">,</span> <span class="n">start_vx</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">fal_pos_stack</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Performs depth-first search starting from given vertex.</span>
+
+<span class="sd">    This algorithm returns DFS tree for connected component containing</span>
+<span class="sd">    ``start_vx``.</span>
+
+<span class="sd">    Equivalent to ``dfs_edges`` from NetworkX library (v2.4).</span>
+
+<span class="sd">    :param flat_adj_list: Flat adjacency list of length ``2 * edges_num``.</span>
+<span class="sd">      It&#39;s obtained by listing adjacent vertices for every vertex and</span>
+<span class="sd">      concatenating these lists.</span>
+<span class="sd">    :param fal_start: For every vertex contains pointer to ``flat_adj_list``</span>
+<span class="sd">      where we should start reading it&#39;s adjacent vertices. In other words,</span>
+<span class="sd">      neighbors of vertex ``v`` are</span>
+<span class="sd">      ``flat_adj_list[fal_start[v]: fal_start[v+1]].</span>
+<span class="sd">      Length is ``vert_num + 1``. First element is 0, last element is</span>
+<span class="sd">      ``len(flat_adj_list)``.</span>
+<span class="sd">    :param dfs_edges: Array where to write DFS edges as we visit them.</span>
+<span class="sd">    :param dfs_edges_count: How many DFS edges is already written. e need this</span>
+<span class="sd">      to handle disconnected graphs.</span>
+<span class="sd">    :param start_vx: From which vertex to start DFS.</span>
+<span class="sd">    :param flags: Side output. If DFS finds cycle, it should set</span>
+<span class="sd">      ``flags[0] = 1``.</span>
+<span class="sd">    :param stack: Allocated memory for DFS stack. DFS stack contains nodes</span>
+<span class="sd">      which DFS entered but not exited. It corresponds to call stack if we</span>
+<span class="sd">      implemented DFS recursively. It&#39;s important that we don&#39; allocate this</span>
+<span class="sd">      memory inside this function, because then algorithm would have quadratic</span>
+<span class="sd">      complexity if graph has a lot of small connected components.</span>
+<span class="sd">    :param fal_stack: Allocated memory stack which would contain pointers</span>
+<span class="sd">      (flat_adj_list indices) to currently considered children at each level.</span>
+<span class="sd">    :return: Updated dfs_edges_count.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Push start_vx to the stack.</span>
+    <span class="n">stack_head</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_vx</span>
+    <span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="n">fal_start</span><span class="p">[</span><span class="n">start_vx</span><span class="p">]</span>
+    <span class="n">visited</span><span class="p">[</span><span class="n">start_vx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">==</span> <span class="n">fal_start</span><span class="p">[</span><span class="n">v</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="c1"># Go up - pop vertex from stack.</span>
+            <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># debug</span>
+            <span class="n">stack_head</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">stack_head</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="c1"># And move to the next child in parent.</span>
+            <span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Current edge is (v, to).</span>
+            <span class="n">to</span> <span class="o">=</span> <span class="n">flat_adj_list</span><span class="p">[</span><span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">to</span><span class="p">]:</span>
+                <span class="c1"># If `to` is not visited, add this edge to answer</span>
+                <span class="n">dfs_edges</span><span class="p">[</span><span class="n">dfs_edges_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="n">dfs_edges</span><span class="p">[</span><span class="n">dfs_edges_count</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">to</span>
+                <span class="n">dfs_edges_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># and go down by the edge.</span>
+                <span class="n">visited</span><span class="p">[</span><span class="n">to</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">stack_head</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="n">to</span>
+                <span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="n">fal_start</span><span class="p">[</span><span class="n">to</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># If `to` is visited, skip this edge.</span>
+                <span class="n">fal_pos_stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># If it is not parent in DFS tree, we found a back edge.</span>
+                <span class="k">if</span> <span class="n">stack_head</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">to</span> <span class="o">!=</span> <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">dfs_edges_count</span>
+
+
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4[:,:](i4,i4[:,:],i1[:])&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_fast_dfs_internal</span><span class="p">(</span><span class="n">vert_num</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Performs depth-first search handling multiple connected components.</span>
+
+<span class="sd">    :param vert_num: Number of vertices in the graph.</span>
+<span class="sd">    :param edges: Edge list.</span>
+<span class="sd">    :param flags: Additional output of the algorithm.</span>
+<span class="sd">      flag[0] - whether graph has cycles (i.e. was not a forest).</span>
+<span class="sd">      flag[1] - whether graph was disconnected and we added edges to make it</span>
+<span class="sd">        connected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Number of edges.</span>
+    <span class="n">edge_num</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Calculate degree of each vertex.</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vert_num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Build compact adjacency list.</span>
+    <span class="n">flat_adj_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">edge_num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">fal_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vert_num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">fal_start</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span>
+    <span class="n">fal_ptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">fal_start</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">flat_adj_list</span><span class="p">[</span><span class="n">fal_ptr</span><span class="p">[</span><span class="n">u</span><span class="p">]]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">fal_ptr</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">flat_adj_list</span><span class="p">[</span><span class="n">fal_ptr</span><span class="p">[</span><span class="n">v</span><span class="p">]]</span> <span class="o">=</span> <span class="n">u</span>
+        <span class="n">fal_ptr</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">visited</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+    <span class="c1"># Allocate array for the answer.</span>
+    <span class="c1"># Answer will always be a tree, so it has vert_num-1 edges.</span>
+    <span class="n">dfs_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">vert_num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">dfs_edges_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Allocate memory for stacks.</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">vert_num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">fal_pos_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">vert_num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vert_num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">vertex</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Add edges to connect vertex 0 to root of connected component.</span>
+                <span class="n">dfs_edges</span><span class="p">[</span><span class="n">dfs_edges_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">dfs_edges</span><span class="p">[</span><span class="n">dfs_edges_count</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex</span>
+                <span class="n">dfs_edges_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># Mark that graph was disconnected.</span>
+                <span class="n">flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">dfs_edges_count</span> <span class="o">=</span> <span class="n">dfs_one_vertex</span><span class="p">(</span>
+                <span class="n">flat_adj_list</span><span class="p">,</span> <span class="n">fal_start</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">dfs_edges</span><span class="p">,</span> <span class="n">dfs_edges_count</span><span class="p">,</span>
+                <span class="n">vertex</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">fal_pos_stack</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">dfs_edges_count</span> <span class="o">==</span> <span class="n">vert_num</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">dfs_edges</span>
+
+
+<span class="n">FastDfsResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;FastDfsResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dfs_edges&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;had_cycles&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;was_disconnected&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;was_tree&#39;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="fast_dfs"><a class="viewcode-back" href="../../../generated/inferlo.graphs.fast_dfs.html#inferlo.graphs.fast_dfs">[docs]</a><span class="k">def</span> <span class="nf">fast_dfs</span><span class="p">(</span><span class="n">vert_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FastDfsResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Depth-first search.</span>
+
+<span class="sd">    Runs the depth-first search algorithm on given simple undirected graph</span>
+<span class="sd">    represented by an edge list and returns edges of DFS tree in order of</span>
+<span class="sd">    visiting.</span>
+
+<span class="sd">    If input graph is disconnected, completes it to connected by adding edges</span>
+<span class="sd">    between vertex 0 and vertices with minimal index from other connected</span>
+<span class="sd">    components. If this was done, will set ``was_disconnected=True`` in</span>
+<span class="sd">    returned object. Thanks to this, result always has exactly ``vert_num - 1``</span>
+<span class="sd">    edges.</span>
+
+<span class="sd">    If input graph has cycles, not all edges of original graph will be in the</span>
+<span class="sd">    output, and algorithm will indicate that by setting ``had_cycles=True`` in</span>
+<span class="sd">    output object.</span>
+
+<span class="sd">    :param vert_num: Number of vertices in the graph.</span>
+<span class="sd">    :param edges: List of edges in the graph. ``np.array`` of type ``np.int32``</span>
+<span class="sd">      and shape ``(num_edges, 2)``.</span>
+<span class="sd">    :return: ``FastDfsResult`` object with result of the DFS and additional</span>
+<span class="sd">      data.</span>
+
+<span class="sd">    Fields in result object</span>
+<span class="sd">        * ``dfs_edges`` - np.array of type ``np.int32`` and shape</span>
+<span class="sd">          ``(vert_num-1, 2)``. Contains edges in DFS tree in DFS traversal</span>
+<span class="sd">          order (from root to leafs). These edges are guaranteed to form a</span>
+<span class="sd">          tree.</span>
+<span class="sd">        * ``had_cycles`` - whether input graph had cycles.</span>
+<span class="sd">        * ``was_disconnected`` - whether input graph was disconnected.</span>
+<span class="sd">        * ``was_tree`` - whether input graph was a tree.</span>
+
+<span class="sd">    See https://en.wikipedia.org/wiki/Depth-first_search.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">edges_count</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">edges_count</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">edges_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">vert_num</span>
+
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="n">dfs_edges</span> <span class="o">=</span> <span class="n">_fast_dfs_internal</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">vert_num</span><span class="p">),</span> <span class="n">edges</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+    <span class="n">had_cycles</span> <span class="o">=</span> <span class="p">(</span><span class="n">flags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">was_disconnected</span> <span class="o">=</span> <span class="p">(</span><span class="n">flags</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">was_tree</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">had_cycles</span> <span class="ow">or</span> <span class="n">was_disconnected</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FastDfsResult</span><span class="p">(</span>
+        <span class="n">dfs_edges</span><span class="o">=</span><span class="n">dfs_edges</span><span class="p">,</span>
+        <span class="n">had_cycles</span><span class="o">=</span><span class="n">had_cycles</span><span class="p">,</span>
+        <span class="n">was_disconnected</span><span class="o">=</span><span class="n">was_disconnected</span><span class="p">,</span>
+        <span class="n">was_tree</span><span class="o">=</span><span class="n">was_tree</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

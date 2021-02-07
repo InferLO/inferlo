@@ -1,0 +1,6 @@
+﻿inferlo.pairwise.optimization.convex\_hierarchies.lasserre
+==========================================================
+
+.. currentmodule:: inferlo.pairwise.optimization.convex_hierarchies
+
+.. autofunction:: lasserre

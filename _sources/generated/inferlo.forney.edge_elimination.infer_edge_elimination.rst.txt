@@ -1,0 +1,6 @@
+﻿inferlo.forney.edge\_elimination.infer\_edge\_elimination
+=========================================================
+
+.. currentmodule:: inferlo.forney.edge_elimination
+
+.. autofunction:: infer_edge_elimination

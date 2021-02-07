@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.generic.message_passing &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.generic.message_passing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.generic.message_passing</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">inferlo.base</span> <span class="kn">import</span> <span class="n">GraphModel</span>
+<span class="kn">from</span> <span class="nn">inferlo.base.factors</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">inferlo.base.inference_result</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+
+
+<div class="viewcode-block" id="infer_generic_message_passing"><a class="viewcode-back" href="../../../generated/inferlo.generic.message_passing.infer_generic_message_passing.html#inferlo.generic.message_passing.infer_generic_message_passing">[docs]</a><span class="k">def</span> <span class="nf">infer_generic_message_passing</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+                                  <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                                  <span class="n">max_product</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic message passing algorithm.</span>
+
+<span class="sd">    Also known as &quot;Loopy belief propagation.&quot;</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param max_iter: Maximal number of iterations.</span>
+<span class="sd">    :return: Inference result.</span>
+
+<span class="sd">    Warning! This does not work correctly on non-trees.</span>
+
+<span class="sd">    Reference</span>
+<span class="sd">        [1] Kschischang, Frey, Loeliger,</span>
+<span class="sd">        &quot;Factor graphs and the sum-product algorithm&quot;,</span>
+<span class="sd">        IEEE Transactions on Information Theory, 2001.</span>
+<span class="sd">        https://ieeexplore.ieee.org/document/910572</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Prepare discrete factors.</span>
+    <span class="n">factors</span> <span class="o">=</span> <span class="p">[</span><span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">()]</span>
+
+    <span class="c1"># Build directed factor graph.</span>
+    <span class="n">num_variables</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_variables</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_variables</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)))</span>
+    <span class="n">edges_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)):</span>
+        <span class="n">factor_vertex_id</span> <span class="o">=</span> <span class="n">num_variables</span> <span class="o">+</span> <span class="n">factor_id</span>
+        <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">[</span><span class="n">factor_id</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">var_id</span><span class="p">,</span> <span class="n">factor_vertex_id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">edges_count</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">factor_vertex_id</span><span class="p">,</span> <span class="n">var_id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">edges_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">edges_count</span> <span class="o">+=</span> <span class="mi">2</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+
+    <span class="c1"># Reverse index on edges. Maps edge to its id.</span>
+    <span class="n">edges_ri</span> <span class="o">=</span> <span class="p">{</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">))}</span>
+
+    <span class="k">def</span> <span class="nf">get_variable_for_edge</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+        <span class="n">start_vx</span><span class="p">,</span> <span class="n">end_vx</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">start_vx</span> <span class="k">if</span> <span class="n">start_vx</span> <span class="o">&lt;</span> <span class="n">num_variables</span> <span class="k">else</span> <span class="n">end_vx</span>
+
+    <span class="c1"># Initialize all messages with &quot;unit functions&quot;.</span>
+    <span class="n">edge_messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">get_variable_for_edge</span><span class="p">(</span><span class="n">edge_id</span><span class="p">))</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="k">for</span>
+        <span class="n">edge_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">))]</span>
+
+    <span class="k">def</span> <span class="nf">tensor_product</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="k">def</span> <span class="nf">incoming_edge_ids</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+        <span class="n">start_vx</span><span class="p">,</span> <span class="n">end_vx</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">edges_ri</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">start_vx</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">start_vx</span><span class="p">)</span> <span class="k">if</span>
+                <span class="n">i</span> <span class="o">!=</span> <span class="n">end_vx</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">new_message_vf</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate new message for variable-&gt;factor edge.&quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">edge_messages</span><span class="p">[</span><span class="n">edge_id</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">incoming_edge_ids</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span> <span class="o">*</span> <span class="n">edge_messages</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_messages</span><span class="p">[</span><span class="n">edge_id</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="k">def</span> <span class="nf">new_message_fv</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate new message for factor-&gt;variable edge.&quot;&quot;&quot;</span>
+        <span class="n">start_vx</span><span class="p">,</span> <span class="n">end_vx</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+        <span class="n">factor_id</span> <span class="o">=</span> <span class="n">start_vx</span> <span class="o">-</span> <span class="n">num_variables</span>
+        <span class="n">final_var_id</span> <span class="o">=</span> <span class="n">end_vx</span>
+        <span class="n">final_domain_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">final_var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">var_idx</span> <span class="o">=</span> <span class="n">factors</span><span class="p">[</span><span class="n">factor_id</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span>
+
+        <span class="n">final_var_id_in_var_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">var_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">final_var_id</span><span class="p">:</span>
+                <span class="n">final_var_id_in_var_idx</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">assert</span> <span class="n">final_var_id_in_var_idx</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
+        <span class="n">perm</span> <span class="o">=</span> <span class="p">[</span><span class="n">final_var_id_in_var_idx</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">var_idx</span><span class="p">))</span> <span class="k">if</span>
+                                            <span class="n">j</span> <span class="o">!=</span> <span class="n">final_var_id_in_var_idx</span><span class="p">]</span>
+        <span class="n">factor_values</span> <span class="o">=</span> <span class="n">factors</span><span class="p">[</span><span class="n">factor_id</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+        <span class="n">factor_values</span> <span class="o">=</span> <span class="n">factor_values</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">final_domain_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">msg_tp</span> <span class="o">=</span> <span class="n">tensor_product</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">edge_messages</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">incoming_edge_ids</span><span class="p">(</span><span class="n">edge_id</span><span class="p">)])</span>
+
+        <span class="k">assert</span> <span class="n">factor_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">msg_tp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">factor_values</span> <span class="o">*</span> <span class="n">msg_tp</span>
+        <span class="k">if</span> <span class="n">max_product</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_messages</span><span class="p">[</span><span class="n">edge_id</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="c1"># Caclulates new message for edge.</span>
+    <span class="k">def</span> <span class="nf">calculate_new_message</span><span class="p">(</span><span class="n">edge_id</span><span class="p">):</span>
+        <span class="n">start_vx</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start_vx</span> <span class="o">&lt;</span> <span class="n">num_variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_message_vf</span><span class="p">(</span><span class="n">edge_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_message_fv</span><span class="p">(</span><span class="n">edge_id</span><span class="p">)</span>
+
+    <span class="c1"># Main loop.</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">edge_messages</span> <span class="o">=</span> <span class="p">[</span><span class="n">calculate_new_message</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">))]</span>
+
+    <span class="k">def</span> <span class="nf">get_result_for_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">prev_vx</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">var_id</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">*=</span> <span class="n">edge_messages</span><span class="p">[</span><span class="n">edges_ri</span><span class="p">[(</span><span class="n">prev_vx</span><span class="p">,</span> <span class="n">var_id</span><span class="p">)]]</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">get_max_domain_size</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">):</span>
+        <span class="n">ans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()]</span> <span class="o">=</span> <span class="n">get_result_for_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max_product</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">pf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pf</span><span class="p">),</span> <span class="n">marg_prob</span><span class="o">=</span><span class="n">ans</span> <span class="o">/</span> <span class="n">pf</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

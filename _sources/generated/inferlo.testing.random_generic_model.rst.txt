@@ -1,0 +1,6 @@
+﻿inferlo.testing.random\_generic\_model
+======================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: random_generic_model

@@ -1,0 +1,1022 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Getting started with InferLO &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Inferlo and libDAI comparison" href="../examples/inferlo_libdai.html" />
+    <link rel="prev" title="inferlo.datasets.UaiReader" href="../generated/inferlo.datasets.UaiReader.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started with InferLO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Defining-a-model">Defining a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Variables-and-domains">Variables and domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Factors">Factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pairwise-models">Pairwise models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inference,-Optimization-and-Sampling">Inference, Optimization and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Algorithms">Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Normal-Factor-Graph-models">Normal Factor Graph models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Conversion-to-Normal-Factor-Graph-model">Conversion to Normal Factor Graph model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Three-graphs-of-a-model">Three graphs of a model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting started with InferLO</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tutorials/getting_started.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Getting-started-with-InferLO">
+<h1>Getting started with InferLO<a class="headerlink" href="#Getting-started-with-InferLO" title="Permalink to this headline">¶</a></h1>
+<p>In this Notebook we will review basic concepts of InferLO library, show how to define graphical models and how to solve different tasks (inference, maximum likelihood and sampling) for models. Also we will review different kinds of models (generic, pairwise and Normal Factor Graph), and show how you can use different algorithms to solve the same problem.</p>
+<p>Purpose of this Notebook is to give understanding of how graphical models are represented in the InferLO library, rather than to be tutorial on graphical models.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Don&#39;t run this cell.</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">inferlo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p>Essentially graphical model is a way to represent a probabilistic distribution over variables. This distribution is usually defined by non-normalized probability density function, represented as a product of factors, each factor being a function of small number of variables. Then we can define a graph describing structure of those factors (there are multiple ways to do so).</p>
+<p>In InferLO you define a model in terms of two basic building blocks: <code class="docutils literal notranslate"><span class="pre">Variable</span></code>s and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>s. First we review how you can do it by defining them explicilty.</p>
+</div>
+<div class="section" id="Defining-a-model">
+<h2>Defining a model<a class="headerlink" href="#Defining-a-model" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start by defining a generic graphical model, which is explicitly defined by (non-normalized) probability density function. Let’s say we have 4 variables <span class="math notranslate nohighlight">\(x_0, x_1, x_2, x_3\)</span> which can take any value, and we want to represent probability distribution</p>
+<div class="math notranslate nohighlight">
+\[p(x) \sim e^{x_1 \cdot x_2} \cdot |x_2+x_3| \cdot \cos(x3-x4)^2.\]</div>
+<p>For this we will use <code class="docutils literal notranslate"><span class="pre">GenericGraphModel</span></code>. First, we should initialize the model with number of variables. Then, we will add factors add by one.</p>
+<p>In this case we will use <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which defines factor explicilty by indices of variables on which it depends and a function. To define such a factor we need three things: a model, indices of variables and a function. Function should take a list of values (its length must match number of variables this factor depends on) and evaluate value of this factor for given values of variables.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">inferlo</span><span class="o">.</span><span class="n">FunctionFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">inferlo</span><span class="o">.</span><span class="n">FunctionFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">inferlo</span><span class="o">.</span><span class="n">FunctionFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we can evaluate value of the whole product at any point:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.785309445728231
+</pre></div></div>
+</div>
+<p>We can define the same model in more succint way, using symbolic expressions. Note that <code class="docutils literal notranslate"><span class="pre">*=</span></code> is just shortcut for <code class="docutils literal notranslate"><span class="pre">add_factor</span></code> and expression on the right creates a <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_symbolic_variables</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x0</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">*=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x2</span><span class="o">-</span><span class="n">x3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.785309445728231
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Variables-and-domains">
+<h2>Variables and domains<a class="headerlink" href="#Variables-and-domains" title="Permalink to this headline">¶</a></h2>
+<p>In example above variables could take any real value. In practice it’s useful to have variables with limited domain. You can specify domain for every individual variable in the model. Note that <code class="docutils literal notranslate"><span class="pre">model[i]</span></code> accesses <code class="docutils literal notranslate"><span class="pre">i</span></code>-th variable:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">RealDomain</span><span class="p">()</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">binary</span><span class="p">()</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">([</span><span class="n">var</span><span class="o">.</span><span class="n">domain</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variables</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[RealDomain, DiscreteDomain([10,100,1000]), DiscreteDomain([0,1]), DiscreteDomain([0,1,2,3,4])]
+</pre></div></div>
+</div>
+<p>In this example <span class="math notranslate nohighlight">\(x_0 \in \mathbb{R}, x_1 \in \{10, 100, 1000\}, x_2 \in \{0, 1\} , x_3 \in \{0, 1,2,3,4,5\}\)</span>.</p>
+<p>By default domains of all variables are real. If you want to change domains of some variables, please do so first thing after you created the model.</p>
+<p>If you want all variables to have the same (default) domain, you can specify this domain when creating a model. In example below all variables are binary, except last one, which can take values 0,1 or 2.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">binary</span><span class="p">())</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">var</span><span class="o">.</span><span class="n">domain</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variables</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[DiscreteDomain([0,1]), DiscreteDomain([0,1]), DiscreteDomain([0,1]), DiscreteDomain([0,1]), DiscreteDomain([0,1,2])]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Factors">
+<h2>Factors<a class="headerlink" href="#Factors" title="Permalink to this headline">¶</a></h2>
+<p>In example above we used <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which is defined explicilty by a function, and it can be any function. There are other ways to represent factors.</p>
+<p>If all variables, on which the fcator depends, are discrete, number of possible combinations of variable values is finite, so you can tabulate the function and represnt it by this table (which will be a multidimensional array). You can do this in InferLO by using a <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">binary</span><span class="p">())</span>
+<span class="n">factor</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="n">factor</span><span class="o">.</span><span class="n">value</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2
+</pre></div></div>
+</div>
+<p>Above we described a function <span class="math notranslate nohighlight">\(f(x_0, x_1)\)</span> such that <span class="math notranslate nohighlight">\(f(0,0)=0, f(0,1)=1, f(1,0)=2, f(1,1)=3\)</span>.</p>
+<p>You can define a function explicilty (using <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>) and then convert it do <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>, obtaining explict table of function values:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">binary</span><span class="p">())</span>
+<span class="n">model</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteDomain</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_symbolic_variables</span><span class="p">()</span>
+<span class="n">function_factor</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span>
+<span class="n">discrete_factor</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">function_factor</span><span class="p">)</span>
+<span class="n">discrete_factor</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[[  2.,   3.,   4.],
+        [ 12.,  13.,  14.]],
+
+       [[102., 103., 104.],
+        [112., 113., 114.]]])
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Pairwise-models">
+<h2>Pairwise models<a class="headerlink" href="#Pairwise-models" title="Permalink to this headline">¶</a></h2>
+<p>Generic model can express any distribution, but it’s too abstract. InferLO defines classes for more concrete models, which may be subjects to some additional constraints, but allow for efficient algorithms to solve certain problems.</p>
+<p>First such example is Pairwise Finite model - a model where every factor depends on at most 2 variables, and where variables come from the same discrete domain. Famous partial cases of this kind of model are <a class="reference external" href="https://en.wikipedia.org/wiki/Ising_model">Ising model</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Potts_model">Potts model</a>.</p>
+<p>In InferLO such model is represented by class <code class="docutils literal notranslate"><span class="pre">PairWiseFiniteModel</span></code>. It’s defined by <code class="docutils literal notranslate"><span class="pre">gr_size</span></code> - graph size and <code class="docutils literal notranslate"><span class="pre">al_isze</span></code> - alphabet size. Domain of all variables is set of integers <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">...,</span> <span class="pre">al_size-1</span></code>.</p>
+<p>Denote <span class="math notranslate nohighlight">\(N\)</span> - <code class="docutils literal notranslate"><span class="pre">gr_size</span></code>, <span class="math notranslate nohighlight">\(T\)</span> - <code class="docutils literal notranslate"><span class="pre">al_size</span></code>. Probability of given state <span class="math notranslate nohighlight">\(X \in \{0, \dots T-1 \}^{N}\)</span> is given by formula:</p>
+<div class="math notranslate nohighlight">
+\[p(X) = \frac{1}{Z} \exp \Big(
+\sum_{i=0}^{N-1} F[i, X_i] +
+\sum_{u, v \in E} J_{i,j} [X_i, X_j] \Big),\]</div>
+<p>where <span class="math notranslate nohighlight">\(F \in \mathbb{R}^{N, T}\)</span> - “field”, <span class="math notranslate nohighlight">\(E \in V \times V\)</span> — set of edges (<span class="math notranslate nohighlight">\(V = \{0, \dots, N-1\}^2\)</span> - vertices), <span class="math notranslate nohighlight">\(J_{u, v} \in \mathbb{R}^{T, T}\)</span> - interaction matrix corresponding to edge <span class="math notranslate nohighlight">\((u, v)\)</span>. <span class="math notranslate nohighlight">\(Z\)</span> is normalization function, which is constant defined to ensure that <span class="math notranslate nohighlight">\(\sum_{X} p(X)=1\)</span>, also known as <em>partition function</em>.</p>
+<p>In InferLO you can create such a model by field, all edges and interaction at once, or by setting field and individual interactions one by one. Below we show two ways to create the same model. It has 4 vertices, 3 edges, and all edges has the same interactions matrix.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]])</span>
+<span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">]])</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">add_interaction</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">add_interaction</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">add_interaction</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="p">[</span><span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Now, let’s can show pairwise grap for this model - this is the graph <span class="math notranslate nohighlight">\(G=(V, E)\)</span> from definition above, where vertices represent variables and edges represent interactions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span><span class="o">.</span><span class="n">draw_pairwise_graph</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_getting_started_24_0.png" src="../_images/tutorials_getting_started_24_0.png" />
+</div>
+</div>
+<p>We can also draw factor graph for this model. Factor graph is a bipartite graph with variables in one part and factors in other. There is an edge between variable and factor if factor depends on that variable.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_getting_started_26_0.png" src="../_images/tutorials_getting_started_26_0.png" />
+</div>
+</div>
+<p>We can see that there are 3 factors corresponding to edges and 4 factors corresponding to fields in vertices.</p>
+</div>
+<div class="section" id="Inference,-Optimization-and-Sampling">
+<h2>Inference, Optimization and Sampling<a class="headerlink" href="#Inference,-Optimization-and-Sampling" title="Permalink to this headline">¶</a></h2>
+<p>Now, let’s do something with this toy model. First task is inference - finding partition function <span class="math notranslate nohighlight">\(Z\)</span> and marginal probabilities.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span><span class="o">.</span><span class="n">infer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;log_pf&#39;: 34.12701627818652, &#39;marg_prob&#39;: array([[0.88076347, 0.11923653],
+       [0.11923653, 0.88076347],
+       [0.11923653, 0.88076347],
+       [0.11923653, 0.88076347]])}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model2</span><span class="o">.</span><span class="n">infer</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;log_pf&#39;: 34.12701627818652, &#39;marg_prob&#39;: array([[0.88076347, 0.11923653],
+       [0.11923653, 0.88076347],
+       [0.11923653, 0.88076347],
+       [0.11923653, 0.88076347]])}
+</pre></div></div>
+</div>
+<p>Note that we return not parttion function, but its logarithm, because it itself may be so high that it doesn’t fit in float data type.</p>
+<p>Another task is optimization, i.e. finding state having the highest probability.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span><span class="o">.</span><span class="n">max_likelihood</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([0, 1, 1, 1])
+</pre></div></div>
+</div>
+<p>Yet another task is sampling - sampling realizations of distribution represented by the model. You can specify number of samples and get that many independent samples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0, 1, 1, 1],
+       [1, 0, 0, 0],
+       [0, 1, 1, 1]])
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Algorithms">
+<h2>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The same problem for the same model can be solved by different algorithm of different accuract and efficiency. Let’s build a model whose graph is 5x5 grid and perform inference using three algorithms - dynamic programming on path decomposition (exact), mean field (approximate) and message passing (approximate).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">inferlo.pairwise.testing</span> <span class="kn">import</span> <span class="n">grid_potts_model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">grid_potts_model</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;path_dp&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+156.4906749764044
+[0.41116171 0.00963484 0.57920346]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;message_passing&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6639.478242081531
+[0.4127652  0.00997726 0.57725754]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;mean_field&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+148.8450089880952
+[0.33744495 0.00197638 0.66057867]
+</pre></div></div>
+</div>
+<p>First answer is guaranteed to be exact.</p>
+<p>Message passing gives good approximation for marginal probabilities, but partion function is completely wrong (in fact, we can restore correct patition function for this algorithm only if graph is a tree).</p>
+<p>Mean field is guaranteed to give lower bound on partition function, and we can see that estimate is close to correct answer, but estimate of marginal probablities is worse than for message passing.</p>
+</div>
+<div class="section" id="Normal-Factor-Graph-models">
+<h2>Normal Factor Graph models<a class="headerlink" href="#Normal-Factor-Graph-models" title="Permalink to this headline">¶</a></h2>
+<p>If every variable appears in exactly two factors, we can build a Normal Factor Graph - a graph where edges correspond to variables, and vertices correspond to factors. We we will call such models Normal Factor Graph (NFG) models. Also they are known ad Edge-Variable or Forney-style models.</p>
+<p>Not any model can be represented in such a way, but every model can be converted to NFG model. Conversion may add new variables and factors. This conversion is implemented by function <code class="docutils literal notranslate"><span class="pre">inferlo.NormalFactorGraphModel.from_model</span></code>, which takes arbitrary graphical model and returns equivalent NFG model.</p>
+<div class="section" id="Conversion-to-Normal-Factor-Graph-model">
+<h3>Conversion to Normal Factor Graph model<a class="headerlink" href="#Conversion-to-Normal-Factor-Graph-model" title="Permalink to this headline">¶</a></h3>
+<p>Below we demonstrate how the conversion algorithm works. We build generic model with 5 variables and 4 factors. Then we convert it to equivalent Normal Factor Graph model.</p>
+<p>We plot factor graph for initial model, Normal Factor graph and factor graph for the new model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model1</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="p">(</span><span class="n">num_variables</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">,</span> <span class="n">x5</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">get_symbolic_variables</span><span class="p">()</span>
+<span class="n">model1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span>
+<span class="n">model1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x1</span><span class="o">*</span><span class="n">x3</span><span class="o">*</span><span class="n">x4</span><span class="p">)</span>
+<span class="n">model1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="o">*</span><span class="n">x3</span><span class="o">*</span><span class="n">x4</span><span class="p">)</span>
+<span class="n">model1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="o">*</span><span class="n">x3</span><span class="o">*</span><span class="n">x5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">factors</span><span class="p">)):</span>
+    <span class="n">model1</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;f</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+
+<span class="n">model2</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">NormalFactorGraphModel</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span>
+<span class="n">model2</span><span class="o">.</span><span class="n">draw_edge_variable_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">model2</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Initial factor graph&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normal Factor graph of an equivalent model&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Factor graph of converted model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_getting_started_45_0.png" src="../_images/tutorials_getting_started_45_0.png" />
+</div>
+</div>
+<p>Note how each of variables <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> is replaced with three variables and a factor requiring new variables to be equal (denoted “=”).</p>
+<p>Also there is a trivial factor <span class="math notranslate nohighlight">\(f(x_4)=1\)</span> (denoted “1”) which is added so that <span class="math notranslate nohighlight">\(x_4\)</span> appears in exactly 2 factors, so we can draw an edge.</p>
+<p>We add new variables only if necessary. If variable appears in only 1 or 2 factors, it won’t be cloned.</p>
+</div>
+</div>
+<div class="section" id="Three-graphs-of-a-model">
+<h2>Three graphs of a model<a class="headerlink" href="#Three-graphs-of-a-model" title="Permalink to this headline">¶</a></h2>
+<p>Below we build a simple model which is both pairwise and NFG model, and show 3 graphs for it: pairwise graph, factor graph and Normal Factor (edge-variable) graph.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">j1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">interactions</span> <span class="o">=</span> <span class="p">[</span><span class="n">j1</span><span class="p">,</span> <span class="n">j1</span><span class="p">,</span> <span class="n">j1</span><span class="p">]</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">PairWiseFiniteModel</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">interactions</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">model1</span><span class="o">.</span><span class="n">draw_pairwise_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">model1</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">model2</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">NormalFactorGraphModel</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span>
+<span class="n">model2</span><span class="o">.</span><span class="n">draw_edge_variable_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Pairwise graph&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Factor graph&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Edge-varable graph&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_getting_started_49_0.png" src="../_images/tutorials_getting_started_49_0.png" />
+</div>
+</div>
+<p>You can define pairwise graph only for pairwise model and Normal Factor Graph only for NFG model. Factor graph is defined for any model.</p>
+<p>For this example we selected model which is both pairwise and NFG. In general, we wouldn’t be able to convert pairwise model to NFG model without adding.</p>
+<p>This example demonstrates how factors and variables correspond to different elements of graph in different representations. In pairwise graph vertices are variables and edges are factors. In Normal Factor Graph vertices are factors and edges are variables. In factor graph vertices in one part are variables, and vertices in other part are factor.</p>
+<p>Note how things representing variables are always red, and things representing factors are always green.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../examples/inferlo_libdai.html" class="btn btn-neutral float-right" title="Inferlo and libDAI comparison" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../generated/inferlo.datasets.UaiReader.html" class="btn btn-neutral float-left" title="inferlo.datasets.UaiReader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

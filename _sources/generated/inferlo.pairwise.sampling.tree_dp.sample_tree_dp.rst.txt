@@ -1,0 +1,6 @@
+﻿inferlo.pairwise.sampling.tree\_dp.sample\_tree\_dp
+===================================================
+
+.. currentmodule:: inferlo.pairwise.sampling.tree_dp
+
+.. autofunction:: sample_tree_dp

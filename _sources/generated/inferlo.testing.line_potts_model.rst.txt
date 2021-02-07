@@ -1,0 +1,6 @@
+﻿inferlo.testing.line\_potts\_model
+==================================
+
+.. currentmodule:: inferlo.testing
+
+.. autofunction:: line_potts_model

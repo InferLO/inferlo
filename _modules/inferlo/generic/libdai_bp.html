@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inferlo.generic.libdai_bp &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inferlo.generic.libdai_bp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inferlo.generic.libdai_bp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">inferlo.base.factors.discrete_factor</span> <span class="kn">import</span> <span class="n">DiscreteFactor</span>
+<span class="kn">from</span> <span class="nn">inferlo.base</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span>
+
+<span class="n">recordSentMessages</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<span class="k">class</span> <span class="nc">Prob</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Equivalent of dai::Prob.</span>
+
+<span class="sd">    Wrapper around a vector - represents probability distribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">uniform</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates unifom probability distribution.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Prob</span><span class="o">.</span><span class="n">same_value</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">same_value</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates vector filled with the same value.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Prob</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">*</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets all entries to x.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a copy.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Prob</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">*=</span> <span class="n">other</span><span class="o">.</span><span class="n">p</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">p</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Normalize distribution.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculate entropy of the distribution.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">dist_kl</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Prob</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Prob</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Kullback-Leibler divergence between two probability distributions.&quot;&quot;&quot;</span>
+    <span class="n">kl_div</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">p</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">kl_div</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">dist_linf</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">Prob</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">Prob</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Distance between two probability distributions in L_infinity norm.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">q</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Neighbor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Describes the neighbor relationship of two nodes in a graph.</span>
+
+<span class="sd">    Corresponds to dai::Neighbor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Corresponds to the index of this Neighbor entry in the vector of</span>
+    <span class="c1"># neighbors.</span>
+    <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1"># Contains the absolute index of the neighboring node.</span>
+    <span class="n">node</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1"># Contains the &quot;dual&quot; index (i.e., the index of this node in the Neighbors</span>
+    <span class="c1"># vector of the neighboring node)</span>
+    <span class="n">dual</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">EdgeProp</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Type used for storing edge properties.&quot;&quot;&quot;</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Index cached for this edge.</span>
+    <span class="n">message</span><span class="p">:</span> <span class="n">Prob</span>  <span class="c1"># Old message living on this edge.</span>
+    <span class="n">new_message</span><span class="p">:</span> <span class="n">Prob</span>  <span class="c1"># New message living on this edge</span>
+    <span class="n">residual</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Residual for this edge</span>
+
+
+<span class="k">class</span> <span class="nc">LDFactor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Equivalent of dai::Factor.</span>
+
+<span class="sd">    Consists of set of variables and flattened values assigned to all var</span>
+<span class="sd">    combinations. Variables are assigned like in Inferlo, but tensor is</span>
+<span class="sd">    transposed before flattening.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">p</span><span class="p">:</span> <span class="n">Prob</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span> <span class="o">=</span> <span class="n">var_idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">uniform</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Creates factor defining uniform distribution.&quot;&quot;&quot;</span>
+        <span class="n">total_domain_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_idx</span><span class="p">:</span>
+            <span class="n">total_domain_size</span> <span class="o">*=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">LDFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">,</span> <span class="n">Prob</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">total_domain_size</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_inferlo_factor</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">DiscreteFactor</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Converts inferlo.DiscreteFactor to LDFactor.&quot;&quot;&quot;</span>
+        <span class="n">rev_perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rev_perm</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LDFactor</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">Prob</span><span class="p">(</span><span class="n">prob</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">to_inferlo_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Converts LDFactor to inferlo.DiscreteFactor.&quot;&quot;&quot;</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">libdai_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span>
+        <span class="n">rev_perm</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">inferlo_tensor</span> <span class="o">=</span> <span class="n">libdai_tensor</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rev_perm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">inferlo_tensor</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">combine_with_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">LDFactor</span><span class="p">,</span>
+                            <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Applies binary function to two factors.&quot;&quot;&quot;</span>
+        <span class="c1"># Check that variables of the other factor are subset of variables of</span>
+        <span class="c1"># the given factor.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">other</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span>
+
+        <span class="c1"># Now, update every value of given factor with corresponding value of</span>
+        <span class="c1"># the other factor.</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">)):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">_encode_value_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decode_value_index</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">other</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">LDFactor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">combine_with_factor</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">LDFactor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">combine_with_factor</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LDFactor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Sums factor over some variables.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_inferlo_factor</span><span class="p">()</span><span class="o">.</span><span class="n">marginal</span><span class="p">(</span><span class="n">new_var_idx</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">LDFactor</span><span class="o">.</span><span class="n">from_inferlo_factor</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">max_marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LDFactor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Eleiminates certain variables by finding maximum.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_inferlo_factor</span><span class="p">()</span><span class="o">.</span><span class="n">max_marginal</span><span class="p">(</span><span class="n">new_var_idx</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">LDFactor</span><span class="o">.</span><span class="n">from_inferlo_factor</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">normed</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a copy of this factor.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LDFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_decode_value_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns dict from variable id to variable value.&quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">size</span>
+            <span class="n">idx</span> <span class="o">//=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="k">def</span> <span class="nf">_encode_value_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">base</span> <span class="o">*</span> <span class="n">var_values</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span>
+            <span class="n">base</span> <span class="o">*=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BP"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP">[docs]</a><span class="k">class</span> <span class="nc">BP</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Belief propagation algorithm, equivalent to dai::BP.</span>
+
+<span class="sd">    This class is ported from libDAI&#39;s dai::BP class. It runs belief</span>
+<span class="sd">    propagation algorithm for graphical model with discrete variables with</span>
+<span class="sd">    arbitrary factor graph.</span>
+
+<span class="sd">    At the moment MAXPROD algorithm (for finding MAP state) is not supported.</span>
+
+<span class="sd">    Use BP.infer() to perform inference.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BP.infer"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.infer">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">infer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs inference BP algorithm for given model.</span>
+
+<span class="sd">        Supports all options which libdai::BP supports. Refer to libDAI</span>
+<span class="sd">        documentation for options descritpion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tol&#39;</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s1">&#39;logdomain&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">:</span> <span class="s1">&#39;SEQRND&#39;</span><span class="p">}</span>
+        <span class="n">inf_alg</span> <span class="o">=</span> <span class="n">BP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+        <span class="n">inf_alg</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">inf_alg</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">inf_alg</span><span class="o">.</span><span class="n">log_z</span><span class="p">(),</span> <span class="n">inf_alg</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="BP.__init__"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">props</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="c1"># Stores all edge properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">EdgeProp</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Maximum difference between variable beliefs encountered so far</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxdiff</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="c1"># Number of iterations needed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iters</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># The history of message updates (only recorded if \a</span>
+        <span class="c1"># recordSentMessages is \c true)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sentMessages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Stores variable beliefs of previous iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oldBeliefsV</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LDFactor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Stores factor beliefs of previous iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_old_beliefs_f</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LDFactor</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Stores the update schedule</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factors</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">LDFactor</span><span class="o">.</span><span class="n">from_inferlo_factor</span><span class="p">(</span>
+                <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">)</span>
+
+        <span class="c1"># Prepare Neighbors.</span>
+        <span class="c1"># For every variable - factors, referencing it.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Neighbor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">)]</span>
+        <span class="c1"># For every factor - variables it references.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Neighbor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">)):</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">factor_id</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">var_iter_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)):</span>
+                <span class="n">var_id</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="n">var_iter_index</span><span class="p">]</span>
+                <span class="n">nbv_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">var_id</span><span class="p">])</span>
+                <span class="n">nbf_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">[</span><span class="n">factor_id</span><span class="p">])</span>
+                <span class="k">assert</span> <span class="n">var_iter_index</span> <span class="o">==</span> <span class="n">nbf_len</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">Neighbor</span><span class="p">(</span>
+                        <span class="nb">iter</span><span class="o">=</span><span class="n">nbv_len</span><span class="p">,</span>
+                        <span class="n">node</span><span class="o">=</span><span class="n">factor_id</span><span class="p">,</span>
+                        <span class="n">dual</span><span class="o">=</span><span class="n">nbf_len</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">[</span><span class="n">factor_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">Neighbor</span><span class="p">(</span>
+                        <span class="nb">iter</span><span class="o">=</span><span class="n">nbf_len</span><span class="p">,</span>
+                        <span class="n">node</span><span class="o">=</span><span class="n">var_id</span><span class="p">,</span>
+                        <span class="n">dual</span><span class="o">=</span><span class="n">nbv_len</span><span class="p">))</span>
+
+        <span class="c1"># Parse properties.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logdomain&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;updates&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inference</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;inference&#39;</span><span class="p">,</span> <span class="s1">&#39;SUMPROD&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;damping&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maxiter&#39;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxtime</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maxtime&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;tol&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_construct</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_construct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function for constructors.&quot;&quot;&quot;</span>
+        <span class="c1"># Create edge properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var_size</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">new_ep</span> <span class="o">=</span> <span class="n">EdgeProp</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="n">Prob</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
+                    <span class="n">new_message</span><span class="o">=</span><span class="n">Prob</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
+                    <span class="n">residual</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_ep</span><span class="p">)</span>
+
+        <span class="c1"># Create old beliefs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oldBeliefsV</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_oldBeliefsV</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LDFactor</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_old_beliefs_f</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_old_beliefs_f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">LDFactor</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">))</span>
+
+        <span class="c1"># Create update sequence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">[</span><span class="n">ii</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">dual</span><span class="p">))</span>
+
+<div class="viewcode-block" id="BP.init"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes messages awith default values.&quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span> <span class="k">else</span> <span class="mf">1.0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQMAX&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_residual</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iters</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="BP.find_max_residual"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.find_max_residual">[docs]</a>    <span class="k">def</span> <span class="nf">find_max_residual</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find max residual.&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: optimize with a lookup table.</span>
+        <span class="n">max_r</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">best_edge</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_I</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">residual</span> <span class="o">&gt;</span> <span class="n">max_r</span><span class="p">:</span>
+                    <span class="n">max_r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">residual</span>
+                    <span class="n">best_edge</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">_I</span>
+        <span class="k">return</span> <span class="n">best_edge</span></div>
+
+    <span class="k">def</span> <span class="nf">_calc_incoming_message_product</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ii</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">without_i</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+            <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prob</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the product of factor \a I and the incoming messages.</span>
+
+<span class="sd">        If without_i == True, the message coming from variable i is omitted</span>
+<span class="sd">        from the product.</span>
+
+<span class="sd">        This function is used by calc_new_message and calc_belief_f.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f_prod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+            <span class="n">f_prod</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">f_prod</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="c1"># Calculate product of incoming messages and factor I</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">[</span><span class="n">ii</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">without_i</span> <span class="ow">and</span> <span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">node</span> <span class="o">==</span> <span class="n">i</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># prod_j will be the product of messages coming into j</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_var_size</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">)</span>
+            <span class="n">default_val</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span> <span class="k">else</span> <span class="mf">1.0</span>
+            <span class="n">prod_j</span> <span class="o">=</span> <span class="n">Prob</span><span class="o">.</span><span class="n">same_value</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">default_val</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">J</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">J</span><span class="o">.</span><span class="n">node</span> <span class="o">!=</span> <span class="n">ii</span><span class="p">:</span>  <span class="c1"># for all J in nb(j) \ I</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+                        <span class="n">prod_j</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">][</span><span class="n">J</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">prod_j</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">][</span><span class="n">J</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+
+            <span class="c1"># multiply prod with prod_j</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+                <span class="n">f_prod</span> <span class="o">+=</span> <span class="n">LDFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">],</span> <span class="n">prod_j</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f_prod</span> <span class="o">*=</span> <span class="n">LDFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">],</span> <span class="n">prod_j</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f_prod</span><span class="o">.</span><span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">_calc_new_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">_I</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="c1"># calculate updated message I-&gt;i</span>
+        <span class="n">ii</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">node</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># optimization</span>
+            <span class="n">marg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Fprod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="n">Fprod</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_incoming_message_product</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+                <span class="n">Fprod</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">Fprod</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Fprod</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+
+            <span class="c1"># Marginalize onto i</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference</span> <span class="o">==</span> <span class="s1">&#39;SUMPROD&#39;</span><span class="p">:</span>
+                <span class="n">marg</span> <span class="o">=</span> <span class="n">Fprod</span><span class="o">.</span><span class="n">marginal</span><span class="p">([</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">p</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">marg</span> <span class="o">=</span> <span class="n">Fprod</span><span class="o">.</span><span class="n">max_marginal</span><span class="p">([</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">p</span>
+
+        <span class="c1"># Store result</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span> <span class="o">=</span> <span class="n">Prob</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">marg</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span> <span class="o">=</span> <span class="n">marg</span>
+
+        <span class="c1"># Update the residual if necessary</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQMAX&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_residual</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span>
+                <span class="n">_I</span><span class="p">,</span>
+                <span class="n">dist_linf</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">))</span>
+
+    <span class="c1"># BP::run does not check for NANs for performance reasons</span>
+    <span class="c1"># Somehow NaNs do not often occur in BP...</span>
+<div class="viewcode-block" id="BP.run"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs BP algorithm.&quot;&quot;&quot;</span>
+        <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># Do several passes over the network until maximum number of iterations</span>
+        <span class="c1"># has been reached or until the maximum belief difference is smaller</span>
+        <span class="c1"># than tolerance.</span>
+        <span class="n">max_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">while</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iters</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="n">max_diff</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tic</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxtime</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQMAX&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iters</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># do the first pass</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_calc_new_message</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
+                <span class="c1"># Maximum-Residual BP [\ref EMK06]</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span><span class="p">)):</span>
+                    <span class="c1"># Update the message with the largest residual.</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">_I</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_max_residual</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_message</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_I</span><span class="p">)</span>
+
+                    <span class="c1"># I-&gt;i has been updated, which means that residuals for all</span>
+                    <span class="c1"># J-&gt;j with J in nb[i]\I and j in nb[J]\i have to be</span>
+                    <span class="c1"># updated</span>
+                    <span class="k">for</span> <span class="n">J</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">J</span><span class="o">.</span><span class="n">iter</span> <span class="o">!=</span> <span class="n">_I</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbF</span><span class="p">[</span><span class="n">J</span><span class="o">.</span><span class="n">node</span><span class="p">]:</span>
+                                <span class="n">_J</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="n">dual</span>
+                                <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_calc_new_message</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">node</span><span class="p">,</span> <span class="n">_J</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;PARALL&#39;</span><span class="p">:</span>
+                <span class="c1"># Parallel updates</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_calc_new_message</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_update_message</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Sequential updates</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQRND&#39;</span><span class="p">:</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_seq</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_calc_new_message</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_message</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># Calculate new beliefs and compare with old ones</span>
+            <span class="n">max_diff</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">max_diff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_diff</span><span class="p">,</span>
+                               <span class="n">dist_linf</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oldBeliefsV</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_oldBeliefsV</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span><span class="p">):</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_f</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+                <span class="n">max_diff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_diff</span><span class="p">,</span>
+                               <span class="n">dist_linf</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_beliefs_f</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_old_beliefs_f</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_iters</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">max_diff</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxdiff</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_maxdiff</span> <span class="o">=</span> <span class="n">max_diff</span>
+        <span class="k">return</span> <span class="n">max_diff</span></div>
+
+    <span class="k">def</span> <span class="nf">_calc_belief_v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prob</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Prob</span><span class="o">.</span><span class="n">same_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span>
+                            <span class="mf">0.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span> <span class="k">else</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">ii</span><span class="o">.</span><span class="n">iter</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">_belief_v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LDFactor</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_belief_v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">LDFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_belief_f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ii</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LDFactor</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_belief_f</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">LDFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_calc_belief_f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ii</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Prob</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_incoming_message_product</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BP.log_z"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.log_z">[docs]</a>    <span class="k">def</span> <span class="nf">log_z</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates logarithm of the partition function.&quot;&quot;&quot;</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbV</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_v</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrFactors</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">-=</span> <span class="n">dist_kl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_belief_f</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ans</span></div>
+
+<div class="viewcode-block" id="BP.marg_prob"><a class="viewcode-back" href="../../../generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.marg_prob">[docs]</a>    <span class="k">def</span> <span class="nf">marg_prob</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Calculates marginal probabilities.&quot;&quot;&quot;</span>
+        <span class="n">max_domain_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_var_size</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                                  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">)])</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">,</span> <span class="n">max_domain_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nrVars</span><span class="p">):</span>
+            <span class="n">ans</span><span class="p">[</span><span class="n">var_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_var_size</span><span class="p">(</span><span class="n">var_id</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_belief_v</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">p</span>
+        <span class="k">return</span> <span class="n">ans</span></div>
+
+    <span class="k">def</span> <span class="nf">_var_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">_I</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">recordSentMessages</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sentMessages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">_I</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQMAX&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_residual</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_I</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping</span>
+            <span class="n">old_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">p</span>
+            <span class="n">new_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span><span class="o">.</span><span class="n">p</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdomain</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="n">old_msg</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_msg</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">d</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="n">old_msg</span> <span class="o">**</span> <span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">new_msg</span> <span class="o">**</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">d</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">updates</span> <span class="o">==</span> <span class="s1">&#39;SEQMAX&#39;</span><span class="p">:</span>
+                <span class="n">new_res</span> <span class="o">=</span> <span class="n">dist_linf</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">new_message</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_residual</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_I</span><span class="p">,</span> <span class="n">new_res</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_residual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">_I</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_I</span><span class="p">]</span><span class="o">.</span><span class="n">residual</span> <span class="o">=</span> <span class="n">r</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+﻿inferlo.pairwise.optimization.convex\_bounds.lp\_relaxation
+===========================================================
+
+.. currentmodule:: inferlo.pairwise.optimization.convex_bounds
+
+.. autofunction:: lp_relaxation
