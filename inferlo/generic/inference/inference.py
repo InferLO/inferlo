@@ -1,6 +1,6 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
-from inferlo import GraphModel, DiscreteFactor
+from inferlo import GraphModel, DiscreteFactor, InferenceResult
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .bucket_elimination import BucketElimination
 from .bucket_renormalization import BucketRenormalization
@@ -34,7 +34,7 @@ def _convert(inferlo_model: GraphModel) -> GraphicalModel:
 def belief_propagation(model: GraphModel,
                        max_iter: int = 1000,
                        converge_thr: float = 1e-5,
-                       damp_ratio: float = 0.1) -> float:
+                       damp_ratio: float = 0.1) -> InferenceResult:
     """Inference with (loopy) Belief Propagation.
 
     Estimates partition function using Loopy Belief Propagation algorithm.
@@ -43,15 +43,17 @@ def belief_propagation(model: GraphModel,
     :param max_iter: Number of iterations.
     :param converge_thr: Convergence threshold.
     :param damp_ratio: Damp ratio.
-    :return: Natural logarithm of estimated partition function.
+    :return: Inference result.
 
     References
         [1] `Original implementation
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
     """
     algo = BeliefPropagation(_convert(model))
-    return algo.run(max_iter=max_iter, converge_thr=converge_thr,
-                    damp_ratio=damp_ratio)
+    algo.run(max_iter=max_iter,
+             converge_thr=converge_thr,
+             damp_ratio=damp_ratio)
+    return algo.get_inference_result()
 
 
 def bucket_elimination(model: GraphModel) -> float:
@@ -99,11 +101,12 @@ def bucket_renormalization(model: GraphModel,
     return algo.run(max_iter=max_iter)
 
 
-def iterative_join_graph_propagation(model: GraphModel,
-                                     ibound: int = 10,
-                                     max_iter: int = 1000,
-                                     converge_thr: float = 1e-5,
-                                     damp_ratio: float = 0.1) -> float:
+def iterative_join_graph_propagation(
+        model: GraphModel,
+        ibound: int = 10,
+        max_iter: int = 1000,
+        converge_thr: float = 1e-5,
+        damp_ratio: float = 0.1) -> float:
     """Inference with Iterative Join Graph Propagation.
 
     Estimates partition function using Iterative Join Graph Propagation
@@ -111,6 +114,7 @@ def iterative_join_graph_propagation(model: GraphModel,
       methods.
 
     :param model: Model for which to perform inference.
+    :param ibound: Maximal size of mini-bucket.
     :param max_iter: Number of iterations.
     :param converge_thr: Convergence threshold.
     :param damp_ratio: Damp ratio.
@@ -125,8 +129,10 @@ def iterative_join_graph_propagation(model: GraphModel,
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
     """
     algo = IterativeJoinGraphPropagation(_convert(model), ibound=ibound)
-    return algo.run(max_iter=max_iter, converge_thr=converge_thr,
-                    damp_ratio=damp_ratio)
+    algo.run(max_iter=max_iter,
+             converge_thr=converge_thr,
+             damp_ratio=damp_ratio)
+    return algo.get_log_z()
 
 
 def mean_field(model: GraphModel,
