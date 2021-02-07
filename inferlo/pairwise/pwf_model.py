@@ -271,7 +271,7 @@ class PairWiseFiniteModel(GraphModel):
             if self.is_graph_acyclic():
                 return infer_tree_dp(self)
             try:
-                return infer_bruteforce(self)
+                return infer_junction_tree(self)
             except TooMuchStatesError:
                 return infer_message_passing(self)
         elif algorithm == 'bruteforce':
@@ -458,3 +458,36 @@ class PairWiseFiniteModel(GraphModel):
         for u, v, j in edges:
             a += j[all_states[:, u], all_states[:, v]]
         return a
+
+    @staticmethod
+    def from_model(original_model: GraphModel) -> PairWiseFiniteModel:
+        """Constructs Pairwise Finite model which is equivalent to given model.
+
+        All variables must be discrete. All factors must depend on at most 2
+        variables.
+
+        New model will have the same number of variables and factors. If
+        variables in original model have different domain sizes, in new model
+        they will be extended to have the same domain size.
+        """
+        al_size = max(v.domain.size() for v in original_model.get_variables())
+        old_factors = list(original_model.get_factors())
+
+        def pad_tensor(t):
+            padding = [[0, al_size - dim] for dim in t.shape]
+            return np.pad(t, padding)
+
+        # Validate model.
+        if al_size > 1000:
+            raise ValueError("Not all variables are discrete.")
+        if max (len(f.var_idx) for f in old_factors) > 2:
+            raise ValueError("Model is not pairwise.")
+
+        new_model = PairWiseFiniteModel(original_model.num_variables, al_size)
+        for old_factor in old_factors:
+            values = DiscreteFactor.from_factor(old_factor).values
+            values = pad_tensor(values)
+            new_factor = DiscreteFactor(new_model, old_factor.var_idx, values)
+            new_model.add_factor(new_factor)
+
+        return new_model
