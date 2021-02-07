@@ -48,7 +48,7 @@ def test_tree():
 
     result = model.infer(algorithm='mean_field')
 
-    assert_results_close(result, gt, log_pf_tol=10.0, mp_mse_tol=0.02)
+    assert_results_close(result, gt, log_pf_tol=10.0, mp_mse_tol=0.03)
 
 
 def test_grid():
