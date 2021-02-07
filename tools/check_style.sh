@@ -1,1 +1,0 @@
-pycodestyle --max-line-length=80 inferlo && pylint --rcfile=tools/pylintrc.txt inferlo

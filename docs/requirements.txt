@@ -1,7 +1,0 @@
-# Requirements needed to build documentation.
-sphinx
-sphinx_rtd_theme
-sphinx_markdown_parser
-sphinx-autodoc-typehints
-pypandoc
-nbsphinx
