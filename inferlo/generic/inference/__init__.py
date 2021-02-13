@@ -1,5 +1,6 @@
 from .inference import (belief_propagation,
                         bucket_elimination,
+                        bucket_elimination_bt,
                         bucket_renormalization,
                         iterative_join_graph_propagation,
                         get_marginals,

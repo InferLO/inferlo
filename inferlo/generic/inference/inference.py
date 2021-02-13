@@ -85,6 +85,12 @@ def bucket_elimination(model: GraphModel,
     return algo.run(elimination_order_method=elimination_order_method)
 
 
+def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
+    """Inference with Bucket Elimination + binary tree."""
+    algo = BucketElimination(_convert(model))
+    return algo.run_bt()
+
+
 def bucket_renormalization(model: GraphModel,
                            ibound: int = 10,
                            max_iter: int = 1) -> float:
