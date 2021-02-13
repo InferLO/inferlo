@@ -19,6 +19,7 @@ UAI_SOL_URL = REPO_URL + 'MAR_sol'
 # TODO: load data from remote data repository.
 UAI_PF = {
     'DBN_11.uai': 58.5307,
+    'CSP_12.uai': 16.4536,
     'Promedus_11.uai': -8.39145,
     'Promedus_12.uai': -3.16462,
     'Promedus_13.uai': -4.50703,

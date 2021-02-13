@@ -1,6 +1,6 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
-from typing import Callable
+from typing import Callable, List
 
 import numpy as np
 
@@ -14,6 +14,7 @@ from .graphical_model import GraphicalModel
 from .mean_field import MeanField
 from .mini_bucket_elimination import MiniBucketElimination
 from .weighted_mini_bucket_elimination import WeightedMiniBucketElimination
+from ...base.inference_result import marg_probs_to_array
 
 
 def _convert(inferlo_model: GraphModel) -> GraphicalModel:
@@ -224,7 +225,8 @@ def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
 
 def get_marginals(
         model: GenericGraphModel,
-        log_pf_algo: Callable[[GenericGraphModel], float]) -> InferenceResult:
+        log_pf_algo: Callable[[GenericGraphModel], float],
+        var_ids=None) -> InferenceResult:
     """Calculates marginal probabilities using provided algorithm for computing
     partition function.
 
@@ -233,13 +235,15 @@ def get_marginals(
     calculates marginal probability
     """
     log_pf = log_pf_algo(model)
-    num_vars = model.num_variables
-    max_domain_size = max(
-        model.get_variable(i).domain.size() for i in range(num_vars))
-    marg_prob = np.zeros((num_vars, max_domain_size), dtype=float)
-    for i in range(num_vars):
-        for j in range(model.get_variable(i).domain.size()):
-            restricted_model = _restrict_model(model, i, j)
-            restricted_log_pf = log_pf_algo(restricted_model)
-            marg_prob[i, j] = np.exp(restricted_log_pf - log_pf)
-    return InferenceResult(log_pf=log_pf, marg_prob=marg_prob)
+    marg_probs = []
+    if var_ids is None:
+        var_ids = list(range(model.num_variables))
+    for var_id in var_ids:
+        card = model.get_variable(var_id).domain.size()
+        restricted_log_pf = np.array([
+            log_pf_algo(_restrict_model(model, var_id, j))
+            for j in range(card)
+        ])
+        marg_probs.append(np.exp(restricted_log_pf - log_pf))
+    return InferenceResult(log_pf=log_pf,
+                           marg_prob=marg_probs_to_array(marg_probs))
