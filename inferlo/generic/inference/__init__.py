@@ -2,6 +2,7 @@ from .inference import (belief_propagation,
                         bucket_elimination,
                         bucket_renormalization,
                         iterative_join_graph_propagation,
+                        get_marginals,
                         mean_field,
                         mini_bucket_elimination,
                         weighted_mini_bucket_elimination)

@@ -91,7 +91,7 @@ class Factor:
     @classmethod
     def scalar(cls, value=1.0):
         """Creates scalar factor."""
-        return cls("", [], value=np.array(value))
+        return cls("", [], values=np.array(value))
 
     def get_cardinality_for_(self, variable):
         """Returns cardinality of a variable."""
@@ -440,6 +440,8 @@ default_variable_name.cnt = 0
 
 def product_over_(*args) -> Factor:
     """Multiplies several factors."""
+    if len(args) == 0:
+        return Factor.scalar(1.0)
     factor_list = [tensor for tensor in args if tensor]
     if len(factor_list) > 1:
         return reduce(lambda phi1, phi2: phi1 * phi2, factor_list)

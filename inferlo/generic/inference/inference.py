@@ -1,6 +1,11 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
-from inferlo import GraphModel, DiscreteFactor, InferenceResult
+from typing import Callable
+
+import numpy as np
+
+from inferlo import GraphModel, DiscreteFactor, InferenceResult, \
+    GenericGraphModel
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .bucket_elimination import BucketElimination
 from .bucket_renormalization import BucketRenormalization
@@ -159,7 +164,9 @@ def mean_field(model: GraphModel,
     return MeanField(_convert(model)).run()
 
 
-def mini_bucket_elimination(model: GraphModel, ibound: int = 10) -> float:
+def mini_bucket_elimination(model: GraphModel,
+                            bound: str = "upper",
+                            ibound: int = 10) -> float:
     """Inference with Mini Bucket Elimination.
 
     Estimates partition function using Mini Bucket Elimination algorithm.
@@ -197,3 +204,36 @@ def weighted_mini_bucket_elimination(model: GraphModel,
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/weighted_mini_bucket_elimination.py>`_.
     """
     return WeightedMiniBucketElimination(_convert(model), ibound=ibound).run()
+
+
+def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
+    """Makes a copy of model in which value of given variable is fixed."""
+    assert 0 <= val < model.get_variable(var_id).domain.size()
+    new_model = model.copy()
+    for i in range(len(new_model.factors)):
+        if var_id in new_model.factors[i].var_idx:
+            new_model.factors[i] = new_model.factors[i].restrict(var_id, val)
+    return new_model
+
+
+def get_marginals(
+        model: GenericGraphModel,
+        log_pf_algo: Callable[[GenericGraphModel], float]) -> InferenceResult:
+    """Calculates marginal probabilities using provided algorithm for computing
+    partition function.
+
+    For every value of every variable builds new model where value of that
+    variable is fixed, and computes partition function for new model. Then
+    calculates marginal probability
+    """
+    log_pf = log_pf_algo(model)
+    num_vars = model.num_variables
+    max_domain_size = max(
+        model.get_variable(i).domain.size() for i in range(num_vars))
+    marg_prob = np.zeros((num_vars, max_domain_size), dtype=float)
+    for i in range(num_vars):
+        for j in range(model.get_variable(i).domain.size()):
+            restricted_model = _restrict_model(model, i, j)
+            restricted_log_pf = log_pf_algo(restricted_model)
+            marg_prob[i, j] = np.exp(restricted_log_pf - log_pf)
+    return InferenceResult(log_pf=log_pf, marg_prob=marg_prob)

@@ -2,6 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
 
+from inferlo import GenericGraphModel
 from inferlo.generic import inference as inf
 from inferlo.testing import grid_potts_model, tree_potts_model, \
     clique_potts_model, assert_results_close
@@ -80,3 +81,11 @@ def test_bucket_renormalization_grid_9x9():
         inf.weighted_mini_bucket_elimination(model),
         true_log_pf,
         atol=2.0)
+
+
+def test_get_marginals():
+    model = grid_potts_model(4, 3, al_size=4, seed=0)
+    true_result = model.infer(algorithm='path_dp')
+    model = GenericGraphModel.from_model(model)
+    be_result = inf.get_marginals(model, inf.bucket_elimination)
+    assert_results_close(true_result, be_result)

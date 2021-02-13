@@ -97,3 +97,21 @@ class DiscreteFactor(Factor):
     def max_marginal(self, new_var_idx: List[int]) -> DiscreteFactor:
         """Marginalizes factor on subset of variables, using MAX-PROD."""
         raise ValueError("Not implemented.")
+
+    def restrict(self, variable_id, fixed_value) -> DiscreteFactor:
+        """Fixes value of one variable.
+
+        Returns new factor which is equivalent to original factor, but with
+        value of one variable fixed.
+        """
+        assert variable_id in self.var_idx
+        if len(self.var_idx) == 1:
+            assert self.var_idx[0] == variable_id
+            new_values = np.zeros_like(self.values)
+            new_values[fixed_value] = self.values[fixed_value]
+            return DiscreteFactor(self.model, [variable_id], new_values)
+        new_var_idx = [i for i in self.var_idx if i != variable_id]
+        idx = tuple(fixed_value if i == variable_id else slice(None) for i in
+                    self.var_idx)
+        new_values = self.values[idx]
+        return DiscreteFactor(self.model, new_var_idx, new_values)
