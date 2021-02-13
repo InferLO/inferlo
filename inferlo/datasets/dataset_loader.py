@@ -86,9 +86,9 @@ class DatasetLoader:
         """
         if data_dir is None:
             data_dir = os.path.join(tempfile.gettempdir(), 'inferlo_data')
-        self.data_dir = data_dir
+        self.data_dir = os.path.expanduser(data_dir)
         if not os.path.exists(self.data_dir):
-            os.mkdir(self.data_dir)
+            os.makedirs(self.data_dir)
         self.uai_reader = UaiReader()
 
     def load_file_(self, url_prefix, file_name):
