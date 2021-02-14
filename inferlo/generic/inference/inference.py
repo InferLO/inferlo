@@ -88,7 +88,13 @@ def bucket_elimination(model: GraphModel,
 
 
 def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
-    """Inference with Bucket Elimination on binary tree."""
+    """Inference with Bucket Elimination on binary tree.
+
+    It runs Bucket elimination multiple times in different order to get marginal
+    probabilities for every variable. However, it partially reuses results
+    using "divide & conquer" technique, which allows to compute all marginal
+    probabilities by doing only O(N logN) eliminations.
+    """
     model = _convert(model)
     be_algo = BucketElimination(model)
     bt_algo = BinaryTreeElimination(
