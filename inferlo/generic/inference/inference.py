@@ -172,7 +172,6 @@ def mean_field(model: GraphModel,
 
 
 def mini_bucket_elimination(model: GraphModel,
-                            bound: str = "upper",
                             ibound: int = 10) -> float:
     """Inference with Mini Bucket Elimination.
 
@@ -213,6 +212,7 @@ def weighted_mini_bucket_elimination(model: GraphModel,
     return WeightedMiniBucketElimination(_convert(model), ibound=ibound).run()
 
 
+# TODO: Move to the new model class.
 def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
     """Makes a copy of model in which value of given variable is fixed."""
     assert 0 <= val < model.get_variable(var_id).domain.size()
@@ -226,13 +226,29 @@ def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
 def get_marginals(
         model: GenericGraphModel,
         log_pf_algo: Callable[[GenericGraphModel], float],
-        var_ids=None) -> InferenceResult:
+        var_ids: List[int] = None,
+        skip_last: bool = False) -> InferenceResult:
     """Calculates marginal probabilities using provided algorithm for computing
     partition function.
 
     For every value of every variable builds new model where value of that
     variable is fixed, and computes partition function for new model. Then
-    calculates marginal probability
+    calculates marginal probability.
+
+    This is high-level abstraction, agnostic of underlying algorithm. It will
+    get exact results as long as underlying algorithm is exact.
+
+    :param model: Graphical model.
+    :param log_pf_algo: Function which computes.
+    :param var_ids: If set, marginal probabilities will be only calculated for
+        these variables.
+    :param skip_last: If True, marginal probabilities will be calculated for
+        all but one values of variables, and last value will be inferred from
+        condition that all probabilities add up to 1. This saves computation,
+        but not recommended for approximate algorithms, as it may yield negative
+        values. If False, all marginal probabilities will be computed
+        independently, and then normalized - so they won't depend on the global
+        partition function.
     """
     log_pf = log_pf_algo(model)
     marg_probs = []
@@ -240,10 +256,19 @@ def get_marginals(
         var_ids = list(range(model.num_variables))
     for var_id in var_ids:
         card = model.get_variable(var_id).domain.size()
-        restricted_log_pf = np.array([
-            log_pf_algo(_restrict_model(model, var_id, j))
-            for j in range(card)
-        ])
-        marg_probs.append(np.exp(restricted_log_pf - log_pf))
+        mp = np.zeros(card)
+        for j in range(card):
+            if skip_last and j == card - 1:
+                break
+            restr_model = _restrict_model(model, var_id, j)
+            mp[j] = log_pf_algo(restr_model)
+        if skip_last:
+            mp = np.exp(mp - log_pf)
+            mp[card - 1] = 1.0 - np.sum(mp[:card - 1])
+        else:
+            mp = np.exp(mp - np.max(mp))
+            mp /= np.sum(mp)
+        assert (np.sum(mp) - 1.0) < 1e-5
+        marg_probs.append(mp)
     return InferenceResult(log_pf=log_pf,
                            marg_prob=marg_probs_to_array(marg_probs))

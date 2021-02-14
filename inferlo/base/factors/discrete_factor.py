@@ -106,6 +106,7 @@ class DiscreteFactor(Factor):
         """
         assert variable_id in self.var_idx
         if len(self.var_idx) == 1:
+            # TODO: remove this hack - this case should return scalar factor.
             assert self.var_idx[0] == variable_id
             new_values = np.zeros_like(self.values)
             new_values[fixed_value] = self.values[fixed_value]

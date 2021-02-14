@@ -87,5 +87,17 @@ def test_get_marginals():
     model = grid_potts_model(4, 3, al_size=4, seed=0)
     true_result = model.infer(algorithm='path_dp')
     model = GenericGraphModel.from_model(model)
-    be_result = inf.get_marginals(model, inf.bucket_elimination)
+    be_result_1 = inf.get_marginals(model, inf.bucket_elimination,
+                                    skip_last=False)
+    be_result_2 = inf.get_marginals(model, inf.bucket_elimination,
+                                    skip_last=True)
+    assert_results_close(true_result, be_result_1)
+    assert_results_close(true_result, be_result_2)
+
+
+def test_bucket_elimination_bt():
+    model = grid_potts_model(4, 3, al_size=4, seed=1)
+    true_result = model.infer(algorithm='path_dp')
+    model = GenericGraphModel.from_model(model)
+    be_result = inf.bucket_elimination_bt(model)
     assert_results_close(true_result, be_result)
