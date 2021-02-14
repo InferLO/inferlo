@@ -34,8 +34,6 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -171,6 +169,7 @@
 <span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -188,6 +187,19 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">log_pf</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">marg_prob</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span></div>
+
+
+<span class="k">def</span> <span class="nf">marg_probs_to_array</span><span class="p">(</span><span class="n">marg_probs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Collects marginal probabilities to 2D np.array.</span>
+
+<span class="sd">    If variables have different domains, pads absent values with zeroes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_vars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">marg_probs</span><span class="p">)</span>
+    <span class="n">max_domain_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span> <span class="k">for</span> <span class="n">mp</span> <span class="ow">in</span> <span class="n">marg_probs</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_vars</span><span class="p">,</span> <span class="n">max_domain_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vars</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">marg_probs</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="n">marg_probs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 
            </div>

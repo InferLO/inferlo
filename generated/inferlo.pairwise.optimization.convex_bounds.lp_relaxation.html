@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -227,7 +225,7 @@
 <h1>inferlo.pairwise.optimization.convex_bounds.lp_relaxation<a class="headerlink" href="#inferlo-pairwise-optimization-convex-bounds-lp-relaxation" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="inferlo.pairwise.optimization.convex_bounds.lp_relaxation">
-<code class="sig-prename descclassname">inferlo.pairwise.optimization.convex_bounds.</code><code class="sig-name descname">lp_relaxation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span></em><span class="sig-paren">)</span> &#x2192; LPRelaxResult<a class="reference internal" href="../_modules/inferlo/pairwise/optimization/convex_bounds.html#lp_relaxation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.optimization.convex_bounds.lp_relaxation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">inferlo.pairwise.optimization.convex_bounds.</span></code><code class="sig-name descname"><span class="pre">lp_relaxation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PairWiseFiniteModel</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">LPRelaxResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/optimization/convex_bounds.html#lp_relaxation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.optimization.convex_bounds.lp_relaxation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Max Likelihood for pairwise model by solving LP relaxation.</p>
 <p>1) Reformulates the original problem of maximizing
 <code class="docutils literal notranslate"><span class="pre">sum</span> <span class="pre">F[i][X_i]</span> <span class="pre">+</span> <span class="pre">0.5*sum</span> <span class="pre">J[i][j][X[i]][X[j]])</span></code>

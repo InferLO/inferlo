@@ -34,8 +34,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -115,13 +113,7 @@
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.forney.edge_elimination.infer_edge_elimination.html">inferlo.forney.edge_elimination.infer_edge_elimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.belief_propagation.html">inferlo.generic.inference.belief_propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.bucket_elimination.html">inferlo.generic.inference.bucket_elimination</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.bucket_renormalization.html">inferlo.generic.inference.bucket_renormalization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.iterative_join_graph_propagation.html">inferlo.generic.inference.iterative_join_graph_propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.mean_field.html">inferlo.generic.inference.mean_field</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.mini_bucket_elimination.html">inferlo.generic.inference.mini_bucket_elimination</a></li>
-<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.weighted_mini_bucket_elimination.html">inferlo.generic.inference.weighted_mini_bucket_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/inferlo.generic.inference.inference.html">inferlo.generic.inference.inference</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.pairwise.bruteforce.infer_bruteforce.html">inferlo.pairwise.bruteforce.infer_bruteforce</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/inferlo.pairwise.junction_tree.infer_junction_tree.html">inferlo.pairwise.junction_tree.infer_junction_tree</a></li>
@@ -378,26 +370,8 @@ algorithm-specific parameters.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.generic.message_passing.infer_generic_message_passing.html#inferlo.generic.message_passing.infer_generic_message_passing" title="inferlo.generic.message_passing.infer_generic_message_passing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.message_passing.infer_generic_message_passing</span></code></a>(model)</p></td>
 <td><p>Generic message passing algorithm.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.belief_propagation.html#inferlo.generic.inference.belief_propagation" title="inferlo.generic.inference.belief_propagation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.belief_propagation</span></code></a>(model)</p></td>
-<td><p>Inference with (loopy) Belief Propagation.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.bucket_elimination.html#inferlo.generic.inference.bucket_elimination" title="inferlo.generic.inference.bucket_elimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.bucket_elimination</span></code></a>(model)</p></td>
-<td><p>Inference with Bucket Elimination.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.bucket_renormalization.html#inferlo.generic.inference.bucket_renormalization" title="inferlo.generic.inference.bucket_renormalization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.bucket_renormalization</span></code></a>(model)</p></td>
-<td><p>Inference with Bucket Renormalization.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.iterative_join_graph_propagation.html#inferlo.generic.inference.iterative_join_graph_propagation" title="inferlo.generic.inference.iterative_join_graph_propagation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.iterative_join_graph_propagation</span></code></a>(model)</p></td>
-<td><p>Inference with Iterative Join Graph Propagation.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.mean_field.html#inferlo.generic.inference.mean_field" title="inferlo.generic.inference.mean_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.mean_field</span></code></a>(model)</p></td>
-<td><p>Inference with Mean Field.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.mini_bucket_elimination.html#inferlo.generic.inference.mini_bucket_elimination" title="inferlo.generic.inference.mini_bucket_elimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.mini_bucket_elimination</span></code></a>(model)</p></td>
-<td><p>Inference with Mini Bucket Elimination.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.weighted_mini_bucket_elimination.html#inferlo.generic.inference.weighted_mini_bucket_elimination" title="inferlo.generic.inference.weighted_mini_bucket_elimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.weighted_mini_bucket_elimination</span></code></a>(model)</p></td>
-<td><p>Inference with Weighted Mini Bucket Elimination.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.inference.html#module-inferlo.generic.inference.inference" title="inferlo.generic.inference.inference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.inference</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html#inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP" title="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</span></code></a>(model)</p></td>
 <td><p>Inference with Gaussian Belief Propagation.</p></td>

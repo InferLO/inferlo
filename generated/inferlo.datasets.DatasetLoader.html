@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -214,11 +212,11 @@
 <h1>inferlo.datasets.DatasetLoader<a class="headerlink" href="#inferlo-datasets-datasetloader" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.datasets.DatasetLoader">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.datasets.</code><code class="sig-name descname">DatasetLoader</code><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.datasets.</span></code><code class="sig-name descname"><span class="pre">DatasetLoader</span></code><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads graphical models from named datasets.</p>
 <dl class="py method">
 <dt id="inferlo.datasets.DatasetLoader.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>data_dir</strong> – Where to store cached datasets. Specify if you want
@@ -253,7 +251,7 @@ directory will be used.</p>
 </table>
 <dl class="py method">
 <dt id="inferlo.datasets.DatasetLoader.load_file_">
-<code class="sig-name descname">load_file_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url_prefix</span></em>, <em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_file_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_file_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">load_file_</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_file_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_file_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads file from the web to local file.</p>
 <p>If local file already exists, does nothing.
 Returns local path to loaded file.</p>
@@ -261,7 +259,7 @@ Returns local path to loaded file.</p>
 
 <dl class="py method">
 <dt id="inferlo.datasets.DatasetLoader.load_uai_dataset">
-<code class="sig-name descname">load_uai_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset_name</span></em><span class="sig-paren">)</span> &#x2192; inferlo.datasets.dataset_loader.Dataset<a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_uai_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_uai_dataset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">load_uai_dataset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.datasets.dataset_loader.Dataset</span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_uai_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_uai_dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads named dataset from UAI competition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

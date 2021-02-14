@@ -34,8 +34,6 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -172,7 +170,7 @@
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -193,7 +191,7 @@
         <span class="k">if</span> <span class="n">domain</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">domain</span> <span class="o">=</span> <span class="n">RealDomain</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">num_variables</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type: List[Factor]</span></div>
 
 <div class="viewcode-block" id="GenericGraphModel.add_factor"><a class="viewcode-back" href="../../../generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.add_factor">[docs]</a>    <span class="k">def</span> <span class="nf">add_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds factor.&quot;&quot;&quot;</span>
@@ -210,7 +208,22 @@
 
 <div class="viewcode-block" id="GenericGraphModel.max_likelihood"><a class="viewcode-back" href="../../../generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.max_likelihood">[docs]</a>    <span class="k">def</span> <span class="nf">max_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Finds most probable state.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="bp">NotImplemented</span></div></div>
+        <span class="k">raise</span> <span class="bp">NotImplemented</span></div>
+
+<div class="viewcode-block" id="GenericGraphModel.from_model"><a class="viewcode-back" href="../../../generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.from_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates copy of a given model.&quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">num_variables</span>
+        <span class="n">new_model</span> <span class="o">=</span> <span class="n">GenericGraphModel</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">new_model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span>
+        <span class="k">for</span> <span class="n">old_factor</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">():</span>
+            <span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">old_factor</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">new_model</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">new_model</span></div>
+
+<div class="viewcode-block" id="GenericGraphModel.copy"><a class="viewcode-back" href="../../../generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a copy of itself.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">GenericGraphModel</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

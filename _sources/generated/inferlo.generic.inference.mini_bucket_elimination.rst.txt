@@ -1,6 +1,0 @@
-﻿inferlo.generic.inference.mini\_bucket\_elimination
-===================================================
-
-.. currentmodule:: inferlo.generic.inference
-
-.. autofunction:: mini_bucket_elimination

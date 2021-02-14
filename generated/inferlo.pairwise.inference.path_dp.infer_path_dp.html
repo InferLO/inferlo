@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -98,13 +96,7 @@
 <li class="toctree-l4"><a class="reference internal" href="inferlo.forney.edge_elimination.infer_edge_elimination.html">inferlo.forney.edge_elimination.infer_edge_elimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.belief_propagation.html">inferlo.generic.inference.belief_propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.bucket_elimination.html">inferlo.generic.inference.bucket_elimination</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.bucket_renormalization.html">inferlo.generic.inference.bucket_renormalization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.iterative_join_graph_propagation.html">inferlo.generic.inference.iterative_join_graph_propagation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.mean_field.html">inferlo.generic.inference.mean_field</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.mini_bucket_elimination.html">inferlo.generic.inference.mini_bucket_elimination</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.weighted_mini_bucket_elimination.html">inferlo.generic.inference.weighted_mini_bucket_elimination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.inference.html">inferlo.generic.inference.inference</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.bruteforce.infer_bruteforce.html">inferlo.pairwise.bruteforce.infer_bruteforce</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.infer_junction_tree.html">inferlo.pairwise.junction_tree.infer_junction_tree</a></li>
@@ -235,7 +227,7 @@
 <h1>inferlo.pairwise.inference.path_dp.infer_path_dp<a class="headerlink" href="#inferlo-pairwise-inference-path-dp-infer-path-dp" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="inferlo.pairwise.inference.path_dp.infer_path_dp">
-<code class="sig-prename descclassname">inferlo.pairwise.inference.path_dp.</code><code class="sig-name descname">infer_path_dp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span></em><span class="sig-paren">)</span> &#x2192; InferenceResult<a class="reference internal" href="../_modules/inferlo/pairwise/inference/path_dp.html#infer_path_dp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.pairwise.inference.path_dp.infer_path_dp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">inferlo.pairwise.inference.path_dp.</span></code><code class="sig-name descname"><span class="pre">infer_path_dp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PairWiseFiniteModel</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">InferenceResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/inference/path_dp.html#infer_path_dp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.inference.path_dp.infer_path_dp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inference using DP on path decomposition.</p>
 <p>Performs dynamic programming on the path decomposition of the underlying
 graph of the pairwise model.</p>

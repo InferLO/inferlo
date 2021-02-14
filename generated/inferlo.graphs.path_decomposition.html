@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -214,7 +212,7 @@
 <h1>inferlo.graphs.path_decomposition<a class="headerlink" href="#inferlo-graphs-path-decomposition" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="inferlo.graphs.path_decomposition">
-<code class="sig-prename descclassname">inferlo.graphs.</code><code class="sig-name descname">path_decomposition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">graph</span><span class="p">:</span> <span class="n">networkx.classes.graph.Graph</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>numpy.array<span class="p">]</span><a class="reference internal" href="../_modules/inferlo/graphs/path_decomposition.html#path_decomposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.graphs.path_decomposition" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">inferlo.graphs.</span></code><code class="sig-name descname"><span class="pre">path_decomposition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">networkx.classes.graph.Graph</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.array</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/graphs/path_decomposition.html#path_decomposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.graphs.path_decomposition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Path decomposition of a graph.</p>
 <p>Splits vertices into layers, such that vertices in layer i are connected
 only with vertices from layers i-1, i and i+1.</p>

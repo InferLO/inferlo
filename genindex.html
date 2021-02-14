@@ -34,8 +34,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -262,7 +260,7 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/inferlo.generic.inference.belief_propagation.html#inferlo.generic.inference.belief_propagation">belief_propagation() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.belief_propagation">belief_propagation() (in module inferlo.generic.inference.inference)</a>
 </li>
       <li><a href="generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.binary">binary() (inferlo.DiscreteDomain static method)</a>
 </li>
@@ -270,9 +268,11 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/inferlo.generic.inference.bucket_elimination.html#inferlo.generic.inference.bucket_elimination">bucket_elimination() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination">bucket_elimination() (in module inferlo.generic.inference.inference)</a>
 </li>
-      <li><a href="generated/inferlo.generic.inference.bucket_renormalization.html#inferlo.generic.inference.bucket_renormalization">bucket_renormalization() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination_bt">bucket_elimination_bt() (in module inferlo.generic.inference.inference)</a>
+</li>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_renormalization">bucket_renormalization() (in module inferlo.generic.inference.inference)</a>
 </li>
       <li><a href="generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.build">build() (inferlo.NormalFactorGraphModel method)</a>
 </li>
@@ -288,11 +288,13 @@
 </li>
       <li><a href="generated/inferlo.Factor.html#inferlo.Factor.clone">clone() (inferlo.Factor method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.combine_factors">combine_factors() (inferlo.FunctionFactor static method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.combine_with">combine_with() (inferlo.FunctionFactor method)</a>
+</li>
+      <li><a href="generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.copy">copy() (inferlo.GenericGraphModel method)</a>
 </li>
       <li><a href="generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.cos">cos() (inferlo.FunctionFactor method)</a>
 </li>
@@ -356,9 +358,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_flat_values">from_flat_values() (inferlo.DiscreteFactor static method)</a>
 </li>
-      <li><a href="generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.from_model">from_model() (inferlo.NormalFactorGraphModel static method)</a>
+      <li><a href="generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel.from_model">from_model() (inferlo.GenericGraphModel static method)</a>
 
       <ul>
+        <li><a href="generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.from_model">(inferlo.NormalFactorGraphModel static method)</a>
+</li>
         <li><a href="generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.from_model">(inferlo.PairWiseFiniteModel static method)</a>
 </li>
       </ul></li>
@@ -405,6 +409,8 @@
       <li><a href="generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_interaction_matrix">get_interaction_matrix() (inferlo.PairWiseFiniteModel method)</a>
 </li>
       <li><a href="generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_interactions_for_edges">get_interactions_for_edges() (inferlo.PairWiseFiniteModel method)</a>
+</li>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.get_marginals">get_marginals() (in module inferlo.generic.inference.inference)</a>
 </li>
       <li><a href="generated/inferlo.GraphModel.html#inferlo.GraphModel.get_max_domain_size">get_max_domain_size() (inferlo.GraphModel method)</a>
 </li>
@@ -464,16 +470,23 @@
 </li>
       <li><a href="generated/inferlo.pairwise.inference.mean_field.infer_mean_field.html#inferlo.pairwise.inference.mean_field.infer_mean_field">infer_mean_field() (in module inferlo.pairwise.inference.mean_field)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/inferlo.pairwise.inference.message_passing.infer_message_passing.html#inferlo.pairwise.inference.message_passing.infer_message_passing">infer_message_passing() (in module inferlo.pairwise.inference.message_passing)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/inferlo.pairwise.inference.path_dp.infer_path_dp.html#inferlo.pairwise.inference.path_dp.infer_path_dp">infer_path_dp() (in module inferlo.pairwise.inference.path_dp)</a>
 </li>
       <li><a href="generated/inferlo.pairwise.inference.tree_dp.infer_tree_dp.html#inferlo.pairwise.inference.tree_dp.infer_tree_dp">infer_tree_dp() (in module inferlo.pairwise.inference.tree_dp)</a>
 </li>
       <li><a href="generated/inferlo.InferenceResult.html#inferlo.InferenceResult">InferenceResult (class in inferlo)</a>
 </li>
+      <li>
+    inferlo.generic.inference.inference
+
+      <ul>
+        <li><a href="generated/inferlo.generic.inference.inference.html#module-inferlo.generic.inference.inference">module</a>
+</li>
+      </ul></li>
       <li><a href="generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.init">init() (inferlo.generic.libdai_bp.BP method)</a>
 </li>
       <li><a href="generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.is_discrete">is_discrete() (inferlo.DiscreteDomain method)</a>
@@ -490,7 +503,7 @@
 </li>
       <li><a href="generated/inferlo.testing.ising_model_on_graph.html#inferlo.testing.ising_model_on_graph">ising_model_on_graph() (in module inferlo.testing)</a>
 </li>
-      <li><a href="generated/inferlo.generic.inference.iterative_join_graph_propagation.html#inferlo.generic.inference.iterative_join_graph_propagation">iterative_join_graph_propagation() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.iterative_join_graph_propagation">iterative_join_graph_propagation() (in module inferlo.generic.inference.inference)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -556,12 +569,19 @@
 </li>
       <li><a href="generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.max_marginal">max_marginal() (inferlo.DiscreteFactor method)</a>
 </li>
-      <li><a href="generated/inferlo.generic.inference.mean_field.html#inferlo.generic.inference.mean_field">mean_field() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mean_field">mean_field() (in module inferlo.generic.inference.inference)</a>
 </li>
-      <li><a href="generated/inferlo.generic.inference.mini_bucket_elimination.html#inferlo.generic.inference.mini_bucket_elimination">mini_bucket_elimination() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination">mini_bucket_elimination() (in module inferlo.generic.inference.inference)</a>
 </li>
       <li><a href="generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop.ML_ALGORITHMS">ML_ALGORITHMS (inferlo.interop.LibDaiInterop attribute)</a>
 </li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="generated/inferlo.generic.inference.inference.html#module-inferlo.generic.inference.inference">inferlo.generic.inference.inference</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -603,6 +623,8 @@
       <li><a href="generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.read_model">read_model() (inferlo.datasets.UaiReader method)</a>
 </li>
       <li><a href="generated/inferlo.RealDomain.html#inferlo.RealDomain">RealDomain (class in inferlo)</a>
+</li>
+      <li><a href="generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.restrict">restrict() (inferlo.DiscreteFactor method)</a>
 </li>
       <li><a href="generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP.run">run() (inferlo.generic.libdai_bp.BP method)</a>
 </li>
@@ -682,7 +704,7 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/inferlo.generic.inference.weighted_mini_bucket_elimination.html#inferlo.generic.inference.weighted_mini_bucket_elimination">weighted_mini_bucket_elimination() (in module inferlo.generic.inference)</a>
+      <li><a href="generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.weighted_mini_bucket_elimination">weighted_mini_bucket_elimination() (in module inferlo.generic.inference.inference)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>

@@ -21,6 +21,7 @@
       ~DiscreteFactor.is_discrete
       ~DiscreteFactor.marginal
       ~DiscreteFactor.max_marginal
+      ~DiscreteFactor.restrict
       ~DiscreteFactor.value
    
    

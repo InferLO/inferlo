@@ -1,6 +1,0 @@
-﻿inferlo.generic.inference.bucket\_renormalization
-=================================================
-
-.. currentmodule:: inferlo.generic.inference
-
-.. autofunction:: bucket_renormalization

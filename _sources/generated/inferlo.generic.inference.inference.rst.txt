@@ -1,0 +1,37 @@
+﻿inferlo.generic.inference.inference
+===================================
+
+.. automodule:: inferlo.generic.inference.inference
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      belief_propagation
+      bucket_elimination
+      bucket_elimination_bt
+      bucket_renormalization
+      get_marginals
+      iterative_join_graph_propagation
+      mean_field
+      mini_bucket_elimination
+      weighted_mini_bucket_elimination
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

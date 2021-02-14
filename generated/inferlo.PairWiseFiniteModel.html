@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -217,7 +215,7 @@
 <h1>inferlo.PairWiseFiniteModel<a class="headerlink" href="#inferlo-pairwisefinitemodel" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.PairWiseFiniteModel">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">PairWiseFiniteModel</code><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">PairWiseFiniteModel</span></code><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pairwise finite graphical model.</p>
 <p>Represents a graphical model in which all variables have the same discrete
 domain, all factor depends on at most two variables.</p>
@@ -243,7 +241,7 @@ proportional to <code class="docutils literal notranslate"><span class="pre">exp
 </dl>
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="n">al_size</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">al_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes PairWiseFiniteModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -363,13 +361,13 @@ proportional to <code class="docutils literal notranslate"><span class="pre">exp
 </table>
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.add_factor">
-<code class="sig-name descname">add_factor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">factor</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.add_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.add_factor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.add_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.add_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.add_interaction">
-<code class="sig-name descname">add_interaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">interaction</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.add_interaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.add_interaction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_interaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.add_interaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.add_interaction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds factor corresponding to interaction between nodes u and v.</p>
 <p>Factor is f(x) = exp(interaction[x[u], x[v]]).
 If there already is interaction between these edges, this interaction
@@ -378,7 +376,7 @@ will be added to it (old interaction isn’t discarded).</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.create">
-<em class="property">static </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">edges</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>numpy.ndarray<span class="p">, </span>List<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">interactions</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.create" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interactions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates PairwiseFiniteModel from compact representation.</p>
 <p>Infers number of variables and size of alphabet from shape of
 <code class="docutils literal notranslate"><span class="pre">field</span></code>.</p>
@@ -401,26 +399,26 @@ interactions between variables <code class="docutils literal notranslate"><span 
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.decode_state">
-<code class="sig-name descname">decode_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.decode_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.decode_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">decode_state</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.decode_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.decode_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns id of given state.</p>
 <p>State id is integer between <cite>0</cite> and <cite>al_size**gr_size-1</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.draw_pairwise_graph">
-<code class="sig-name descname">draw_pairwise_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.draw_pairwise_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.draw_pairwise_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">draw_pairwise_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.draw_pairwise_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.draw_pairwise_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws pairwise graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.encode_state">
-<code class="sig-name descname">encode_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.encode_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.encode_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">encode_state</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.encode_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.encode_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns state represented by its integer id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.from_model">
-<em class="property">static </em><code class="sig-name descname">from_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em><span class="sig-paren">)</span> &#x2192; inferlo.pairwise.pwf_model.PairWiseFiniteModel<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.from_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.from_model" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.graph_model.GraphModel</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.pairwise.pwf_model.PairWiseFiniteModel</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.from_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.from_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs Pairwise Finite model which is equivalent to given model.</p>
 <p>All variables must be discrete. All factors must depend on at most 2
 variables.</p>
@@ -431,7 +429,7 @@ they will be extended to have the same domain size.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_all_interactions">
-<code class="sig-name descname">get_all_interactions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_all_interactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_all_interactions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_all_interactions</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_all_interactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_all_interactions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all interaction matrices in compact form.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -444,19 +442,19 @@ the same order as returned by get_edges.array.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_dfs_result">
-<code class="sig-name descname">get_dfs_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; inferlo.graphs.fast_dfs.FastDfsResult<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_dfs_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_dfs_result" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_dfs_result</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.graphs.fast_dfs.FastDfsResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_dfs_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_dfs_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs DFS for interaction graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_edges_array">
-<code class="sig-name descname">get_edges_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_edges_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_edges_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_edges_array</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_edges_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_edges_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns edge list as np.array.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_edges_connected">
-<code class="sig-name descname">get_edges_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_edges_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_edges_connected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_edges_connected</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_edges_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_edges_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns edges, ensuring that graph is connected.</p>
 <p>If graph is already connected, equivalent to <code class="docutils literal notranslate"><span class="pre">get_edges_array</span></code>.
 If graph is not connected, adds minimal amount of edges to make it
@@ -467,19 +465,19 @@ correctly.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_factors">
-<code class="sig-name descname">get_factors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterable<span class="p">[</span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a><span class="p">]</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_factors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_factors</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates explicit list of factors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_graph">
-<code class="sig-name descname">get_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_graph</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns interaction graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_interaction_matrix">
-<code class="sig-name descname">get_interaction_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">v</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_interaction_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_interaction_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_interaction_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_interaction_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_interaction_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns interaction matrix between nodes u and v.</p>
 <p>Returns np.array of shape (al_size, al_size).
 If there is no interaction between these nodes, raises KeyError.</p>
@@ -487,7 +485,7 @@ If there is no interaction between these nodes, raises KeyError.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_interactions_for_edges">
-<code class="sig-name descname">get_interactions_for_edges</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">edges</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_interactions_for_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_interactions_for_edges" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_interactions_for_edges</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_interactions_for_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_interactions_for_edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns interaction for given edges.</p>
 <p>If some edges don’t exist, interaction matrix for them will be a zero
 matrix.</p>
@@ -503,7 +501,7 @@ matrix.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.get_subgraph_factor_values">
-<code class="sig-name descname">get_subgraph_factor_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vars_idx</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">vars_skip</span><span class="p">:</span> <span class="n">Set</span> <span class="o">=</span> <span class="default_value">frozenset({})</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_subgraph_factor_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_subgraph_factor_values" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_subgraph_factor_values</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vars_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vars_skip</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Set</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">frozenset({})</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.get_subgraph_factor_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.get_subgraph_factor_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates factor values for subgraph.</p>
 <p>Consider model on subgraph containing only variables with indices
 <code class="docutils literal notranslate"><span class="pre">vars</span></code>. That is, containing only factors which depend only on
@@ -538,13 +536,13 @@ is consistent with <code class="docutils literal notranslate"><span class="pre">
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.has_edge">
-<code class="sig-name descname">has_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">v</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.has_edge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.has_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_edge</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.has_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.has_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether there is edge between vertices u and v.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.infer">
-<code class="sig-name descname">infer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.InferenceResult">InferenceResult</a><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.infer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.InferenceResult"><span class="pre">InferenceResult</span></a><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs inference.</p>
 <dl class="simple">
 <dt>Available algorithms</dt><dd><ul class="simple">
@@ -575,13 +573,13 @@ partition function and matrix of marginal probabilities.</p>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.is_graph_acyclic">
-<code class="sig-name descname">is_graph_acyclic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.is_graph_acyclic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.is_graph_acyclic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_graph_acyclic</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.is_graph_acyclic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.is_graph_acyclic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether interaction graph is acyclic.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.max_likelihood">
-<code class="sig-name descname">max_likelihood</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.max_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">max_likelihood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.max_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the most probable state.</p>
 <dl class="simple">
 <dt>Available algorithms</dt><dd><ul class="simple">
@@ -608,7 +606,7 @@ graphs of small treewidth.</p></li>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.sample">
-<code class="sig-name descname">sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_samples</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.sample" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">sample</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws i.i.d. samples from the distribution.</p>
 <dl class="simple">
 <dt>Available algorithms</dt><dd><ul class="simple">
@@ -636,7 +634,7 @@ probabilities for each state.</p></li>
 
 <dl class="py method">
 <dt id="inferlo.PairWiseFiniteModel.set_field">
-<code class="sig-name descname">set_field</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.set_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.set_field" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_field</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/pairwise/pwf_model.html#PairWiseFiniteModel.set_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.PairWiseFiniteModel.set_field" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets values of field (biases) in all vertices.</p>
 </dd></dl>
 

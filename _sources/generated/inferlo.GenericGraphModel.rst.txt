@@ -15,8 +15,10 @@
    
       ~GenericGraphModel.__init__
       ~GenericGraphModel.add_factor
+      ~GenericGraphModel.copy
       ~GenericGraphModel.draw_factor_graph
       ~GenericGraphModel.evaluate
+      ~GenericGraphModel.from_model
       ~GenericGraphModel.get_factor_graph
       ~GenericGraphModel.get_factors
       ~GenericGraphModel.get_max_domain_size

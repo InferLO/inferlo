@@ -15,8 +15,10 @@
    
       ~GaussianModel.__init__
       ~GaussianModel.add_factor
+      ~GaussianModel.copy
       ~GaussianModel.draw_factor_graph
       ~GaussianModel.evaluate
+      ~GaussianModel.from_model
       ~GaussianModel.get_factor_graph
       ~GaussianModel.get_factors
       ~GaussianModel.get_max_domain_size

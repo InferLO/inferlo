@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -217,12 +215,12 @@
 <h1>inferlo.GenericGraphModel<a class="headerlink" href="#inferlo-genericgraphmodel" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.GenericGraphModel">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">GenericGraphModel</code><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">GenericGraphModel</span></code><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Graphical model in the most general form.</p>
 <p>Explicitly specified by list of factors.</p>
 <dl class="py method">
 <dt id="inferlo.GenericGraphModel.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_variables</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">domain</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_variables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -251,11 +249,17 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#inferlo.GenericGraphModel.add_factor" title="inferlo.GenericGraphModel.add_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_factor</span></code></a>(factor)</p></td>
 <td><p>Adds factor.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_factor_graph</span></code>(ax)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.GenericGraphModel.copy" title="inferlo.GenericGraphModel.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Makes a copy of itself.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_factor_graph</span></code>(ax)</p></td>
 <td><p>Draws the factor graph.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
 <td><p>Returns value of non-normalized pdf in point.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.GenericGraphModel.from_model" title="inferlo.GenericGraphModel.from_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_model</span></code></a>(model)</p></td>
+<td><p>Creates copy of a given model.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factor_graph</span></code>()</p></td>
 <td><p>Builds factor graph for the model.</p></td>
@@ -294,25 +298,37 @@
 </table>
 <dl class="py method">
 <dt id="inferlo.GenericGraphModel.add_factor">
-<code class="sig-name descname">add_factor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">factor</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.add_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.add_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds factor.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="inferlo.GenericGraphModel.copy">
+<code class="sig-name descname"><span class="pre">copy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a copy of itself.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="inferlo.GenericGraphModel.from_model">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.graph_model.GraphModel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.from_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.from_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates copy of a given model.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="inferlo.GenericGraphModel.get_factors">
-<code class="sig-name descname">get_factors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterable<span class="p">[</span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a><span class="p">]</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.get_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_factors</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.get_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all factors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.GenericGraphModel.infer">
-<code class="sig-name descname">infer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel.infer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs inference.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.GenericGraphModel.max_likelihood">
-<code class="sig-name descname">max_likelihood</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.max_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GenericGraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">max_likelihood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/base/generic_graph_model.html#GenericGraphModel.max_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GenericGraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds most probable state.</p>
 </dd></dl>
 

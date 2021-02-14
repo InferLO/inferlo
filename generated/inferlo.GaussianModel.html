@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -217,7 +215,7 @@
 <h1>inferlo.GaussianModel<a class="headerlink" href="#inferlo-gaussianmodel" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.GaussianModel">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">GaussianModel</code><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GaussianModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">GaussianModel</span></code><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gaussian graphical model</p>
 <p>A Gaussian graphical model is defined by an undirected graph G = (V;E),
 where V is the set of nodes and E is the set of edges,
@@ -231,7 +229,7 @@ Dmitry M. Malioutov, Jason K. Johnson, Alan S. Willsky :
 <a class="reference external" href="http://ssg.mit.edu/group/willsky/publ_pdfs/185_pub_MLR.pdf">http://ssg.mit.edu/group/willsky/publ_pdfs/185_pub_MLR.pdf</a></p>
 <dl class="py method">
 <dt id="inferlo.GaussianModel.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">J</span><span class="p">:</span> <span class="n">numpy.array</span></em>, <em class="sig-param"><span class="n">h</span><span class="p">:</span> <span class="n">numpy.array</span></em>, <em class="sig-param"><span class="n">domain</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GaussianModel.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -260,11 +258,17 @@ Dmitry M. Malioutov, Jason K. Johnson, Alan S. Willsky :
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_factor</span></code>(factor)</p></td>
 <td><p>Adds factor.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_factor_graph</span></code>(ax)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
+<td><p>Makes a copy of itself.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_factor_graph</span></code>(ax)</p></td>
 <td><p>Draws the factor graph.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code>(x)</p></td>
 <td><p>Returns value of non-normalized pdf in point.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_model</span></code>(model)</p></td>
+<td><p>Creates copy of a given model.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_factor_graph</span></code>()</p></td>
 <td><p>Builds factor graph for the model.</p></td>
@@ -324,7 +328,7 @@ Dmitry M. Malioutov, Jason K. Johnson, Alan S. Willsky :
 </table>
 <dl class="py method">
 <dt id="inferlo.GaussianModel.infer">
-<code class="sig-name descname">infer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.GaussianModel.infer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs inference.</p>
 </dd></dl>
 

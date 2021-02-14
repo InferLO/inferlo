@@ -34,8 +34,6 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -189,6 +187,7 @@
 <span class="c1"># TODO: load data from remote data repository.</span>
 <span class="n">UAI_PF</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;DBN_11.uai&#39;</span><span class="p">:</span> <span class="mf">58.5307</span><span class="p">,</span>
+    <span class="s1">&#39;CSP_12.uai&#39;</span><span class="p">:</span> <span class="mf">16.4536</span><span class="p">,</span>
     <span class="s1">&#39;Promedus_11.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.39145</span><span class="p">,</span>
     <span class="s1">&#39;Promedus_12.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.16462</span><span class="p">,</span>
     <span class="s1">&#39;Promedus_13.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.50703</span><span class="p">,</span>
@@ -256,9 +255,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s1">&#39;inferlo_data&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span> <span class="o">=</span> <span class="n">UaiReader</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DatasetLoader.load_file_"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_file_">[docs]</a>    <span class="k">def</span> <span class="nf">load_file_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url_prefix</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>

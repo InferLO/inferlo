@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -220,11 +218,11 @@
 <h1>inferlo.DiscreteFactor<a class="headerlink" href="#inferlo-discretefactor" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.DiscreteFactor">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">DiscreteFactor</code><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">DiscreteFactor</span></code><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor" title="Permalink to this definition">¶</a></dt>
 <dd><p>A factor of several discrete variables.</p>
 <dl class="py method">
 <dt id="inferlo.DiscreteFactor.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel">GraphModel</a></span></em>, <em class="sig-param"><span class="n">var_idx</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">values</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">np.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -272,21 +270,24 @@ factor depends.</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="#inferlo.DiscreteFactor.max_marginal" title="inferlo.DiscreteFactor.max_marginal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_marginal</span></code></a>(new_var_idx)</p></td>
 <td><p>Marginalizes factor on subset of variables, using MAX-PROD.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.DiscreteFactor.value" title="inferlo.DiscreteFactor.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>(x)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.DiscreteFactor.restrict" title="inferlo.DiscreteFactor.restrict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restrict</span></code></a>(variable_id, fixed_value)</p></td>
+<td><p>Fixes value of one variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.DiscreteFactor.value" title="inferlo.DiscreteFactor.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a>(x)</p></td>
 <td><p>Value of function inside this factor in given point.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt id="inferlo.DiscreteFactor.from_factor">
-<em class="property">static </em><code class="sig-name descname">from_factor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">factor</span><span class="p">:</span> <span class="n">inferlo.base.factors.factor.Factor</span></em><span class="sig-paren">)</span> &#x2192; inferlo.base.factors.discrete_factor.DiscreteFactor<a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.from_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.from_factor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.factors.factor.Factor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.factors.discrete_factor.DiscreteFactor</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.from_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.from_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts arbitrary factor to DiscreteFactor.</p>
 <p>Returns <cite>None</cite> if some variables of the factor are not discrete.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.DiscreteFactor.from_flat_values">
-<em class="property">static </em><code class="sig-name descname">from_flat_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel">GraphModel</a></span></em>, <em class="sig-param"><span class="n">var_idx</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">values_flat</span><span class="p">:</span> <span class="n">np.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.from_flat_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.from_flat_values" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_flat_values</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values_flat</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">np.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.from_flat_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.from_flat_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates factor specified by list of values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,19 +303,27 @@ Last variable is “least significant”.</p></li>
 
 <dl class="py method">
 <dt id="inferlo.DiscreteFactor.marginal">
-<code class="sig-name descname">marginal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; inferlo.base.factors.discrete_factor.DiscreteFactor<a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.marginal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.marginal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">marginal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.factors.discrete_factor.DiscreteFactor</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.marginal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.marginal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Marginalizes factor on subset of variables.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.DiscreteFactor.max_marginal">
-<code class="sig-name descname">max_marginal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; inferlo.base.factors.discrete_factor.DiscreteFactor<a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.max_marginal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.max_marginal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">max_marginal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.factors.discrete_factor.DiscreteFactor</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.max_marginal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.max_marginal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Marginalizes factor on subset of variables, using MAX-PROD.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="inferlo.DiscreteFactor.restrict">
+<code class="sig-name descname"><span class="pre">restrict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_value</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.factors.discrete_factor.DiscreteFactor</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.restrict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixes value of one variable.</p>
+<p>Returns new factor which is equivalent to original factor, but with
+value of one variable fixed.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="inferlo.DiscreteFactor.value">
-<code class="sig-name descname">value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">List<span class="p">[</span>float<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.DiscreteFactor.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/discrete_factor.html#DiscreteFactor.value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteFactor.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Value of function inside this factor in given point.</p>
 </dd></dl>
 

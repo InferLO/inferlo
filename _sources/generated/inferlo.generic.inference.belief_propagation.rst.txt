@@ -1,6 +1,0 @@
-﻿inferlo.generic.inference.belief\_propagation
-=============================================
-
-.. currentmodule:: inferlo.generic.inference
-
-.. autofunction:: belief_propagation

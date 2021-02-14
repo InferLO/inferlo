@@ -34,8 +34,6 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -217,7 +215,7 @@
 <h1>inferlo.NormalFactorGraphModel<a class="headerlink" href="#inferlo-normalfactorgraphmodel" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="inferlo.NormalFactorGraphModel">
-<em class="property">class </em><code class="sig-prename descclassname">inferlo.</code><code class="sig-name descname">NormalFactorGraphModel</code><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">NormalFactorGraphModel</span></code><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normal Factor Graph model.</p>
 <p>Also known as Forney-style or Edge-Variable graphical model.</p>
 <p>Variables correspond to edges of a graph, factors correspond to vertices of
@@ -225,7 +223,7 @@ a graph.</p>
 <p>Every variable appears in exactly two factors.</p>
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_variables</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">domain</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain">Domain</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_variables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain"><span class="pre">Domain</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes Normal Factor Graph model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -308,31 +306,31 @@ a graph.</p>
 </table>
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.add_factor">
-<code class="sig-name descname">add_factor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">factor</span><span class="p">:</span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.add_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">add_factor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.add_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.build" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">build</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates the model and makes it immutable.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.check_built">
-<code class="sig-name descname">check_built</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.check_built"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.check_built" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">check_built</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.check_built"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.check_built" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that model is built.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.draw_edge_variable_graph">
-<code class="sig-name descname">draw_edge_variable_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.draw_edge_variable_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.draw_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">draw_edge_variable_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.draw_edge_variable_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.draw_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws edge-variable graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.from_model">
-<em class="property">static </em><code class="sig-name descname">from_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">original_model</span><span class="p">:</span> <span class="n">inferlo.base.graph_model.GraphModel</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.from_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.from_model" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">from_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.graph_model.GraphModel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.from_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.from_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructs NFG model which is equivalent to given model.</p>
 <p>If necessary, clones variables and adds factors.</p>
 <p>Guarantees that first N variables in new model will correspond to
@@ -342,19 +340,19 @@ model.</p>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.get_edge_variable_graph">
-<code class="sig-name descname">get_edge_variable_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; networkx.classes.graph.Graph<a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_edge_variable_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_edge_variable_graph</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">networkx.classes.graph.Graph</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_edge_variable_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_edge_variable_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns edge-variable graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.get_factors">
-<code class="sig-name descname">get_factors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Iterable<span class="p">[</span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor">Factor</a><span class="p">]</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_factors</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.get_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all factors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.infer">
-<code class="sig-name descname">infer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.infer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates partition function.</p>
 <dl class="simple">
 <dt>Available algorithms</dt><dd><ul class="simple">
@@ -375,7 +373,7 @@ model.</p>
 
 <dl class="py method">
 <dt id="inferlo.NormalFactorGraphModel.max_likelihood">
-<code class="sig-name descname">max_likelihood</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algorithm</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.max_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">max_likelihood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/forney/nfg_model.html#NormalFactorGraphModel.max_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.NormalFactorGraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the most probable state.</p>
 </dd></dl>
 
