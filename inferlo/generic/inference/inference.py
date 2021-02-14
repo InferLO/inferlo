@@ -122,7 +122,7 @@ def bucket_renormalization(model: GraphModel,
         https://arxiv.org/abs/1803.05104
 
         [2] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_renormalization.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_renormalization.py>`__.
     """
     algo = BucketRenormalization(_convert(model), ibound=ibound)
     algo.run(max_iter=max_iter)
@@ -154,7 +154,7 @@ def iterative_join_graph_propagation(
         https://arxiv.org/abs/1301.0564
 
         [2] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`__.
     """
     algo = IterativeJoinGraphPropagation(_convert(model), ibound=ibound)
     algo.run(max_iter=max_iter,
@@ -177,7 +177,7 @@ def mean_field(model: GraphModel,
 
     References
         [1] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mean_field.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mean_field.py>`__.
     """
     return MeanField(_convert(model)).run()
 
@@ -198,7 +198,7 @@ def mini_bucket_elimination(model: GraphModel,
         https://dl.acm.org/doi/abs/10.1145/636865.636866
 
         [2] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py>`__.
     """
     return MiniBucketElimination(_convert(model), ibound=ibound).run()
 
@@ -218,7 +218,7 @@ def weighted_mini_bucket_elimination(model: GraphModel,
         [1] Qiang Liu, Alexander T. Ihler.
         Bounding the Partition Function using Holder's Inequality. 2011.
         [2] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/weighted_mini_bucket_elimination.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/weighted_mini_bucket_elimination.py>`__.
     """
     return WeightedMiniBucketElimination(_convert(model), ibound=ibound).run()
 
