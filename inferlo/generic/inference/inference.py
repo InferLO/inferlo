@@ -54,7 +54,7 @@ def belief_propagation(model: GraphModel,
 
     References
         [1] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/belief_propagation.py>`__.
     """
     algo = BeliefPropagation(_convert(model))
     algo.run(max_iter=max_iter,
@@ -81,7 +81,7 @@ def bucket_elimination(model: GraphModel,
         https://arxiv.org/abs/1302.3572
 
         [2] `Original implementation
-        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py>`_.
+        <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_elimination.py>`__.
     """
     algo = BucketElimination(_convert(model))
     return algo.run(elimination_order_method=elimination_order_method)
