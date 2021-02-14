@@ -7,6 +7,7 @@ import numpy as np
 from inferlo import GraphModel, DiscreteFactor, InferenceResult, \
     GenericGraphModel
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
+from .binary_tree_elimination import BinaryTreeElimination
 from .bucket_elimination import BucketElimination
 from .bucket_renormalization import BucketRenormalization
 from .factor import Factor
@@ -87,9 +88,12 @@ def bucket_elimination(model: GraphModel,
 
 
 def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
-    """Inference with Bucket Elimination + binary tree."""
-    algo = BucketElimination(_convert(model))
-    return algo.run_bt()
+    """Inference with Bucket Elimination on binary tree."""
+    model = _convert(model)
+    be_algo = BucketElimination(model)
+    bt_algo = BinaryTreeElimination(
+        lambda x, y: be_algo.eliminate_variables(x, y))
+    return bt_algo.run(model)
 
 
 def bucket_renormalization(model: GraphModel,
@@ -115,7 +119,8 @@ def bucket_renormalization(model: GraphModel,
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/bucket_renormalization.py>`_.
     """
     algo = BucketRenormalization(_convert(model), ibound=ibound)
-    return algo.run(max_iter=max_iter)
+    algo.run(max_iter=max_iter)
+    return algo.get_log_z()
 
 
 def iterative_join_graph_propagation(

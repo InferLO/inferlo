@@ -4,12 +4,8 @@ import random
 from copy import copy
 from typing import List
 
-import numpy as np
-
-from .factor import Factor, product_over_, logsumexp
+from .factor import Factor, product_over_
 from .graphical_model import GraphicalModel
-from ... import InferenceResult
-from ...base.inference_result import marg_probs_to_array
 
 
 class BucketElimination:
@@ -28,49 +24,17 @@ class BucketElimination:
         elif elimination_order_method == "given":
             elimination_order = kwargs["elimination_order"]
 
-        eliminated_model = self._eliminate_variables(self.model,
-                                                     elimination_order)
+        eliminated_model = self.eliminate_variables(self.model,
+                                                    elimination_order)
         Z = Factor.scalar(1.0)
         for fac in eliminated_model.factors:
             Z = Z * fac
         return Z.log_values
 
-    def run_bt(self) -> InferenceResult:
-        """Runs the algorithm with binary tree order (TODO: explain)."""
-        self._final_factors = dict()
-        self._run_bt_rec(self.model, self.model.variables)
-
-        log_z = 0
-        marg_probs = []
-        for variable in self.model.variables:
-            log_values = self._final_factors[variable].log_values
-            log_z = logsumexp(log_values)
-            marg_probs.append(np.exp(log_values - log_z))
-        return InferenceResult(log_pf=log_z,
-                               marg_prob=marg_probs_to_array(marg_probs))
-
-    def _run_bt_rec(self,
-                    model: GraphicalModel,
-                    remaining_variables: List[str]):
-        """Recursive step of BE with Binary Tree order."""
-        assert len(remaining_variables) >= 1
-        if len(remaining_variables) == 1:
-            final_factor = Factor.scalar(1.0)
-            for fac in model.factors:
-                final_factor = final_factor * fac
-            self._final_factors[remaining_variables[0]] = final_factor
-        else:
-            n = len(remaining_variables) // 2
-            vars1 = remaining_variables[:n]
-            vars2 = remaining_variables[n:]
-            model1 = self._eliminate_variables(model, vars1)
-            self._run_bt_rec(model1, vars2)
-            model2 = self._eliminate_variables(model, vars2)
-            self._run_bt_rec(model2, vars1)
-
-    def _eliminate_variables(self,
-                             model: GraphicalModel,
-                             elimination_order: List[str]):
+    def eliminate_variables(self,
+                            model: GraphicalModel,
+                            elimination_order: List[str]):
+        """Eliminates several variables, returns resulting model."""
         model = model.copy()
         for var in elimination_order:
             model.contract_variable(var)
