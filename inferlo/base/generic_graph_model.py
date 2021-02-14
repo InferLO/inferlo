@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING, Iterable, List
 
 import numpy as np
 
@@ -23,7 +23,7 @@ class GenericGraphModel(GraphModel):
         if domain is None:
             domain = RealDomain()
         super().__init__(num_variables, domain)
-        self.factors = []
+        self.factors = []  # type: List[Factor]
 
     def add_factor(self, factor: Factor):
         """Adds factor."""
@@ -41,3 +41,18 @@ class GenericGraphModel(GraphModel):
     def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
         """Finds most probable state."""
         raise NotImplemented
+
+    @staticmethod
+    def from_model(model: GraphModel):
+        """Creates copy of a given model."""
+        n = model.num_variables
+        new_model = GenericGraphModel(n)
+        for i in range(n):
+            new_model.get_variable(i).domain = model.get_variable(i).domain
+        for old_factor in model.get_factors():
+            new_model.factors.append(old_factor.clone(new_model))
+        return new_model
+
+    def copy(self):
+        """Makes a copy of itself."""
+        return GenericGraphModel.from_model(self)

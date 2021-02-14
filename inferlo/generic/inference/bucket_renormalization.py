@@ -73,9 +73,9 @@ class BucketRenormalization(MiniBucketElimination):
         """Runs the algorithm, returns log(Z)."""
         for _ in range(max_iter):
             self._optimize()
-        return self._get_logZ()
 
-    def _get_logZ(self):
+    def get_log_z(self):
+        """Calculates log Z."""
         be = BucketElimination(self.renormalized_model)
         logZ = self.base_logZ
         logZ += be.run(

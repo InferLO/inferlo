@@ -59,13 +59,7 @@ Inference algorithms
     inferlo.forney.edge_elimination.infer_edge_elimination
     inferlo.generic.libdai_bp.BP
     inferlo.generic.message_passing.infer_generic_message_passing
-    inferlo.generic.inference.belief_propagation
-    inferlo.generic.inference.bucket_elimination
-    inferlo.generic.inference.bucket_renormalization
-    inferlo.generic.inference.iterative_join_graph_propagation
-    inferlo.generic.inference.mean_field
-    inferlo.generic.inference.mini_bucket_elimination
-    inferlo.generic.inference.weighted_mini_bucket_elimination
+    inferlo.generic.inference.inference
     inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
     inferlo.pairwise.bruteforce.infer_bruteforce
     inferlo.pairwise.junction_tree.infer_junction_tree

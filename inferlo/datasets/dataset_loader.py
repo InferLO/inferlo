@@ -19,6 +19,7 @@ UAI_SOL_URL = REPO_URL + 'MAR_sol'
 # TODO: load data from remote data repository.
 UAI_PF = {
     'DBN_11.uai': 58.5307,
+    'CSP_12.uai': 16.4536,
     'Promedus_11.uai': -8.39145,
     'Promedus_12.uai': -3.16462,
     'Promedus_13.uai': -4.50703,
@@ -86,9 +87,9 @@ class DatasetLoader:
         """
         if data_dir is None:
             data_dir = os.path.join(tempfile.gettempdir(), 'inferlo_data')
-        self.data_dir = data_dir
+        self.data_dir = os.path.expanduser(data_dir)
         if not os.path.exists(self.data_dir):
-            os.mkdir(self.data_dir)
+            os.makedirs(self.data_dir)
         self.uai_reader = UaiReader()
 
     def load_file_(self, url_prefix, file_name):
