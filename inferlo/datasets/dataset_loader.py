@@ -8,6 +8,7 @@ import numpy as np
 import wget
 
 from inferlo import GenericGraphModel
+from inferlo.base import InferenceResult
 from inferlo.datasets.uai_reader import UaiReader
 
 REPO_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/'
@@ -19,7 +20,9 @@ UAI_SOL_URL = REPO_URL + 'MAR_sol'
 # TODO: load data from remote data repository.
 UAI_PF = {
     'DBN_11.uai': 58.5307,
+    'CSP_11.uai': 13.563,
     'CSP_12.uai': 16.4536,
+    'CSP_13.uai': 15.3037,
     'Promedus_11.uai': -8.39145,
     'Promedus_12.uai': -3.16462,
     'Promedus_13.uai': -4.50703,
@@ -74,6 +77,10 @@ class Dataset:
     model: GenericGraphModel
     true_marginals: np.array
     true_log_pf: float
+
+    def true_inference_result(self) -> InferenceResult:
+        """Converts ground truth to InferenceResult."""
+        return InferenceResult(log_pf=self.true_log_pf, marg_prob=self.true_marginals)
 
 
 class DatasetLoader:

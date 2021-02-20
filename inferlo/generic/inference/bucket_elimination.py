@@ -8,6 +8,15 @@ from .factor import Factor, product_over_
 from .graphical_model import GraphicalModel
 
 
+def eliminate_variables(model: GraphicalModel,
+                        elimination_order: List[str]):
+    """Eliminates several variables, returns resulting model."""
+    model = model.copy()
+    for var in elimination_order:
+        model.contract_variable(var)
+    return model
+
+
 class BucketElimination:
     """Bucket elimination algorithm."""
 
@@ -24,21 +33,12 @@ class BucketElimination:
         elif elimination_order_method == "given":
             elimination_order = kwargs["elimination_order"]
 
-        eliminated_model = self.eliminate_variables(self.model,
-                                                    elimination_order)
+        eliminated_model = eliminate_variables(self.model, elimination_order)
+
         Z = Factor.scalar(1.0)
         for fac in eliminated_model.factors:
             Z = Z * fac
         return Z.log_values
-
-    def eliminate_variables(self,
-                            model: GraphicalModel,
-                            elimination_order: List[str]):
-        """Eliminates several variables, returns resulting model."""
-        model = model.copy()
-        for var in elimination_order:
-            model.contract_variable(var)
-        return model
 
     def get_marginal_factor(self,
                             elimination_order_method="random",

@@ -108,8 +108,12 @@ def test_mini_bucket_elimination_bt():
     true_result = model.infer(algorithm='path_dp')
     model = GenericGraphModel.from_model(model)
     be_result = inf.mini_bucket_elimination_bt(model, ibound=10)
-    assert_results_close(
-        true_result,
-        be_result,
-        log_pf_tol=1e-5,
-        mp_mse_tol=1e-4)
+    assert_results_close(true_result, be_result, log_pf_tol=1e-5, mp_mse_tol=1e-4)
+
+
+def test_mini_bucket_renormalization_bt():
+    model = grid_potts_model(5, 5, al_size=3, seed=1)
+    true_result = model.infer(algorithm='path_dp')
+    model = GenericGraphModel.from_model(model)
+    be_result = inf.mini_bucket_renormalization_bt(model, ibound=7)
+    assert_results_close(true_result, be_result, log_pf_tol=1e-5, mp_mse_tol=1e-4)

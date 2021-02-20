@@ -206,8 +206,12 @@ class MiniBucketElimination:
         self.variables_replicated_from_ = variables_replicated_from_
         self.base_logZ = base_logZ
 
-    def run(self, get_z=True) -> GraphicalModel:
-        """Runs the algorithm."""
+    def run(self, get_z=True):
+        """Runs the algorithm.
+
+        Eliminates all variables in elimination_order, and stores eliminated model in
+        self.working_model.
+        """
         self.working_model = self.renormalized_model.copy()
         for var in self.elimination_order:
             for i, rvar in enumerate(self.variables_replicated_from_[var]):
@@ -215,8 +219,6 @@ class MiniBucketElimination:
                     self.working_model.contract_variable(rvar, operator="max")
                 else:
                     self.working_model.contract_variable(rvar, operator="sum")
-
-        return self.working_model
 
     def get_log_z(self) -> float:
         """Returns logarithm of partition function for fully eliminated model."""
