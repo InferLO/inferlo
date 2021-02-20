@@ -2,7 +2,7 @@ from typing import Callable, List
 
 import numpy as np
 
-from .factor import logsumexp, Factor
+from .factor import logsumexp
 from .graphical_model import GraphicalModel
 from ... import InferenceResult
 from ...base.inference_result import marg_probs_to_array
@@ -40,8 +40,8 @@ class BinaryTreeElimination:
         """Recursive step of BE on Binary Tree."""
         assert len(remaining_variables) >= 1
         if len(remaining_variables) == 1:
-            final_factor = Factor.scalar(1.0)
-            for fac in model.factors:
+            final_factor = model.factors[0]
+            for fac in model.factors[1:]:
                 final_factor = final_factor * fac
             self._final_factors[remaining_variables[0]] = final_factor
         else:

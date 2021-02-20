@@ -69,7 +69,7 @@ def test_wmbe_grid_9x9():
     model = grid_potts_model(9, 9, al_size=2, seed=0)
     true_log_pf = model.infer(algorithm="path_dp").log_pf
     assert np.allclose(
-        inf.bucket_renormalization(model),
+        inf.weighted_mini_bucket_elimination(model),
         true_log_pf,
         atol=4.0)
 
@@ -78,9 +78,9 @@ def test_bucket_renormalization_grid_9x9():
     model = grid_potts_model(9, 9, al_size=2, seed=0)
     true_log_pf = model.infer(algorithm="path_dp").log_pf
     assert np.allclose(
-        inf.weighted_mini_bucket_elimination(model),
+        inf.bucket_renormalization(model),
         true_log_pf,
-        atol=2.0)
+        atol=4.0)
 
 
 def test_get_marginals():
@@ -101,3 +101,15 @@ def test_bucket_elimination_bt():
     model = GenericGraphModel.from_model(model)
     be_result = inf.bucket_elimination_bt(model)
     assert_results_close(true_result, be_result)
+
+
+def test_mini_bucket_elimination_bt():
+    model = grid_potts_model(5, 5, al_size=3, seed=1)
+    true_result = model.infer(algorithm='path_dp')
+    model = GenericGraphModel.from_model(model)
+    be_result = inf.mini_bucket_elimination_bt(model, ibound=10)
+    assert_results_close(
+        true_result,
+        be_result,
+        log_pf_tol=1e-5,
+        mp_mse_tol=1e-4)

@@ -3,7 +3,7 @@
 import random
 from copy import copy
 from functools import reduce
-from typing import List
+from typing import List, Optional
 
 import numpy as np
 
@@ -17,6 +17,8 @@ class MiniBucketElimination:
     def __init__(self, model: GraphicalModel = None, **kwargs):
         self.base_logZ = 0.0
         self.model = model.copy()
+        self.working_model = None  # type: Optional[GraphicalModel]
+
         if "elimination_order" in kwargs:
             self.elimination_order = copy(kwargs["elimination_order"])
         else:
@@ -45,13 +47,12 @@ class MiniBucketElimination:
                                 self.renormalized_model.variables}
 
         for fac in self.renormalized_model.factors:
-            lower_var = min(fac.variables,
-                            key=self.renormalized_elimination_order.index)
-            factor_upper_to_[lower_var] = fac
-            upper_candidate_for_[lower_var] = upper_candidate_for_[
-                lower_var].union(
-                set(fac.variables)
-            )
+            lower_var = fac.first_variable_in_order(self.renormalized_elimination_order)
+            if lower_var is not None:
+                factor_upper_to_[lower_var] = fac
+                for var in fac.variables:
+                    if var in self.renormalized_elimination_order:
+                        upper_candidate_for_[lower_var].add(var)
 
         for var in self.renormalized_elimination_order:
             m_vars = sorted(
@@ -109,7 +110,7 @@ class MiniBucketElimination:
         factors_adj_to_ = dict()
         working_factorss = [[fac] for fac in renormalized_model.factors]
         eliminated_variables = []
-        for t in range(len(self.model.variables)):
+        for t in range(len(elimination_order)):
             uneliminated_variables = sorted(
                 set(self.model.variables) - set(eliminated_variables))
             candidate_mini_buckets_for_ = dict()
@@ -178,11 +179,14 @@ class MiniBucketElimination:
 
             renormalized_model.remove_variable(var)
 
-        factors_upper_to_ = {var: [] for var in renormalized_model.variables}
+        # For each variable find factors which will be eliminated with it.
+        factors_upper_to_ = {var: [] for var in renormalized_elimination_order}
         for fac in renormalized_model.factors:
-            lower_var = min(fac.variables,
-                            key=renormalized_elimination_order.index)
-            factors_upper_to_[lower_var].append(fac)
+            lower_var = fac.first_variable_in_order(renormalized_elimination_order)
+            if lower_var is not None:
+                factors_upper_to_[lower_var].append(fac)
+        assert set(factors_upper_to_.keys()) == set(
+            renormalized_elimination_order)
 
         for var, facs in factors_upper_to_.items():
             if facs:
@@ -202,21 +206,26 @@ class MiniBucketElimination:
         self.variables_replicated_from_ = variables_replicated_from_
         self.base_logZ = base_logZ
 
-    def run(self):
-        """Runs the algorithm, returns log(Z)."""
-        working_model = self.renormalized_model.copy()
+    def run(self, get_z=True) -> GraphicalModel:
+        """Runs the algorithm."""
+        self.working_model = self.renormalized_model.copy()
         for var in self.elimination_order:
             for i, rvar in enumerate(self.variables_replicated_from_[var]):
                 if i < len(self.variables_replicated_from_[var]) - 1:
-                    working_model.contract_variable(rvar, operator="max")
+                    self.working_model.contract_variable(rvar, operator="max")
                 else:
-                    working_model.contract_variable(rvar, operator="sum")
+                    self.working_model.contract_variable(rvar, operator="sum")
 
-        logZ = self.base_logZ
-        for fac in working_model.factors:
-            logZ += fac.log_values
+        return self.working_model
 
-        return logZ
+    def get_log_z(self) -> float:
+        """Returns logarithm of partition function for fully eliminated model."""
+        assert self.working_model is not None, 'Called get_log_z() before run().'
+        assert len(self.working_model.variables) == 0, "Model is not fully eliminated."
+        log_z = self.base_logZ
+        for fac in self.working_model.factors:
+            log_z += fac.log_values
+        return log_z
 
     def _get_variables_in(self, bucket, eliminated=None):
         if eliminated is None:

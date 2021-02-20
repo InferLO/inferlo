@@ -102,6 +102,27 @@ def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
     return bt_algo.run(model)
 
 
+def mini_bucket_elimination_bt(
+        model: GraphModel,
+        ibound=10) -> InferenceResult:
+    """Inference with Mini-Bucket Elimination on binary tree.
+
+    :param model: Model for which to perform inference.
+    :param ibound: Maximal size of mini-bucket.
+    """
+
+    def eliminate(model, order):
+        algo = MiniBucketElimination(model,
+                                     ibound=ibound,
+                                     elimination_order=order)
+        algo.run()
+        algo.working_model.add_factor(Factor("", [], log_values=np.array(algo.base_logZ)))
+        return algo.working_model
+
+    bt_algo = BinaryTreeElimination(eliminate)
+    return bt_algo.run(_convert(model))
+
+
 def bucket_renormalization(model: GraphModel,
                            ibound: int = 10,
                            max_iter: int = 1) -> float:
@@ -200,7 +221,9 @@ def mini_bucket_elimination(model: GraphModel,
         [2] `Original implementation
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py>`__.
     """
-    return MiniBucketElimination(_convert(model), ibound=ibound).run()
+    algo = MiniBucketElimination(_convert(model), ibound=ibound)
+    algo.run()
+    return algo.get_log_z()
 
 
 def weighted_mini_bucket_elimination(model: GraphModel,

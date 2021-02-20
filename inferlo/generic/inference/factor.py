@@ -239,8 +239,7 @@ class Factor:
             max_a = max(amax(a1), amax(fac.log_values))
             with np.errstate(invalid="raise"):
                 try:
-                    fac.log_values = log(
-                        exp(a1 - max_a) + exp(fac.log_values - max_a))
+                    fac.log_values = log(exp(a1 - max_a) + exp(fac.log_values - max_a))
                 except BaseException:
                     print(a1)
                     print(fac.log_values)
@@ -282,8 +281,7 @@ class Factor:
             if extra_variables:
                 fac.log_values = add_dims(fac.log_values, len(extra_variables))
                 fac.variables.extend(extra_variables)
-                new_variable_card = fac1.get_cardinalities_for_(
-                    extra_variables)
+                new_variable_card = fac1.get_cardinalities_for_(extra_variables)
                 fac.cardinality = np.append(fac.cardinality, new_variable_card)
 
             extra_variables = set(fac.variables) - set(fac1.variables)
@@ -394,6 +392,15 @@ class Factor:
     def __repr__(self):
         return "Factor: " + self.name + " Variables: " + ", ".join(
             self.variables)
+
+    def first_variable_in_order(self, order):
+        """Returns variable on which this factor depends, which is first in given order, or None if
+        factor doesn't depend on any of variables in 'order'.
+        """
+        for var in order:
+            if var in self.variables:
+                return var
+        return None
 
 
 def add_dims(a: np.array, extra_dims):

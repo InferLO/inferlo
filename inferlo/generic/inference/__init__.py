@@ -6,6 +6,7 @@ from .inference import (belief_propagation,
                         get_marginals,
                         mean_field,
                         mini_bucket_elimination,
+                        mini_bucket_elimination_bt,
                         weighted_mini_bucket_elimination)
 
 """
