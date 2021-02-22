@@ -1,5 +1,7 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
+import warnings
+
 import numpy as np
 from sklearn.utils.extmath import randomized_svd
 
@@ -92,13 +94,13 @@ class BucketRenormalization(MiniBucketElimination):
             factor.get_cardinality_for_(variable), -1
         )
 
-        if np.isfinite(np.max(flattened_factor_log_values)):
-            flattened_factor_values = np.exp(
-                flattened_factor_log_values - np.max(
-                    flattened_factor_log_values)
-            )
-        else:
-            raise ValueError()
+        max_log = np.max(flattened_factor_log_values)
+        if np.isnan(max_log):
+            warnings.warn('Got nan in flattened_factor_log_values')
+            np.nan_to_num(flattened_factor_log_values, copy=False, nan=-1e9)
+            max_log = np.max(flattened_factor_log_values)
+        assert np.isfinite(max_log)
+        flattened_factor_values = np.exp(flattened_factor_log_values - max_log)
 
         U, _, _ = randomized_svd(flattened_factor_values, n_components=1)
 
