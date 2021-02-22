@@ -49,7 +49,7 @@ class ExperimentRunner:
         directory = os.path.join(self.data_dir, func.__name__)
         if not os.path.exists(directory):
             os.makedirs(directory)
-        file_name = ','.join(params_list) + '.dat'
+        file_name = '&'.join(params_list) + '.dat'
         file_path = os.path.join(directory, file_name)
         if os.path.exists(file_path):
             # Experiment has already been run.
