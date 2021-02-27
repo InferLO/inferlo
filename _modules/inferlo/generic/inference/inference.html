@@ -176,7 +176,7 @@
     <span class="n">GenericGraphModel</span>
 <span class="kn">from</span> <span class="nn">.belief_propagation</span> <span class="kn">import</span> <span class="n">BeliefPropagation</span><span class="p">,</span> <span class="n">IterativeJoinGraphPropagation</span>
 <span class="kn">from</span> <span class="nn">.binary_tree_elimination</span> <span class="kn">import</span> <span class="n">BinaryTreeElimination</span>
-<span class="kn">from</span> <span class="nn">.bucket_elimination</span> <span class="kn">import</span> <span class="n">BucketElimination</span>
+<span class="kn">from</span> <span class="nn">.bucket_elimination</span> <span class="kn">import</span> <span class="n">BucketElimination</span><span class="p">,</span> <span class="n">eliminate_variables</span>
 <span class="kn">from</span> <span class="nn">.bucket_renormalization</span> <span class="kn">import</span> <span class="n">BucketRenormalization</span>
 <span class="kn">from</span> <span class="nn">.factor</span> <span class="kn">import</span> <span class="n">Factor</span>
 <span class="kn">from</span> <span class="nn">.graphical_model</span> <span class="kn">import</span> <span class="n">GraphicalModel</span>
@@ -253,21 +253,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">algo</span> <span class="o">=</span> <span class="n">BucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">elimination_order_method</span><span class="o">=</span><span class="n">elimination_order_method</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="bucket_elimination_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination_bt">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination_bt</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination on binary tree.</span>
-
-<span class="sd">    It runs Bucket elimination multiple times in different order to get marginal</span>
-<span class="sd">    probabilities for every variable. However, it partially reuses results</span>
-<span class="sd">    using &quot;divide &amp; conquer&quot; technique, which allows to compute all marginal</span>
-<span class="sd">    probabilities by doing only O(N logN) eliminations.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">be_algo</span> <span class="o">=</span> <span class="n">BucketElimination</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">bt_algo</span> <span class="o">=</span> <span class="n">BinaryTreeElimination</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">be_algo</span><span class="o">.</span><span class="n">eliminate_variables</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="bucket_renormalization"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_renormalization">[docs]</a><span class="k">def</span> <span class="nf">bucket_renormalization</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
@@ -368,7 +353,9 @@
 <span class="sd">        [2] `Original implementation</span>
 <span class="sd">        &lt;https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py&gt;`__.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">MiniBucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+    <span class="n">algo</span> <span class="o">=</span> <span class="n">MiniBucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_log_z</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="weighted_mini_bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.weighted_mini_bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">weighted_mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
@@ -451,6 +438,67 @@
         <span class="n">marg_probs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">log_pf</span><span class="p">,</span>
                            <span class="n">marg_prob</span><span class="o">=</span><span class="n">marg_probs_to_array</span><span class="p">(</span><span class="n">marg_probs</span><span class="p">))</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Binary Tree Elimination algorithms.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="bucket_elimination_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination_bt">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination_bt</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination on binary tree.</span>
+
+<span class="sd">    It runs Bucket elimination multiple times in different order to get marginal</span>
+<span class="sd">    probabilities for every variable. However, it partially reuses results</span>
+<span class="sd">    using &quot;divide &amp; conquer&quot; technique, which allows to compute all marginal</span>
+<span class="sd">    probabilities by doing only O(N logN) eliminations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">bt_algo</span> <span class="o">=</span> <span class="n">BinaryTreeElimination</span><span class="p">(</span><span class="n">eliminate_variables</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mini_bucket_elimination_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination_bt">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_elimination_bt</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+        <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Elimination on binary tree.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">MiniBucketElimination</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                                     <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span>
+                                     <span class="n">elimination_order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="n">algo</span><span class="o">.</span><span class="n">working_model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">Factor</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="n">log_values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">algo</span><span class="o">.</span><span class="n">base_logZ</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">working_model</span>
+
+    <span class="n">bt_algo</span> <span class="o">=</span> <span class="n">BinaryTreeElimination</span><span class="p">(</span><span class="n">eliminate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="mini_bucket_renormalization_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_renormalization_bt">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_renormalization_bt</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+        <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Renormalization on binary tree.</span>
+
+<span class="sd">    :param model: Model for which to perform inference.</span>
+<span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="n">br_algo</span> <span class="o">=</span> <span class="n">BucketRenormalization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                                        <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span>
+                                        <span class="n">elimination_order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+        <span class="n">eliminated_model</span> <span class="o">=</span> <span class="n">eliminate_variables</span><span class="p">(</span><span class="n">br_algo</span><span class="o">.</span><span class="n">renormalized_model</span><span class="p">,</span>
+                                               <span class="n">br_algo</span><span class="o">.</span><span class="n">renormalized_elimination_order</span><span class="p">)</span>
+        <span class="n">eliminated_model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">Factor</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="n">log_values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">br_algo</span><span class="o">.</span><span class="n">base_logZ</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">eliminated_model</span>
+
+    <span class="n">bt_algo</span> <span class="o">=</span> <span class="n">BinaryTreeElimination</span><span class="p">(</span><span class="n">eliminate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
 </pre></div>
 
            </div>
