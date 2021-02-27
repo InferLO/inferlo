@@ -1,6 +1,6 @@
 [config]
 disable=all
-max-line-length=80
+max-line-length=100
 no-docstring-rgx:^test.*|^\_.*
 score=no
 

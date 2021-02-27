@@ -8,7 +8,7 @@ from inferlo import GraphModel, DiscreteFactor, InferenceResult, \
     GenericGraphModel
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .binary_tree_elimination import BinaryTreeElimination
-from .bucket_elimination import BucketElimination
+from .bucket_elimination import BucketElimination, eliminate_variables
 from .bucket_renormalization import BucketRenormalization
 from .factor import Factor
 from .graphical_model import GraphicalModel
@@ -85,21 +85,6 @@ def bucket_elimination(model: GraphModel,
     """
     algo = BucketElimination(_convert(model))
     return algo.run(elimination_order_method=elimination_order_method)
-
-
-def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
-    """Inference with Bucket Elimination on binary tree.
-
-    It runs Bucket elimination multiple times in different order to get marginal
-    probabilities for every variable. However, it partially reuses results
-    using "divide & conquer" technique, which allows to compute all marginal
-    probabilities by doing only O(N logN) eliminations.
-    """
-    model = _convert(model)
-    be_algo = BucketElimination(model)
-    bt_algo = BinaryTreeElimination(
-        lambda x, y: be_algo.eliminate_variables(x, y))
-    return bt_algo.run(model)
 
 
 def bucket_renormalization(model: GraphModel,
@@ -200,7 +185,9 @@ def mini_bucket_elimination(model: GraphModel,
         [2] `Original implementation
         <https://github.com/sungsoo-ahn/bucket-renormalization/blob/master/inference/mini_bucket_elimination.py>`__.
     """
-    return MiniBucketElimination(_convert(model), ibound=ibound).run()
+    algo = MiniBucketElimination(_convert(model), ibound=ibound)
+    algo.run()
+    return algo.get_log_z()
 
 
 def weighted_mini_bucket_elimination(model: GraphModel,
@@ -283,3 +270,64 @@ def get_marginals(
         marg_probs.append(mp)
     return InferenceResult(log_pf=log_pf,
                            marg_prob=marg_probs_to_array(marg_probs))
+
+
+"""
+Binary Tree Elimination algorithms.
+"""
+
+
+def bucket_elimination_bt(model: GraphModel) -> InferenceResult:
+    """Inference with Bucket Elimination on binary tree.
+
+    It runs Bucket elimination multiple times in different order to get marginal
+    probabilities for every variable. However, it partially reuses results
+    using "divide & conquer" technique, which allows to compute all marginal
+    probabilities by doing only O(N logN) eliminations.
+    """
+    model = _convert(model)
+    bt_algo = BinaryTreeElimination(eliminate_variables)
+    return bt_algo.run(model)
+
+
+def mini_bucket_elimination_bt(
+        model: GraphModel,
+        ibound: int = 10) -> InferenceResult:
+    """Inference with Mini-Bucket Elimination on binary tree.
+
+    :param model: Model for which to perform inference.
+    :param ibound: Maximal size of mini-bucket.
+    """
+
+    def eliminate(model, order):
+        algo = MiniBucketElimination(model,
+                                     ibound=ibound,
+                                     elimination_order=order)
+        algo.run()
+        algo.working_model.add_factor(Factor("", [], log_values=np.array(algo.base_logZ)))
+        return algo.working_model
+
+    bt_algo = BinaryTreeElimination(eliminate)
+    return bt_algo.run(_convert(model))
+
+
+def mini_bucket_renormalization_bt(
+        model: GraphModel,
+        ibound: int = 10) -> InferenceResult:
+    """Inference with Mini-Bucket Renormalization on binary tree.
+
+    :param model: Model for which to perform inference.
+    :param ibound: Maximal size of mini-bucket.
+    """
+
+    def eliminate(model, order):
+        br_algo = BucketRenormalization(model,
+                                        ibound=ibound,
+                                        elimination_order=order)
+        eliminated_model = eliminate_variables(br_algo.renormalized_model,
+                                               br_algo.renormalized_elimination_order)
+        eliminated_model.add_factor(Factor("", [], log_values=np.array(br_algo.base_logZ)))
+        return eliminated_model
+
+    bt_algo = BinaryTreeElimination(eliminate)
+    return bt_algo.run(_convert(model))
