@@ -78,10 +78,6 @@ class Dataset:
     true_marginals: np.array
     true_log_pf: float
 
-    def true_inference_result(self) -> InferenceResult:
-        """Converts ground truth to InferenceResult."""
-        return InferenceResult(log_pf=self.true_log_pf, marg_prob=self.true_marginals)
-
 
 class DatasetLoader:
     """Loads graphical models from named datasets."""
