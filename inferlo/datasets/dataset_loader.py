@@ -8,7 +8,6 @@ import numpy as np
 import wget
 
 from inferlo import GenericGraphModel
-from inferlo.base import InferenceResult
 from inferlo.datasets.uai_reader import UaiReader
 
 REPO_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/'
