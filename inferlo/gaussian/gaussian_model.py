@@ -10,7 +10,6 @@ import numpy as np
 from inferlo.base.domain import RealDomain
 from inferlo.base.factors.function_factor import FunctionFactor
 from inferlo.base.generic_graph_model import GenericGraphModel
-from inferlo.base.variable import Variable
 from .inference.gaussian_belief_propagation import gaussian_BP
 
 

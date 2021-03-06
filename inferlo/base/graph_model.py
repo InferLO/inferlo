@@ -20,7 +20,7 @@ class GraphModel(abc.ABC):
     """Abstract class representing any graphical model."""
 
     def __init__(self):
-        self.variables = [] # type: List[Variable]
+        self.variables = []  # type: List[Variable]
 
     def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
@@ -35,6 +35,7 @@ class GraphModel(abc.ABC):
 
     @property
     def num_variables(self):
+        """Number of variables in the model."""
         return len(self.variables)
 
     @abc.abstractmethod
