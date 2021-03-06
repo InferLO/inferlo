@@ -14,8 +14,11 @@
    .. autosummary::
    
       ~DatasetLoader.__init__
+      ~DatasetLoader.custom_dataset_exists
+      ~DatasetLoader.load_custom_dataset
       ~DatasetLoader.load_file_
       ~DatasetLoader.load_uai_dataset
+      ~DatasetLoader.save_custom_dataset
    
    
 

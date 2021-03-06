@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Marginal Probabilities with Elimination algorithms &mdash; InferLO 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing to InferLO" href="../contributing.html" />
+    <link rel="prev" title="Bucket renormalization" href="bucket_renormalization.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> InferLO
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Experiments</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bucket_renormalization.html">Bucket renormalization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Marginal Probabilities with Elimination algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Experiments">Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Algorithms">Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Accuracy-metric">Accuracy metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Experiment-1-:-Ising-Grid.">Experiment 1 : Ising Grid.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Experiment-2:-UAI-datasets-with-varying-ibound.">Experiment 2: UAI datasets with varying ibound.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">InferLO</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Marginal Probabilities with Elimination algorithms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/experiments/marginal_probabilities.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Marginal-Probabilities-with-Elimination-algorithms">
+<h1>Marginal Probabilities with Elimination algorithms<a class="headerlink" href="#Marginal-Probabilities-with-Elimination-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>Dmytro Fedoriaka, February-March 2021</p>
+<p>This notebook is experimental part of a paper on computing marginal probabilities for probabilistic Graphical Models using Elimination Algorithms. The paper is currently work in progress.</p>
+<div class="section" id="Experiments">
+<h2>Experiments<a class="headerlink" href="#Experiments" title="Permalink to this headline">¶</a></h2>
+<p>We run a series of experiments to compare accuracy and running time of proposed algorithms with some existing algorithms for computing marginal probabilities.</p>
+<div class="section" id="Algorithms">
+<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline">¶</a></h3>
+<p>We run the following algorithms:</p>
+<ul class="simple">
+<li><p>MBE-TR - Mini-Bucket elimination + Trivial Reduction (with varying ibound);</p></li>
+<li><p>MBR-TR - Mini-Bucket renormaliztion + Trivial Reduction (with varying ibound);</p></li>
+<li><p>MBE-BT - Mini-Bucket elimination + Binary Tree Elimination (with varying ibound);</p></li>
+<li><p>MBR-BT - Mini-Bucket renormaliztion + Binary Tree Elimination (with varying ibound);</p></li>
+<li><p>BP - Belief propagation;</p></li>
+<li><p>TRWBP - Tree-Reweighted Belif Propagation.</p></li>
+</ul>
+<p>Algorithms MBE-TR, MBE-TR, MBE-BT, MBR-BT are implemented in the <a class="reference external" href="https://github.com/InferLO/inferlo">InferLO</a> library as part of current project.</p>
+<p>Algorithms BP and TRWBP are used from <a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/">LibDAI</a> library, using InferLO’s adapter. These are benchmarks so it’s reasonable to use independednt implementation.</p>
+<p>Also as part of this project we also implemented Trivial Reduction and Binary Tree Elimination for Bucket Elimination, but they don’t appear in the experiments. Thats because:</p>
+<ul class="simple">
+<li><p>They guaranteed to give exact result;</p></li>
+<li><p>Their running time omn big datasets is so big it’s impractical;</p></li>
+<li><p>On synthetic Ising Grid datasets BE + Trivial Reduction gives misleadingly fast results because of special structure of the model, which womn’t happen in the general case. We used this to get exact marginal probabilities for Experiment 1.</p></li>
+</ul>
+</div>
+<div class="section" id="Accuracy-metric">
+<h3>Accuracy metric<a class="headerlink" href="#Accuracy-metric" title="Permalink to this headline">¶</a></h3>
+<p>We used the mean Kullback-Leibler divergence as accuracy metric:</p>
+<div class="math notranslate nohighlight">
+\[\text{MKLD}(p) = \frac{1}{n} \sum_{i=1}^{n} \sum_{j=1}^{d_i} p_{i,j} \ln \left(\frac{p_{i,j}}{\max(\hat{p}_{i,j},10^{-10})}\right),\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> is marginal probabilities given by the model and <span class="math notranslate nohighlight">\(\hat{p}\)</span> are knwon true marginal probabilities.</p>
+<p>Note that some datasets have true probabilities for some values of some variables equal to 0, which would result in the division by 0, so we had adjust such proabilities to be equal to very small positive value (<span class="math notranslate nohighlight">\(10^{-10}\)</span>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">kl_div</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">inferlo</span>
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
+<span class="kn">from</span> <span class="nn">inferlo.datasets</span> <span class="kn">import</span> <span class="n">DatasetLoader</span><span class="p">,</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">inferlo.interop</span> <span class="kn">import</span> <span class="n">LibDaiInterop</span>
+<span class="kn">import</span> <span class="nn">inferlo.generic.inference</span> <span class="k">as</span> <span class="nn">inf</span>
+<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">testing</span>
+
+<span class="n">loader</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_datasets&#39;</span><span class="p">)</span>
+<span class="n">libdai</span> <span class="o">=</span> <span class="n">LibDaiInterop</span><span class="p">()</span>
+<span class="n">exp_runner</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">ExperimentRunner</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_experiments&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">libdai</span><span class="o">.</span><span class="n">is_libdai_ready</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">mean_kl_div</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">kl_div</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Experiment-1-:-Ising-Grid.">
+<h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Permalink to this headline">¶</a></h3>
+<p>We generate grid graph of size <span class="math notranslate nohighlight">\(13 \times h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is in range <span class="math notranslate nohighlight">\([1, 30]\)</span>. On this graph we build a syntetic Ising model ($x_i = { -1, 1 } $):</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \exp \left(\sum_{i \in \mathcal{V}} \phi_i x_i + \sum_{(i,j) \in \mathcal{E}} \phi_{ij} x_i x_j \right).\]</div>
+<p>We draw <span class="math notranslate nohighlight">\(\phi_i\)</span> and <span class="math notranslate nohighlight">\(\phi_{i,j}\)</span> uniformly from intervals [-1, 1].</p>
+<p>We get exact marginal probabilities by running Bucket Elimination + Trivial Reduction.</p>
+<p>Then for every model we run algorithms BP, MBE-BT, MBR-BT, MBE-TR, MBR-TR. ibound in these experiment is always 9.</p>
+<p>The charts below for each model show running time and accuracy (mean KL divergence).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">ising_grid_dataset</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;ising_grid_</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">_seed=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">loader</span><span class="o">.</span><span class="n">custom_dataset_exists</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_custom_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">grid_graph</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">model_pwf</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">ising_model_on_graph</span><span class="p">(</span>
+        <span class="n">graph</span><span class="p">,</span> <span class="n">field_range</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">interaction_range</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model_pwf</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_elimination</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">elimination_order_method</span><span class="o">=</span><span class="s1">&#39;not_random&#39;</span><span class="p">),</span>
+        <span class="n">skip_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                      <span class="n">true_log_pf</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">,</span>
+                      <span class="n">true_marginals</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span>
+                      <span class="n">name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">)</span>
+    <span class="n">loader</span><span class="o">.</span><span class="n">save_custom_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dataset</span>
+
+
+<span class="k">def</span> <span class="nf">compare_marginals_ising_grid</span><span class="p">(</span><span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">w</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">h</span><span class="o">&gt;</span><span class="mi">0</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">ising_grid_dataset</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;BP&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">marg_prob</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_renormalization</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">marg_prob</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_renormalization</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_renormalization_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown algorithm: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;log_pf_error&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
+      <span class="s2">&quot;mean_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">&quot;max_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">&quot;mean_kl_div&quot;</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="n">w</span><span class="o">=</span><span class="mi">13</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">):</span>
+    <span class="n">ising_grid_dataset</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+    <span class="c1">#print(&#39;Grid is %dx%d&#39; % (w,h))</span>
+    <span class="n">algos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">algos</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span>
+            <span class="n">compare_marginals_ising_grid</span><span class="p">,</span>
+            <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">:</span><span class="n">h</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax_mkld</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+    <span class="n">h_to_mkld</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+    <span class="n">h_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_to_time</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="n">num_vars_range</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h_range</span><span class="p">)</span>
+    <span class="n">time_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
+    <span class="n">mkld_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_mkld</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
+    <span class="n">ax_mkld</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">mkld_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+
+    <span class="n">k</span><span class="p">,</span> <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">time_chart</span><span class="p">),</span> <span class="n">deg</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">num_vars_range</span><span class="o">**</span><span class="n">k</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: t~N^</span><span class="si">%.02f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+
+
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Accuracy of different algorithms&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">,</span>
+                             <span class="s1">&#39;ibound=9&#39;</span><span class="p">]))</span>
+
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Time, s&#39;</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Running time of different algorithms&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">,</span>
+                             <span class="s1">&#39;ibound=9&#39;</span><span class="p">]))</span>
+
+
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/experiments_marginal_probabilities_6_0.png" src="../_images/experiments_marginal_probabilities_6_0.png" />
+</div>
+</div>
+<p>We can see that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
+<p>We also fitted running time as function of number of variables in log-scale, and it appers that Trivial Reduction takes <span class="math notranslate nohighlight">\(O(n^{3.1})\)</span> time, while Bucket Elimination takes <span class="math notranslate nohighlight">\(O(n^{1.7})\)</span> time.</p>
+<p>Belief Propagation outperforms both MBE and MBR in accuracy and time, but these are very simple models, and ibound was deliberately chosen so these models don’t give exact answers.</p>
+<p>Main goal of this experiment was to prove that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
+<p>We also calculated “relative” running time for MBE-BT, MBR-BT, MBE-TR, MBR-TR. Fo that, we divided running time by the running time of the base algorithm (i.e. the algorithm which does full elimination once and just computes partition function).</p>
+<p>Results are below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]:</span>
+    <span class="n">base_algo</span> <span class="o">=</span> <span class="n">algo</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">base_results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">base_algo</span><span class="p">})</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+    <span class="n">h_to_base_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">base_results</span><span class="p">}</span>
+    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+
+    <span class="n">h_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_to_time</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="n">num_vars_range</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h_range</span><span class="p">)</span>
+    <span class="n">time_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">/</span><span class="n">h_to_base_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax1</span> <span class="k">if</span> <span class="s1">&#39;BT&#39;</span> <span class="ow">in</span> <span class="n">algo</span> <span class="k">else</span> <span class="n">ax2</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Running time / Base algorithm running time&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Binary Tree Elimination algorithms&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y=2x&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Running time / Base algorithm running time&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Trivial Reduction algorithms&#39;</span><span class="p">)</span>
+
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/experiments_marginal_probabilities_9_0.png" src="../_images/experiments_marginal_probabilities_9_0.png" />
+</div>
+</div>
+<p>For Trivial Reduction algorithms, as expected, relative running time is close to line y=2x, that is for model with N variables we call base algorithm <span class="math notranslate nohighlight">\(2 \times N\)</span> times (2 because variables are binary).</p>
+<p>For Binary Tree Elimination we got results even better then expected (if we ignore results for small models). We expected it to be like <span class="math notranslate nohighlight">\(y=\log_2(x)\)</span>, and <span class="math notranslate nohighlight">\(log_2(13 \times 30) \approx 9\)</span>, but it is almost constant (2 for MBE-BT and 3 dor MBR-BT).</p>
+<p>This can be explained as follows: as model becomes smaller, eliminations are cheaper, and most eliminations are done on small models. For example, <span class="math notranslate nohighlight">\(n (log_2(n)-1)\)</span> eliminations are done on model having less than <span class="math notranslate nohighlight">\(n/2\)</span> variables.</p>
+</div>
+<div class="section" id="Experiment-2:-UAI-datasets-with-varying-ibound.">
+<h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this headline">¶</a></h3>
+<p>We took 10 linkage datasets from UAI competitions. For each of them ran:</p>
+<ul class="simple">
+<li><p>MBE-BT with ibound in range [4, 15].</p></li>
+<li><p>MBR-BT with ibound in range [4, 11].</p></li>
+<li><p>BP</p></li>
+<li><p>TRWBP</p></li>
+</ul>
+<p>Sometimes BP failed. Sometimes MBR-BT failed (<em>investigate: might be a bug in implemntation)</em>. For these cases data is missing on the chart.</p>
+<p>Results are shown on charts below. In 6 of 8 cases MBE-BT outperforms both PB and TRWBP in accuracy.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_uai_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;BP&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_renormalization_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown algorithm: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s2">&quot;log_pf_error&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
+      <span class="s2">&quot;mean_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">&quot;max_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">&quot;mean_kl_div&quot;</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">run_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># Mini-Bucket Elimination + Binary Tree order.</span>
+    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+    <span class="n">mbe_mkld</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ibound&#39;</span><span class="p">:</span> <span class="n">ibound</span>
+        <span class="p">})</span>
+        <span class="n">mbe_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbe_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Mini-Bucket Renormalization + Binary Tree order.</span>
+    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">mbr_mkld</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ibound&#39;</span><span class="p">:</span> <span class="n">ibound</span>
+        <span class="p">})</span>
+        <span class="n">mbr_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbr_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+
+    <span class="c1"># Belief Propagation.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span>
+    <span class="p">})</span>
+    <span class="k">if</span> <span class="s1">&#39;mean_kl_div&#39;</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Tree-Reweighted Belief Propagation.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;TRWBP&#39;</span>
+    <span class="p">})</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TRWBP&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ibound&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Comparing inference algorithms</span><span class="se">\n</span><span class="s1">Dataset: &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linkage_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">19</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">run_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/experiments_marginal_probabilities_12_0.png" src="../_images/experiments_marginal_probabilities_12_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing to InferLO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="bucket_renormalization.html" class="btn btn-neutral float-left" title="Bucket renormalization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, InferLO developers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -96,6 +96,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/marginal_probabilities.html">Marginal Probabilities with Elimination algorithms</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Developer documentation</span></p>
 <ul>
@@ -171,12 +172,14 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">wget</span>
 
 <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GenericGraphModel</span>
 <span class="kn">from</span> <span class="nn">inferlo.datasets.uai_reader</span> <span class="kn">import</span> <span class="n">UaiReader</span>
+<span class="kn">from</span> <span class="nn">inferlo.datasets.uai_writer</span> <span class="kn">import</span> <span class="n">UaiWriter</span>
 
 <span class="n">REPO_URL</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/&#39;</span>
 <span class="n">UAI_PROB_URL</span> <span class="o">=</span> <span class="n">REPO_URL</span> <span class="o">+</span> <span class="s1">&#39;MAR_prob&#39;</span>
@@ -238,12 +241,20 @@
 <span class="p">}</span>
 
 
-<span class="nd">@dataclass</span>
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../generated/inferlo.datasets.Dataset.html#inferlo.datasets.Dataset">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Dataset containing GM and true answers.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Dataset containing GM and true answers.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">        * ``model`` - Graphical model.</span>
+<span class="sd">        * ``true_marginals`` - known true exact marginal probabilities for all variables.</span>
+<span class="sd">        * ``true_log_pf`` - known true exact natural logarithm of the partition function.</span>
+<span class="sd">        * ``name`` - name of the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span>
     <span class="n">true_marginals</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span>
     <span class="n">true_log_pf</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
 <div class="viewcode-block" id="DatasetLoader"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader">[docs]</a><span class="k">class</span> <span class="nc">DatasetLoader</span><span class="p">:</span>
@@ -260,7 +271,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span> <span class="o">=</span> <span class="n">UaiReader</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;custom&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span> <span class="o">=</span> <span class="n">UaiReader</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uai_writer</span> <span class="o">=</span> <span class="n">UaiWriter</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DatasetLoader.load_file_"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_file_">[docs]</a>    <span class="k">def</span> <span class="nf">load_file_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url_prefix</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Loads file from the web to local file.</span>
@@ -295,7 +310,37 @@
         <span class="n">marginals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span><span class="o">.</span><span class="n">read_marginals</span><span class="p">(</span><span class="n">mar_file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
                        <span class="n">true_marginals</span><span class="o">=</span><span class="n">marginals</span><span class="p">,</span>
-                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">UAI_PF</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></div></div>
+                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">UAI_PF</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetLoader.save_custom_dataset"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.save_custom_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">save_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves dataset locally.&quot;&quot;&quot;</span>
+        <span class="c1"># Store model.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uai_writer</span><span class="o">.</span><span class="n">write_model</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+                                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Store true answers.</span>
+        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.ans.npy&#39;</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;true_marginals&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">,</span> <span class="s1">&#39;true_log_pf&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">}</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ans_path</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetLoader.load_custom_dataset"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_custom_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">load_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Loads previously saved datataset.&quot;&quot;&quot;</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span><span class="o">.</span><span class="n">read_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+
+        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.ans.npy&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ans_path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>  <span class="c1"># type: Dict</span>
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">&#39;true_log_pf&#39;</span><span class="p">],</span>
+                       <span class="n">true_marginals</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">&#39;true_marginals&#39;</span><span class="p">],</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetLoader.custom_dataset_exists"><a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.custom_dataset_exists">[docs]</a>    <span class="k">def</span> <span class="nf">custom_dataset_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if custom dataset exists.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>
