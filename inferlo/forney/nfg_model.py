@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable
 
 import networkx as nx
-import numpy as np
 
 from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
 from inferlo.base.variable import Variable
@@ -81,9 +80,6 @@ class NormalFactorGraphModel(GraphModel):
             return infer_edge_elimination(self)
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
-
-    def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
-        raise NotImplemented
 
     def get_factors(self) -> Iterable[Factor]:
         return self.factors

@@ -50,18 +50,6 @@ class GraphModel(abc.ABC):
         return len(self.variables)
 
     @abc.abstractmethod
-    def infer(self, algorithm='auto', **kwargs):
-        """Performs inference."""
-
-    @abc.abstractmethod
-    def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
-        """Finds the most probable state."""
-
-    def sample(self, num_samples: int, algorithm='auto',
-               **kwargs) -> np.ndarray:
-        """Generates samples."""
-
-    @abc.abstractmethod
     def get_factors(self) -> Iterable[Factor]:
         """Returns all factors."""
 

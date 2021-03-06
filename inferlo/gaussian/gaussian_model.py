@@ -57,4 +57,5 @@ class GaussianModel(GenericGraphModel):
                     self.add_factor(factor_J)
 
     def infer(self, **kwargs):
+        """Performs inference for the model."""
         return gaussian_BP(self, **kwargs)

@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable, List
 
-import numpy as np
-
-from inferlo.base.variable import Variable
 from inferlo.base.domain import RealDomain
 from inferlo.base.graph_model import GraphModel
+from inferlo.base.variable import Variable
 
 if TYPE_CHECKING:
     from inferlo.base.factors.factor import Factor
@@ -35,14 +33,6 @@ class GenericGraphModel(GraphModel):
     def get_factors(self) -> Iterable[Factor]:
         """Returns all factors."""
         return self.factors
-
-    def infer(self, algorithm='auto', **kwargs):
-        """Performs inference."""
-        raise NotImplemented
-
-    def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
-        """Finds most probable state."""
-        raise NotImplemented
 
     @staticmethod
     def from_model(model: GraphModel):
