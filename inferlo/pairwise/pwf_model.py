@@ -24,6 +24,7 @@ from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
 from .utils import decode_state, encode_state, decode_all_states
+from .. import Variable
 from ..generic.inference import belief_propagation
 from ..graphs import fast_dfs
 from ..graphs.fast_dfs import FastDfsResult
@@ -70,7 +71,9 @@ class PairWiseFiniteModel(GraphModel):
 
         Domain will consist of integers in range 0, 1, ... al_size - 1.
         """
-        super().__init__(size, DiscreteDomain.range(al_size))
+        super().__init__()
+        domain = DiscreteDomain.range(al_size)
+        self.variables = [Variable(idx, domain) for idx in range(size)]
 
         self.gr_size = size
         self.al_size = al_size

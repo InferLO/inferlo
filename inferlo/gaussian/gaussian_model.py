@@ -1,12 +1,16 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 from __future__ import annotations
-from functools import partial
+
 from collections import defaultdict
+from functools import partial
+
 import numpy as np
+
 from inferlo.base.domain import RealDomain
-from inferlo.base.generic_graph_model import GenericGraphModel
 from inferlo.base.factors.function_factor import FunctionFactor
+from inferlo.base.generic_graph_model import GenericGraphModel
+from inferlo.base.variable import Variable
 from .inference.gaussian_belief_propagation import gaussian_BP
 
 
@@ -30,11 +34,9 @@ class GaussianModel(GenericGraphModel):
     G = defaultdict(list)
     n = 0
 
-    def __init__(self, J: np.array, h: np.array, domain=None):
-        if domain is None:
-            domain = RealDomain()
+    def __init__(self, J: np.array, h: np.array):
         self.n = J.shape[0]
-        super().__init__(self.n, domain)
+        super().__init__(self.n, RealDomain())
         self.J = J
         self.h = h
 

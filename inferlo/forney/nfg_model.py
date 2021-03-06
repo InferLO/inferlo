@@ -8,6 +8,7 @@ import networkx as nx
 import numpy as np
 
 from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
+from inferlo.base.variable import Variable
 from inferlo.forney.edge_elimination import infer_edge_elimination
 
 if TYPE_CHECKING:
@@ -31,7 +32,8 @@ class NormalFactorGraphModel(GraphModel):
         :param num_variables: Number of variables in the model.
         :param domain: Default domain of each variable.
         """
-        super().__init__(num_variables, domain)
+        super().__init__()
+        self.variables = [Variable(idx, domain) for idx in range(num_variables)]
 
         # self.edges[i] -- two indices of factors, depending on i-th variable.
         self.edges = [[] for _ in range(num_variables)]
@@ -115,8 +117,7 @@ class NormalFactorGraphModel(GraphModel):
                 new_vars_count += factors_num
 
         # Create new model.
-        new_model = NormalFactorGraphModel(new_vars_count,
-                                           original_model._default_domain)
+        new_model = NormalFactorGraphModel(new_vars_count, None)
 
         # Clone factors, change reference to the model.
         new_factors = [f.clone(new_model) for f in old_factors]

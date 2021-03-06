@@ -19,32 +19,23 @@ if TYPE_CHECKING:
 class GraphModel(abc.ABC):
     """Abstract class representing any graphical model."""
 
-    def __init__(self, num_variables: int, domain: Domain):
-        """
-        :param num_variables: Number of variables in the model.
-        :param domain: Default domain of each variable.
-        """
-        self.num_variables = num_variables
-        self._default_domain = domain
-        self._vars = dict()
+    def __init__(self):
+        self.variables = [] # type: List[Variable]
 
     def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
-        if not 0 <= idx < self.num_variables:
-            raise IndexError(
-                "index %d is out of bounds for random vector of size %d" % (
-                    idx, self.num_variables))
-        if idx not in self._vars:
-            v = Variable(self, idx, self._default_domain)
-            self._vars[idx] = v
-        return self._vars[idx]
+        return self.variables[idx]
 
     def get_variables(self) -> List[Variable]:
         """Returns all variables."""
-        return [self.get_variable(i) for i in range(self.num_variables)]
+        return self.variables
 
     def __getitem__(self, idx: int) -> Variable:
         return self.get_variable(idx)
+
+    @property
+    def num_variables(self):
+        return len(self.variables)
 
     @abc.abstractmethod
     def add_factor(self, factor: Factor):
@@ -55,7 +46,7 @@ class GraphModel(abc.ABC):
         return self
 
     def __len__(self):
-        return self.num_variables
+        return len(self.variables)
 
     @abc.abstractmethod
     def infer(self, algorithm='auto', **kwargs):

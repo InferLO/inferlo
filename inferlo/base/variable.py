@@ -13,7 +13,6 @@ class Variable:
 
     def __init__(
             self,
-            model: GraphModel,
             index: int,
             domain: Domain):
         """Initializies a random variable.
@@ -22,7 +21,6 @@ class Variable:
         :param index: Index (position) of this variable in a model.
         :param domain: Domain of this variable (set of values it can take).
         """
-        self.model = model
         self.index = index
         self.domain = domain
         self.name = 'x_%d' % index
