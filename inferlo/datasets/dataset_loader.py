@@ -24,6 +24,8 @@ UAI_PF = {
     'CSP_11.uai': 13.563,
     'CSP_12.uai': 16.4536,
     'CSP_13.uai': 15.3037,
+    'Grids_11.uai': 169.408,
+    'ObjectDetection_11.uai': -74.8804,
     'Promedus_11.uai': -8.39145,
     'Promedus_12.uai': -3.16462,
     'Promedus_13.uai': -4.50703,
