@@ -154,5 +154,6 @@ Helpers to load public datasets with graphical models.
 .. autosummary::
     :toctree: generated/
 
+    inferlo.datasets.Dataset
     inferlo.datasets.DatasetLoader
     inferlo.datasets.UaiReader

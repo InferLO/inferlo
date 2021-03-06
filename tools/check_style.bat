@@ -1,1 +1,0 @@
-pycodestyle inferlo && pylint --rcfile=tools/pylintrc.txt inferlo

@@ -97,9 +97,11 @@ class BucketRenormalization(MiniBucketElimination):
         max_log = np.max(flattened_factor_log_values)
         if np.isnan(max_log):
             warnings.warn('Got nan in flattened_factor_log_values')
-            np.nan_to_num(flattened_factor_log_values, copy=False, nan=-1e9)
+            np.nan_to_num(flattened_factor_log_values, copy=False, nan=-np.inf)
             max_log = np.max(flattened_factor_log_values)
-        assert np.isfinite(max_log)
+        if not np.isfinite(max_log):
+            warnings.warn('Got infinite value in flattened_factor_log_values')
+            max_log = 0.0
         flattened_factor_values = np.exp(flattened_factor_log_values - max_log)
 
         U, _, _ = randomized_svd(flattened_factor_values, n_components=1)
