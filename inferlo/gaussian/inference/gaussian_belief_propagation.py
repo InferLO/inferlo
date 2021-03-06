@@ -28,9 +28,8 @@ def gaussian_BP_iteration(model, J_delta, h_delta, J_wave, h_wave):
             old_h_delta = h_delta[i][j]
             new_J_wave[i][j] = J_wave_i - J_delta[j][i]
             new_h_wave[i][j] = h_wave_i - h_delta[j][i]
-            new_J_delta[i][j] = -((model.J[i][j])**2) / new_J_wave[i][j]
-            new_h_delta[i][j] =\
-                -(model.J[i][j] * new_h_wave[i][j]) / new_J_wave[i][j]
+            new_J_delta[i][j] = -((model.J[i][j]) ** 2) / new_J_wave[i][j]
+            new_h_delta[i][j] = -(model.J[i][j] * new_h_wave[i][j]) / new_J_wave[i][j]
             diff1 = abs(old_J_wave - new_J_wave[i][j])
             diff2 = abs(old_h_wave - new_h_wave[i][j])
             diff3 = abs(old_J_delta - new_J_delta[i][j])
@@ -64,7 +63,7 @@ def gaussian_BP(model, tol=1e-9, max_iter=1e5):
     t = 0
 
     while t < max_iter:
-        cur_diff, J_delta, h_delta, J_wave, h_wave =\
+        cur_diff, J_delta, h_delta, J_wave, h_wave = \
             gaussian_BP_iteration(model, J_delta, h_delta, J_wave, h_wave)
         if cur_diff < tol:
             break

@@ -111,8 +111,7 @@ class MiniBucketElimination:
         working_factorss = [[fac] for fac in renormalized_model.factors]
         eliminated_variables = []
         for t in range(len(elimination_order)):
-            uneliminated_variables = sorted(
-                set(self.model.variables) - set(eliminated_variables))
+            uneliminated_variables = sorted(set(self.model.variables) - set(eliminated_variables))
             candidate_mini_buckets_for_ = dict()
 
             bucket_for_ = {cand_var: [] for cand_var in uneliminated_variables}
@@ -128,8 +127,7 @@ class MiniBucketElimination:
                     mini_bucket = None
                     for mb in candidate_mini_buckets_for_[cand_var]:
                         eliminated = eliminated_variables + [cand_var]
-                        if self.get_bucket_size(
-                                mb + [facs], eliminated=eliminated) < ibound:
+                        if self.get_bucket_size(mb + [facs], eliminated=eliminated) < ibound:
                             mini_bucket = mb
                             break
 
@@ -139,9 +137,8 @@ class MiniBucketElimination:
                         candidate_mini_buckets_for_[cand_var].append([facs])
 
             if use_min_fill:
-                var, mini_buckets = min(
-                    candidate_mini_buckets_for_.items(), key=lambda x: len(
-                        x[1]))
+                var, mini_buckets = min(candidate_mini_buckets_for_.items(),
+                                        key=lambda x: len(x[1]))
                 elimination_order.append(var)
             else:
                 var = elimination_order[t]
@@ -149,13 +146,11 @@ class MiniBucketElimination:
 
             eliminated_variables.append(var)
             mini_buckets.sort(
-                key=lambda mb: self.get_bucket_size(
-                    mb, eliminated=eliminated_variables))
+                key=lambda mb: self.get_bucket_size(mb, eliminated=eliminated_variables))
 
             remove_idx = []
             for working_facs_idx, working_facs in enumerate(working_factorss):
-                if var in self._get_variables_in(
-                        [[fac] for fac in working_facs]):
+                if var in self._get_variables_in([[fac] for fac in working_facs]):
                     remove_idx.append(working_facs_idx)
 
             for i in reversed(sorted(remove_idx)):
@@ -167,8 +162,7 @@ class MiniBucketElimination:
 
                 replicated_var = var + "_" + str(i)
                 variables_replicated_from_[var].append(replicated_var)
-                factors_adj_to_[replicated_var] = [fac for fac in mb_facs if
-                                                   var in fac.variables]
+                factors_adj_to_[replicated_var] = [fac for fac in mb_facs if var in fac.variables]
 
         for var in elimination_order:
             for replicated_var in variables_replicated_from_[var]:

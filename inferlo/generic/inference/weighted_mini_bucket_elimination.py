@@ -37,8 +37,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             for var in reversed(self.elimination_order):
                 for rvar in self.variables_replicated_from_[var]:
                     if self.variable_upper_to_[rvar]:
-                        self._backward_pass_for_(self.variable_upper_to_[rvar],
-                                                 rvar)
+                        self._backward_pass_for_(self.variable_upper_to_[rvar], rvar)
 
         for t in range(max_iter):
             if verbose:
@@ -63,8 +62,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             if update_weight:
                 self._update_holder_weights_for_(var)
             if update_reparam:
-                reparam_converge_flag = self._update_reparameterization_for_(
-                    var)
+                reparam_converge_flag = self._update_reparameterization_for_(var)
                 if not reparam_converge_flag:
                     converge_flag = False
 
@@ -76,16 +74,14 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             if update_weight:
                 self._update_holder_weights_for_(var)
             if update_reparam:
-                reparam_converge_flag = self._update_reparameterization_for_(
-                    var)
+                reparam_converge_flag = self._update_reparameterization_for_(var)
                 if not reparam_converge_flag:
                     converge_flag = False
                     # print(converge_flag)
 
             for rvar in self.variables_replicated_from_[var]:
                 if self.variable_upper_to_[rvar]:
-                    self._backward_pass_for_(self.variable_upper_to_[rvar],
-                                             rvar)
+                    self._backward_pass_for_(self.variable_upper_to_[rvar], rvar)
 
         return converge_flag
 
@@ -122,14 +118,11 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
     def _backward_pass_for_(self, variable, lower_variable):
         message = product_over_(self.factor_upper_to_[variable],
                                 *self._messages_to_(variable))
-        message.pow(
-            self.holder_weights_for_[lower_variable] /
-            self.holder_weights_for_[variable])
+        message.pow(self.holder_weights_for_[lower_variable] / self.holder_weights_for_[variable])
         message.div(self.messages[(lower_variable, variable)])
 
         lower_upper_factor = self.factor_upper_to_[lower_variable]
-        variables_to_marginalize = list(
-            set(message.variables) - set(lower_upper_factor.variables))
+        variables_to_marginalize = list(set(message.variables) - set(lower_upper_factor.variables))
         message.marginalize(
             variables_to_marginalize,
             operator="weighted_sum",
@@ -170,8 +163,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
         for rvar in self.variables_replicated_from_[variable]:
             belief_from_rvar = self._get_marginals_upper_to(rvar)
             b_values = belief_from_rvar.values
-            cb_values = belief_from_rvar.normalize(
-                [rvar], inplace=False).values
+            cb_values = belief_from_rvar.normalize([rvar], inplace=False).values
 
             b_values.ravel()
             cb_values.ravel()
@@ -179,14 +171,12 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
             entropy_for_[rvar] = -np.sum(
                 b_values[index_to_keep] * np.log(cb_values[index_to_keep]))
 
-            average_entropy += self.holder_weights_for_[rvar] * entropy_for_[
-                rvar]
+            average_entropy += self.holder_weights_for_[rvar] * entropy_for_[rvar]
 
         holder_weight_sum = 0.0
         for rvar in self.variables_replicated_from_[variable]:
             self.holder_weights_for_[rvar] *= np.exp(
-                -self.holder_weight_step_size * (
-                    entropy_for_[rvar] - average_entropy)
+                -self.holder_weight_step_size * (entropy_for_[rvar] - average_entropy)
             )
             holder_weight_sum += self.holder_weights_for_[rvar]
 
@@ -196,9 +186,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
     def _messages_to_(self, variable):
         if self.variable_upper_to_[variable]:
             upper_variable = self.variable_upper_to_[variable]
-            return [self.messages[
-                (upper_variable, variable)]] + self._upper_messages_to_(
-                variable)
+            return [self.messages[(upper_variable, variable)]] + self._upper_messages_to_(variable)
         else:
             return self._upper_messages_to_(variable)
 
