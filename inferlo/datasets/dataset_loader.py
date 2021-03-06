@@ -3,12 +3,14 @@
 import os
 from dataclasses import dataclass
 import tempfile
+from typing import Dict
 
 import numpy as np
 import wget
 
 from inferlo import GenericGraphModel
 from inferlo.datasets.uai_reader import UaiReader
+from inferlo.datasets.uai_writer import UaiWriter
 
 REPO_URL = 'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/'
 UAI_PROB_URL = REPO_URL + 'MAR_prob'
@@ -72,10 +74,18 @@ UAI_PF = {
 
 @dataclass
 class Dataset:
-    """Dataset containing GM and true answers."""
+    """Dataset containing GM and true answers.
+
+    Fields:
+        * ``model`` - Graphical model.
+        * ``true_marginals`` - known true exact marginal probabilities for all variables.
+        * ``true_log_pf`` - known true exact natural logarithm of the partition function.
+        * ``name`` - name of the dataset.
+    """
     model: GenericGraphModel
     true_marginals: np.array
     true_log_pf: float
+    name: str
 
 
 class DatasetLoader:
@@ -92,7 +102,11 @@ class DatasetLoader:
         self.data_dir = os.path.expanduser(data_dir)
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
+        self.custom_dir = os.path.join(self.data_dir, 'custom')
+        if not os.path.exists(self.custom_dir):
+            os.makedirs(self.custom_dir)
         self.uai_reader = UaiReader()
+        self.uai_writer = UaiWriter()
 
     def load_file_(self, url_prefix, file_name):
         """Loads file from the web to local file.
@@ -127,4 +141,34 @@ class DatasetLoader:
         marginals = self.uai_reader.read_marginals(mar_file)
         return Dataset(model=model,
                        true_marginals=marginals,
-                       true_log_pf=UAI_PF[dataset_name] * np.log(10))
+                       true_log_pf=UAI_PF[dataset_name] * np.log(10),
+                       name=dataset_name)
+
+    def save_custom_dataset(self, dataset):
+        """Saves dataset locally."""
+        # Store model.
+        self.uai_writer.write_model(dataset.model,
+                                    os.path.join(self.custom_dir, dataset.name + '.uai'))
+
+        # Store true answers.
+        ans_path = os.path.join(self.custom_dir, dataset.name + '.ans.npy')
+        ans = {'true_marginals': dataset.true_marginals, 'true_log_pf': dataset.true_log_pf}
+        np.save(ans_path, ans)
+
+    def load_custom_dataset(self, name: str) -> Dataset:
+        """Loads previously saved datataset."""
+        model_path = os.path.join(self.custom_dir, name + '.uai')
+        assert os.path.exists(model_path)
+        model = self.uai_reader.read_model(model_path)
+
+        ans_path = os.path.join(self.custom_dir, name + '.ans.npy')
+        assert os.path.exists(model_path)
+        ans = np.load(ans_path, allow_pickle=True).item()  # type: Dict
+        return Dataset(model=model,
+                       true_log_pf=ans['true_log_pf'],
+                       true_marginals=ans['true_marginals'],
+                       name=name)
+
+    def custom_dataset_exists(self, name: str):
+        """Checks if custom dataset exists."""
+        return os.path.exists(os.path.join(self.custom_dir, name + '.uai'))

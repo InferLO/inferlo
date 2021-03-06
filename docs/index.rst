@@ -24,6 +24,7 @@ Documentation
 
     experiments/inferlo_libdai.ipynb
     experiments/bucket_renormalization.ipynb
+    experiments/marginal_probabilities.ipynb
 	
 .. toctree::
     :maxdepth: 1
