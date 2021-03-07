@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from inferlo.base.factors.factor import Factor
 
 
-class GenericGraphModel(GraphModel):
+class DiscreteModel(GraphModel):
     """Graphical model in the most general form.
 
     Explicitly specified by list of factors.
@@ -38,7 +38,7 @@ class GenericGraphModel(GraphModel):
     def from_model(model: GraphModel):
         """Creates copy of a given model."""
         n = model.num_variables
-        new_model = GenericGraphModel(n)
+        new_model = DiscreteModel(n)
         for i in range(n):
             new_model.get_variable(i).domain = model.get_variable(i).domain
         for old_factor in model.get_factors():
@@ -47,4 +47,4 @@ class GenericGraphModel(GraphModel):
 
     def copy(self):
         """Makes a copy of itself."""
-        return GenericGraphModel.from_model(self)
+        return DiscreteModel.from_model(self)
