@@ -8,7 +8,7 @@ import numpy as np
 from networkx import Graph, nx
 
 from inferlo.base.domain import DiscreteDomain
-from inferlo.base.factors import DiscreteFactor
+from inferlo.base.factors import OldDiscreteFactor
 from inferlo.base.graph_model import GraphModel
 from .bruteforce import (
     infer_bruteforce,
@@ -217,14 +217,14 @@ class PairWiseFiniteModel(GraphModel):
 
     def add_factor(self, factor: Factor):
         """Adds a factor."""
-        if isinstance(factor, DiscreteFactor):
+        if isinstance(factor, OldDiscreteFactor):
             self._add_discrete_factor(factor)
         elif factor.is_discrete():
-            self._add_discrete_factor(DiscreteFactor.from_factor(factor))
+            self._add_discrete_factor(OldDiscreteFactor.from_factor(factor))
         else:
             raise ValueError("Can't add non-discrete factor.")
 
-    def _add_discrete_factor(self, factor: DiscreteFactor):
+    def _add_discrete_factor(self, factor: OldDiscreteFactor):
         assert factor.model == self
         with np.errstate(divide='ignore'):
             log_factor = np.log(factor.values)
@@ -242,9 +242,9 @@ class PairWiseFiniteModel(GraphModel):
         factors = []
         for i in range(self.gr_size):
             if np.linalg.norm(self.field[i, :]) > 1e-9:
-                factors.append(DiscreteFactor(self, [i], self.field[i, :]))
+                factors.append(OldDiscreteFactor(self, [i], self.field[i, :]))
         for u, v in self.edges:
-            factor = DiscreteFactor(self, [u, v], self.get_interaction_matrix(u, v))
+            factor = OldDiscreteFactor(self, [u, v], self.get_interaction_matrix(u, v))
             if self.num_variables < 10:
                 factor.name = 'J%d%d' % (u, v)
             else:
@@ -490,9 +490,9 @@ class PairWiseFiniteModel(GraphModel):
 
         new_model = PairWiseFiniteModel(original_model.num_variables, al_size)
         for old_factor in old_factors:
-            values = DiscreteFactor.from_factor(old_factor).values
+            values = OldDiscreteFactor.from_factor(old_factor).values
             values = pad_tensor(values)
-            new_factor = DiscreteFactor.from_values(new_model, old_factor.var_idx, values)
+            new_factor = OldDiscreteFactor.from_values(new_model, old_factor.var_idx, values)
             new_model.add_factor(new_factor)
 
         return new_model

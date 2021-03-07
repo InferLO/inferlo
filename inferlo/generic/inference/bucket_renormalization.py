@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.utils.extmath import randomized_svd
 
 from .bucket_elimination import BucketElimination
-from .factor import Factor, default_factor_name, product_over_
+from inferlo.base.factors.discrete_factor import DiscreteFactor, default_factor_name, product_over_
 from .graphical_model import GraphicalModel
 from .mini_bucket_elimination import MiniBucketElimination
 
@@ -55,7 +55,7 @@ class BucketRenormalization(MiniBucketElimination):
                     exception_variables=[var, mb_var],
                 )
                 new_mb_projector = self._get_svd_projector(marginal_factor, mb_var)
-                new_projector = Factor(
+                new_projector = DiscreteFactor(
                     name=default_factor_name(),
                     variables=[var],
                     log_values=new_mb_projector.log_values,
@@ -81,7 +81,7 @@ class BucketRenormalization(MiniBucketElimination):
 
         return logZ
 
-    def _get_svd_projector(self, factor, variable):
+    def _get_svd_projector(self, factor, variable) -> DiscreteFactor:
         factor.transpose_by_(
             [variable, *sorted(set(factor.variables) - set([variable]))])
         flattened_factor_log_values = factor.log_values.reshape(
@@ -108,5 +108,5 @@ class BucketRenormalization(MiniBucketElimination):
         u[u < 0] = 0.0
         u /= np.linalg.norm(u)
 
-        return Factor(name=default_factor_name(), variables=[variable],
-                      values=u)
+        return DiscreteFactor(name=default_factor_name(), variables=[variable],
+                              values=u)

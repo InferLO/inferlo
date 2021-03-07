@@ -6,7 +6,7 @@ from typing import Dict, Tuple, List
 
 import numpy as np
 
-from .factor import Factor, product_over_, entropy
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_, entropy
 from .graphical_model import GraphicalModel
 from ... import InferenceResult
 
@@ -28,10 +28,10 @@ class BeliefPropagation:
         self.factors_adj_to_ = {var: self.model.get_adj_factors(var) for var in
                                 self.model.variables}
 
-        self.messages = dict()  # type: Dict[Tuple, Factor]
+        self.messages = dict()  # type: Dict[Tuple, DiscreteFactor]
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(fac, var)] = Factor.initialize_with_(
+                self.messages[(fac, var)] = DiscreteFactor.initialize_with_(
                     _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )
@@ -39,7 +39,7 @@ class BeliefPropagation:
 
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(var, fac)] = Factor.initialize_with_(
+                self.messages[(var, fac)] = DiscreteFactor.initialize_with_(
                     _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )

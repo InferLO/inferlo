@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from inferlo.base.factors import DiscreteFactor
+from inferlo.base.factors import OldDiscreteFactor
 
 if TYPE_CHECKING:
     from inferlo.forney.nfg_model import NormalFactorGraphModel
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 # TODO: Implement LogSumExp trick and return log pf to avoid overflow.
 # TODO: Support convolution over several variables.
 
-def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
+def convolve_factor(factor: OldDiscreteFactor, var: int) -> OldDiscreteFactor:
     """Convolves (integrates) factor over variable.
 
     Result is factor of all variables except ``var``, which at every point
@@ -32,8 +32,8 @@ def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
 # TODO: delegate to factors' product and marginalize?
 
 
-def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
-                         var: int) -> DiscreteFactor:
+def convolve_two_factors(factor1: OldDiscreteFactor, factor2: OldDiscreteFactor,
+                         var: int) -> OldDiscreteFactor:
     """Convolves two factors over variable.
 
     Result is factor depending on all variables of first and second factor
@@ -64,7 +64,7 @@ def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
     subscripts = vars1_sym + ',' + vars2_sym + '->' + new_vars_sym
 
     new_values = np.einsum(subscripts, factor1.values, factor2.values)
-    return DiscreteFactor.from_values(factor1.model, new_vars, new_values)
+    return OldDiscreteFactor.from_values(factor1.model, new_vars, new_values)
 
 
 def infer_edge_elimination(model: NormalFactorGraphModel):
@@ -85,7 +85,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
     :return: Partition function.
     """
     model.check_built()
-    factors = [DiscreteFactor.from_factor(f) for f in model.factors]
+    factors = [OldDiscreteFactor.from_factor(f) for f in model.factors]
     edges = np.array(model.edges)
     # Don't reference model from this point to ensure we don't modify it.
 

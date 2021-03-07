@@ -5,7 +5,7 @@ import numpy as np
 
 from inferlo import Variable
 from inferlo.base.domain import DiscreteDomain
-from inferlo.base.factors.discrete_factor import DiscreteFactor
+from inferlo.base.factors.old_discrete_factor import OldDiscreteFactor
 from inferlo.base.discrete_model import DiscreteModel
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 
@@ -228,7 +228,7 @@ def random_discrete_model(num_variables=10,
                                    replace=False)
         values_shape = [model.get_variable(i).domain.size() for i in var_idx]
         values = np.random.random(size=values_shape)
-        factor = DiscreteFactor(model, var_idx, values)
+        factor = OldDiscreteFactor(model, var_idx, values)
         model.add_factor(factor)
 
     # Ensure all variables are in some factor.
@@ -236,6 +236,6 @@ def random_discrete_model(num_variables=10,
     for var_id in range(num_variables):
         if var_id not in vars_in_factors:
             size = model.get_variable(var_id).domain.size()
-            model.add_factor(DiscreteFactor(model, [var_id], np.ones(size)))
+            model.add_factor(OldDiscreteFactor(model, [var_id], np.ones(size)))
 
     return model

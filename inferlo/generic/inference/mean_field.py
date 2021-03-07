@@ -5,7 +5,7 @@ from copy import copy
 
 import numpy as np
 
-from .factor import Factor, product_over_, entropy
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_, entropy
 from .graphical_model import GraphicalModel
 
 
@@ -33,7 +33,7 @@ class MeanField:
 
         self.mean_fields = {}
         for var in self.model.variables:
-            self.mean_fields[var] = Factor.initialize_with_(
+            self.mean_fields[var] = DiscreteFactor.initialize_with_(
                 _default_message_name(),
                 [var],
                 init_np_func,
@@ -72,9 +72,9 @@ class MeanField:
     def _update_mean_fields(self):
         variable_order = np.random.permutation(self.model.variables)
         for var in variable_order:
-            next_mean_field = Factor.full_like_(self.mean_fields[var], 0.0)
+            next_mean_field = DiscreteFactor.full_like_(self.mean_fields[var], 0.0)
             for fac in self.model.get_adj_factors(var):
-                tmp = Factor(
+                tmp = DiscreteFactor(
                     name="tmp",
                     variables=[var],
                     values=np.ones(self.model.get_cardinality_for_(var)),

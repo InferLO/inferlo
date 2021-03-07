@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Iterable
 
 import networkx as nx
 
-from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
+from inferlo.base import GraphModel, OldDiscreteFactor, FunctionFactor
 from inferlo.base.variable import Variable
 from inferlo.forney.edge_elimination import infer_edge_elimination
 
@@ -123,7 +123,7 @@ class NormalFactorGraphModel(GraphModel):
             const_factor = FunctionFactor(new_model, [var_id], lambda x: 1)
             const_factor.name = '1'
             if original_model[var_id].domain.is_discrete():
-                return DiscreteFactor.from_factor(const_factor)
+                return OldDiscreteFactor.from_factor(const_factor)
             else:
                 return const_factor
 
@@ -133,7 +133,7 @@ class NormalFactorGraphModel(GraphModel):
                                           lambda x: x[1:] == x[:-1])
             delta_factor.name = '='
             if original_model[var_ids[0]].domain.is_discrete():
-                return DiscreteFactor.from_factor(delta_factor)
+                return OldDiscreteFactor.from_factor(delta_factor)
             else:
                 return delta_factor
 

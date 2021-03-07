@@ -4,13 +4,13 @@ from typing import Callable, List
 
 import numpy as np
 
-from inferlo import GraphModel, DiscreteFactor, InferenceResult, \
+from inferlo import GraphModel, OldDiscreteFactor, InferenceResult, \
     DiscreteModel
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .binary_tree_elimination import BinaryTreeElimination
 from .bucket_elimination import BucketElimination, eliminate_variables
 from .bucket_renormalization import BucketRenormalization
-from .factor import Factor
+from inferlo.base.factors.discrete_factor import DiscreteFactor
 from .graphical_model import GraphicalModel
 from .mean_field import MeanField
 from .mini_bucket_elimination import MiniBucketElimination
@@ -28,13 +28,13 @@ def _convert(inferlo_model: GraphModel) -> GraphicalModel:
 
     factors = list(inferlo_model.get_factors())
     for factor_id in range(len(factors)):
-        factor = DiscreteFactor.from_factor(factors[factor_id])
+        factor = OldDiscreteFactor.from_factor(factors[factor_id])
         factor_variables = []
         for var_id in factor.var_idx:
             factor_variables.append("V%d" % var_id)
-        model.add_factor(Factor(name="F%d" % factor_id,
-                                variables=factor_variables,
-                                values=factor.values))
+        model.add_factor(DiscreteFactor(name="F%d" % factor_id,
+                                        variables=factor_variables,
+                                        values=factor.values))
     return model
 
 
@@ -304,7 +304,7 @@ def mini_bucket_elimination_bt(
                                      ibound=ibound,
                                      elimination_order=order)
         algo.run()
-        algo.working_model.add_factor(Factor("", [], log_values=np.array(algo.base_logZ)))
+        algo.working_model.add_factor(DiscreteFactor("", [], log_values=np.array(algo.base_logZ)))
         return algo.working_model
 
     bt_algo = BinaryTreeElimination(eliminate)
@@ -326,7 +326,7 @@ def mini_bucket_renormalization_bt(
                                         elimination_order=order)
         eliminated_model = eliminate_variables(br_algo.renormalized_model,
                                                br_algo.renormalized_elimination_order)
-        eliminated_model.add_factor(Factor("", [], log_values=np.array(br_algo.base_logZ)))
+        eliminated_model.add_factor(DiscreteFactor("", [], log_values=np.array(br_algo.base_logZ)))
         return eliminated_model
 
     bt_algo = BinaryTreeElimination(eliminate)

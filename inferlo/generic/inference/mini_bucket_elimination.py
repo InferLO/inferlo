@@ -7,7 +7,7 @@ from typing import List, Optional
 
 import numpy as np
 
-from .factor import Factor, product_over_
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_
 from .graphical_model import GraphicalModel
 
 
@@ -41,7 +41,7 @@ class MiniBucketElimination:
                               self.renormalized_model.variables}
         variables_lower_to_ = {var: [] for var in
                                self.renormalized_model.variables}
-        factor_upper_to_ = {var: Factor.scalar(1.0) for var in
+        factor_upper_to_ = {var: DiscreteFactor.scalar(1.0) for var in
                             self.renormalized_model.variables}
         upper_candidate_for_ = {var: set() for var in
                                 self.renormalized_model.variables}
@@ -237,7 +237,7 @@ class MiniBucketElimination:
         else:
             return []
 
-    def get_bucket_size(self, bucket: List[Factor], eliminated=None):
+    def get_bucket_size(self, bucket: List[DiscreteFactor], eliminated=None):
         """Counts variables referenced by factors in given bucket."""
         if eliminated is None:
             eliminated = []

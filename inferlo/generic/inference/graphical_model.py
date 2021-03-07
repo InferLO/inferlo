@@ -5,7 +5,7 @@ from typing import List
 
 import numpy as np
 
-from .factor import product_over_, Factor
+from inferlo.base.factors.discrete_factor import product_over_, DiscreteFactor
 
 
 class GraphicalModel:
@@ -15,7 +15,7 @@ class GraphicalModel:
     TODO(fedimser): use Inferlo's GraphModel instead.
     """
 
-    def __init__(self, variables: List[str], factors: List[Factor]):
+    def __init__(self, variables: List[str], factors: List[DiscreteFactor]):
         self.variables = variables
         self.factors = factors
 
@@ -87,7 +87,7 @@ class GraphicalModel:
     Factor related operations
     """
 
-    def add_factor(self, factor: Factor):
+    def add_factor(self, factor: DiscreteFactor):
         """Adds a factor."""
         if set(factor.variables) - \
                 set(factor.variables).intersection(set(self.variables)):

@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo import FunctionFactor, DiscreteFactor, RealDomain, GraphModel
+from inferlo import FunctionFactor, OldDiscreteFactor, RealDomain, GraphModel
 from inferlo.base import DiscreteDomain
 
 
@@ -14,7 +14,7 @@ def test_convert_from_function():
 
     factor1 = FunctionFactor(model, [0, 1, 3],
                              lambda x: (2 + x[0]) * (1 + np.sin(x[1])) * x[2])
-    factor2 = DiscreteFactor.from_factor(factor1)
+    factor2 = OldDiscreteFactor.from_factor(factor1)
 
     assert factor2.model == model
     assert factor2.var_idx == [0, 1, 3]

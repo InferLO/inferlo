@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0.
 import numpy as np
 
-from inferlo import DiscreteModel, DiscreteDomain, DiscreteFactor, Variable
+from inferlo import DiscreteModel, DiscreteDomain, OldDiscreteFactor, Variable
 
 
 class UaiReader():
@@ -59,9 +59,9 @@ class UaiReader():
             vals_count = self._next_int()
             vals = np.array(
                 [np.float64(self._next_token()) for _ in range(vals_count)])
-            factor = DiscreteFactor.from_flat_values(model,
-                                                     var_idx_list[factor_id],
-                                                     vals)
+            factor = OldDiscreteFactor.from_flat_values(model,
+                                                        var_idx_list[factor_id],
+                                                        vals)
             model.add_factor(factor)
 
         return model

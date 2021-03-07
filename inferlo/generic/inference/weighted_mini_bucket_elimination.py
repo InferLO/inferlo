@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
 
-from .factor import product_over_, Factor
+from inferlo.base.factors.discrete_factor import product_over_, DiscreteFactor
 from .graphical_model import GraphicalModel
 from .mini_bucket_elimination import MiniBucketElimination
 
@@ -152,7 +152,7 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
                 temp_log_val = (self.holder_weights_for_[rvar]) * (
                     -belief_from_[rvar].log_values + log_average_belief
                 )
-                temp = Factor("", [rvar], log_values=temp_log_val)
+                temp = DiscreteFactor("", [rvar], log_values=temp_log_val)
                 self.factor_upper_to_[rvar].product(temp)
 
         return converge_flag

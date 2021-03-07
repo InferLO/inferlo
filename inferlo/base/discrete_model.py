@@ -10,7 +10,7 @@ from inferlo.base.variable import Variable
 
 if TYPE_CHECKING:
     from inferlo.base.factors.factor import Factor
-    from inferlo.base.factors.discrete_factor import DiscreteFactor
+    from inferlo.base.factors.old_discrete_factor import OldDiscreteFactor
 
 
 class DiscreteModel(GraphModel):
@@ -22,7 +22,7 @@ class DiscreteModel(GraphModel):
     def __init__(self, variables: List[Variable]):
         super().__init__()
         self.variables = variables
-        self.factors = []  # type: List[DiscreteFactor]
+        self.factors = []  # type: List[OldDiscreteFactor]
 
     @staticmethod
     def create(num_variables: int, domain_size: int):

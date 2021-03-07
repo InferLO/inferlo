@@ -3,7 +3,7 @@
 import numpy as np
 
 from inferlo import (PairWiseFiniteModel, NormalFactorGraphModel,
-                     DiscreteDomain, DiscreteFactor)
+                     DiscreteDomain, OldDiscreteFactor)
 
 
 def test_create_from_model():
@@ -31,9 +31,9 @@ def test_inference_all_methods():
     all_methods = ['auto', 'edge_elimination']
 
     model = NormalFactorGraphModel(2, DiscreteDomain.binary())
-    model *= DiscreteFactor.from_flat_values(model, [0], [0, 1])
-    model *= DiscreteFactor.from_flat_values(model, [0, 1], [2, 3, 4, 5])
-    model *= DiscreteFactor.from_flat_values(model, [1], [6, 7])
+    model *= OldDiscreteFactor.from_flat_values(model, [0], [0, 1])
+    model *= OldDiscreteFactor.from_flat_values(model, [0, 1], [2, 3, 4, 5])
+    model *= OldDiscreteFactor.from_flat_values(model, [1], [6, 7])
     model.build()
 
     for method in all_methods:

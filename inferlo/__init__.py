@@ -3,7 +3,7 @@ from .base import (
     DiscreteDomain,
     Domain,
     Factor,
-    DiscreteFactor,
+    OldDiscreteFactor,
     FunctionFactor,
     DiscreteModel,
     GraphModel,
