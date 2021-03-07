@@ -3,9 +3,10 @@
 import networkx
 import numpy as np
 
+from inferlo import Variable
 from inferlo.base.domain import DiscreteDomain
-from inferlo.base.factors.discrete_factor import DiscreteFactor
-from inferlo.base.generic_graph_model import GenericGraphModel
+from inferlo.base.factors.old_discrete_factor import OldDiscreteFactor
+from inferlo.base.discrete_model import DiscreteModel
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 
 
@@ -196,11 +197,11 @@ def cross_potts_model(length=20, width=2, al_size=2, seed=0):
                                    seed=seed)
 
 
-def random_generic_model(num_variables=10,
-                         num_factors=10,
-                         max_domain_size=3,
-                         max_factor_size=3,
-                         seed=0) -> GenericGraphModel:
+def random_discrete_model(num_variables=10,
+                          num_factors=10,
+                          max_domain_size=3,
+                          max_factor_size=3,
+                          seed=0) -> DiscreteModel:
     """Generates random discrete graphical model of arbitrary structure.
 
     You can specify number of variables and factors. Variables will have
@@ -215,10 +216,11 @@ def random_generic_model(num_variables=10,
         variables in it will be chosen at random between 1 and this value.
     """
     np.random.seed(seed)
-    model = GenericGraphModel(num_variables=num_variables)
+    variables = []
     for var_id in range(num_variables):
         domain_size = 2 + np.random.randint(max_domain_size - 1)
-        model.get_variable(var_id).domain = DiscreteDomain.range(domain_size)
+        variables.append(Variable(var_id, DiscreteDomain.range(domain_size)))
+    model = DiscreteModel(variables)
     for _ in range(num_factors):
         factor_size = 1 + np.random.randint(max_factor_size)
         var_idx = np.random.choice(num_variables,
@@ -226,6 +228,14 @@ def random_generic_model(num_variables=10,
                                    replace=False)
         values_shape = [model.get_variable(i).domain.size() for i in var_idx]
         values = np.random.random(size=values_shape)
-        factor = DiscreteFactor(model, var_idx, values)
+        factor = OldDiscreteFactor(model, var_idx, values)
         model.add_factor(factor)
+
+    # Ensure all variables are in some factor.
+    vars_in_factors = set([var_id for f in model.factors for var_id in f.var_idx])
+    for var_id in range(num_variables):
+        if var_id not in vars_in_factors:
+            size = model.get_variable(var_id).domain.size()
+            model.add_factor(OldDiscreteFactor(model, [var_id], np.ones(size)))
+
     return model

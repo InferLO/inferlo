@@ -7,7 +7,7 @@ from .model_generators import (
     ising_model_on_graph,
     line_potts_model,
     pairwise_model_on_graph,
-    random_generic_model,
+    random_discrete_model,
     tree_potts_model,
 )
 from .test_utils import assert_results_close

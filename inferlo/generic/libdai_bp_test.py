@@ -6,7 +6,7 @@ import pytest
 from inferlo.generic.libdai_bp import BP
 from inferlo.interop import LibDaiInterop
 from inferlo.testing import (assert_results_close, tree_potts_model,
-                             grid_potts_model, random_generic_model)
+                             grid_potts_model, random_discrete_model)
 
 libdai = LibDaiInterop()
 
@@ -16,7 +16,7 @@ libdai = LibDaiInterop()
 @pytest.mark.skipif(not libdai.is_libdai_ready(),
                     reason="libDAI is not installed on the system.")
 def test_libdai_bp_regression():
-    model = random_generic_model(
+    model = random_discrete_model(
         num_variables=20,
         num_factors=20,
         max_domain_size=4,
@@ -66,7 +66,7 @@ def test_grid():
 
 def test_small_model():
     # Generate small random model and compare Z with bruteforce result.
-    model = random_generic_model(
+    model = random_discrete_model(
         num_variables=10,
         num_factors=4,
         max_domain_size=2,

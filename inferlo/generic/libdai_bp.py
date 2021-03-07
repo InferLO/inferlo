@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, List, Callable, Dict
 
 import numpy as np
 
-from inferlo.base.factors.discrete_factor import DiscreteFactor
+from inferlo.base.factors.old_discrete_factor import OldDiscreteFactor
 from inferlo.base import InferenceResult
 
 if TYPE_CHECKING:
@@ -123,20 +123,20 @@ class LDFactor:
         return LDFactor(model, var_idx, Prob.uniform(total_domain_size))
 
     @staticmethod
-    def from_inferlo_factor(f: DiscreteFactor):
+    def from_inferlo_factor(f: OldDiscreteFactor):
         """Converts inferlo.DiscreteFactor to LDFactor."""
         rev_perm = list(range(len(f.var_idx)))[::-1]
         prob = f.values.transpose(rev_perm).reshape(-1)
         return LDFactor(f.model, f.var_idx, Prob(prob))
 
-    def to_inferlo_factor(self) -> DiscreteFactor:
+    def to_inferlo_factor(self) -> OldDiscreteFactor:
         """Converts LDFactor to inferlo.DiscreteFactor."""
         sizes = [self.model.get_variable(i).domain.size()
                  for i in self.var_idx[::-1]]
         libdai_tensor = self.p.p.reshape(sizes)
         rev_perm = list(range(len(self.var_idx)))[::-1]
         inferlo_tensor = libdai_tensor.transpose(rev_perm)
-        return DiscreteFactor(self.model, self.var_idx, inferlo_tensor)
+        return OldDiscreteFactor.from_values(self.model, self.var_idx, inferlo_tensor)
 
     def combine_with_factor(self, other: LDFactor,
                             func: Callable[[float, float], float]):
@@ -161,7 +161,8 @@ class LDFactor:
 
     def marginal(self, new_var_idx, normed=True) -> LDFactor:
         """Sums factor over some variables."""
-        result = self.to_inferlo_factor().marginal(new_var_idx)
+        var_idx = set(self.var_idx) - set(new_var_idx)
+        result = self.to_inferlo_factor().marginalize(var_idx)
         result = LDFactor.from_inferlo_factor(result)
         if normed:
             result.p.normalize()
@@ -169,7 +170,8 @@ class LDFactor:
 
     def max_marginal(self, new_var_idx, normed=True) -> LDFactor:
         """Eleiminates certain variables by finding maximum."""
-        result = self.to_inferlo_factor().max_marginal(new_var_idx)
+        var_idx = set(self.var_idx) - set(new_var_idx)
+        result = self.to_inferlo_factor().marginalize(var_idx, operator="max")
         result = LDFactor.from_inferlo_factor(result)
         if normed:
             result.p.normalize()
@@ -245,9 +247,8 @@ class BP:
         self._update_seq = []
 
         self.model = model
-        self.factors = [
-            LDFactor.from_inferlo_factor(
-                DiscreteFactor.from_factor(f)) for f in model.get_factors()]
+        self.factors = [LDFactor.from_inferlo_factor(OldDiscreteFactor.from_factor(f)) for f in
+                        model.get_factors()]
         self.nrVars = model.num_variables
         self.nrFactors = len(self.factors)
 

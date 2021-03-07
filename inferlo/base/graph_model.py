@@ -19,59 +19,45 @@ if TYPE_CHECKING:
 class GraphModel(abc.ABC):
     """Abstract class representing any graphical model."""
 
-    def __init__(self, num_variables: int, domain: Domain):
-        """
-        :param num_variables: Number of variables in the model.
-        :param domain: Default domain of each variable.
-        """
-        self.num_variables = num_variables
-        self._default_domain = domain
-        self._vars = dict()
+    def __init__(self):
+        self.variables = []  # type: List[Variable]
+        self.factors = []  # type: List[Factor]
+
+    @staticmethod
+    def create(num_variables: int, domain: Domain):
+        model = GraphModel()
+        model.variables = [Variable(idx, domain) for idx in range(num_variables)]
+        return model
 
     def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
-        if not 0 <= idx < self.num_variables:
-            raise IndexError(
-                "index %d is out of bounds for random vector of size %d" % (
-                    idx, self.num_variables))
-        if idx not in self._vars:
-            v = Variable(self, idx, self._default_domain)
-            self._vars[idx] = v
-        return self._vars[idx]
+        return self.variables[idx]
 
     def get_variables(self) -> List[Variable]:
         """Returns all variables."""
-        return [self.get_variable(i) for i in range(self.num_variables)]
+        return self.variables
 
     def __getitem__(self, idx: int) -> Variable:
         return self.get_variable(idx)
 
-    @abc.abstractmethod
+    @property
+    def num_variables(self):
+        """Number of variables in the model."""
+        return len(self.variables)
+
     def add_factor(self, factor: Factor):
         """Adds a factor to the model."""
+        self.factors.append(factor)
 
     def __imul__(self, other: Factor):
         self.add_factor(other)
         return self
 
     def __len__(self):
-        return self.num_variables
+        return len(self.variables)
 
-    @abc.abstractmethod
-    def infer(self, algorithm='auto', **kwargs):
-        """Performs inference."""
-
-    @abc.abstractmethod
-    def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
-        """Finds the most probable state."""
-
-    def sample(self, num_samples: int, algorithm='auto',
-               **kwargs) -> np.ndarray:
-        """Generates samples."""
-
-    @abc.abstractmethod
-    def get_factors(self) -> Iterable[Factor]:
-        """Returns all factors."""
+    def get_factors(self) -> List[Factor]:
+        return self.factors
 
     def get_symbolic_variables(self) -> List[FunctionFactor]:
         """Prepares variables for usage in expressions.
@@ -133,9 +119,10 @@ class GraphModel(abc.ABC):
         assert x.shape == (self.num_variables,)
         result = 1.0
         for factor in self.get_factors():
-            result *= factor.value(x[factor.var_idx])
+            result *= factor.evaluate(x[factor.var_idx])
         return result
 
+    # TODO: move to DiscreteModel.
     def part_func_bruteforce(model):
         """Evaluates partition function in very inefficient way."""
         part_func = 0
@@ -144,6 +131,7 @@ class GraphModel(abc.ABC):
             part_func += model.evaluate(np.array(x))
         return part_func
 
+    # TODO: move to DiscreteModel.
     def max_likelihood_bruteforce(model):
         """Evaluates most likely state in a  very inefficient way."""
         best_state = None

@@ -6,7 +6,7 @@ from typing import Dict, Tuple, List
 
 import numpy as np
 
-from .factor import Factor, product_over_, entropy
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_, entropy
 from .graphical_model import GraphicalModel
 from ... import InferenceResult
 
@@ -25,13 +25,13 @@ class BeliefPropagation:
     def __init__(self, model):
         self.model = model.copy()
         init_np_func = np.ones
-        self.factors_adj_to_ = {var: self.model.get_adj_factors(
-            var) for var in self.model.variables}
+        self.factors_adj_to_ = {var: self.model.get_adj_factors(var) for var in
+                                self.model.variables}
 
-        self.messages = dict()  # type: Dict[Tuple, Factor]
+        self.messages = dict()  # type: Dict[Tuple, DiscreteFactor]
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(fac, var)] = Factor.initialize_with_(
+                self.messages[(fac, var)] = DiscreteFactor.initialize_with_(
                     _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )
@@ -39,7 +39,7 @@ class BeliefPropagation:
 
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(var, fac)] = Factor.initialize_with_(
+                self.messages[(var, fac)] = DiscreteFactor.initialize_with_(
                     _default_message_name(), [var], init_np_func,
                     model.get_cardinality_for_(var)
                 )
@@ -60,8 +60,7 @@ class BeliefPropagation:
                 *self._message_to_(var)).normalize(inplace=False)
 
         for fac in self.model.factors:
-            self.beliefs[fac] = product_over_(fac, *self._message_to_(
-                fac)).normalize(inplace=False)
+            self.beliefs[fac] = product_over_(fac, *self._message_to_(fac)).normalize(inplace=False)
 
     def get_log_z(self):
         """Calculates partition function based on beliefs."""
@@ -182,9 +181,7 @@ class IterativeJoinGraphPropagation(BeliefPropagation):
                 mini_buckets = []
                 for fac in facs:
                     mini_bucket = next(
-                        (mb for mb in mini_buckets if
-                         get_bucket_size(mb + [fac]) < ibound), False
-                    )
+                        (mb for mb in mini_buckets if get_bucket_size(mb + [fac]) < ibound), False)
                     if mini_bucket:
                         mini_bucket.append(fac)
                     else:

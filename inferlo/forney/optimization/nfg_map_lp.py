@@ -68,7 +68,9 @@ def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
       correspond to marginalization constraints.
     """
 
-    al_size = model._default_domain.size()
+    al_size = model[0].domain.size()
+    for v in model.variables:
+        assert v.domain.size() == al_size, "All variables must have the same domain size."
     var_size = len(model.edges)
 
     factor_list = model.factors
@@ -90,7 +92,7 @@ def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
         var_vals = list(product(range(al_size),
                                 repeat=len(factor_list[factor].var_idx)))
         for x in var_vals:
-            value = factor_list[factor].value(list(x))
+            value = factor_list[factor].evaluate(list(x))
             if (value != 0):
                 objective += np.log(value) * factor_beliefs[factor][x]
 

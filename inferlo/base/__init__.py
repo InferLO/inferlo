@@ -1,7 +1,7 @@
 """Basic classes."""
 from .domain import DiscreteDomain, Domain, RealDomain
-from .factors import DiscreteFactor, Factor, FunctionFactor
+from .factors import OldDiscreteFactor, Factor, FunctionFactor
 from .inference_result import InferenceResult
-from .generic_graph_model import GenericGraphModel
+from .discrete_model import DiscreteModel
 from .graph_model import GraphModel
 from .variable import Variable

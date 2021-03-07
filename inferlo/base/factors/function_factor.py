@@ -27,7 +27,7 @@ class FunctionFactor(Factor):
         super().__init__(model, var_idx)
         self.func = func
 
-    def value(self, values: List[float]):
+    def evaluate(self, values: List[float]):
         return self.func(values)
 
     # Numeric operations on factors.

@@ -4,26 +4,31 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable, List
 
-import numpy as np
-
-from inferlo.base.domain import RealDomain
+from inferlo.base.domain import DiscreteDomain
 from inferlo.base.graph_model import GraphModel
+from inferlo.base.variable import Variable
 
 if TYPE_CHECKING:
     from inferlo.base.factors.factor import Factor
+    from inferlo.base.factors.old_discrete_factor import OldDiscreteFactor
 
 
-class GenericGraphModel(GraphModel):
-    """Graphical model in the most general form.
+class DiscreteModel(GraphModel):
+    """Discrete Graphical model in the most general form.
 
-    Explicitly specified by list of factors.
+    Explicitly specified by lists of variables and factors. All variables are discrete.
     """
 
-    def __init__(self, num_variables: int, domain=None):
-        if domain is None:
-            domain = RealDomain()
-        super().__init__(num_variables, domain)
-        self.factors = []  # type: List[Factor]
+    def __init__(self, variables: List[Variable]):
+        super().__init__()
+        self.variables = variables
+        self.factors = []  # type: List[OldDiscreteFactor]
+
+    @staticmethod
+    def create(num_variables: int, domain_size: int):
+        domain = DiscreteDomain.range(domain_size)
+        variables = [Variable(idx, domain) for idx in range(num_variables)]
+        return DiscreteModel(variables)
 
     def add_factor(self, factor: Factor):
         """Adds factor."""
@@ -34,25 +39,14 @@ class GenericGraphModel(GraphModel):
         """Returns all factors."""
         return self.factors
 
-    def infer(self, algorithm='auto', **kwargs):
-        """Performs inference."""
-        raise NotImplemented
-
-    def max_likelihood(self, algorithm='auto', **kwargs) -> np.ndarray:
-        """Finds most probable state."""
-        raise NotImplemented
-
     @staticmethod
     def from_model(model: GraphModel):
         """Creates copy of a given model."""
-        n = model.num_variables
-        new_model = GenericGraphModel(n)
-        for i in range(n):
-            new_model.get_variable(i).domain = model.get_variable(i).domain
+        new_model = DiscreteModel(model.variables)
         for old_factor in model.get_factors():
             new_model.factors.append(old_factor.clone(new_model))
         return new_model
 
     def copy(self):
         """Makes a copy of itself."""
-        return GenericGraphModel.from_model(self)
+        return DiscreteModel.from_model(self)

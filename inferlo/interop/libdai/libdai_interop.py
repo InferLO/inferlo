@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING, List, Dict
 import numpy as np
 
 from inferlo.base import InferenceResult
-from inferlo.base.factors import DiscreteFactor
+from inferlo.base.factors import OldDiscreteFactor
 
 if TYPE_CHECKING:
     from inferlo import GraphModel
@@ -167,7 +167,7 @@ class LibDaiInterop():
         """
         factors = list(model.get_factors())
         assert all([f.is_discrete() for f in factors])
-        factors = [DiscreteFactor.from_factor(f) for f in factors]
+        factors = [OldDiscreteFactor.from_factor(f) for f in factors]
 
         vars_in_factors = set([i for f in factors for i in f.var_idx])
         all_vars = set(range(model.num_variables))
@@ -178,7 +178,7 @@ class LibDaiInterop():
                 "unit factors for them. Unused variables: %s" % unused_vars)
             for var_id in unused_vars:
                 size = model.get_variable(var_id).domain.size()
-                factors.append(DiscreteFactor(model, [var_id], np.ones(size)))
+                factors.append(OldDiscreteFactor(model, [var_id], np.ones(size)))
 
         with open(file_path, "w") as file:
             file.write("%d\n\n" % len(factors))
@@ -187,7 +187,7 @@ class LibDaiInterop():
                 file.write("\n\n")
 
     @staticmethod
-    def _to_fg_factor(factor: DiscreteFactor) -> List[str]:
+    def _to_fg_factor(factor: OldDiscreteFactor) -> List[str]:
         """Encodes discrete factor in libDAI FG format."""
         domain_sizes = [factor.model.get_variable(i).domain.size() for i in
                         factor.var_idx]

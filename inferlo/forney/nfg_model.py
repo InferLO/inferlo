@@ -5,13 +5,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable
 
 import networkx as nx
-import numpy as np
 
-from inferlo.base import GraphModel, DiscreteFactor, FunctionFactor
+from inferlo.base import GraphModel, OldDiscreteFactor, FunctionFactor
+from inferlo.base.variable import Variable
 from inferlo.forney.edge_elimination import infer_edge_elimination
 
 if TYPE_CHECKING:
-    from inferlo import Domain, Factor
+    from inferlo import Domain, Factor, DiscreteDomain
 
 
 class NormalFactorGraphModel(GraphModel):
@@ -31,7 +31,8 @@ class NormalFactorGraphModel(GraphModel):
         :param num_variables: Number of variables in the model.
         :param domain: Default domain of each variable.
         """
-        super().__init__(num_variables, domain)
+        super().__init__()
+        self.variables = [Variable(idx, domain) for idx in range(num_variables)]
 
         # self.edges[i] -- two indices of factors, depending on i-th variable.
         self.edges = [[] for _ in range(num_variables)]
@@ -80,9 +81,6 @@ class NormalFactorGraphModel(GraphModel):
         else:
             raise ValueError('Unknown algorithm %s' % algorithm)
 
-    def max_likelihood(self, algorithm, **kwargs) -> np.ndarray:
-        raise NotImplemented
-
     def get_factors(self) -> Iterable[Factor]:
         return self.factors
 
@@ -115,8 +113,7 @@ class NormalFactorGraphModel(GraphModel):
                 new_vars_count += factors_num
 
         # Create new model.
-        new_model = NormalFactorGraphModel(new_vars_count,
-                                           original_model._default_domain)
+        new_model = NormalFactorGraphModel(new_vars_count, original_model[0].domain)
 
         # Clone factors, change reference to the model.
         new_factors = [f.clone(new_model) for f in old_factors]
@@ -126,7 +123,7 @@ class NormalFactorGraphModel(GraphModel):
             const_factor = FunctionFactor(new_model, [var_id], lambda x: 1)
             const_factor.name = '1'
             if original_model[var_id].domain.is_discrete():
-                return DiscreteFactor.from_factor(const_factor)
+                return OldDiscreteFactor.from_factor(const_factor)
             else:
                 return const_factor
 
@@ -136,7 +133,7 @@ class NormalFactorGraphModel(GraphModel):
                                           lambda x: x[1:] == x[:-1])
             delta_factor.name = '='
             if original_model[var_ids[0]].domain.is_discrete():
-                return DiscreteFactor.from_factor(delta_factor)
+                return OldDiscreteFactor.from_factor(delta_factor)
             else:
                 return delta_factor
 

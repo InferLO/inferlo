@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.utils.extmath import randomized_svd
 
 from .bucket_elimination import BucketElimination
-from .factor import Factor, default_factor_name, product_over_
+from inferlo.base.factors.discrete_factor import DiscreteFactor, default_factor_name, product_over_
 from .graphical_model import GraphicalModel
 from .mini_bucket_elimination import MiniBucketElimination
 
@@ -33,14 +33,11 @@ class BucketRenormalization(MiniBucketElimination):
                     projector.variables = [main_rvar]
                     projector.name = "P_{}".format(rvar)
 
-                    replications[rvar] = (
-                        main_rvar, replicated_projector, projector)
+                    replications[rvar] = (main_rvar, replicated_projector, projector)
                     main_projectors.append(projector)
 
-                    working_model.add_factors_from(
-                        [replicated_projector.copy(), projector.copy()])
-                    self.renormalized_model.add_factors_from(
-                        [replicated_projector, projector])
+                    working_model.add_factors_from([replicated_projector.copy(), projector.copy()])
+                    self.renormalized_model.add_factors_from([replicated_projector, projector])
 
                 working_model.contract_variable(rvar)
 
@@ -50,17 +47,15 @@ class BucketRenormalization(MiniBucketElimination):
         for var in reversed(self.renormalized_elimination_order):
             if var in self.replications.keys():
                 mb_var, projector, mb_projector = self.replications[var]
-                self.renormalized_model.remove_factors_from(
-                    [projector, mb_projector])
+                self.renormalized_model.remove_factors_from([projector, mb_projector])
                 be = BucketElimination(self.renormalized_model)
                 marginal_factor = be.get_marginal_factor(
                     elimination_order_method="given",
                     elimination_order=self.renormalized_elimination_order,
                     exception_variables=[var, mb_var],
                 )
-                new_mb_projector = self._get_svd_projector(marginal_factor,
-                                                           mb_var)
-                new_projector = Factor(
+                new_mb_projector = self._get_svd_projector(marginal_factor, mb_var)
+                new_projector = DiscreteFactor(
                     name=default_factor_name(),
                     variables=[var],
                     log_values=new_mb_projector.log_values,
@@ -68,8 +63,7 @@ class BucketRenormalization(MiniBucketElimination):
 
                 self.renormalized_model.add_factors_from(
                     [new_projector, new_mb_projector])
-                self.replications[var] = (
-                    mb_var, new_projector, new_mb_projector)
+                self.replications[var] = (mb_var, new_projector, new_mb_projector)
 
     def run(self, max_iter=10):
         """Runs the algorithm, returns log(Z)."""
@@ -87,7 +81,7 @@ class BucketRenormalization(MiniBucketElimination):
 
         return logZ
 
-    def _get_svd_projector(self, factor, variable):
+    def _get_svd_projector(self, factor, variable) -> DiscreteFactor:
         factor.transpose_by_(
             [variable, *sorted(set(factor.variables) - set([variable]))])
         flattened_factor_log_values = factor.log_values.reshape(
@@ -114,5 +108,5 @@ class BucketRenormalization(MiniBucketElimination):
         u[u < 0] = 0.0
         u /= np.linalg.norm(u)
 
-        return Factor(name=default_factor_name(), variables=[variable],
-                      values=u)
+        return DiscreteFactor(name=default_factor_name(), variables=[variable],
+                              values=u)

@@ -5,7 +5,7 @@ from copy import copy
 
 import numpy as np
 
-from .factor import Factor, product_over_, entropy
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_, entropy
 from .graphical_model import GraphicalModel
 
 
@@ -33,7 +33,7 @@ class MeanField:
 
         self.mean_fields = {}
         for var in self.model.variables:
-            self.mean_fields[var] = Factor.initialize_with_(
+            self.mean_fields[var] = DiscreteFactor.initialize_with_(
                 _default_message_name(),
                 [var],
                 init_np_func,
@@ -48,16 +48,12 @@ class MeanField:
                 var: copy(
                     self.mean_fields[var]) for var in self.model.variables}
             self._update_mean_fields()
-            if self._is_converged(
-                    self.mean_fields,
-                    old_mean_field,
-                    converge_thr):
+            if self._is_converged(self.mean_fields, old_mean_field, converge_thr):
                 converged = True
                 break
 
         if not converged:
-            warnings.warn(
-                "Mean field did not converge after %d iterations." % max_iter)
+            warnings.warn("Mean field did not converge after %d iterations." % max_iter)
 
         return self._get_log_z()
 
@@ -67,28 +63,24 @@ class MeanField:
             logZ += entropy(self.mean_fields[var])
 
         for fac in self.model.factors:
-            m = product_over_(*[self.mean_fields[var]
-                                for var in fac.variables])
+            m = product_over_(*[self.mean_fields[var] for var in fac.variables])
             index_to_keep = m.values != 0
-            logZ += np.sum(m.values[index_to_keep] *
-                           fac.log_values[index_to_keep])
+            logZ += np.sum(m.values[index_to_keep] * fac.log_values[index_to_keep])
 
         return logZ
 
     def _update_mean_fields(self):
         variable_order = np.random.permutation(self.model.variables)
         for var in variable_order:
-            next_mean_field = Factor.full_like_(self.mean_fields[var], 0.0)
+            next_mean_field = DiscreteFactor.full_like_(self.mean_fields[var], 0.0)
             for fac in self.model.get_adj_factors(var):
-                tmp = Factor(
+                tmp = DiscreteFactor(
                     name="tmp",
                     variables=[var],
                     values=np.ones(self.model.get_cardinality_for_(var)),
                 )
-                tmp = product_over_(
-                    tmp, *[self.mean_fields[var1] for var1 in fac.variables if
-                           var1 != var]
-                )
+                tmp = product_over_(tmp, *[self.mean_fields[var1]
+                                           for var1 in fac.variables if var1 != var])
                 tmp.transpose_by_(fac.variables)
                 tmp.log_values = fac.log_values * tmp.values
                 next_mean_field = next_mean_field + tmp.marginalize_except_(
@@ -101,9 +93,6 @@ class MeanField:
 
     def _is_converged(self, mean_field, old_mean_field, converge_thr):
         for var in self.model.variables:
-            if np.sum(
-                    np.abs(
-                        mean_field[var].values -
-                        old_mean_field[var].values)) > converge_thr:
+            if np.sum(np.abs(mean_field[var].values - old_mean_field[var].values)) > converge_thr:
                 return False
         return True

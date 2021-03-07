@@ -1,12 +1,12 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
-from inferlo import GenericGraphModel
+from inferlo import DiscreteModel
 
 
 class UaiWriter():
     """Writes Graphical Model in UAI format."""
 
-    def write_model(self, model: GenericGraphModel, path: str):
+    def write_model(self, model: DiscreteModel, path: str):
         """Writes Graphical model to a file in UAI format.
 
         Format description:

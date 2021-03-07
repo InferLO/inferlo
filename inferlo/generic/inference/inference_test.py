@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
 
-from inferlo import GenericGraphModel
+from inferlo import DiscreteModel
 from inferlo.generic import inference as inf
 from inferlo.testing import grid_potts_model, tree_potts_model, \
     clique_potts_model, assert_results_close
@@ -86,7 +86,7 @@ def test_bucket_renormalization_grid_9x9():
 def test_get_marginals():
     model = grid_potts_model(4, 3, al_size=4, seed=0)
     true_result = model.infer(algorithm='path_dp')
-    model = GenericGraphModel.from_model(model)
+    model = DiscreteModel.from_model(model)
     be_result_1 = inf.get_marginals(model, inf.bucket_elimination,
                                     skip_last=False)
     be_result_2 = inf.get_marginals(model, inf.bucket_elimination,
@@ -98,7 +98,7 @@ def test_get_marginals():
 def test_bucket_elimination_bt():
     model = grid_potts_model(4, 3, al_size=4, seed=1)
     true_result = model.infer(algorithm='path_dp')
-    model = GenericGraphModel.from_model(model)
+    model = DiscreteModel.from_model(model)
     be_result = inf.bucket_elimination_bt(model)
     assert_results_close(true_result, be_result)
 
@@ -106,7 +106,7 @@ def test_bucket_elimination_bt():
 def test_mini_bucket_elimination_bt():
     model = grid_potts_model(5, 5, al_size=3, seed=1)
     true_result = model.infer(algorithm='path_dp')
-    model = GenericGraphModel.from_model(model)
+    model = DiscreteModel.from_model(model)
     be_result = inf.mini_bucket_elimination_bt(model, ibound=10)
     assert_results_close(true_result, be_result, log_pf_tol=1e-5, mp_mse_tol=1e-4)
 
@@ -114,6 +114,6 @@ def test_mini_bucket_elimination_bt():
 def test_mini_bucket_renormalization_bt():
     model = grid_potts_model(5, 5, al_size=3, seed=1)
     true_result = model.infer(algorithm='path_dp')
-    model = GenericGraphModel.from_model(model)
+    model = DiscreteModel.from_model(model)
     be_result = inf.mini_bucket_renormalization_bt(model, ibound=7)
     assert_results_close(true_result, be_result, log_pf_tol=1e-5, mp_mse_tol=1e-4)

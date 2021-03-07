@@ -1,16 +1,20 @@
 # Copyright (c) The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 from __future__ import annotations
-from functools import partial
+
 from collections import defaultdict
+from functools import partial
+
 import numpy as np
+
 from inferlo.base.domain import RealDomain
-from inferlo.base.generic_graph_model import GenericGraphModel
+from inferlo.base.variable import Variable
 from inferlo.base.factors.function_factor import FunctionFactor
+from inferlo.base.graph_model import GraphModel
 from .inference.gaussian_belief_propagation import gaussian_BP
 
 
-class GaussianModel(GenericGraphModel):
+class GaussianModel(GraphModel):
     """Gaussian graphical model
 
     A Gaussian graphical model is defined by an undirected graph G = (V;E),
@@ -30,11 +34,11 @@ class GaussianModel(GenericGraphModel):
     G = defaultdict(list)
     n = 0
 
-    def __init__(self, J: np.array, h: np.array, domain=None):
-        if domain is None:
-            domain = RealDomain()
+    def __init__(self, J: np.array, h: np.array):
         self.n = J.shape[0]
-        super().__init__(self.n, domain)
+        super().__init__()
+        domain = RealDomain()
+        self.variables = [Variable(idx, domain) for idx in range(self.n)]
         self.J = J
         self.h = h
 
@@ -56,4 +60,5 @@ class GaussianModel(GenericGraphModel):
                     self.add_factor(factor_J)
 
     def infer(self, **kwargs):
+        """Performs inference for the model."""
         return gaussian_BP(self, **kwargs)

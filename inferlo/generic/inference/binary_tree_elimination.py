@@ -4,7 +4,7 @@ from typing import Callable, List
 
 import numpy as np
 
-from .factor import logsumexp
+from inferlo.utils.special_functions import logsumexp
 from .graphical_model import GraphicalModel
 from ... import InferenceResult
 from ...base.inference_result import marg_probs_to_array

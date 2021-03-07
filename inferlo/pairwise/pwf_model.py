@@ -8,7 +8,7 @@ import numpy as np
 from networkx import Graph, nx
 
 from inferlo.base.domain import DiscreteDomain
-from inferlo.base.factors import DiscreteFactor
+from inferlo.base.factors import OldDiscreteFactor
 from inferlo.base.graph_model import GraphModel
 from .bruteforce import (
     infer_bruteforce,
@@ -24,6 +24,7 @@ from .optimization.path_dp import max_lh_path_dp
 from .optimization.tree_dp import max_likelihood_tree_dp
 from .sampling.tree_dp import sample_tree_dp
 from .utils import decode_state, encode_state, decode_all_states
+from .. import Variable
 from ..generic.inference import belief_propagation
 from ..graphs import fast_dfs
 from ..graphs.fast_dfs import FastDfsResult
@@ -70,7 +71,9 @@ class PairWiseFiniteModel(GraphModel):
 
         Domain will consist of integers in range 0, 1, ... al_size - 1.
         """
-        super().__init__(size, DiscreteDomain.range(al_size))
+        super().__init__()
+        domain = DiscreteDomain.range(al_size)
+        self.variables = [Variable(idx, domain) for idx in range(size)]
 
         self.gr_size = size
         self.al_size = al_size
@@ -214,14 +217,14 @@ class PairWiseFiniteModel(GraphModel):
 
     def add_factor(self, factor: Factor):
         """Adds a factor."""
-        if isinstance(factor, DiscreteFactor):
+        if isinstance(factor, OldDiscreteFactor):
             self._add_discrete_factor(factor)
         elif factor.is_discrete():
-            self._add_discrete_factor(DiscreteFactor.from_factor(factor))
+            self._add_discrete_factor(OldDiscreteFactor.from_factor(factor))
         else:
             raise ValueError("Can't add non-discrete factor.")
 
-    def _add_discrete_factor(self, factor: DiscreteFactor):
+    def _add_discrete_factor(self, factor: OldDiscreteFactor):
         assert factor.model == self
         with np.errstate(divide='ignore'):
             log_factor = np.log(factor.values)
@@ -234,19 +237,20 @@ class PairWiseFiniteModel(GraphModel):
             v1, v2 = factor.var_idx
             self.add_interaction(v1, v2, log_factor)
 
-    def get_factors(self) -> Iterable[Factor]:
+    def get_factors(self) -> List[Factor]:
         """Generates explicit list of factors."""
+        factors = []
         for i in range(self.gr_size):
             if np.linalg.norm(self.field[i, :]) > 1e-9:
-                yield DiscreteFactor(self, [i], np.exp(self.field[i, :]))
+                factors.append(OldDiscreteFactor(self, [i], self.field[i, :]))
         for u, v in self.edges:
-            factor = DiscreteFactor(self, [u, v],
-                                    np.exp(self.get_interaction_matrix(u, v)))
+            factor = OldDiscreteFactor(self, [u, v], self.get_interaction_matrix(u, v))
             if self.num_variables < 10:
                 factor.name = 'J%d%d' % (u, v)
             else:
                 factor.name = 'J_%d_%d' % (u, v)
-            yield factor
+            factors.append(factor)
+        return factors
 
     def infer(self, algorithm='auto', **kwargs) -> InferenceResult:
         """Performs inference.
@@ -486,9 +490,9 @@ class PairWiseFiniteModel(GraphModel):
 
         new_model = PairWiseFiniteModel(original_model.num_variables, al_size)
         for old_factor in old_factors:
-            values = DiscreteFactor.from_factor(old_factor).values
+            values = OldDiscreteFactor.from_factor(old_factor).values
             values = pad_tensor(values)
-            new_factor = DiscreteFactor(new_model, old_factor.var_idx, values)
+            new_factor = OldDiscreteFactor.from_values(new_model, old_factor.var_idx, values)
             new_model.add_factor(new_factor)
 
         return new_model

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from inferlo.base.factors import DiscreteFactor
+from inferlo.base.factors import OldDiscreteFactor
 
 if TYPE_CHECKING:
     from inferlo.forney.nfg_model import NormalFactorGraphModel
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 # TODO: Implement LogSumExp trick and return log pf to avoid overflow.
 # TODO: Support convolution over several variables.
 
-def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
+def convolve_factor(factor: OldDiscreteFactor, var: int) -> OldDiscreteFactor:
     """Convolves (integrates) factor over variable.
 
     Result is factor of all variables except ``var``, which at every point
@@ -27,15 +27,13 @@ def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
       in model, not in factor. Factor must depend on this variable.
     :return: New convolved factor.
     """
-    assert var in factor.var_idx
-    var_pos = factor.var_idx.index(var)
-    new_vars = [v for v in factor.var_idx if v != var]
-    new_values = np.sum(factor.values, axis=var_pos)
-    return DiscreteFactor(factor.model, new_vars, new_values)
+    return factor.marginalize([var])
+
+# TODO: delegate to factors' product and marginalize?
 
 
-def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
-                         var: int) -> DiscreteFactor:
+def convolve_two_factors(factor1: OldDiscreteFactor, factor2: OldDiscreteFactor,
+                         var: int) -> OldDiscreteFactor:
     """Convolves two factors over variable.
 
     Result is factor depending on all variables of first and second factor
@@ -66,7 +64,7 @@ def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
     subscripts = vars1_sym + ',' + vars2_sym + '->' + new_vars_sym
 
     new_values = np.einsum(subscripts, factor1.values, factor2.values)
-    return DiscreteFactor(factor1.model, new_vars, new_values)
+    return OldDiscreteFactor.from_values(factor1.model, new_vars, new_values)
 
 
 def infer_edge_elimination(model: NormalFactorGraphModel):
@@ -87,7 +85,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
     :return: Partition function.
     """
     model.check_built()
-    factors = [DiscreteFactor.from_factor(f) for f in model.factors]
+    factors = [OldDiscreteFactor.from_factor(f) for f in model.factors]
     edges = np.array(model.edges)
     # Don't reference model from this point to ensure we don't modify it.
 
@@ -110,8 +108,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
             factors[f1] = convolve_factor(factors[f1], var_id)
         else:
             # Convolve two factors and replace first factor with result.
-            factors[f1] = convolve_two_factors(
-                factors[f1], factors[f2], var_id)
+            factors[f1] = convolve_two_factors(factors[f1], factors[f2], var_id)
             # Delete second factor.
             factors[f2] = None
             # Remap references to second factor on edges.

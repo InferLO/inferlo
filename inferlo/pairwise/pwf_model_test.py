@@ -2,8 +2,8 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo import GenericGraphModel, DiscreteDomain
-from inferlo.base import DiscreteFactor
+from inferlo import DiscreteModel, DiscreteDomain
+from inferlo.base import OldDiscreteFactor
 from inferlo.pairwise import PairWiseFiniteModel
 from inferlo.base.inference_result import InferenceResult
 from inferlo.testing import assert_results_close
@@ -16,13 +16,13 @@ def test_build_from_factors():
     # Field.
     model *= np.exp(5 * x[1])
     model *= np.exp(10 * x[2])
-    model *= DiscreteFactor(model, [3], np.exp([7, 8]))
+    model *= OldDiscreteFactor.from_values(model, [3], np.exp([7, 8]))
 
     # Interactions.
     model *= np.exp(2 * x[0] * x[1])
     model *= (1 + x[2] + x[3])
     model *= np.exp(10 * x[0] * x[1])  # Should accumulate.
-    model *= DiscreteFactor(model, [0, 4], np.exp([[1, 2], [3, 4]]))
+    model *= OldDiscreteFactor.from_values(model, [0, 4], np.exp([[1, 2], [3, 4]]))
 
     assert np.allclose(model.field,
                        np.array([[0, 0], [0, 5], [0, 10], [7, 8], [0, 0]]))
@@ -122,7 +122,7 @@ def test_encode_state():
 
 
 def test_from_model():
-    model1 = GenericGraphModel(3)
+    model1 = DiscreteModel.create(3, 2)
     model1[0].domain = DiscreteDomain.binary()
     model1[2].domain = DiscreteDomain([0, 10])
     model1[1].domain = DiscreteDomain.range(3)
