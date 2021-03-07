@@ -8,12 +8,13 @@ from functools import partial
 import numpy as np
 
 from inferlo.base.domain import RealDomain
+from inferlo.base.variable import Variable
 from inferlo.base.factors.function_factor import FunctionFactor
-from inferlo.base.generic_graph_model import GenericGraphModel
+from inferlo.base.graph_model import GraphModel
 from .inference.gaussian_belief_propagation import gaussian_BP
 
 
-class GaussianModel(GenericGraphModel):
+class GaussianModel(GraphModel):
     """Gaussian graphical model
 
     A Gaussian graphical model is defined by an undirected graph G = (V;E),
@@ -35,7 +36,9 @@ class GaussianModel(GenericGraphModel):
 
     def __init__(self, J: np.array, h: np.array):
         self.n = J.shape[0]
-        super().__init__(self.n, RealDomain())
+        super().__init__()
+        domain = RealDomain()
+        self.variables = [Variable(idx, domain) for idx in range(self.n)]
         self.J = J
         self.h = h
 

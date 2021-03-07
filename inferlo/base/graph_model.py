@@ -21,6 +21,7 @@ class GraphModel(abc.ABC):
 
     def __init__(self):
         self.variables = []  # type: List[Variable]
+        self.factors = []  # type: List[Factor]
 
     def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
@@ -38,9 +39,9 @@ class GraphModel(abc.ABC):
         """Number of variables in the model."""
         return len(self.variables)
 
-    @abc.abstractmethod
     def add_factor(self, factor: Factor):
         """Adds a factor to the model."""
+        self.factors.append(factor)
 
     def __imul__(self, other: Factor):
         self.add_factor(other)
@@ -49,9 +50,8 @@ class GraphModel(abc.ABC):
     def __len__(self):
         return len(self.variables)
 
-    @abc.abstractmethod
-    def get_factors(self) -> Iterable[Factor]:
-        """Returns all factors."""
+    def get_factors(self) -> List[Factor]:
+        return self.factors
 
     def get_symbolic_variables(self) -> List[FunctionFactor]:
         """Prepares variables for usage in expressions.
