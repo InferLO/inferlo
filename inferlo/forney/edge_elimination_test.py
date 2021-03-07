@@ -3,7 +3,7 @@
 import numpy as np
 
 import inferlo
-from inferlo import PairWiseFiniteModel
+from inferlo import PairWiseFiniteModel, DiscreteDomain, DiscreteFactor
 from inferlo.forney.edge_elimination import (convolve_factor,
                                              convolve_two_factors,
                                              infer_edge_elimination)
@@ -32,8 +32,8 @@ def test_convolve_two_factors():
     model[2].domain = inferlo.DiscreteDomain.range(6)
     v1 = np.random.random(size=(4, 5))
     v2 = np.random.random(size=(5, 6))
-    factor1 = inferlo.DiscreteFactor(model, [0, 1], v1)
-    factor2 = inferlo.DiscreteFactor(model, [1, 2], v2)
+    factor1 = inferlo.DiscreteFactor.from_values(model, [0, 1], v1)
+    factor2 = inferlo.DiscreteFactor.from_values(model, [1, 2], v2)
 
     factor3 = convolve_two_factors(factor1, factor2, 1)
     assert factor3.model == model
@@ -43,8 +43,8 @@ def test_convolve_two_factors():
 
 def test_convolve_two_factors_leaf():
     model = inferlo.DiscreteModel.create(2, 2)
-    factor1 = inferlo.DiscreteFactor(model, [0], np.array([1, 2]))
-    factor2 = inferlo.DiscreteFactor(model, [0, 1], np.array([[3, 4], [5, 6]]))
+    factor1 = inferlo.DiscreteFactor.from_values(model, [0], np.array([1, 2]))
+    factor2 = inferlo.DiscreteFactor.from_values(model, [0, 1], np.array([[3, 4], [5, 6]]))
 
     factor3 = convolve_two_factors(factor1, factor2, 0)
 
@@ -61,10 +61,10 @@ def test_infer_small_line():
     f01 = np.random.random(size=(5, 5))
     f12 = np.random.random(size=(5, 5))
     f2 = np.random.random(size=(5,))
-    model *= inferlo.DiscreteFactor(model, [0], f0)
-    model *= inferlo.DiscreteFactor(model, [0, 1], f01)
-    model *= inferlo.DiscreteFactor(model, [1, 2], f12)
-    model *= inferlo.DiscreteFactor(model, [2], f2)
+    model *= inferlo.DiscreteFactor.from_values(model, [0], f0)
+    model *= inferlo.DiscreteFactor.from_values(model, [0, 1], f01)
+    model *= inferlo.DiscreteFactor.from_values(model, [1, 2], f12)
+    model *= inferlo.DiscreteFactor.from_values(model, [2], f2)
     model.build()
 
     z = infer_edge_elimination(model)
@@ -72,7 +72,7 @@ def test_infer_small_line():
     assert np.allclose(z, f0 @ f01 @ f12 @ f2)
 
 
-def test_ifer_clique_3vars():
+def test_infer_clique_3vars():
     al_size = 5
     np.random.seed(10)
     domain = inferlo.DiscreteDomain.range(al_size)
@@ -80,9 +80,9 @@ def test_ifer_clique_3vars():
     f01 = np.random.random(size=(al_size, al_size))
     f12 = np.random.random(size=(al_size, al_size))
     f20 = np.random.random(size=(al_size, al_size))
-    model *= inferlo.DiscreteFactor(model, [0, 1], f01)
-    model *= inferlo.DiscreteFactor(model, [1, 2], f12)
-    model *= inferlo.DiscreteFactor(model, [2, 0], f20)
+    model *= inferlo.DiscreteFactor.from_values(model, [0, 1], f01)
+    model *= inferlo.DiscreteFactor.from_values(model, [1, 2], f12)
+    model *= inferlo.DiscreteFactor.from_values(model, [2, 0], f20)
     model.build()
 
     z = infer_edge_elimination(model)
@@ -120,3 +120,14 @@ def test_infer_disconnected():
     pf = infer_edge_elimination(nfg_model)
 
     assert np.allclose(true_pf, pf)
+
+
+def test_infer_one_variable():
+    model = inferlo.NormalFactorGraphModel(1, DiscreteDomain.binary())
+    model.add_factor(DiscreteFactor.from_values(model, [0], [1, 2]))
+    model.add_factor(DiscreteFactor.from_values(model, [0], [1, 2]))
+    model.build()
+
+    pf = infer_edge_elimination(model)
+
+    assert np.allclose(pf, 5.0)

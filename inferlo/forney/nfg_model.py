@@ -11,7 +11,7 @@ from inferlo.base.variable import Variable
 from inferlo.forney.edge_elimination import infer_edge_elimination
 
 if TYPE_CHECKING:
-    from inferlo import Domain, Factor
+    from inferlo import Domain, Factor, DiscreteDomain
 
 
 class NormalFactorGraphModel(GraphModel):
@@ -113,7 +113,7 @@ class NormalFactorGraphModel(GraphModel):
                 new_vars_count += factors_num
 
         # Create new model.
-        new_model = NormalFactorGraphModel(new_vars_count, None)
+        new_model = NormalFactorGraphModel(new_vars_count, original_model[0].domain)
 
         # Clone factors, change reference to the model.
         new_factors = [f.clone(new_model) for f in old_factors]

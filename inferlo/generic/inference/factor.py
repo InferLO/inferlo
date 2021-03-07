@@ -4,7 +4,9 @@ from copy import copy
 from functools import reduce
 
 import numpy as np
-from numpy import exp, log, amax, amin, squeeze
+from numpy import exp, log, amax, amin
+
+from inferlo.utils.special_functions import logsumexp
 
 
 class Factor:
@@ -406,25 +408,6 @@ class Factor:
 def add_dims(a: np.array, extra_dims):
     """Reshapes array by adding dimensions on the right."""
     return a.reshape(*a.shape, *([1] * extra_dims))
-
-
-def logsumexp(a, axis=None, keepdims=False):
-    """LogSumExp of a factor."""
-    if axis is None:
-        a = a.ravel()
-
-    a_max = amax(a, axis=axis, keepdims=True)
-    if a_max.ndim > 0:
-        a_max[~np.isfinite(a_max)] = 0
-
-    tmp = exp(a - a_max)
-    with np.errstate(divide="ignore"):
-        out = log(np.sum(tmp, axis=axis, keepdims=keepdims))
-
-    if not keepdims:
-        a_max = squeeze(a_max, axis=axis)
-    out += a_max
-    return out
 
 
 def default_factor_name(prefix="_F"):

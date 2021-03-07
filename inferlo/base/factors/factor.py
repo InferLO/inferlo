@@ -24,7 +24,7 @@ class Factor(abc.ABC):
         self.var_idx = list(var_idx)
 
     @abc.abstractmethod
-    def value(self, values: List[float]):
+    def evaluate(self, values: List[float]):
         """Value of function inside this factor in given point."""
 
     def is_discrete(self):

@@ -230,4 +230,12 @@ def random_discrete_model(num_variables=10,
         values = np.random.random(size=values_shape)
         factor = DiscreteFactor(model, var_idx, values)
         model.add_factor(factor)
+
+    # Ensure all variables are in some factor.
+    vars_in_factors = set([var_id for f in model.factors for var_id in f.var_idx])
+    for var_id in range(num_variables):
+        if var_id not in vars_in_factors:
+            size = model.get_variable(var_id).domain.size()
+            model.add_factor(DiscreteFactor(model, [var_id], np.ones(size)))
+
     return model

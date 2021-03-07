@@ -242,10 +242,9 @@ class PairWiseFiniteModel(GraphModel):
         factors = []
         for i in range(self.gr_size):
             if np.linalg.norm(self.field[i, :]) > 1e-9:
-                factors.append(DiscreteFactor(self, [i], np.exp(self.field[i, :])))
+                factors.append(DiscreteFactor(self, [i], self.field[i, :]))
         for u, v in self.edges:
-            factor = DiscreteFactor(self, [u, v],
-                                    np.exp(self.get_interaction_matrix(u, v)))
+            factor = DiscreteFactor(self, [u, v], self.get_interaction_matrix(u, v))
             if self.num_variables < 10:
                 factor.name = 'J%d%d' % (u, v)
             else:
@@ -493,7 +492,7 @@ class PairWiseFiniteModel(GraphModel):
         for old_factor in old_factors:
             values = DiscreteFactor.from_factor(old_factor).values
             values = pad_tensor(values)
-            new_factor = DiscreteFactor(new_model, old_factor.var_idx, values)
+            new_factor = DiscreteFactor.from_values(new_model, old_factor.var_idx, values)
             new_model.add_factor(new_factor)
 
         return new_model

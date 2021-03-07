@@ -2,6 +2,8 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numba
 import numpy as np
+from numpy import amax, squeeze
+from numpy.core._multiarray_umath import exp, log
 
 
 @numba.jit
@@ -42,3 +44,22 @@ def sample_categorical(probs, num_samples):
         mask = rnd_numbers >= cum_probs[i - 1]
         ans[mask] = i
     return ans
+
+
+def logsumexp(a, axis=None, keepdims=False):
+    """LogSumExp of a factor."""
+    if axis is None:
+        a = a.ravel()
+
+    a_max = amax(a, axis=axis, keepdims=True)
+    if a_max.ndim > 0:
+        a_max[~np.isfinite(a_max)] = 0
+
+    tmp = exp(a - a_max)
+    with np.errstate(divide="ignore"):
+        out = log(np.sum(tmp, axis=axis, keepdims=keepdims))
+
+    if not keepdims:
+        a_max = squeeze(a_max, axis=axis)
+    out += a_max
+    return out

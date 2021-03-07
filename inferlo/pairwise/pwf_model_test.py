@@ -16,13 +16,13 @@ def test_build_from_factors():
     # Field.
     model *= np.exp(5 * x[1])
     model *= np.exp(10 * x[2])
-    model *= DiscreteFactor(model, [3], np.exp([7, 8]))
+    model *= DiscreteFactor.from_values(model, [3], np.exp([7, 8]))
 
     # Interactions.
     model *= np.exp(2 * x[0] * x[1])
     model *= (1 + x[2] + x[3])
     model *= np.exp(10 * x[0] * x[1])  # Should accumulate.
-    model *= DiscreteFactor(model, [0, 4], np.exp([[1, 2], [3, 4]]))
+    model *= DiscreteFactor.from_values(model, [0, 4], np.exp([[1, 2], [3, 4]]))
 
     assert np.allclose(model.field,
                        np.array([[0, 0], [0, 5], [0, 10], [7, 8], [0, 0]]))

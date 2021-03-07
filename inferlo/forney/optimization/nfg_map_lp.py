@@ -92,7 +92,7 @@ def map_lp(model: NormalFactorGraphModel) -> map_lp_result:
         var_vals = list(product(range(al_size),
                                 repeat=len(factor_list[factor].var_idx)))
         for x in var_vals:
-            value = factor_list[factor].value(list(x))
+            value = factor_list[factor].evaluate(list(x))
             if (value != 0):
                 objective += np.log(value) * factor_beliefs[factor][x]
 

@@ -27,11 +27,9 @@ def convolve_factor(factor: DiscreteFactor, var: int) -> DiscreteFactor:
       in model, not in factor. Factor must depend on this variable.
     :return: New convolved factor.
     """
-    assert var in factor.var_idx
-    var_pos = factor.var_idx.index(var)
-    new_vars = [v for v in factor.var_idx if v != var]
-    new_values = np.sum(factor.values, axis=var_pos)
-    return DiscreteFactor(factor.model, new_vars, new_values)
+    return factor.marginalize([var])
+
+# TODO: delegate to factors' product and marginalize?
 
 
 def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
@@ -66,7 +64,7 @@ def convolve_two_factors(factor1: DiscreteFactor, factor2: DiscreteFactor,
     subscripts = vars1_sym + ',' + vars2_sym + '->' + new_vars_sym
 
     new_values = np.einsum(subscripts, factor1.values, factor2.values)
-    return DiscreteFactor(factor1.model, new_vars, new_values)
+    return DiscreteFactor.from_values(factor1.model, new_vars, new_values)
 
 
 def infer_edge_elimination(model: NormalFactorGraphModel):
@@ -110,8 +108,7 @@ def infer_edge_elimination(model: NormalFactorGraphModel):
             factors[f1] = convolve_factor(factors[f1], var_id)
         else:
             # Convolve two factors and replace first factor with result.
-            factors[f1] = convolve_two_factors(
-                factors[f1], factors[f2], var_id)
+            factors[f1] = convolve_two_factors(factors[f1], factors[f2], var_id)
             # Delete second factor.
             factors[f2] = None
             # Remap references to second factor on edges.

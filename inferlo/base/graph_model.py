@@ -119,9 +119,10 @@ class GraphModel(abc.ABC):
         assert x.shape == (self.num_variables,)
         result = 1.0
         for factor in self.get_factors():
-            result *= factor.value(x[factor.var_idx])
+            result *= factor.evaluate(x[factor.var_idx])
         return result
 
+    # TODO: move to DiscreteModel.
     def part_func_bruteforce(model):
         """Evaluates partition function in very inefficient way."""
         part_func = 0
@@ -130,6 +131,7 @@ class GraphModel(abc.ABC):
             part_func += model.evaluate(np.array(x))
         return part_func
 
+    # TODO: move to DiscreteModel.
     def max_likelihood_bruteforce(model):
         """Evaluates most likely state in a  very inefficient way."""
         best_state = None
