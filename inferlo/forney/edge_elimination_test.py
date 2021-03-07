@@ -11,7 +11,7 @@ from inferlo.testing import tree_potts_model, grid_potts_model
 
 
 def test_convolve_factor():
-    model = inferlo.GenericGraphModel(4, inferlo.DiscreteDomain.binary())
+    model = inferlo.DiscreteModel.create(4, 2)
     model[2].domain = inferlo.DiscreteDomain.range(3)
     factor1 = inferlo.FunctionFactor(model, [0, 1, 2],
                                      lambda x: x[0] + 10 * x[1] + 100 * x[2])
@@ -26,7 +26,7 @@ def test_convolve_factor():
 
 
 def test_convolve_two_factors():
-    model = inferlo.GenericGraphModel(3)
+    model = inferlo.DiscreteModel.create(3, 2)
     model[0].domain = inferlo.DiscreteDomain.range(4)
     model[1].domain = inferlo.DiscreteDomain.range(5)
     model[2].domain = inferlo.DiscreteDomain.range(6)
@@ -42,7 +42,7 @@ def test_convolve_two_factors():
 
 
 def test_convolve_two_factors_leaf():
-    model = inferlo.GenericGraphModel(2, inferlo.DiscreteDomain.binary())
+    model = inferlo.DiscreteModel.create(2, 2)
     factor1 = inferlo.DiscreteFactor(model, [0], np.array([1, 2]))
     factor2 = inferlo.DiscreteFactor(model, [0, 1], np.array([[3, 4], [5, 6]]))
 

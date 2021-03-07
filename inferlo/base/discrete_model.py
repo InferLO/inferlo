@@ -4,26 +4,31 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Iterable, List
 
-from inferlo.base.domain import RealDomain
+from inferlo.base.domain import DiscreteDomain
 from inferlo.base.graph_model import GraphModel
 from inferlo.base.variable import Variable
 
 if TYPE_CHECKING:
     from inferlo.base.factors.factor import Factor
+    from inferlo.base.factors.discrete_factor import DiscreteFactor
 
 
 class DiscreteModel(GraphModel):
-    """Graphical model in the most general form.
+    """Discrete Graphical model in the most general form.
 
-    Explicitly specified by list of factors.
+    Explicitly specified by lists of variables and factors. All variables are discrete.
     """
 
-    def __init__(self, num_variables: int, domain=None):
+    def __init__(self, variables: List[Variable]):
         super().__init__()
-        if domain is None:
-            domain = RealDomain()
-        self.variables = [Variable(idx, domain) for idx in range(num_variables)]
-        self.factors = []  # type: List[Factor]
+        self.variables = variables
+        self.factors = []  # type: List[DiscreteFactor]
+
+    @staticmethod
+    def create(num_variables: int, domain_size: int):
+        domain = DiscreteDomain.range(domain_size)
+        variables = [Variable(idx, domain) for idx in range(num_variables)]
+        return DiscreteModel(variables)
 
     def add_factor(self, factor: Factor):
         """Adds factor."""
@@ -37,10 +42,7 @@ class DiscreteModel(GraphModel):
     @staticmethod
     def from_model(model: GraphModel):
         """Creates copy of a given model."""
-        n = model.num_variables
-        new_model = DiscreteModel(n)
-        for i in range(n):
-            new_model.get_variable(i).domain = model.get_variable(i).domain
+        new_model = DiscreteModel(model.variables)
         for old_factor in model.get_factors():
             new_model.factors.append(old_factor.clone(new_model))
         return new_model

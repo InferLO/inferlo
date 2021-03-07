@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo import GenericGraphModel, DiscreteDomain
+from inferlo import DiscreteModel, DiscreteDomain
 from inferlo.base import DiscreteFactor
 from inferlo.pairwise import PairWiseFiniteModel
 from inferlo.base.inference_result import InferenceResult
@@ -122,7 +122,7 @@ def test_encode_state():
 
 
 def test_from_model():
-    model1 = GenericGraphModel(3)
+    model1 = DiscreteModel.create(3, 2)
     model1[0].domain = DiscreteDomain.binary()
     model1[2].domain = DiscreteDomain([0, 10])
     model1[1].domain = DiscreteDomain.range(3)

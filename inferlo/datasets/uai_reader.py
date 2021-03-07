@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0.
 import numpy as np
 
-from inferlo import GenericGraphModel, DiscreteDomain, DiscreteFactor
+from inferlo import DiscreteModel, DiscreteDomain, DiscreteFactor, Variable
 
 
 class UaiReader():
@@ -24,7 +24,7 @@ class UaiReader():
     def _next_int(self):
         return int(self._next_token())
 
-    def read_model(self, path) -> GenericGraphModel:
+    def read_model(self, path) -> DiscreteModel:
         """Reads Graphical model form a file in UAI format.
 
         Format description:
@@ -40,9 +40,11 @@ class UaiReader():
 
         # Read variables' cardinalities and initialize the model.
         num_vars = int(self._next_int())
-        model = GenericGraphModel(num_vars)
+        variables = []
         for i in range(num_vars):
-            model[i].domain = DiscreteDomain.range(int(self._next_token()))
+            domain = DiscreteDomain.range(int(self._next_token()))
+            variables.append(Variable(i, domain))
+        model = DiscreteModel(variables)
 
         # Read which variables are in which factors.
         num_factors = self._next_int()

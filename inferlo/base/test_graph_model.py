@@ -2,12 +2,12 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo import GenericGraphModel, DiscreteFactor, FunctionFactor
+from inferlo import DiscreteFactor, FunctionFactor, GraphModel, RealDomain
 from inferlo.base import DiscreteDomain
 
 
 def test_evaluate():
-    model = GenericGraphModel(num_variables=3)
+    model = GraphModel.create(3, RealDomain())
     model[0].domain = DiscreteDomain.binary()
     model[1].domain = DiscreteDomain.binary()
 

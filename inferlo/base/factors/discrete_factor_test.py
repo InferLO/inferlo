@@ -2,13 +2,12 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
 
-from inferlo import GenericGraphModel, FunctionFactor, \
-    DiscreteFactor
+from inferlo import FunctionFactor, DiscreteFactor, RealDomain, GraphModel
 from inferlo.base import DiscreteDomain
 
 
 def test_convert_from_function():
-    model = GenericGraphModel(5)
+    model = GraphModel.create(5, RealDomain())
     model[0].domain = DiscreteDomain([-1, 1])
     model[1].domain = DiscreteDomain([0, np.pi])
     model[3].domain = DiscreteDomain([0, 1, 2])

@@ -5,7 +5,7 @@ from typing import Callable, List
 import numpy as np
 
 from inferlo import GraphModel, DiscreteFactor, InferenceResult, \
-    GenericGraphModel
+    DiscreteModel
 from .belief_propagation import BeliefPropagation, IterativeJoinGraphPropagation
 from .binary_tree_elimination import BinaryTreeElimination
 from .bucket_elimination import BucketElimination, eliminate_variables
@@ -211,7 +211,7 @@ def weighted_mini_bucket_elimination(model: GraphModel,
 
 
 # TODO: Move to the new model class.
-def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
+def _restrict_model(model: DiscreteModel, var_id: int, val: int):
     """Makes a copy of model in which value of given variable is fixed."""
     assert 0 <= val < model.get_variable(var_id).domain.size()
     new_model = model.copy()
@@ -222,8 +222,8 @@ def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
 
 
 def get_marginals(
-        model: GenericGraphModel,
-        log_pf_algo: Callable[[GenericGraphModel], float],
+        model: DiscreteModel,
+        log_pf_algo: Callable[[DiscreteModel], float],
         var_ids: List[int] = None,
         skip_last: bool = False) -> InferenceResult:
     """Calculates marginal probabilities using provided algorithm for computing

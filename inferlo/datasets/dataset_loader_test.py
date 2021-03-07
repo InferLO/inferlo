@@ -3,7 +3,7 @@
 import numpy as np
 
 import inferlo
-from inferlo import GenericGraphModel
+from inferlo import DiscreteModel
 from inferlo.datasets import Dataset
 from inferlo.testing import grid_potts_model
 
@@ -40,7 +40,7 @@ def test_load_linkage():
 def test_custom_dataset():
     model = grid_potts_model(4, 3, al_size=4, seed=1)
     true_result = model.infer(algorithm='path_dp')
-    model = GenericGraphModel.from_model(model)
+    model = DiscreteModel.from_model(model)
     dataset = Dataset(model=model, true_log_pf=true_result.log_pf,
                       true_marginals=true_result.marg_prob, name='test_dataset')
     dataset_loader.save_custom_dataset(dataset)

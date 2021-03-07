@@ -23,6 +23,12 @@ class GraphModel(abc.ABC):
         self.variables = []  # type: List[Variable]
         self.factors = []  # type: List[Factor]
 
+    @staticmethod
+    def create(num_variables: int, domain: Domain):
+        model = GraphModel()
+        model.variables = [Variable(idx, domain) for idx in range(num_variables)]
+        return model
+
     def get_variable(self, idx: int) -> Variable:
         """Returns variable by its index."""
         return self.variables[idx]

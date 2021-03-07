@@ -4,7 +4,7 @@ import os
 
 import numpy as np
 
-from inferlo import PairWiseFiniteModel, GenericGraphModel, DiscreteDomain
+from inferlo import PairWiseFiniteModel, DiscreteModel, DiscreteDomain
 from inferlo.interop import LibDaiInterop
 from inferlo.testing import tree_potts_model, assert_results_close
 
@@ -55,7 +55,7 @@ def test_arbitrary_model():
     libdai = LibDaiInterop()
     if not libdai.is_libdai_ready():
         return
-    model = GenericGraphModel(5)
+    model = DiscreteModel.create(5, 2)
     model[0].domain = DiscreteDomain.binary()
     model[1].domain = DiscreteDomain.range(3)
     model[2].domain = DiscreteDomain.range(4)

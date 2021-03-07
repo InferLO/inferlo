@@ -5,7 +5,7 @@ from .base import (
     Factor,
     DiscreteFactor,
     FunctionFactor,
-    GenericGraphModel,
+    DiscreteModel,
     GraphModel,
     InferenceResult,
     RealDomain,

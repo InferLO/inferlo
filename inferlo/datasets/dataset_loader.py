@@ -8,7 +8,7 @@ from typing import Dict
 import numpy as np
 import wget
 
-from inferlo import GenericGraphModel
+from inferlo import DiscreteModel
 from inferlo.datasets.uai_reader import UaiReader
 from inferlo.datasets.uai_writer import UaiWriter
 
@@ -84,7 +84,7 @@ class Dataset:
         * ``true_log_pf`` - known true exact natural logarithm of the partition function.
         * ``name`` - name of the dataset.
     """
-    model: GenericGraphModel
+    model: DiscreteModel
     true_marginals: np.array
     true_log_pf: float
     name: str
