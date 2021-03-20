@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>inferlo.pairwise.junction_tree.infer_junction_tree &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.generic.inference.BackwardBucketElimination &mdash; InferLO 0.1.0 documentation</title>
   
 
   
@@ -40,8 +40,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="inferlo.pairwise.inference.mean_field.infer_mean_field" href="inferlo.pairwise.inference.mean_field.infer_mean_field.html" />
-    <link rel="prev" title="inferlo.pairwise.bruteforce.infer_bruteforce" href="inferlo.pairwise.bruteforce.infer_bruteforce.html" /> 
+    <link rel="next" title="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html" />
+    <link rel="prev" title="inferlo.generic.inference.inference" href="inferlo.generic.inference.inference.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -97,10 +97,10 @@
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.inference.html">inferlo.generic.inference.inference</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.BackwardBucketElimination.html">inferlo.generic.inference.BackwardBucketElimination</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.generic.inference.BackwardBucketElimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.bruteforce.infer_bruteforce.html">inferlo.pairwise.bruteforce.infer_bruteforce</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.pairwise.junction_tree.infer_junction_tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.junction_tree.infer_junction_tree.html">inferlo.pairwise.junction_tree.infer_junction_tree</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.mean_field.infer_mean_field.html">inferlo.pairwise.inference.mean_field.infer_mean_field</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.message_passing.infer_message_passing.html">inferlo.pairwise.inference.message_passing.infer_message_passing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.pairwise.inference.path_dp.infer_path_dp.html">inferlo.pairwise.inference.path_dp.infer_path_dp</a></li>
@@ -182,13 +182,13 @@
         
           <li><a href="../api.html">API Reference</a> &raquo;</li>
         
-      <li>inferlo.pairwise.junction_tree.infer_junction_tree</li>
+      <li>inferlo.generic.inference.BackwardBucketElimination</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/generated/inferlo.pairwise.junction_tree.infer_junction_tree.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/inferlo.generic.inference.BackwardBucketElimination.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -225,23 +225,48 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="inferlo-pairwise-junction-tree-infer-junction-tree">
-<h1>inferlo.pairwise.junction_tree.infer_junction_tree<a class="headerlink" href="#inferlo-pairwise-junction-tree-infer-junction-tree" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt id="inferlo.pairwise.junction_tree.infer_junction_tree">
-<code class="sig-prename descclassname"><span class="pre">inferlo.pairwise.junction_tree.</span></code><code class="sig-name descname"><span class="pre">infer_junction_tree</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.inference_result.InferenceResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/junction_tree.html#infer_junction_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.junction_tree.infer_junction_tree" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs inference using Junction Tree decomposition.</p>
-<p>Decomposes graph into junction tree, builds equivalent model on that tree,
-performs inference for the new model and restores answer for the original
-model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> – Model, for which to perform inference.</p></li>
-<li><p><strong>result</strong> – InferenceResult object.</p></li>
-</ul>
+<div class="section" id="inferlo-generic-inference-backwardbucketelimination">
+<h1>inferlo.generic.inference.BackwardBucketElimination<a class="headerlink" href="#inferlo-generic-inference-backwardbucketelimination" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="inferlo.generic.inference.BackwardBucketElimination">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.</span></code><code class="sig-name descname"><span class="pre">BackwardBucketElimination</span></code><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backward Bucket Elimination algorithm.</p>
+<p>This is the regular Bucket Elimination algorithm followed by a “backward pass” for computing
+marginal probabilities.</p>
+<p>Implemented as described in [1] (pages 31-32), code uses notation from [1].</p>
+<dl class="simple">
+<dt>References</dt><dd><p>[1] Qiang Liu.
+Reasoning and Decisions in Probabilistic Graphical Models – A Unified Framework. 2014.
+<a class="reference external" href="http://sli.ics.uci.edu/pmwiki/uploads/Group/liu_phd.pdf">http://sli.ics.uci.edu/pmwiki/uploads/Group/liu_phd.pdf</a></p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="inferlo.generic.inference.BackwardBucketElimination.__init__">
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.generic.inference.BackwardBucketElimination.__init__" title="inferlo.generic.inference.BackwardBucketElimination.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#inferlo.generic.inference.BackwardBucketElimination.infer" title="inferlo.generic.inference.BackwardBucketElimination.infer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">infer</span></code></a>(model)</p></td>
+<td><p>Performs inference for graphical model.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="inferlo.generic.inference.BackwardBucketElimination.infer">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.generic_graph_model.GenericGraphModel</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.inference_result.InferenceResult</span><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.infer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs inference for graphical model.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -252,8 +277,8 @@ model.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="inferlo.pairwise.inference.mean_field.infer_mean_field.html" class="btn btn-neutral float-right" title="inferlo.pairwise.inference.mean_field.infer_mean_field" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="inferlo.pairwise.bruteforce.infer_bruteforce.html" class="btn btn-neutral float-left" title="inferlo.pairwise.bruteforce.infer_bruteforce" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html" class="btn btn-neutral float-right" title="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inferlo.generic.inference.inference.html" class="btn btn-neutral float-left" title="inferlo.generic.inference.inference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

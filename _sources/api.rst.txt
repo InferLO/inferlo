@@ -60,6 +60,7 @@ Inference algorithms
     inferlo.generic.libdai_bp.BP
     inferlo.generic.message_passing.infer_generic_message_passing
     inferlo.generic.inference.inference
+    inferlo.generic.inference.BackwardBucketElimination
     inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
     inferlo.pairwise.bruteforce.infer_bruteforce
     inferlo.pairwise.junction_tree.infer_junction_tree

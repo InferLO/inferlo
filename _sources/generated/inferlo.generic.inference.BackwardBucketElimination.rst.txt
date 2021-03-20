@@ -1,0 +1,23 @@
+﻿inferlo.generic.inference.BackwardBucketElimination
+===================================================
+
+.. currentmodule:: inferlo.generic.inference
+
+.. autoclass:: BackwardBucketElimination
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BackwardBucketElimination.__init__
+      ~BackwardBucketElimination.infer
+   
+   
+
+   
+   
+   
