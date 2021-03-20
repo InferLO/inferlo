@@ -7,10 +7,10 @@ from inferlo.base.inference_result import marg_probs_to_array
 
 
 class BackwardBucketElimination:
-    """Backwards Bucket Elimination algorithm.
+    """Backward Bucket Elimination algorithm.
 
-    This is regular Bucket Elimination algorithm followed by a "backward" for computing marginal
-    probabilities.
+    This is the regular Bucket Elimination algorithm followed by a "backward pass" for computing
+    marginal probabilities.
 
     Implemented as described in [1] (pages 31-32), code uses notation from [1].
 
@@ -21,7 +21,7 @@ class BackwardBucketElimination:
     """
 
     @staticmethod
-    def infer( model: GenericGraphModel) -> InferenceResult:
+    def infer(model: GenericGraphModel) -> InferenceResult:
         """Performs inference for graphical model."""
         model = _convert(model)
         elimination_order = model.variables
@@ -29,7 +29,7 @@ class BackwardBucketElimination:
         new_factors = dict()
         marg_prob = dict()  # Factors - marg prob for bucket corresponding to variable.
         i_to_j = dict()  # var_id -> j (id to whose bucket received new factor for var_id).
-        c = dict()
+        c = dict()  # For every bucket - set of variables on which it depends.
 
         for var_id in elimination_order:
             # Find the bucket, and store it.
