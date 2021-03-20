@@ -9,6 +9,7 @@ from .inference import (belief_propagation,
                         mini_bucket_elimination_bt,
                         mini_bucket_renormalization_bt,
                         weighted_mini_bucket_elimination)
+from .backward_bucket_elimination import BackwardBucketElimination
 
 """
 Some code in this directory was copied from

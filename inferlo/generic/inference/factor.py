@@ -368,6 +368,9 @@ class Factor:
         else:
             return self.product(1 / other, inplace=False)
 
+    def __truediv__(self, other):
+        return self.__div__(other)
+
     def __rmul__(self, other):
         return self.__mul__(other)
 
