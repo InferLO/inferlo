@@ -27,3 +27,6 @@ docs/generated
 *.ipynb
 !/docs/tutorials/*.ipynb
 !/docs/experiments/*.ipynb
+
+# Virtual environment.
+venv
