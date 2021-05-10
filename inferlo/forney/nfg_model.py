@@ -213,7 +213,6 @@ class NormalFactorGraphModel(GraphModel):
                        range(self.num_variables)}
         nx.draw_networkx(graph, pos, ax,
                          labels=node_labels,
-                         node_labels=True,
                          node_shape='s',
                          node_color='lightgreen',
                          edge_color='red')

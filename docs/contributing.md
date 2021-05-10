@@ -159,3 +159,19 @@ should be keyword arguments with default values.
 
 Then add call to your function from a method on model class. It should be 
 conditioned on user passing your algorithm name as ```algorithm``` argument.
+
+### Release management
+
+We follow [Semantic versioning](https://semver.org/) rules. Currently 
+InferLO is in Alpha, which means major version is "0", and we keep our right to
+make any breaking changes.
+
+There is no fixed release schedule, but we try to push new minor version any
+time new useful functionality was added.
+
+Releases are pushed manually. To push a new release:
+
+1. Change version in setup.py. 
+2. Go to "Actions", click "Upload Python Package", then "Run workflow". 
+3. Go to "Releases", create new release with the same version and
+add releases notes describing what are new features since the last release.
