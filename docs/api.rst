@@ -58,7 +58,6 @@ Inference algorithms
 
     inferlo.forney.edge_elimination.infer_edge_elimination
     inferlo.generic.libdai_bp.BP
-    inferlo.generic.message_passing.infer_generic_message_passing
     inferlo.generic.inference.inference
     inferlo.generic.inference.BackwardBucketElimination
     inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP
