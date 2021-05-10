@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -95,7 +98,6 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="inferlo.forney.edge_elimination.infer_edge_elimination.html">inferlo.forney.edge_elimination.infer_edge_elimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.inference.html">inferlo.generic.inference.inference</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.BackwardBucketElimination.html">inferlo.generic.inference.BackwardBucketElimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
@@ -228,8 +230,8 @@
 <div class="section" id="inferlo-pairwise-inference-message-passing-infer-message-passing">
 <h1>inferlo.pairwise.inference.message_passing.infer_message_passing<a class="headerlink" href="#inferlo-pairwise-inference-message-passing-infer-message-passing" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="inferlo.pairwise.inference.message_passing.infer_message_passing">
-<code class="sig-prename descclassname"><span class="pre">inferlo.pairwise.inference.message_passing.</span></code><code class="sig-name descname"><span class="pre">infer_message_passing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PairWiseFiniteModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">InferenceResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/inference/message_passing.html#infer_message_passing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.inference.message_passing.infer_message_passing" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.pairwise.inference.message_passing.infer_message_passing">
+<span class="sig-prename descclassname"><span class="pre">inferlo.pairwise.inference.message_passing.</span></span><span class="sig-name descname"><span class="pre">infer_message_passing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PairWiseFiniteModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">InferenceResult</span><a class="reference internal" href="../_modules/inferlo/pairwise/inference/message_passing.html#infer_message_passing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.inference.message_passing.infer_message_passing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inference with Message Passing.</p>
 <dl class="simple">
 <dt>For acyclic graph returns exact partition function and marginal</dt><dd><p>probabilities. For graph with loops may return good approximation to

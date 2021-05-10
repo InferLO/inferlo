@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,12 +32,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -465,7 +468,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Don&#39;t run this cell.</span>
+<span></span><span class="c1"># Don&#39;t run this cell unless you are InferLO developer and this notebook is in inferlo/docs/tutorials.</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -739,10 +742,10 @@ array([[[  2.,   3.,   4.],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;log_pf&#39;: 34.12701627818652, &#39;marg_prob&#39;: array([[0.88076347, 0.11923653],
+InferenceResult(log_pf=34.12701627818652, marg_prob=array([[0.88076347, 0.11923653],
        [0.11923653, 0.88076347],
        [0.11923653, 0.88076347],
-       [0.11923653, 0.88076347]])}
+       [0.11923653, 0.88076347]]))
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -760,10 +763,10 @@ array([[[  2.,   3.,   4.],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;log_pf&#39;: 34.12701627818652, &#39;marg_prob&#39;: array([[0.88076347, 0.11923653],
+InferenceResult(log_pf=34.12701627818652, marg_prob=array([[0.88076347, 0.11923653],
        [0.11923653, 0.88076347],
        [0.11923653, 0.88076347],
-       [0.11923653, 0.88076347]])}
+       [0.11923653, 0.88076347]]))
 </pre></div></div>
 </div>
 <p>Note that we return not parttion function, but its logarithm, because it itself may be so high that it doesn’t fit in float data type.</p>
@@ -783,7 +786,7 @@ array([[[  2.,   3.,   4.],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([0, 1, 1, 1])
+array([0, 1, 1, 1], dtype=int32)
 </pre></div></div>
 </div>
 <p>Yet another task is sampling - sampling realizations of distribution represented by the model. You can specify number of samples and get that many independent samples.</p>
@@ -803,8 +806,8 @@ array([0, 1, 1, 1])
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 array([[0, 1, 1, 1],
-       [1, 0, 0, 0],
-       [0, 1, 1, 1]])
+       [0, 1, 1, 1],
+       [0, 1, 1, 1]], dtype=int32)
 </pre></div></div>
 </div>
 </div>
@@ -816,7 +819,7 @@ array([[0, 1, 1, 1],
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">inferlo.pairwise.testing</span> <span class="kn">import</span> <span class="n">grid_potts_model</span>
+<span></span><span class="kn">from</span> <span class="nn">inferlo.testing</span> <span class="kn">import</span> <span class="n">grid_potts_model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">grid_potts_model</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;path_dp&#39;</span><span class="p">)</span>
@@ -870,8 +873,8 @@ array([[0, 1, 1, 1],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-148.8450089880952
-[0.33744495 0.00197638 0.66057867]
+146.0209085386057
+[0.27666686 0.00299012 0.72034302]
 </pre></div></div>
 </div>
 <p>First answer is guaranteed to be exact.</p>
@@ -887,7 +890,7 @@ array([[0, 1, 1, 1],
 <p>Below we demonstrate how the conversion algorithm works. We build generic model with 5 variables and 4 factors. Then we convert it to equivalent Normal Factor Graph model.</p>
 <p>We plot factor graph for initial model, Normal Factor graph and factor graph for the new model.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -933,7 +936,7 @@ array([[0, 1, 1, 1],
 <h2>Three graphs of a model<a class="headerlink" href="#Three-graphs-of-a-model" title="Permalink to this headline">¶</a></h2>
 <p>Below we build a simple model which is both pairwise and NFG model, and show 3 graphs for it: pairwise graph, factor graph and Normal Factor (edge-variable) graph.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -218,12 +221,12 @@
 <div class="section" id="inferlo-factor">
 <h1>inferlo.Factor<a class="headerlink" href="#inferlo-factor" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="inferlo.Factor">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">Factor</span></code><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">Factor</span></span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract factor - function of one or more random variables.</p>
 <dl class="py method">
-<dt id="inferlo.Factor.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -265,26 +268,26 @@ factor depends.</p></li>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="inferlo.Factor.clone">
-<code class="sig-name descname"><span class="pre">clone</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.clone" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.clone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.clone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the same factor, but pointing to new model.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.Factor.get_name">
-<code class="sig-name descname"><span class="pre">get_name</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.get_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of this factor.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.Factor.is_discrete">
-<code class="sig-name descname"><span class="pre">is_discrete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.is_discrete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.is_discrete" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor.is_discrete">
+<span class="sig-name descname"><span class="pre">is_discrete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.is_discrete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.is_discrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether all  variables in the factor are discrete.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.Factor.value">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.value" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.Factor.value">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/factor.html#Factor.value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.Factor.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Value of function inside this factor in given point.</p>
 </dd></dl>
 

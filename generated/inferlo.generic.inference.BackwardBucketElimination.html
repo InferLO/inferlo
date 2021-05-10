@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -95,7 +98,6 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../api.html#inference-algorithms">Inference algorithms</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="inferlo.forney.edge_elimination.infer_edge_elimination.html">inferlo.forney.edge_elimination.infer_edge_elimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.libdai_bp.BP.html">inferlo.generic.libdai_bp.BP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="inferlo.generic.message_passing.infer_generic_message_passing.html">inferlo.generic.message_passing.infer_generic_message_passing</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.generic.inference.inference.html">inferlo.generic.inference.inference</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">inferlo.generic.inference.BackwardBucketElimination</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</a></li>
@@ -228,8 +230,8 @@
 <div class="section" id="inferlo-generic-inference-backwardbucketelimination">
 <h1>inferlo.generic.inference.BackwardBucketElimination<a class="headerlink" href="#inferlo-generic-inference-backwardbucketelimination" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="inferlo.generic.inference.BackwardBucketElimination">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.</span></code><code class="sig-name descname"><span class="pre">BackwardBucketElimination</span></code><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.generic.inference.BackwardBucketElimination">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.</span></span><span class="sig-name descname"><span class="pre">BackwardBucketElimination</span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination" title="Permalink to this definition">¶</a></dt>
 <dd><p>Backward Bucket Elimination algorithm.</p>
 <p>This is the regular Bucket Elimination algorithm followed by a “backward pass” for computing
 marginal probabilities.</p>
@@ -241,8 +243,8 @@ Reasoning and Decisions in Probabilistic Graphical Models – A Unified Framewor
 </dd>
 </dl>
 <dl class="py method">
-<dt id="inferlo.generic.inference.BackwardBucketElimination.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.generic.inference.BackwardBucketElimination.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
@@ -262,8 +264,8 @@ Reasoning and Decisions in Probabilistic Graphical Models – A Unified Framewor
 </tbody>
 </table>
 <dl class="py method">
-<dt id="inferlo.generic.inference.BackwardBucketElimination.infer">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">inferlo.base.generic_graph_model.GenericGraphModel</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">inferlo.base.inference_result.InferenceResult</span><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.infer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.generic.inference.BackwardBucketElimination.infer">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.base.generic_graph_model.GenericGraphModel"><span class="pre">inferlo.base.generic_graph_model.GenericGraphModel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">inferlo.base.inference_result.InferenceResult</span></a><a class="reference internal" href="../_modules/inferlo/generic/inference/backward_bucket_elimination.html#BackwardBucketElimination.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.BackwardBucketElimination.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs inference for graphical model.</p>
 </dd></dl>
 

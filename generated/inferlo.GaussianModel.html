@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -215,8 +218,8 @@
 <div class="section" id="inferlo-gaussianmodel">
 <h1>inferlo.GaussianModel<a class="headerlink" href="#inferlo-gaussianmodel" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="inferlo.GaussianModel">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">GaussianModel</span></code><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.GaussianModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">GaussianModel</span></span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gaussian graphical model</p>
 <p>A Gaussian graphical model is defined by an undirected graph G = (V;E),
 where V is the set of nodes and E is the set of edges,
@@ -229,8 +232,8 @@ respect the graph G: if {i,j} not in E, then J_{i,j} = 0</p>
 Dmitry M. Malioutov, Jason K. Johnson, Alan S. Willsky :
 <a class="reference external" href="http://ssg.mit.edu/group/willsky/publ_pdfs/185_pub_MLR.pdf">http://ssg.mit.edu/group/willsky/publ_pdfs/185_pub_MLR.pdf</a></p>
 <dl class="py method">
-<dt id="inferlo.GaussianModel.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.GaussianModel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">J</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -328,8 +331,8 @@ Dmitry M. Malioutov, Jason K. Johnson, Alan S. Willsky :
 </tbody>
 </table>
 <dl class="py method">
-<dt id="inferlo.GaussianModel.infer">
-<code class="sig-name descname"><span class="pre">infer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.infer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.GaussianModel.infer">
+<span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/gaussian/gaussian_model.html#GaussianModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GaussianModel.infer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs inference.</p>
 </dd></dl>
 

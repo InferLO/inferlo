@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -218,12 +221,12 @@
 <div class="section" id="inferlo-discretedomain">
 <h1>inferlo.DiscreteDomain<a class="headerlink" href="#inferlo-discretedomain" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="inferlo.DiscreteDomain">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">inferlo.</span></code><code class="sig-name descname"><span class="pre">DiscreteDomain</span></code><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">DiscreteDomain</span></span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Domain consisting of finite set of numbers.</p>
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
@@ -255,32 +258,32 @@
 </tbody>
 </table>
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.binary">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">binary</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.binary" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.binary">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">binary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates domain with two values 0 and 1.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.get_value_index">
-<code class="sig-name descname"><span class="pre">get_value_index</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.get_value_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.get_value_index" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.get_value_index">
+<span class="sig-name descname"><span class="pre">get_value_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.get_value_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.get_value_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets number of given value in list of al values in domain.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.is_discrete">
-<code class="sig-name descname"><span class="pre">is_discrete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.is_discrete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.is_discrete" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.is_discrete">
+<span class="sig-name descname"><span class="pre">is_discrete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.is_discrete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.is_discrete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the domain is discrete.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.range">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">range</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.range" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.range">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates domain with integer values from 0 to n-1.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="inferlo.DiscreteDomain.size">
-<code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.size" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="inferlo.DiscreteDomain.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/domain.html#DiscreteDomain.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.DiscreteDomain.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cardinality of the domain.</p>
 </dd></dl>
 

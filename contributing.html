@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -109,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#code-style">Code style</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-new-algorithms">Adding new algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-management">Release management</a></li>
 </ul>
 </li>
 </ul>
@@ -332,6 +336,21 @@ as first parameter. If your algorithm has configurable parameters, they
 should be keyword arguments with default values.</p>
 <p>Then add call to your function from a method on model class. It should be 
 conditioned on user passing your algorithm name as <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> argument.</p>
+</div>
+<div class="section" id="release-management">
+<h2>Release management<a class="headerlink" href="#release-management" title="Permalink to this headline">¶</a></h2>
+<p>We follow <a class="reference external" href="https://semver.org/">Semantic versioning</a> rules. Currently 
+InferLO is in Alpha, which means major version is “0”, and we keep our right to
+make any breaking changes.</p>
+<p>There is no fixed release schedule, but we try to push new minor version any
+time new useful functionality was added.</p>
+<p>Releases are pushed manually. To push a new release:</p>
+<ol class="simple">
+<li><p>Change version in setup.py. </p></li>
+<li><p>Go to “Actions”, click “Upload Python Package”, then “Run workflow”. </p></li>
+<li><p>Go to “Releases”, create new release with the same version and
+add releases notes describing what are new features since the last release.</p></li>
+</ol>
 </div>
 </div>
 
