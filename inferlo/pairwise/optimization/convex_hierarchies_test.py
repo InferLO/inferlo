@@ -25,7 +25,8 @@ def test_line_potts_4x3_sherali_adams():
 
 @pytest.mark.skipif(sys.platform == "win32",
                     reason="SCS is unstable")
-@pytest.mark.skip(reason="Requires blas+lapack which are not automatically installed with cvxpy. TODO: fix this.")
+@pytest.mark.skip(reason="Requires blas+lapack which are not automatically installed with cvxpy. "
+                         "TODO: fix this.")
 def test_line_potts_4x2_lasserre():
     """
     Second step of Lasserre hierarchy is exact on line graph.
