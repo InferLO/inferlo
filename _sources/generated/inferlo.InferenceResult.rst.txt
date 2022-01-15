@@ -19,4 +19,11 @@
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~InferenceResult.log_pf
+      ~InferenceResult.marg_prob
+   
    

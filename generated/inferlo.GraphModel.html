@@ -1,75 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>inferlo.GraphModel &mdash; InferLO 0.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="inferlo.NormalFactorGraphModel" href="inferlo.NormalFactorGraphModel.html" />
     <link rel="prev" title="inferlo.GenericGraphModel" href="inferlo.GenericGraphModel.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> InferLO
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
@@ -109,88 +59,46 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Tutorials</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Experiments</span></p>
+<p class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/marginal_probabilities.html">Marginal Probabilities with Elimination algorithms</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">InferLO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../api.html">API Reference</a> &raquo;</li>
-        
       <li>inferlo.GraphModel</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/generated/inferlo.GraphModel.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -215,15 +123,15 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="inferlo-graphmodel">
-<h1>inferlo.GraphModel<a class="headerlink" href="#inferlo-graphmodel" title="Permalink to this headline">¶</a></h1>
+<section id="inferlo-graphmodel">
+<h1>inferlo.GraphModel<a class="headerlink" href="#inferlo-graphmodel" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="inferlo.GraphModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">GraphModel</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">GraphModel</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel" title="Permalink to this definition"></a></dt>
 <dd><p>Abstract class representing any graphical model.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_variables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain"><span class="pre">Domain</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.__init__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain"><span class="pre">Domain</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.__init__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -295,19 +203,19 @@
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.add_factor">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">add_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.add_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.add_factor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.add_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.add_factor" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a factor to the model.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.draw_factor_graph">
-<span class="sig-name descname"><span class="pre">draw_factor_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.draw_factor_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.draw_factor_graph" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">draw_factor_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.draw_factor_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.draw_factor_graph" title="Permalink to this definition"></a></dt>
 <dd><p>Draws the factor graph.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.evaluate">
-<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.evaluate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.evaluate" title="Permalink to this definition"></a></dt>
 <dd><p>Returns value of non-normalized pdf in point.</p>
 <p>In other words, just substitutes values into factors and multiplies
 them.</p>
@@ -315,7 +223,7 @@ them.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_factor_graph">
-<span class="sig-name descname"><span class="pre">get_factor_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_factor_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_factor_graph" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_factor_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">networkx.classes.graph.Graph</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_factor_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_factor_graph" title="Permalink to this definition"></a></dt>
 <dd><p>Builds factor graph for the model.</p>
 <p>Factor graph is a bipartite graph with variables in one part and
 factors in other graph. Edge denotes that factor depends on variable.</p>
@@ -323,19 +231,19 @@ factors in other graph. Edge denotes that factor depends on variable.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_factors">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_factors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_factors" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_factors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><span class="pre">Factor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_factors" title="Permalink to this definition"></a></dt>
 <dd><p>Returns all factors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_max_domain_size">
-<span class="sig-name descname"><span class="pre">get_max_domain_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_max_domain_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_max_domain_size" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_max_domain_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_max_domain_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_max_domain_size" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the biggest domain size over all variables.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_symbolic_variables">
-<span class="sig-name descname"><span class="pre">get_symbolic_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.FunctionFactor.html#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">inferlo.base.factors.function_factor.FunctionFactor</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_symbolic_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_symbolic_variables" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_symbolic_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.FunctionFactor.html#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">inferlo.base.factors.function_factor.FunctionFactor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_symbolic_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_symbolic_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Prepares variables for usage in expressions.</p>
 <p>Returns lists of trivial <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code> s, each of them
 representing a factor on one variable with identity function.
@@ -345,96 +253,79 @@ another <code class="docutils literal notranslate"><span class="pre">FunctionFac
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_variable">
-<span class="sig-name descname"><span class="pre">get_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="inferlo.Variable.html#inferlo.Variable" title="inferlo.base.variable.Variable"><span class="pre">inferlo.base.variable.Variable</span></a><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_variable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.Variable.html#inferlo.Variable" title="inferlo.base.variable.Variable"><span class="pre">inferlo.base.variable.Variable</span></a></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_variable" title="Permalink to this definition"></a></dt>
 <dd><p>Returns variable by its index.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.get_variables">
-<span class="sig-name descname"><span class="pre">get_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Variable.html#inferlo.Variable" title="inferlo.base.variable.Variable"><span class="pre">inferlo.base.variable.Variable</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_variables" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.Variable.html#inferlo.Variable" title="inferlo.base.variable.Variable"><span class="pre">inferlo.base.variable.Variable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.get_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.get_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Returns all variables.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.infer">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.infer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.infer" title="Permalink to this definition"></a></dt>
 <dd><p>Performs inference.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.max_likelihood">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">max_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.max_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.max_likelihood" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.max_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.max_likelihood" title="Permalink to this definition"></a></dt>
 <dd><p>Finds the most probable state.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.max_likelihood_bruteforce">
-<span class="sig-name descname"><span class="pre">max_likelihood_bruteforce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.max_likelihood_bruteforce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.max_likelihood_bruteforce" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">max_likelihood_bruteforce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.max_likelihood_bruteforce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.max_likelihood_bruteforce" title="Permalink to this definition"></a></dt>
 <dd><p>Evaluates most likely state in a  very inefficient way.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.part_func_bruteforce">
-<span class="sig-name descname"><span class="pre">part_func_bruteforce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.part_func_bruteforce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.part_func_bruteforce" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">part_func_bruteforce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.part_func_bruteforce"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.part_func_bruteforce" title="Permalink to this definition"></a></dt>
 <dd><p>Evaluates partition function in very inefficient way.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.GraphModel.sample">
-<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.sample" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/inferlo/base/graph_model.html#GraphModel.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.GraphModel.sample" title="Permalink to this definition"></a></dt>
 <dd><p>Generates samples.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="inferlo.NormalFactorGraphModel.html" class="btn btn-neutral float-right" title="inferlo.NormalFactorGraphModel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="inferlo.GenericGraphModel.html" class="btn btn-neutral float-left" title="inferlo.GenericGraphModel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inferlo.NormalFactorGraphModel.html" class="btn btn-neutral float-right" title="inferlo.NormalFactorGraphModel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, InferLO developers.
-
-    </p>
+    <p>&#169; Copyright 2020, InferLO developers.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

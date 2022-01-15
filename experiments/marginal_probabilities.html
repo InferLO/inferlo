@@ -1,77 +1,38 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Marginal Probabilities with Elimination algorithms &mdash; InferLO 0.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Contributing to InferLO" href="../contributing.html" />
     <link rel="prev" title="Bucket renormalization" href="bucket_renormalization.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> InferLO
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -79,27 +40,16 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Tutorials</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Experiments</span></p>
+<p class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bucket_renormalization.html">Bucket renormalization</a></li>
@@ -114,76 +64,35 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">InferLO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Marginal Probabilities with Elimination algorithms</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/experiments/marginal_probabilities.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -394,7 +303,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
@@ -454,15 +363,15 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Marginal-Probabilities-with-Elimination-algorithms">
-<h1>Marginal Probabilities with Elimination algorithms<a class="headerlink" href="#Marginal-Probabilities-with-Elimination-algorithms" title="Permalink to this headline">¶</a></h1>
+<section id="Marginal-Probabilities-with-Elimination-algorithms">
+<h1>Marginal Probabilities with Elimination algorithms<a class="headerlink" href="#Marginal-Probabilities-with-Elimination-algorithms" title="Permalink to this headline"></a></h1>
 <p>Dmytro Fedoriaka, February-March 2021</p>
 <p>This notebook is experimental part of a paper on computing marginal probabilities for probabilistic Graphical Models using Elimination Algorithms. The paper is currently work in progress.</p>
-<div class="section" id="Experiments">
-<h2>Experiments<a class="headerlink" href="#Experiments" title="Permalink to this headline">¶</a></h2>
+<section id="Experiments">
+<h2>Experiments<a class="headerlink" href="#Experiments" title="Permalink to this headline"></a></h2>
 <p>We run a series of experiments to compare accuracy and running time of proposed algorithms with some existing algorithms for computing marginal probabilities.</p>
-<div class="section" id="Algorithms">
-<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline">¶</a></h3>
+<section id="Algorithms">
+<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline"></a></h3>
 <p>We run the following algorithms:</p>
 <ul class="simple">
 <li><p>MBE-TR - Mini-Bucket elimination + Trivial Reduction (with varying ibound);</p></li>
@@ -480,9 +389,9 @@ div.rendered_html tbody tr:hover {
 <li><p>Their running time omn big datasets is so big it’s impractical;</p></li>
 <li><p>On synthetic Ising Grid datasets BE + Trivial Reduction gives misleadingly fast results because of special structure of the model, which womn’t happen in the general case. We used this to get exact marginal probabilities for Experiment 1.</p></li>
 </ul>
-</div>
-<div class="section" id="Accuracy-metric">
-<h3>Accuracy metric<a class="headerlink" href="#Accuracy-metric" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Accuracy-metric">
+<h3>Accuracy metric<a class="headerlink" href="#Accuracy-metric" title="Permalink to this headline"></a></h3>
 <p>We used the mean Kullback-Leibler divergence as accuracy metric:</p>
 <div class="math notranslate nohighlight">
 \[\text{MKLD}(p) = \frac{1}{n} \sum_{i=1}^{n} \sum_{j=1}^{d_i} p_{i,j} \ln \left(\frac{p_{i,j}}{\max(\hat{p}_{i,j},10^{-10})}\right),\]</div>
@@ -492,8 +401,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 </pre></div>
 </div>
@@ -502,8 +410,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
@@ -530,9 +437,9 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Experiment-1-:-Ising-Grid.">
-<h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Experiment-1-:-Ising-Grid.">
+<h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Permalink to this headline"></a></h3>
 <p>We generate grid graph of size <span class="math notranslate nohighlight">\(13 \times h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is in range <span class="math notranslate nohighlight">\([1, 30]\)</span>. On this graph we build a syntetic Ising model ($x_i = { -1, 1 } $):</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{x}) = \exp \left(\sum_{i \in \mathcal{V}} \phi_i x_i + \sum_{(i,j) \in \mathcal{E}} \phi_{ij} x_i x_j \right).\]</div>
@@ -544,8 +451,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">ising_grid_dataset</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ising_grid_dataset</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;ising_grid_</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">_seed=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">loader</span><span class="o">.</span><span class="n">custom_dataset_exists</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_custom_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
@@ -619,8 +525,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax_mkld</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
@@ -662,8 +567,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -683,8 +587,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax1</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
@@ -720,8 +623,7 @@ div.rendered_html tbody tr:hover {
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-</pre></div>
+<br/></pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -734,9 +636,9 @@ div.rendered_html tbody tr:hover {
 <p>For Trivial Reduction algorithms, as expected, relative running time is close to line y=2x, that is for model with N variables we call base algorithm <span class="math notranslate nohighlight">\(2 \times N\)</span> times (2 because variables are binary).</p>
 <p>For Binary Tree Elimination we got results even better then expected (if we ignore results for small models). We expected it to be like <span class="math notranslate nohighlight">\(y=\log_2(x)\)</span>, and <span class="math notranslate nohighlight">\(log_2(13 \times 30) \approx 9\)</span>, but it is almost constant (2 for MBE-BT and 3 dor MBR-BT).</p>
 <p>This can be explained as follows: as model becomes smaller, eliminations are cheaper, and most eliminations are done on small models. For example, <span class="math notranslate nohighlight">\(n (log_2(n)-1)\)</span> eliminations are done on model having less than <span class="math notranslate nohighlight">\(n/2\)</span> variables.</p>
-</div>
-<div class="section" id="Experiment-2:-UAI-datasets-with-varying-ibound.">
-<h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="Experiment-2:-UAI-datasets-with-varying-ibound.">
+<h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this headline"></a></h3>
 <p>We took 10 linkage datasets from UAI competitions. For each of them ran:</p>
 <ul class="simple">
 <li><p>MBE-BT with ibound in range [4, 15].</p></li>
@@ -750,8 +652,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_uai_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
@@ -840,56 +741,39 @@ div.rendered_html tbody tr:hover {
 <img alt="../_images/experiments_marginal_probabilities_12_0.png" src="../_images/experiments_marginal_probabilities_12_0.png" />
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing to InferLO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="bucket_renormalization.html" class="btn btn-neutral float-left" title="Bucket renormalization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contributing to InferLO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, InferLO developers.
-
-    </p>
+    <p>&#169; Copyright 2020, InferLO developers.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

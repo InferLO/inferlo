@@ -1,75 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>inferlo.generic.libdai_bp.BP &mdash; InferLO 0.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="inferlo.generic.inference.inference" href="inferlo.generic.inference.inference.html" />
     <link rel="prev" title="inferlo.forney.edge_elimination.infer_edge_elimination" href="inferlo.forney.edge_elimination.infer_edge_elimination.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> InferLO
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,18 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing InferLO</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
@@ -121,88 +71,46 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Tutorials</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/getting_started.html">Getting started with InferLO</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Experiments</span></p>
+<p class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/inferlo_libdai.html">Inferlo and libDAI comparison</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/bucket_renormalization.html">Bucket renormalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../experiments/marginal_probabilities.html">Marginal Probabilities with Elimination algorithms</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developer documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to InferLO</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">InferLO</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../api.html">API Reference</a> &raquo;</li>
-        
       <li>inferlo.generic.libdai_bp.BP</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/generated/inferlo.generic.libdai_bp.BP.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -227,11 +135,11 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="inferlo-generic-libdai-bp-bp">
-<h1>inferlo.generic.libdai_bp.BP<a class="headerlink" href="#inferlo-generic-libdai-bp-bp" title="Permalink to this headline">¶</a></h1>
+<section id="inferlo-generic-libdai-bp-bp">
+<h1>inferlo.generic.libdai_bp.BP<a class="headerlink" href="#inferlo-generic-libdai-bp-bp" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">inferlo.generic.libdai_bp.</span></span><span class="sig-name descname"><span class="pre">BP</span></span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.generic.libdai_bp.</span></span><span class="sig-name descname"><span class="pre">BP</span></span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP" title="Permalink to this definition"></a></dt>
 <dd><p>Belief propagation algorithm, equivalent to dai::BP.</p>
 <p>This class is ported from libDAI’s dai::BP class. It runs belief
 propagation algorithm for graphical model with discrete variables with
@@ -240,9 +148,8 @@ arbitrary factor graph.</p>
 <p>Use BP.infer() to perform inference.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">GraphModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GraphModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">props</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -252,7 +159,7 @@ arbitrary factor graph.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.generic.libdai_bp.BP.__init__" title="inferlo.generic.libdai_bp.BP.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, props)</p></td>
-<td><p>Initialize self.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#inferlo.generic.libdai_bp.BP.find_max_residual" title="inferlo.generic.libdai_bp.BP.find_max_residual"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_max_residual</span></code></a>()</p></td>
 <td><p>Find max residual.</p></td>
@@ -276,13 +183,13 @@ arbitrary factor graph.</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.find_max_residual">
-<span class="sig-name descname"><span class="pre">find_max_residual</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.find_max_residual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.find_max_residual" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">find_max_residual</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.find_max_residual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.find_max_residual" title="Permalink to this definition"></a></dt>
 <dd><p>Find max residual.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.infer">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.infer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">infer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.infer" title="Permalink to this definition"></a></dt>
 <dd><p>Runs inference BP algorithm for given model.</p>
 <p>Supports all options which libdai::BP supports. Refer to libDAI
 documentation for options descritpion.</p>
@@ -290,78 +197,61 @@ documentation for options descritpion.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.init" title="Permalink to this definition"></a></dt>
 <dd><p>Initializes messages awith default values.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.log_z">
-<span class="sig-name descname"><span class="pre">log_z</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.log_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.log_z" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">log_z</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.log_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.log_z" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates logarithm of the partition function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.marg_prob">
-<span class="sig-name descname"><span class="pre">marg_prob</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.marg_prob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.marg_prob" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">marg_prob</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.marg_prob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.marg_prob" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates marginal probabilities.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.generic.libdai_bp.BP.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/generic/libdai_bp.html#BP.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.libdai_bp.BP.run" title="Permalink to this definition"></a></dt>
 <dd><p>Runs BP algorithm.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="inferlo.generic.inference.inference.html" class="btn btn-neutral float-right" title="inferlo.generic.inference.inference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="inferlo.forney.edge_elimination.infer_edge_elimination.html" class="btn btn-neutral float-left" title="inferlo.forney.edge_elimination.infer_edge_elimination" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inferlo.generic.inference.inference.html" class="btn btn-neutral float-right" title="inferlo.generic.inference.inference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, InferLO developers.
-
-    </p>
+    <p>&#169; Copyright 2020, InferLO developers.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

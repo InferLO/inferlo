@@ -19,4 +19,13 @@
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Dataset.model
+      ~Dataset.true_marginals
+      ~Dataset.true_log_pf
+      ~Dataset.name
+   
    
