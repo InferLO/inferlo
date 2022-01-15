@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable, Set, Union, List
 
 import numpy as np
-from networkx import Graph, nx
+import networkx as nx
+from networkx import Graph
 
 from inferlo.base.domain import DiscreteDomain
 from inferlo.base.factors import DiscreteFactor
