@@ -22,4 +22,4 @@ def test_line():
     res = map_lp(nfg)
     ub = res.upper_bound
     lb = res.lower_bound
-    assert np.allclose(ub, lb)
+    assert np.allclose(ub, lb, atol=2e-3)

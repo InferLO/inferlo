@@ -10,6 +10,9 @@ __pycache__
 .mypy_cache/*
 .pytest_cache/*
 
+# ignore macOS generated files
+*.DS_Store
+
 # Binary files/
 *.exe
 
