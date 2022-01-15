@@ -16,7 +16,7 @@ Documentation is available at https://inferlo.github.io/inferlo.
 ### Contributing
 
 You can contribute to the library by creating pull requests. 
-Please follow these [guideleines](https://inferlo.readthedocs.io/en/latest/contributing.html).
+Please follow these [guideleines](https://inferlo.github.io/inferlo/contributing.html).
 
 ### Authors
 
