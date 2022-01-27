@@ -62,6 +62,15 @@ class DiscreteFactor(Factor):
         with np.errstate(divide="ignore", invalid="ignore"):
             self.log_values = log(values)
 
+    @property
+    def log_values(self):
+        """Logarithm of values."""
+        return self.__log_values
+
+    @log_values.setter
+    def log_values(self, log_values):
+        self.__log_values = log_values
+
     @staticmethod
     def from_factor(factor: Factor) -> DiscreteFactor:
         """Converts arbitrary factor to DiscreteFactor.

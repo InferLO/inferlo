@@ -4,9 +4,9 @@ import random
 from copy import copy
 from typing import List
 
-from .factor import DiscreteFactor, product_over_
+#from .factor import DiscreteFactor, product_over_
 from .graphical_model import GraphicalModel
-from inferlo.base.factors.discrete_factor import DiscreteFactor
+from inferlo.base.factors.discrete_factor import DiscreteFactor, product_over_
 
 
 def eliminate_variables(model: GraphicalModel,
