@@ -6,7 +6,8 @@ from typing import Dict, Tuple, List
 
 import numpy as np
 
-from .factor import Factor, product_over_, entropy
+#from .factor import Factor, product_over_, entropy
+from ...base.factors.discrete_factor import product_over_, entropy, DiscreteFactor as Factor
 from .graphical_model import GraphicalModel
 from ... import InferenceResult
 
@@ -31,18 +32,20 @@ class BeliefPropagation:
         self.messages = dict()  # type: Dict[Tuple, Factor]
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(fac, var)] = Factor.initialize_with_(
-                    _default_message_name(), [var], init_np_func,
-                    model.get_cardinality_for_(var)
-                )
+                #self.messages[(fac, var)] = Factor.initialize_with_(
+                #    _default_message_name(), [var], init_np_func,
+                #    model.get_cardinality_for_(var)
+                #)
+                self.messages[(fac, var)] = Factor(model, [var], np.ones((fac.get_cardinality_for_(var),)), name=_default_message_name())
                 self.messages[(fac, var)].normalize()
 
         for fac in model.factors:
             for var in fac.variables:
-                self.messages[(var, fac)] = Factor.initialize_with_(
-                    _default_message_name(), [var], init_np_func,
-                    model.get_cardinality_for_(var)
-                )
+                #self.messages[(var, fac)] = Factor.initialize_with_(
+                #    _default_message_name(), [var], init_np_func,
+                #    model.get_cardinality_for_(var)
+                #)
+                self.messages[(var, fac)] = Factor(model, [var], np.ones((fac.get_cardinality_for_(var),)), name=_default_message_name())
                 self.messages[(var, fac)].normalize()
 
     def run(self, max_iter=1000, converge_thr=1e-5, damp_ratio=0.1):
