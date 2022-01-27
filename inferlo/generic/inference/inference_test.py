@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE.
 import numpy as np
 
-from inferlo import GenericGraphModel
+from inferlo import GenericGraphModel, DiscreteDomain, DiscreteFactor
 from inferlo.generic import inference as inf
 from inferlo.testing import grid_potts_model, tree_potts_model, \
     clique_potts_model, assert_results_close
@@ -93,6 +93,33 @@ def test_get_marginals():
                                     skip_last=True)
     assert_results_close(true_result, be_result_1)
     assert_results_close(true_result, be_result_2)
+
+
+# This test only checks that get_marginals runs without failures with various underlying algos.
+def test_get_marginals_with_different_algos():
+    model = GenericGraphModel(5)
+    for i in range(5):
+        model[i].domain = DiscreteDomain.binary()
+    model.add_factor(DiscreteFactor(model, [0], [0.05, 0.95]))
+    model.add_factor(DiscreteFactor(model, [1], [0.01, 0.99]))
+    model.add_factor(DiscreteFactor(model, [0, 1, 2],
+                                    [[[0.999, 0.001], [0.9, 0.1]], [[0.95, 0.05], [0.1, 0.9]]]))
+    model.add_factor(DiscreteFactor(model, [0, 1, 3],
+                                    [[[0.999, 0.001], [0.8, 0.2]], [[0.95, 0.05], [0.05, 0.95]]]))
+    model.add_factor(DiscreteFactor(model, [0, 1, 4],
+                                    [[[0.999, 0.001], [0.7, 0.3]], [[0.95, 0.05], [0.025, 0.975]]]))
+    algos = [
+        lambda model: inf.belief_propagation(model).log_pf,
+        inf.bucket_elimination,
+        inf.mini_bucket_elimination,
+        inf.weighted_mini_bucket_elimination,
+        inf.bucket_renormalization,
+        inf.iterative_join_graph_propagation,
+        inf.mean_field
+    ]
+    for algo in algos:
+        result = inf.get_marginals(model, algo, var_ids=[2, 3, 4])
+        assert result.marg_prob.shape == (3, 2)
 
 
 def test_bucket_elimination_bt():

@@ -218,6 +218,15 @@ def _restrict_model(model: GenericGraphModel, var_id: int, val: int):
     for i in range(len(new_model.factors)):
         if var_id in new_model.factors[i].var_idx:
             new_model.factors[i] = new_model.factors[i].restrict(var_id, val)
+
+    # Add a dummy factor for eliminated variable, which restricts it to only one value.
+    # This is needed because some algorithms fail if model doesn't depend on one of ots factors.
+    # In principle, we could only add this factor and not restrict other factors.
+    # TODO: instead of doing this, remove restricted variable, so new model has one less variable.
+    # That would require remapping variables in all factors.
+    new_factor_vals = np.zeros(new_model.get_variable(var_id).domain.size(), dtype=np.float64)
+    new_factor_vals[val] = 1.0
+    new_model.add_factor(DiscreteFactor(new_model, [var_id], new_factor_vals))
     return new_model
 
 
@@ -260,6 +269,8 @@ def get_marginals(
                 break
             restr_model = _restrict_model(model, var_id, j)
             mp[j] = log_pf_algo(restr_model)
+            if not np.isfinite(mp[j]):
+                mp[j] = 0.0
         if skip_last:
             mp = np.exp(mp - log_pf)
             mp[card - 1] = 1.0 - np.sum(mp[:card - 1])
