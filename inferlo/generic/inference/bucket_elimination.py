@@ -4,8 +4,9 @@ import random
 from copy import copy
 from typing import List
 
-from .factor import Factor, product_over_
+from .factor import DiscreteFactor, product_over_
 from .graphical_model import GraphicalModel
+from inferlo.base.factors.discrete_factor import DiscreteFactor
 
 
 def eliminate_variables(model: GraphicalModel,
@@ -35,14 +36,14 @@ class BucketElimination:
 
         eliminated_model = eliminate_variables(self.model, elimination_order)
 
-        Z = Factor.scalar(1.0)
+        Z = DiscreteFactor.scalar(1.0)
         for fac in eliminated_model.factors:
             Z = Z * fac
         return Z.log_values
 
     def get_marginal_factor(self,
                             elimination_order_method="random",
-                            **kwargs) -> Factor:
+                            **kwargs) -> DiscreteFactor:
         """Returns marginal factor."""
         if elimination_order_method == "random":
             elimination_order = copy(self.model.variables)
@@ -72,7 +73,7 @@ class BucketElimination:
         return final_factor
 
 
-def get_bucket_size(bucket: List[Factor]):
+def get_bucket_size(bucket: List[DiscreteFactor]):
     """Counts variables referenced by factors in a bucket."""
     s = set()
     for fac in bucket:
