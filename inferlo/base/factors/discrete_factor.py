@@ -21,12 +21,26 @@ class DiscreteFactor(Factor):
     # TODO: make immutable.
 
     def __init__(self, model: GraphModel, var_idx: List[int],
-                 values: np.ndarray):
+                 values: np.ndarray, **kwargs):
         super().__init__(model, var_idx)
+        if "name" in kwargs:
+            self.name = kwargs["name"]
+        else:
+            self.name = default_factor_name()
 
+        if "variables" in kwargs:
+            self.variables = kwargs["variables"]
+        else:
+            self.variables = []
+
+        
         values = np.array(values)
-        with np.errstate(divide="ignore", invalid="ignore"):
-            self.log_values = log(values)
+        if "log_values" in kwargs:
+            self.log_values = kwargs["log_values"]
+        else:
+            with np.errstate(divide="ignore", invalid="ignore"):
+                self.log_values = log(values)
+
         expected_shape = [self.model[i].domain.size() for i in
                           self.var_idx]
         assert list(values.shape) == expected_shape, (
@@ -184,13 +198,19 @@ class DiscreteFactor(Factor):
     def copy(self, rename=False):
         """Makes a copy of itself."""
         if rename:
-            return Factor(
+            return DiscreteFactor(
+                self.model,
+                self.var_idx,
+                self.values,
                 name=default_factor_name(),
                 variables=copy(self.variables),
                 log_values=np.copy(self.log_values),
             )
         else:
-            return Factor(
+            return DiscreteFactor(
+                self.model,
+                self.var_idx,
+                self.values,
                 name=copy(self.name),
                 variables=copy(self.variables),
                 log_values=np.copy(self.log_values),
