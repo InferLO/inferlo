@@ -300,6 +300,15 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
             <span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">var_id</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="c1"># Add a dummy factor for eliminated variable, which restricts it to only one value.</span>
+    <span class="c1"># This is needed because some algorithms fail if model doesn&#39;t depend on one of ots factors.</span>
+    <span class="c1"># In principle, we could only add this factor and not restrict other factors.</span>
+    <span class="c1"># TODO: instead of doing this, remove restricted variable, so new model has one less variable.</span>
+    <span class="c1"># That would require remapping variables in all factors.</span>
+    <span class="n">new_factor_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">new_factor_vals</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">new_model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="p">[</span><span class="n">var_id</span><span class="p">],</span> <span class="n">new_factor_vals</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">new_model</span>
 
 
@@ -342,6 +351,8 @@
                 <span class="k">break</span>
             <span class="n">restr_model</span> <span class="o">=</span> <span class="n">_restrict_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_id</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
             <span class="n">mp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_pf_algo</span><span class="p">(</span><span class="n">restr_model</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">mp</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+                <span class="n">mp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">if</span> <span class="n">skip_last</span><span class="p">:</span>
             <span class="n">mp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">mp</span> <span class="o">-</span> <span class="n">log_pf</span><span class="p">)</span>
             <span class="n">mp</span><span class="p">[</span><span class="n">card</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mp</span><span class="p">[:</span><span class="n">card</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
