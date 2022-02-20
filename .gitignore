@@ -33,3 +33,8 @@ docs/generated
 
 # Virtual environment.
 venv
+
+# Build/test output
+build/*
+dist/*
+inferlo.egg-info/*
