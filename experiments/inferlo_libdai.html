@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -80,8 +82,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Inferlo and libDAI comparison</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Inferlo and libDAI comparison</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/experiments/inferlo_libdai.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -201,10 +203,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -306,6 +309,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -314,10 +318,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -329,12 +337,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -362,7 +373,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Inferlo-and-libDAI-comparison">
-<h1>Inferlo and libDAI comparison<a class="headerlink" href="#Inferlo-and-libDAI-comparison" title="Permalink to this headline"></a></h1>
+<h1>Inferlo and libDAI comparison<a class="headerlink" href="#Inferlo-and-libDAI-comparison" title="Permalink to this heading"></a></h1>
 <p>In this Notebook we compare several algorithms in InferLO and libDAI in terms of accuracy and performance.</p>
 <p>This notebook is also useful as example of how to use libDAI interop.</p>
 <div class="nbinput nblast docutils container">
@@ -419,7 +430,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="1.-Marginal-probabilities-on-trees">
-<h2>1. Marginal probabilities on trees<a class="headerlink" href="#1.-Marginal-probabilities-on-trees" title="Permalink to this headline"></a></h2>
+<h2>1. Marginal probabilities on trees<a class="headerlink" href="#1.-Marginal-probabilities-on-trees" title="Permalink to this heading"></a></h2>
 <p>We solve a problem of finding marginal probabilities for random pairwise model on a tree with variables taking 5 possible values. We use 2 exact algorithms: ‘tree_dp’ (dynamic programming on a tree) from InferLO and ‘BP’ (<a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/classdai_1_1BP.html">belief propagation</a>) from libDAI. We check that they give the same results and measure running time.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -450,7 +461,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="2.-Maximal-likelihood-on-trees">
-<h2>2. Maximal likelihood on trees<a class="headerlink" href="#2.-Maximal-likelihood-on-trees" title="Permalink to this headline"></a></h2>
+<h2>2. Maximal likelihood on trees<a class="headerlink" href="#2.-Maximal-likelihood-on-trees" title="Permalink to this heading"></a></h2>
 <p>We solve a problem of finding most probable state for random pairwise model on a tree with variables taking 5 possible values. We use 2 exact algorithms: ‘tree_dp’ (dynamic programming on a tree) from InferLO and ‘BP’ (<a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/classdai_1_1BP.html">belief propagation</a>) from libDAI. We check that they give the same results and measure running time.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -481,7 +492,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="3.-Marginal-probabilities-with-junction-tree">
-<h2>3. Marginal probabilities with junction tree<a class="headerlink" href="#3.-Marginal-probabilities-with-junction-tree" title="Permalink to this headline"></a></h2>
+<h2>3. Marginal probabilities with junction tree<a class="headerlink" href="#3.-Marginal-probabilities-with-junction-tree" title="Permalink to this heading"></a></h2>
 <p>We generate binary graphical model on a “cross” graph, which is graph of bounded treewidth, and find marginal probabilities for it using junction tree algorithms from InferLO and libDAI (<a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/doc/classdai_1_1JTree.html">JTREE</a>).</p>
 <p>We check that results are identical and plot running time.</p>
 <div class="nbinput docutils container">
@@ -515,7 +526,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="4.-Marginal-probabilities-for-the-grid-graph">
-<h2>4. Marginal probabilities for the grid graph<a class="headerlink" href="#4.-Marginal-probabilities-for-the-grid-graph" title="Permalink to this headline"></a></h2>
+<h2>4. Marginal probabilities for the grid graph<a class="headerlink" href="#4.-Marginal-probabilities-for-the-grid-graph" title="Permalink to this heading"></a></h2>
 <p>We consider binary pairwise model on a grid of size 5xN.</p>
 <p>We use different (exact and approximate) InferLO and libDAI algorithms to calculate marginal probabilities. We measure running time and error. Error is maximal difference betwen true and calculated marginal probability over all variables.</p>
 <div class="nbinput docutils container">
@@ -553,7 +564,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="5.-Maximal-likelihood-for-the-grid-graph">
-<h2>5. Maximal likelihood for the grid graph<a class="headerlink" href="#5.-Maximal-likelihood-for-the-grid-graph" title="Permalink to this headline"></a></h2>
+<h2>5. Maximal likelihood for the grid graph<a class="headerlink" href="#5.-Maximal-likelihood-for-the-grid-graph" title="Permalink to this heading"></a></h2>
 <p>We solve a problem of finding most probable state for random pairwise model on a 5xN grid. We measure running time and accuracy. Accuracy is the number of correctly guessed variables.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:

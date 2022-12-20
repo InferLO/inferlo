@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -77,8 +79,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Bucket renormalization</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Bucket renormalization</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/experiments/bucket_renormalization.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -198,10 +200,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -303,6 +306,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -311,10 +315,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -326,12 +334,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -359,7 +370,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Bucket-renormalization">
-<h1>Bucket renormalization<a class="headerlink" href="#Bucket-renormalization" title="Permalink to this headline"></a></h1>
+<h1>Bucket renormalization<a class="headerlink" href="#Bucket-renormalization" title="Permalink to this heading"></a></h1>
 <p>This notebook reproduces some results from <a class="reference external" href="https://arxiv.org/abs/1803.05104">this paper</a> on bucket renormalization. See paper for details</p>
 <p>Also it demonstrates how to use InferLO helpers for loading UAI datasets and for caching experiment results.</p>
 <div class="nbinput nblast docutils container">
@@ -385,7 +396,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="1.-Ising-model-on-grid">
-<h2>1. Ising model on grid<a class="headerlink" href="#1.-Ising-model-on-grid" title="Permalink to this headline"></a></h2>
+<h2>1. Ising model on grid<a class="headerlink" href="#1.-Ising-model-on-grid" title="Permalink to this heading"></a></h2>
 <p>Built random Ising model on 15x15 grid, with varying interaction strength. Observed how accuracy of log partition function depends on interaction strength.</p>
 <p>Ran for Mini-Bucket elimination, Global-Buclet elimination. Compared with Belief Propagation, Mean Field, Mini-Bucket Elimination, Weighted Mini-Bucket Elimination. Used Bucket Elimination for getting exact answer.</p>
 <p>Corresponds to Fig. 3(b) in the paper.</p>
@@ -443,7 +454,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="2.-Promedus-dataset">
-<h2>2. Promedus dataset<a class="headerlink" href="#2.-Promedus-dataset" title="Permalink to this headline"></a></h2>
+<h2>2. Promedus dataset<a class="headerlink" href="#2.-Promedus-dataset" title="Permalink to this heading"></a></h2>
 <p>Corresponds to Fig. 3(f) in the paper.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:

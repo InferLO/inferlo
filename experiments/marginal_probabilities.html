@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -82,8 +84,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Marginal Probabilities with Elimination algorithms</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Marginal Probabilities with Elimination algorithms</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/experiments/marginal_probabilities.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -203,10 +205,11 @@ div.nboutput.container div.prompt > div {
     }
 }
 
-/* disable scrollbars on prompts */
+/* disable scrollbars and line breaks on prompts */
 div.nbinput.container div.prompt pre,
 div.nboutput.container div.prompt pre {
     overflow: hidden;
+    white-space: pre;
 }
 
 /* input/output area */
@@ -308,6 +311,7 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -316,10 +320,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -331,12 +339,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -364,14 +375,14 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Marginal-Probabilities-with-Elimination-algorithms">
-<h1>Marginal Probabilities with Elimination algorithms<a class="headerlink" href="#Marginal-Probabilities-with-Elimination-algorithms" title="Permalink to this headline"></a></h1>
+<h1>Marginal Probabilities with Elimination algorithms<a class="headerlink" href="#Marginal-Probabilities-with-Elimination-algorithms" title="Permalink to this heading"></a></h1>
 <p>Dmytro Fedoriaka, February-March 2021</p>
 <p>This notebook is experimental part of a paper on computing marginal probabilities for probabilistic Graphical Models using Elimination Algorithms. The paper is currently work in progress.</p>
 <section id="Experiments">
-<h2>Experiments<a class="headerlink" href="#Experiments" title="Permalink to this headline"></a></h2>
+<h2>Experiments<a class="headerlink" href="#Experiments" title="Permalink to this heading"></a></h2>
 <p>We run a series of experiments to compare accuracy and running time of proposed algorithms with some existing algorithms for computing marginal probabilities.</p>
 <section id="Algorithms">
-<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this headline"></a></h3>
+<h3>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this heading"></a></h3>
 <p>We run the following algorithms:</p>
 <ul class="simple">
 <li><p>MBE-TR - Mini-Bucket elimination + Trivial Reduction (with varying ibound);</p></li>
@@ -391,11 +402,11 @@ div.rendered_html tbody tr:hover {
 </ul>
 </section>
 <section id="Accuracy-metric">
-<h3>Accuracy metric<a class="headerlink" href="#Accuracy-metric" title="Permalink to this headline"></a></h3>
+<h3>Accuracy metric<a class="headerlink" href="#Accuracy-metric" title="Permalink to this heading"></a></h3>
 <p>We used the mean Kullback-Leibler divergence as accuracy metric:</p>
 <div class="math notranslate nohighlight">
 \[\text{MKLD}(p) = \frac{1}{n} \sum_{i=1}^{n} \sum_{j=1}^{d_i} p_{i,j} \ln \left(\frac{p_{i,j}}{\max(\hat{p}_{i,j},10^{-10})}\right),\]</div>
-<p>where <span class="math notranslate nohighlight">\(p\)</span> is marginal probabilities given by the model and <span class="math notranslate nohighlight">\(\hat{p}\)</span> are knwon true marginal probabilities.</p>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> is marginal probabilities given by the model and <span class="math notranslate nohighlight">\(\hat{p}\)</span> are known true marginal probabilities.</p>
 <p>Note that some datasets have true probabilities for some values of some variables equal to 0, which would result in the division by 0, so we had adjust such proabilities to be equal to very small positive value (<span class="math notranslate nohighlight">\(10^{-10}\)</span>).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -425,13 +436,22 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">inferlo.generic.inference</span> <span class="k">as</span> <span class="nn">inf</span>
 <span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">testing</span>
 
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.titlesize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+
 <span class="n">loader</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_datasets&#39;</span><span class="p">)</span>
 <span class="n">libdai</span> <span class="o">=</span> <span class="n">LibDaiInterop</span><span class="p">()</span>
 <span class="n">exp_runner</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">ExperimentRunner</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_experiments&#39;</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">libdai</span><span class="o">.</span><span class="n">is_libdai_ready</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">mean_kl_div</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mean_kl_div</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">kl_div</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
@@ -439,7 +459,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Experiment-1-:-Ising-Grid.">
-<h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Permalink to this headline"></a></h3>
+<h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Permalink to this heading"></a></h3>
 <p>We generate grid graph of size <span class="math notranslate nohighlight">\(13 \times h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is in range <span class="math notranslate nohighlight">\([1, 30]\)</span>. On this graph we build a syntetic Ising model ($x_i = { -1, 1 } $):</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{x}) = \exp \left(\sum_{i \in \mathcal{V}} \phi_i x_i + \sum_{(i,j) \in \mathcal{E}} \phi_{ij} x_i x_j \right).\]</div>
@@ -448,7 +468,7 @@ div.rendered_html tbody tr:hover {
 <p>Then for every model we run algorithms BP, MBE-BT, MBR-BT, MBE-TR, MBR-TR. ibound in these experiment is always 9.</p>
 <p>The charts below for each model show running time and accuracy (mean KL divergence).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ising_grid_dataset</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -522,12 +542,13 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax_mkld</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
 
 <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]:</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
@@ -552,39 +573,37 @@ div.rendered_html tbody tr:hover {
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Accuracy of different algorithms&#39;</span><span class="p">,</span>
-                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">,</span>
-                             <span class="s1">&#39;ibound=9&#39;</span><span class="p">]))</span>
+                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
 
 <span class="n">ax_time</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Time, s&#39;</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Running time of different algorithms&#39;</span><span class="p">,</span>
-                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">,</span>
-                             <span class="s1">&#39;ibound=9&#39;</span><span class="p">]))</span>
+                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
 
 
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/experiments_marginal_probabilities_6_0.png" src="../_images/experiments_marginal_probabilities_6_0.png" />
+<img alt="../_images/experiments_marginal_probabilities_7_0.png" src="../_images/experiments_marginal_probabilities_7_0.png" />
 </div>
 </div>
 <p>We can see that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
 <p>We also fitted running time as function of number of variables in log-scale, and it appers that Trivial Reduction takes <span class="math notranslate nohighlight">\(O(n^{3.1})\)</span> time, while Bucket Elimination takes <span class="math notranslate nohighlight">\(O(n^{1.7})\)</span> time.</p>
 <p>Belief Propagation outperforms both MBE and MBR in accuracy and time, but these are very simple models, and ibound was deliberately chosen so these models don’t give exact answers.</p>
 <p>Main goal of this experiment was to prove that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
-<p>We also calculated “relative” running time for MBE-BT, MBR-BT, MBE-TR, MBR-TR. Fo that, we divided running time by the running time of the base algorithm (i.e. the algorithm which does full elimination once and just computes partition function).</p>
+<p>We also calculated “relative” running time for MBE-BT, MBR-BT, MBE-TR, MBR-TR. For that, we divided running time by the running time of the base algorithm (i.e. the algorithm which does full elimination once and just computes partition function).</p>
 <p>Results are below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -607,9 +626,9 @@ div.rendered_html tbody tr:hover {
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Running time / Base algorithm running time&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative overhead&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Binary Tree Elimination algorithms&#39;</span><span class="p">)</span>
 
 <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y=2x&#39;</span><span class="p">)</span>
@@ -617,9 +636,8 @@ div.rendered_html tbody tr:hover {
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">])</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Running time / Base algorithm running time&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative overhead&#39;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Trivial Reduction algorithms&#39;</span><span class="p">)</span>
-
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -630,7 +648,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/experiments_marginal_probabilities_9_0.png" src="../_images/experiments_marginal_probabilities_9_0.png" />
+<img alt="../_images/experiments_marginal_probabilities_10_0.png" src="../_images/experiments_marginal_probabilities_10_0.png" />
 </div>
 </div>
 <p>For Trivial Reduction algorithms, as expected, relative running time is close to line y=2x, that is for model with N variables we call base algorithm <span class="math notranslate nohighlight">\(2 \times N\)</span> times (2 because variables are binary).</p>
@@ -638,7 +656,7 @@ div.rendered_html tbody tr:hover {
 <p>This can be explained as follows: as model becomes smaller, eliminations are cheaper, and most eliminations are done on small models. For example, <span class="math notranslate nohighlight">\(n (log_2(n)-1)\)</span> eliminations are done on model having less than <span class="math notranslate nohighlight">\(n/2\)</span> variables.</p>
 </section>
 <section id="Experiment-2:-UAI-datasets-with-varying-ibound.">
-<h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this headline"></a></h3>
+<h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this heading"></a></h3>
 <p>We took 10 linkage datasets from UAI competitions. For each of them ran:</p>
 <ul class="simple">
 <li><p>MBE-BT with ibound in range [4, 15].</p></li>
@@ -649,17 +667,18 @@ div.rendered_html tbody tr:hover {
 <p>Sometimes BP failed. Sometimes MBR-BT failed (<em>investigate: might be a bug in implemntation)</em>. For these cases data is missing on the chart.</p>
 <p>Results are shown on charts below. In 6 of 8 cases MBE-BT outperforms both PB and TRWBP in accuracy.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ibound</span><span class="p">,</span> <span class="n">algo</span><span class="p">)</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_uai_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;BP&#39;</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)}</span>
     <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
@@ -721,7 +740,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ibound&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Comparing inference algorithms</span><span class="se">\n</span><span class="s1">Dataset: &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Dataset: &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
@@ -738,7 +757,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/experiments_marginal_probabilities_12_0.png" src="../_images/experiments_marginal_probabilities_12_0.png" />
+<img alt="../_images/experiments_marginal_probabilities_13_0.png" src="../_images/experiments_marginal_probabilities_13_0.png" />
 </div>
 </div>
 </section>

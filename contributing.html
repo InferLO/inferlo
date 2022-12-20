@@ -15,7 +15,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -80,8 +82,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Contributing to InferLO</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Contributing to InferLO</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/contributing.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -116,9 +118,9 @@
 }
 </style>
 <section id="contributing-to-inferlo">
-<h1>Contributing to InferLO<a class="headerlink" href="#contributing-to-inferlo" title="Permalink to this headline"></a></h1>
+<h1>Contributing to InferLO<a class="headerlink" href="#contributing-to-inferlo" title="Permalink to this heading"></a></h1>
 <section id="first-time-setup">
-<h2>First time setup<a class="headerlink" href="#first-time-setup" title="Permalink to this headline"></a></h2>
+<h2>First time setup<a class="headerlink" href="#first-time-setup" title="Permalink to this heading"></a></h2>
 <p>You will need <a class="reference external" href="https://git-scm.com/">Git</a> and <a class="reference external" href="python.org">Python</a> 3.7+. It’s
 recommended, but not necessary, to do all development in the virtual environment.</p>
 <p>Clone the repository:</p>
@@ -138,12 +140,12 @@ recommended, but not necessary, to do all development in the virtual environment
 </div>
 </section>
 <section id="git">
-<h2>Git<a class="headerlink" href="#git" title="Permalink to this headline"></a></h2>
+<h2>Git<a class="headerlink" href="#git" title="Permalink to this heading"></a></h2>
 <p>If you never worked with Git before, you will have to learn some Git basics. First of all,
 read <a class="reference external" href="https://guides.github.com/introduction/git-handbook/">Git Handbook</a> and bookmark or print <a class="reference external" href="https://github.github.com/training-kit/downloads/github-git-cheat-sheet/">Git cheet sheet</a>. To really understand how Git works, check out <a class="reference external" href="https://git-scm.com/book/en/v2">this site</a>.</p>
 </section>
 <section id="development-cycle">
-<h2>Development cycle<a class="headerlink" href="#development-cycle" title="Permalink to this headline"></a></h2>
+<h2>Development cycle<a class="headerlink" href="#development-cycle" title="Permalink to this heading"></a></h2>
 <p>For making any changes you will have to create new branch, make your changes 
 on that branch and then merge it with <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.</p>
 <p><em>Process below applies to those who has commit access to repository.
@@ -187,7 +189,7 @@ passes for your last commit. Now,
 <a class="reference external" href="https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-a-pull-request">merge it</a>.</p>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Unit tests</strong>. All unit tests must pass. 
 That can be checked by running <code class="docutils literal notranslate"><span class="pre">pytest</span></code> in root of the repository. 
@@ -211,11 +213,11 @@ yuo tom mege code to master.</p></li>
 </ul>
 </section>
 <section id="code-style">
-<h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this headline"></a></h2>
+<h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this heading"></a></h2>
 <p>Please follow <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a>.</p>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>We use <a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a> to automatically 
 build the documentation. Documentation is authomatically exported to 
 <a class="reference external" href="https://inferlo.readthedocs.io/">ReadTheDocs</a>.</p>
@@ -236,7 +238,7 @@ check that it builds.</p>
 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">intsall</span> <span class="pre">pandoc</span></code>.</p>
 </section>
 <section id="adding-new-algorithms">
-<h2>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Permalink to this headline"></a></h2>
+<h2>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Permalink to this heading"></a></h2>
 <p>If you are adding new algorithm to solve a problem fo particular kind of problem,
 for which we already have at least one algorithm, you should follow the following 
 process.</p>
@@ -247,7 +249,7 @@ should be keyword arguments with default values.</p>
 conditioned on user passing your algorithm name as <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> argument.</p>
 </section>
 <section id="release-management">
-<h2>Release management<a class="headerlink" href="#release-management" title="Permalink to this headline"></a></h2>
+<h2>Release management<a class="headerlink" href="#release-management" title="Permalink to this heading"></a></h2>
 <p>We follow <a class="reference external" href="https://semver.org/">Semantic versioning</a> rules. Currently 
 InferLO is in Alpha, which means major version is “0”, and we keep our right to
 make any breaking changes.</p>

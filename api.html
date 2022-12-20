@@ -15,7 +15,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -156,8 +158,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>API Reference</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -192,11 +194,11 @@
 }
 </style>
 <section id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline"></a></h1>
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
 <section id="graphical-models">
-<h2>Graphical models<a class="headerlink" href="#graphical-models" title="Permalink to this headline"></a></h2>
+<h2>Graphical models<a class="headerlink" href="#graphical-models" title="Permalink to this heading"></a></h2>
 <p>Classes representing different kinds of graphical models.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -221,10 +223,10 @@
 </table>
 </section>
 <section id="auxiliary-classes">
-<h2>Auxiliary classes<a class="headerlink" href="#auxiliary-classes" title="Permalink to this headline"></a></h2>
+<h2>Auxiliary classes<a class="headerlink" href="#auxiliary-classes" title="Permalink to this heading"></a></h2>
 <p>Classes representing elementary concepts, such as variables and factors.
 Also contains data classes representing results of computations.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -258,7 +260,7 @@ Also contains data classes representing results of computations.</p>
 </table>
 </section>
 <section id="algorithms-on-graphical-models">
-<h2>Algorithms on graphical models<a class="headerlink" href="#algorithms-on-graphical-models" title="Permalink to this headline"></a></h2>
+<h2>Algorithms on graphical models<a class="headerlink" href="#algorithms-on-graphical-models" title="Permalink to this heading"></a></h2>
 <p>All algorithms are available through methods on graphical models. To invoke
 specific algorithm, you should pass its name as “algorithm” argument to
 corresponding methods. That’s why algorithms are not exported in top-level
@@ -268,8 +270,8 @@ additional parameters (such as number of iterations for iterative algorithm), wh
 should be passed as keyword arguments. Use references below to get information on
 algorithm-specific parameters.</p>
 <section id="inference-algorithms">
-<h3>Inference algorithms<a class="headerlink" href="#inference-algorithms" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Inference algorithms<a class="headerlink" href="#inference-algorithms" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -312,8 +314,8 @@ algorithm-specific parameters.</p>
 </table>
 </section>
 <section id="optimization-algorithms">
-<h3>Optimization algorithms<a class="headerlink" href="#optimization-algorithms" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Optimization algorithms<a class="headerlink" href="#optimization-algorithms" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -350,8 +352,8 @@ algorithm-specific parameters.</p>
 </table>
 </section>
 <section id="sampling-algorithms">
-<h3>Sampling algorithms<a class="headerlink" href="#sampling-algorithms" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Sampling algorithms<a class="headerlink" href="#sampling-algorithms" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -370,8 +372,8 @@ algorithm-specific parameters.</p>
 </table>
 </section>
 <section id="model-conversion-algorithms">
-<h3>Model conversion algorithms<a class="headerlink" href="#model-conversion-algorithms" title="Permalink to this headline"></a></h3>
-<table class="longtable docutils align-default">
+<h3>Model conversion algorithms<a class="headerlink" href="#model-conversion-algorithms" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -385,14 +387,14 @@ algorithm-specific parameters.</p>
 </section>
 </section>
 <section id="algorithm-on-graphs">
-<h2>Algorithm on graphs<a class="headerlink" href="#algorithm-on-graphs" title="Permalink to this headline"></a></h2>
+<h2>Algorithm on graphs<a class="headerlink" href="#algorithm-on-graphs" title="Permalink to this heading"></a></h2>
 <p>In most cases we use NetworkX to represent and manipulate graphs. However,
 in some cases, if the algorithm is too specific and is not available in
 NetworkX, or if we need it to be faster than in NetworkX, we implement it
 in our library. Those implementations are collected in this section. They are
 intended for internal usage by other algorithms rather than to be used directly
 by library users.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -408,10 +410,10 @@ by library users.</p>
 </table>
 </section>
 <section id="model-generators">
-<h2>Model generators<a class="headerlink" href="#model-generators" title="Permalink to this headline"></a></h2>
+<h2>Model generators<a class="headerlink" href="#model-generators" title="Permalink to this heading"></a></h2>
 <p>These function generate random models of certain structure. They are
 useful for testing and benchmarking.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -442,9 +444,9 @@ useful for testing and benchmarking.</p>
 </table>
 </section>
 <section id="interoperation">
-<h2>Interoperation<a class="headerlink" href="#interoperation" title="Permalink to this headline"></a></h2>
+<h2>Interoperation<a class="headerlink" href="#interoperation" title="Permalink to this heading"></a></h2>
 <p>These classes are repossible for interoperation with other GM libraries.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -457,9 +459,9 @@ useful for testing and benchmarking.</p>
 </table>
 </section>
 <section id="datasets">
-<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline"></a></h2>
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this heading"></a></h2>
 <p>Helpers to load public datasets with graphical models.</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />

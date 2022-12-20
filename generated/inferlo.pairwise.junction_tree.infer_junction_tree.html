@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -99,9 +101,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">API Reference</a> &raquo;</li>
-      <li>inferlo.pairwise.junction_tree.infer_junction_tree</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">inferlo.pairwise.junction_tree.infer_junction_tree</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/inferlo.pairwise.junction_tree.infer_junction_tree.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -136,10 +138,10 @@
 }
 </style>
 <section id="inferlo-pairwise-junction-tree-infer-junction-tree">
-<h1>inferlo.pairwise.junction_tree.infer_junction_tree<a class="headerlink" href="#inferlo-pairwise-junction-tree-infer-junction-tree" title="Permalink to this headline"></a></h1>
+<h1>inferlo.pairwise.junction_tree.infer_junction_tree<a class="headerlink" href="#inferlo-pairwise-junction-tree-infer-junction-tree" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.pairwise.junction_tree.infer_junction_tree">
-<span class="sig-prename descclassname"><span class="pre">inferlo.pairwise.junction_tree.</span></span><span class="sig-name descname"><span class="pre">infer_junction_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">inferlo.base.inference_result.InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/pairwise/junction_tree.html#infer_junction_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.junction_tree.infer_junction_tree" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.pairwise.junction_tree.</span></span><span class="sig-name descname"><span class="pre">infer_junction_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/pairwise/junction_tree.html#infer_junction_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.pairwise.junction_tree.infer_junction_tree" title="Permalink to this definition"></a></dt>
 <dd><p>Performs inference using Junction Tree decomposition.</p>
 <p>Decomposes graph into junction tree, builds equivalent model on that tree,
 performs inference for the new model and restores answer for the original

@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -50,7 +52,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../api.html#interoperation">Interoperation</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../api.html#datasets">Datasets</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="inferlo.datasets.Dataset.html">inferlo.datasets.Dataset</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.datasets.DatasetLoader</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.datasets.DatasetLoader</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inferlo.datasets.DatasetLoader"><code class="docutils literal notranslate"><span class="pre">DatasetLoader</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="inferlo.datasets.UaiReader.html">inferlo.datasets.UaiReader</a></li>
 </ul>
 </li>
@@ -85,9 +90,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">API Reference</a> &raquo;</li>
-      <li>inferlo.datasets.DatasetLoader</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">inferlo.datasets.DatasetLoader</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/inferlo.datasets.DatasetLoader.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -122,7 +127,7 @@
 }
 </style>
 <section id="inferlo-datasets-datasetloader">
-<h1>inferlo.datasets.DatasetLoader<a class="headerlink" href="#inferlo-datasets-datasetloader" title="Permalink to this headline"></a></h1>
+<h1>inferlo.datasets.DatasetLoader<a class="headerlink" href="#inferlo-datasets-datasetloader" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="inferlo.datasets.DatasetLoader">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.datasets.</span></span><span class="sig-name descname"><span class="pre">DatasetLoader</span></span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader" title="Permalink to this definition"></a></dt>
@@ -140,7 +145,7 @@ directory will be used.</p>
 </dd></dl>
 
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -179,7 +184,7 @@ directory will be used.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.datasets.DatasetLoader.load_custom_dataset">
-<span class="sig-name descname"><span class="pre">load_custom_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.dataset_loader.Dataset"><span class="pre">inferlo.datasets.dataset_loader.Dataset</span></a></span></span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_custom_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_custom_dataset" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_custom_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.dataset_loader.Dataset"><span class="pre">Dataset</span></a></span></span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_custom_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_custom_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Loads previously saved datataset.</p>
 </dd></dl>
 
@@ -193,7 +198,7 @@ Returns local path to loaded file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.datasets.DatasetLoader.load_uai_dataset">
-<span class="sig-name descname"><span class="pre">load_uai_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.dataset_loader.Dataset"><span class="pre">inferlo.datasets.dataset_loader.Dataset</span></a></span></span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_uai_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_uai_dataset" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_uai_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.dataset_loader.Dataset"><span class="pre">Dataset</span></a></span></span><a class="reference internal" href="../_modules/inferlo/datasets/dataset_loader.html#DatasetLoader.load_uai_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.datasets.DatasetLoader.load_uai_dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Loads named dataset from UAI competition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

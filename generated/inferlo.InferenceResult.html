@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -49,7 +51,10 @@
 <li class="toctree-l3"><a class="reference internal" href="inferlo.Factor.html">inferlo.Factor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inferlo.DiscreteFactor.html">inferlo.DiscreteFactor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inferlo.FunctionFactor.html">inferlo.FunctionFactor</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.InferenceResult</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">inferlo.InferenceResult</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inferlo.InferenceResult"><code class="docutils literal notranslate"><span class="pre">InferenceResult</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="inferlo.RealDomain.html">inferlo.RealDomain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inferlo.Variable.html">inferlo.Variable</a></li>
 </ul>
@@ -90,9 +95,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">API Reference</a> &raquo;</li>
-      <li>inferlo.InferenceResult</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">inferlo.InferenceResult</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/inferlo.InferenceResult.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -127,7 +132,7 @@
 }
 </style>
 <section id="inferlo-inferenceresult">
-<h1>inferlo.InferenceResult<a class="headerlink" href="#inferlo-inferenceresult" title="Permalink to this headline"></a></h1>
+<h1>inferlo.InferenceResult<a class="headerlink" href="#inferlo-inferenceresult" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="inferlo.InferenceResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">InferenceResult</span></span><a class="reference internal" href="../_modules/inferlo/base/inference_result.html#InferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.InferenceResult" title="Permalink to this definition"></a></dt>
@@ -139,11 +144,11 @@ the probability of this variable to assume given value when other variables
 can take any value.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.InferenceResult.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_pf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marg_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#inferlo.InferenceResult.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_pf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marg_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#inferlo.InferenceResult.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -155,7 +160,7 @@ can take any value.</p>
 </tbody>
 </table>
 <p class="rubric">Attributes</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
