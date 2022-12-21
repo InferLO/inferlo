@@ -427,6 +427,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">kl_div</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">inferlo</span>
@@ -659,14 +660,14 @@ div.rendered_html tbody tr:hover {
 <h3>Experiment 2: UAI datasets with varying ibound.<a class="headerlink" href="#Experiment-2:-UAI-datasets-with-varying-ibound." title="Permalink to this heading"></a></h3>
 <p>We took 10 linkage datasets from UAI competitions. For each of them ran:</p>
 <ul class="simple">
-<li><p>MBE-BT with ibound in range [4, 15].</p></li>
+<li><p>MBE-BT with ibound in range [4, 14].</p></li>
 <li><p>MBR-BT with ibound in range [4, 11].</p></li>
 <li><p>BP</p></li>
 <li><p>TRWBP</p></li>
 </ul>
 <p>Sometimes BP failed. Sometimes MBR-BT failed (<em>investigate: might be a bug in implemntation)</em>. For these cases data is missing on the chart.</p>
 <p>Results are shown on charts below. In 6 of 8 cases MBE-BT outperforms both PB and TRWBP in accuracy.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
@@ -698,7 +699,7 @@ div.rendered_html tbody tr:hover {
 
 <span class="k">def</span> <span class="nf">run_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
     <span class="c1"># Mini-Bucket Elimination + Binary Tree order.</span>
-    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
     <span class="n">mbe_mkld</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
@@ -710,7 +711,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbe_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
 
     <span class="c1"># Mini-Bucket Renormalization + Binary Tree order.</span>
-    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
     <span class="n">mbr_mkld</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
@@ -741,15 +742,37 @@ div.rendered_html tbody tr:hover {
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ibound&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Dataset: &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linkage_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">28</span><span class="p">)]</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Promedus_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">39</span><span class="p">)]</span>
 
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">ds</span><span class="p">):</span><span class="n">run_dataset</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">())</span>
+<span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">data1</span> <span class="o">+</span> <span class="n">data2</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
-<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linkage_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">19</span><span class="p">)]</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">run_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">show_plots</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span><span class="o">+</span><span class="n">w</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">w</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">h</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">run_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_plots</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -757,7 +780,22 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/experiments_marginal_probabilities_13_0.png" src="../_images/experiments_marginal_probabilities_13_0.png" />
+<img alt="../_images/experiments_marginal_probabilities_15_0.png" src="../_images/experiments_marginal_probabilities_15_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_plots</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/experiments_marginal_probabilities_16_0.png" src="../_images/experiments_marginal_probabilities_16_0.png" />
 </div>
 </div>
 </section>
