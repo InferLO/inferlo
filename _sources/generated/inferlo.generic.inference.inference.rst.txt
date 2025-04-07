@@ -4,11 +4,6 @@
 .. automodule:: inferlo.generic.inference.inference
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -25,15 +20,3 @@
       mini_bucket_renormalization_bt
       weighted_mini_bucket_elimination
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-

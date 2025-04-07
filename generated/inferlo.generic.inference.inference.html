@@ -1,24 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>inferlo.generic.inference.inference &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -31,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -101,7 +104,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
       <li class="breadcrumb-item active">inferlo.generic.inference.inference</li>
       <li class="wy-breadcrumbs-aside">
@@ -113,38 +116,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="module-inferlo.generic.inference.inference">
-<span id="inferlo-generic-inference-inference"></span><h1>inferlo.generic.inference.inference<a class="headerlink" href="#module-inferlo.generic.inference.inference" title="Permalink to this heading"></a></h1>
+  <section id="module-inferlo.generic.inference.inference">
+<span id="inferlo-generic-inference-inference"></span><h1>inferlo.generic.inference.inference<a class="headerlink" href="#module-inferlo.generic.inference.inference" title="Link to this heading"></a></h1>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.generic.inference.inference.belief_propagation" title="inferlo.generic.inference.inference.belief_propagation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">belief_propagation</span></code></a>(model[, max_iter, ...])</p></td>
 <td><p>Inference with (loopy) Belief Propagation.</p></td>
@@ -183,11 +158,11 @@
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.belief_propagation">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">belief_propagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#belief_propagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.belief_propagation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">belief_propagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#belief_propagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.belief_propagation" title="Link to this definition"></a></dt>
 <dd><p>Inference with (loopy) Belief Propagation.</p>
 <p>Estimates partition function using Loopy Belief Propagation algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>max_iter</strong> – Number of iterations.</p></li>
@@ -195,7 +170,7 @@
 <li><p><strong>damp_ratio</strong> – Damp ratio.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Inference result.</p>
 </dd>
 </dl>
@@ -207,11 +182,11 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.bucket_elimination">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elimination_order_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'random'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_elimination" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elimination_order_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'random'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_elimination" title="Link to this definition"></a></dt>
 <dd><p>Inference with Bucket Elimination.</p>
 <p>Estimates partition function using Bucket Elimination algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>elimination_order_method</strong> – Elimination order. Can be ‘random’,
@@ -219,7 +194,7 @@
 ‘elimination_order’ argument.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>
@@ -234,7 +209,7 @@ Bucket elimination: A unifying framework for reasoning. 1999.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.bucket_elimination_bt">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_elimination_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_elimination_bt" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_elimination_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_elimination_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_elimination_bt" title="Link to this definition"></a></dt>
 <dd><p>Inference with Bucket Elimination on binary tree.</p>
 <p>It runs Bucket elimination multiple times in different order to get marginal
 probabilities for every variable. However, it partially reuses results
@@ -244,11 +219,11 @@ probabilities by doing only O(N logN) eliminations.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.bucket_renormalization">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_renormalization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_renormalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_renormalization" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">bucket_renormalization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#bucket_renormalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.bucket_renormalization" title="Link to this definition"></a></dt>
 <dd><p>Inference with Bucket Renormalization.</p>
 <p>Estimates partition function using Bucket Renormalization algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
@@ -257,7 +232,7 @@ Mini-Bucket Renormalization. 1 corresponds to Global-Bucket
 Renormalization. Default is 1.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>
@@ -272,7 +247,7 @@ Bucket Renormalization for Approximate Inference. 2018.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.get_marginals">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">get_marginals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.base.generic_graph_model.GenericGraphModel"><span class="pre">GenericGraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_pf_algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.base.generic_graph_model.GenericGraphModel"><span class="pre">GenericGraphModel</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#get_marginals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.get_marginals" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">get_marginals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.base.generic_graph_model.GenericGraphModel"><span class="pre">GenericGraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_pf_algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.base.generic_graph_model.GenericGraphModel"><span class="pre">GenericGraphModel</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#get_marginals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.get_marginals" title="Link to this definition"></a></dt>
 <dd><p>Calculates marginal probabilities using provided algorithm for computing
 partition function.</p>
 <p>For every value of every variable builds new model where value of that
@@ -281,7 +256,7 @@ calculates marginal probability.</p>
 <p>This is high-level abstraction, agnostic of underlying algorithm. It will
 get exact results as long as underlying algorithm is exact.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Graphical model.</p></li>
 <li><p><strong>log_pf_algo</strong> – Function which computes.</p></li>
@@ -301,7 +276,7 @@ partition function.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.iterative_join_graph_propagation">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">iterative_join_graph_propagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#iterative_join_graph_propagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.iterative_join_graph_propagation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">iterative_join_graph_propagation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#iterative_join_graph_propagation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.iterative_join_graph_propagation" title="Link to this definition"></a></dt>
 <dd><p>Inference with Iterative Join Graph Propagation.</p>
 <dl class="simple">
 <dt>Estimates partition function using Iterative Join Graph Propagation</dt><dd><p>algorithm, which belongs to the class of Generalized Belief Propagation
@@ -309,7 +284,7 @@ methods.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
@@ -318,7 +293,7 @@ methods.</p>
 <li><p><strong>damp_ratio</strong> – Damp ratio.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>
@@ -333,18 +308,18 @@ Iterative Join-Graph Propagation. 2012.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.mean_field">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mean_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mean_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mean_field" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mean_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">converge_thr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mean_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mean_field" title="Link to this definition"></a></dt>
 <dd><p>Inference with Mean Field.</p>
 <p>Estimates partition function using Mean Field approximation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>max_iter</strong> – Maximal number of iterations.</p></li>
 <li><p><strong>converge_thr</strong> – Convergence threshold.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>
@@ -356,17 +331,17 @@ Iterative Join-Graph Propagation. 2012.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.mini_bucket_elimination">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_elimination" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_elimination" title="Link to this definition"></a></dt>
 <dd><p>Inference with Mini Bucket Elimination.</p>
 <p>Estimates partition function using Mini Bucket Elimination algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>
@@ -381,10 +356,10 @@ Mini-buckets: A general scheme for bounded inference. 2003.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.mini_bucket_elimination_bt">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_elimination_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_elimination_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_elimination_bt" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_elimination_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_elimination_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_elimination_bt" title="Link to this definition"></a></dt>
 <dd><p>Inference with Mini-Bucket Elimination on binary tree.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
@@ -395,10 +370,10 @@ Mini-buckets: A general scheme for bounded inference. 2003.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.mini_bucket_renormalization_bt">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_renormalization_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_renormalization_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_renormalization_bt" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">mini_bucket_renormalization_bt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.base.inference_result.InferenceResult"><span class="pre">InferenceResult</span></a></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#mini_bucket_renormalization_bt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.mini_bucket_renormalization_bt" title="Link to this definition"></a></dt>
 <dd><p>Inference with Mini-Bucket Renormalization on binary tree.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
@@ -409,18 +384,18 @@ Mini-buckets: A general scheme for bounded inference. 2003.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="inferlo.generic.inference.inference.weighted_mini_bucket_elimination">
-<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">weighted_mini_bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#weighted_mini_bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.weighted_mini_bucket_elimination" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">inferlo.generic.inference.inference.</span></span><span class="sig-name descname"><span class="pre">weighted_mini_bucket_elimination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.base.graph_model.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/inferlo/generic/inference/inference.html#weighted_mini_bucket_elimination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.generic.inference.inference.weighted_mini_bucket_elimination" title="Link to this definition"></a></dt>
 <dd><p>Inference with Weighted Mini Bucket Elimination.</p>
 <p>Estimates partition function using Weighted Mini Bucket Elimination
 algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Model for which to perform inference.</p></li>
 <li><p><strong>ibound</strong> – Maximal size of mini-bucket.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Natural logarithm of estimated partition function.</p>
 </dd>
 </dl>

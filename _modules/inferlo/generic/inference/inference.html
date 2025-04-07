@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>inferlo.generic.inference.inference &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -70,7 +73,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">inferlo.generic.inference.inference</li>
       <li class="wy-breadcrumbs-aside">
@@ -84,25 +87,25 @@
   <h1>Source code for inferlo.generic.inference.inference</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) The InferLO authors. All rights reserved.</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE.</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">inferlo</span> <span class="kn">import</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">DiscreteFactor</span><span class="p">,</span> <span class="n">InferenceResult</span><span class="p">,</span> \
+<span class="kn">from</span><span class="w"> </span><span class="nn">inferlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">DiscreteFactor</span><span class="p">,</span> <span class="n">InferenceResult</span><span class="p">,</span> \
     <span class="n">GenericGraphModel</span>
-<span class="kn">from</span> <span class="nn">.belief_propagation</span> <span class="kn">import</span> <span class="n">BeliefPropagation</span><span class="p">,</span> <span class="n">IterativeJoinGraphPropagation</span>
-<span class="kn">from</span> <span class="nn">.binary_tree_elimination</span> <span class="kn">import</span> <span class="n">BinaryTreeElimination</span>
-<span class="kn">from</span> <span class="nn">.bucket_elimination</span> <span class="kn">import</span> <span class="n">BucketElimination</span><span class="p">,</span> <span class="n">eliminate_variables</span>
-<span class="kn">from</span> <span class="nn">.bucket_renormalization</span> <span class="kn">import</span> <span class="n">BucketRenormalization</span>
-<span class="kn">from</span> <span class="nn">.factor</span> <span class="kn">import</span> <span class="n">Factor</span>
-<span class="kn">from</span> <span class="nn">.graphical_model</span> <span class="kn">import</span> <span class="n">GraphicalModel</span>
-<span class="kn">from</span> <span class="nn">.mean_field</span> <span class="kn">import</span> <span class="n">MeanField</span>
-<span class="kn">from</span> <span class="nn">.mini_bucket_elimination</span> <span class="kn">import</span> <span class="n">MiniBucketElimination</span>
-<span class="kn">from</span> <span class="nn">.weighted_mini_bucket_elimination</span> <span class="kn">import</span> <span class="n">WeightedMiniBucketElimination</span>
-<span class="kn">from</span> <span class="nn">...base.inference_result</span> <span class="kn">import</span> <span class="n">marg_probs_to_array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.belief_propagation</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeliefPropagation</span><span class="p">,</span> <span class="n">IterativeJoinGraphPropagation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.binary_tree_elimination</span><span class="w"> </span><span class="kn">import</span> <span class="n">BinaryTreeElimination</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.bucket_elimination</span><span class="w"> </span><span class="kn">import</span> <span class="n">BucketElimination</span><span class="p">,</span> <span class="n">eliminate_variables</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.bucket_renormalization</span><span class="w"> </span><span class="kn">import</span> <span class="n">BucketRenormalization</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.factor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.graphical_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphicalModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.mean_field</span><span class="w"> </span><span class="kn">import</span> <span class="n">MeanField</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.mini_bucket_elimination</span><span class="w"> </span><span class="kn">import</span> <span class="n">MiniBucketElimination</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.weighted_mini_bucket_elimination</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeightedMiniBucketElimination</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...base.inference_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">marg_probs_to_array</span>
 
 
-<span class="k">def</span> <span class="nf">_convert</span><span class="p">(</span><span class="n">inferlo_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphicalModel</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_convert</span><span class="p">(</span><span class="n">inferlo_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphicalModel</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">GraphicalModel</span><span class="p">([],</span> <span class="p">[])</span>
     <span class="n">cardinalities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">inferlo_model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">):</span>
@@ -122,11 +125,13 @@
     <span class="k">return</span> <span class="n">model</span>
 
 
-<div class="viewcode-block" id="belief_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.belief_propagation">[docs]</a><span class="k">def</span> <span class="nf">belief_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+<div class="viewcode-block" id="belief_propagation">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.belief_propagation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">belief_propagation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
                        <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
                        <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with (loopy) Belief Propagation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with (loopy) Belief Propagation.</span>
 
 <span class="sd">    Estimates partition function using Loopy Belief Propagation algorithm.</span>
 
@@ -147,9 +152,12 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_inference_result</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="bucket_elimination">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                        <span class="n">elimination_order_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;random&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination.</span>
 
 <span class="sd">    Estimates partition function using Bucket Elimination algorithm.</span>
 
@@ -171,10 +179,13 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">elimination_order_method</span><span class="o">=</span><span class="n">elimination_order_method</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="bucket_renormalization"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_renormalization">[docs]</a><span class="k">def</span> <span class="nf">bucket_renormalization</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="bucket_renormalization">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_renormalization">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bucket_renormalization</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                            <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
                            <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Bucket Renormalization.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Bucket Renormalization.</span>
 
 <span class="sd">    Estimates partition function using Bucket Renormalization algorithm.</span>
 
@@ -198,13 +209,16 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_log_z</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="iterative_join_graph_propagation"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.iterative_join_graph_propagation">[docs]</a><span class="k">def</span> <span class="nf">iterative_join_graph_propagation</span><span class="p">(</span>
+
+<div class="viewcode-block" id="iterative_join_graph_propagation">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.iterative_join_graph_propagation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterative_join_graph_propagation</span><span class="p">(</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
         <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
         <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
         <span class="n">damp_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Iterative Join Graph Propagation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Iterative Join Graph Propagation.</span>
 
 <span class="sd">    Estimates partition function using Iterative Join Graph Propagation</span>
 <span class="sd">      algorithm, which belongs to the class of Generalized Belief Propagation</span>
@@ -232,10 +246,13 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_log_z</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="mean_field"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mean_field">[docs]</a><span class="k">def</span> <span class="nf">mean_field</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="mean_field">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mean_field">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_field</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
                <span class="n">converge_thr</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Mean Field.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Mean Field.</span>
 
 <span class="sd">    Estimates partition function using Mean Field approximation.</span>
 
@@ -251,9 +268,12 @@
     <span class="k">return</span> <span class="n">MeanField</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="mini_bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="mini_bucket_elimination">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                             <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Mini Bucket Elimination.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Mini Bucket Elimination.</span>
 
 <span class="sd">    Estimates partition function using Mini Bucket Elimination algorithm.</span>
 
@@ -274,9 +294,12 @@
     <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">get_log_z</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="weighted_mini_bucket_elimination"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.weighted_mini_bucket_elimination">[docs]</a><span class="k">def</span> <span class="nf">weighted_mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="weighted_mini_bucket_elimination">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.weighted_mini_bucket_elimination">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">weighted_mini_bucket_elimination</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                                      <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Weighted Mini Bucket Elimination.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Weighted Mini Bucket Elimination.</span>
 
 <span class="sd">    Estimates partition function using Weighted Mini Bucket Elimination</span>
 <span class="sd">    algorithm.</span>
@@ -294,9 +317,10 @@
     <span class="k">return</span> <span class="n">WeightedMiniBucketElimination</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 
 
+
 <span class="c1"># TODO: Move to the new model class.</span>
-<span class="k">def</span> <span class="nf">_restrict_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span><span class="p">,</span> <span class="n">var_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Makes a copy of model in which value of given variable is fixed.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_restrict_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span><span class="p">,</span> <span class="n">var_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Makes a copy of model in which value of given variable is fixed.&quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">model</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">var_id</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">new_model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_model</span><span class="o">.</span><span class="n">factors</span><span class="p">)):</span>
@@ -314,12 +338,14 @@
     <span class="k">return</span> <span class="n">new_model</span>
 
 
-<div class="viewcode-block" id="get_marginals"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.get_marginals">[docs]</a><span class="k">def</span> <span class="nf">get_marginals</span><span class="p">(</span>
+<div class="viewcode-block" id="get_marginals">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.get_marginals">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_marginals</span><span class="p">(</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span><span class="p">,</span>
         <span class="n">log_pf_algo</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GenericGraphModel</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
         <span class="n">var_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">skip_last</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Calculates marginal probabilities using provided algorithm for computing</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates marginal probabilities using provided algorithm for computing</span>
 <span class="sd">    partition function.</span>
 
 <span class="sd">    For every value of every variable builds new model where value of that</span>
@@ -367,13 +393,16 @@
                            <span class="n">marg_prob</span><span class="o">=</span><span class="n">marg_probs_to_array</span><span class="p">(</span><span class="n">marg_probs</span><span class="p">))</span></div>
 
 
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Binary Tree Elimination algorithms.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="bucket_elimination_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination_bt">[docs]</a><span class="k">def</span> <span class="nf">bucket_elimination_bt</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination on binary tree.</span>
+<div class="viewcode-block" id="bucket_elimination_bt">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.bucket_elimination_bt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bucket_elimination_bt</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Bucket Elimination on binary tree.</span>
 
 <span class="sd">    It runs Bucket elimination multiple times in different order to get marginal</span>
 <span class="sd">    probabilities for every variable. However, it partially reuses results</span>
@@ -385,16 +414,19 @@
     <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mini_bucket_elimination_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination_bt">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_elimination_bt</span><span class="p">(</span>
+
+<div class="viewcode-block" id="mini_bucket_elimination_bt">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_elimination_bt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mini_bucket_elimination_bt</span><span class="p">(</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
         <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Elimination on binary tree.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Elimination on binary tree.</span>
 
 <span class="sd">    :param model: Model for which to perform inference.</span>
 <span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
         <span class="n">algo</span> <span class="o">=</span> <span class="n">MiniBucketElimination</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
                                      <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span>
                                      <span class="n">elimination_order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
@@ -406,16 +438,19 @@
     <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="mini_bucket_renormalization_bt"><a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_renormalization_bt">[docs]</a><span class="k">def</span> <span class="nf">mini_bucket_renormalization_bt</span><span class="p">(</span>
+
+<div class="viewcode-block" id="mini_bucket_renormalization_bt">
+<a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.inference.html#inferlo.generic.inference.inference.mini_bucket_renormalization_bt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mini_bucket_renormalization_bt</span><span class="p">(</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
         <span class="n">ibound</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Renormalization on binary tree.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Mini-Bucket Renormalization on binary tree.</span>
 
 <span class="sd">    :param model: Model for which to perform inference.</span>
 <span class="sd">    :param ibound: Maximal size of mini-bucket.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eliminate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
         <span class="n">br_algo</span> <span class="o">=</span> <span class="n">BucketRenormalization</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
                                         <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span>
                                         <span class="n">elimination_order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
@@ -426,6 +461,7 @@
 
     <span class="n">bt_algo</span> <span class="o">=</span> <span class="n">BinaryTreeElimination</span><span class="p">(</span><span class="n">eliminate</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">bt_algo</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
 </pre></div>
 
            </div>

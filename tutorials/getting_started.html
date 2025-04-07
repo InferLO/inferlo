@@ -1,26 +1,26 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting started with InferLO &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eea1f72d" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -33,11 +33,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -89,7 +93,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Getting started with InferLO</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tutorials/getting_started.ipynb.txt" rel="nofollow"> View page source</a>
@@ -100,287 +104,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS for nbsphinx extension */
-
-/* remove conflicting styling from Sphinx themes */
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt *,
-div.nbinput.container div.input_area pre,
-div.nboutput.container div.output_area pre,
-div.nbinput.container div.input_area .highlight,
-div.nboutput.container div.output_area .highlight {
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-div.nbinput.container > div[class*=highlight],
-div.nboutput.container > div[class*=highlight] {
-    margin: 0;
-}
-
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt * {
-    background: none;
-}
-
-div.nboutput.container div.output_area .highlight,
-div.nboutput.container div.output_area pre {
-    background: unset;
-}
-
-div.nboutput.container div.output_area div.highlight {
-    color: unset;  /* override Pygments text color */
-}
-
-/* avoid gaps between output lines */
-div.nboutput.container div[class*=highlight] pre {
-    line-height: normal;
-}
-
-/* input/output containers */
-div.nbinput.container,
-div.nboutput.container {
-    display: -webkit-flex;
-    display: flex;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
-}
-@media (max-width: 540px) {
-    div.nbinput.container,
-    div.nboutput.container {
-        flex-direction: column;
-    }
-}
-
-/* input container */
-div.nbinput.container {
-    padding-top: 5px;
-}
-
-/* last container */
-div.nblast.container {
-    padding-bottom: 5px;
-}
-
-/* input prompt */
-div.nbinput.container div.prompt pre {
-    color: #307FC1;
-}
-
-/* output prompt */
-div.nboutput.container div.prompt pre {
-    color: #BF5B3D;
-}
-
-/* all prompts */
-div.nbinput.container div.prompt,
-div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
-}
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
-@media (max-width: 540px) {
-    div.nbinput.container div.prompt,
-    div.nboutput.container div.prompt {
-        width: unset;
-        text-align: left;
-        padding: 0.4em;
-    }
-    div.nboutput.container div.prompt.empty {
-        padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
-    }
-}
-
-/* disable scrollbars and line breaks on prompts */
-div.nbinput.container div.prompt pre,
-div.nboutput.container div.prompt pre {
-    overflow: hidden;
-    white-space: pre;
-}
-
-/* input/output area */
-div.nbinput.container div.input_area,
-div.nboutput.container div.output_area {
-    -webkit-flex: 1;
-    flex: 1;
-    overflow: auto;
-}
-@media (max-width: 540px) {
-    div.nbinput.container div.input_area,
-    div.nboutput.container div.output_area {
-        width: 100%;
-    }
-}
-
-/* input area */
-div.nbinput.container div.input_area {
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    /*background: #f5f5f5;*/
-}
-
-/* override MathJax center alignment in output cells */
-div.nboutput.container div[class*=MathJax] {
-    text-align: left !important;
-}
-
-/* override sphinx.ext.imgmath center alignment in output cells */
-div.nboutput.container div.math p {
-    text-align: left;
-}
-
-/* standard error */
-div.nboutput.container div.output_area.stderr {
-    background: #fdd;
-}
-
-/* ANSI colors */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-default-inverse-fg { color: #FFFFFF; }
-.ansi-default-inverse-bg { background-color: #000000; }
-
-.ansi-bold { font-weight: bold; }
-.ansi-underline { text-decoration: underline; }
-
-
-div.nbinput.container div.input_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight].math,
-div.nboutput.container div.output_area.rendered_html,
-div.nboutput.container div.output_area > div.output_javascript,
-div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-    margin: 0;
-}
-
-/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
-div.nbinput.container div.input_area > div[class^='highlight'],
-div.nboutput.container div.output_area > div[class^='highlight']{
-    overflow-y: hidden;
-}
-
-/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt .copybtn {
-    display: none;
-}
-
-/* Some additional styling taken form the Jupyter notebook CSS */
-.jp-RenderedHTMLCommon table,
-div.rendered_html table {
-  border: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: black;
-  font-size: 12px;
-  table-layout: fixed;
-}
-.jp-RenderedHTMLCommon thead,
-div.rendered_html thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-.jp-RenderedHTMLCommon tr,
-.jp-RenderedHTMLCommon th,
-.jp-RenderedHTMLCommon td,
-div.rendered_html tr,
-div.rendered_html th,
-div.rendered_html td {
-  text-align: right;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-.jp-RenderedHTMLCommon th,
-div.rendered_html th {
-  font-weight: bold;
-}
-.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
-div.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.jp-RenderedHTMLCommon tbody tr:hover,
-div.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
-
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="Getting-started-with-InferLO">
-<h1>Getting started with InferLO<a class="headerlink" href="#Getting-started-with-InferLO" title="Permalink to this heading"></a></h1>
+  <section id="Getting-started-with-InferLO">
+<h1>Getting started with InferLO<a class="headerlink" href="#Getting-started-with-InferLO" title="Link to this heading"></a></h1>
 <p>In this Notebook we will review basic concepts of InferLO library, show how to define graphical models and how to solve different tasks (inference, maximum likelihood and sampling) for models. Also we will review different kinds of models (generic, pairwise and Normal Factor Graph), and show how you can use different algorithms to solve the same problem.</p>
 <p>Purpose of this Notebook is to give understanding of how graphical models are represented in the InferLO library, rather than to be tutorial on graphical models.</p>
 <div class="nbinput nblast docutils container">
@@ -390,7 +115,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Don&#39;t run this cell unless you are InferLO developer and this notebook is in inferlo/docs/tutorials.</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -399,19 +124,19 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">inferlo</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inferlo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 </pre></div>
 </div>
 </div>
 <section id="Introduction">
-<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this heading"></a></h2>
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading"></a></h2>
 <p>Essentially graphical model is a way to represent a probabilistic distribution over variables. This distribution is usually defined by non-normalized probability density function, represented as a product of factors, each factor being a function of small number of variables. Then we can define a graph describing structure of those factors (there are multiple ways to do so).</p>
 <p>In InferLO you define a model in terms of two basic building blocks: <code class="docutils literal notranslate"><span class="pre">Variable</span></code>s and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>s. First we review how you can do it by defining them explicilty.</p>
 </section>
 <section id="Defining-a-model">
-<h2>Defining a model<a class="headerlink" href="#Defining-a-model" title="Permalink to this heading"></a></h2>
+<h2>Defining a model<a class="headerlink" href="#Defining-a-model" title="Link to this heading"></a></h2>
 <p>Let’s start by defining a generic graphical model, which is explicitly defined by (non-normalized) probability density function. Let’s say we have 4 variables <span class="math notranslate nohighlight">\(x_0, x_1, x_2, x_3\)</span> which can take any value, and we want to represent probability distribution</p>
 <div class="math notranslate nohighlight">
 \[p(x) \sim e^{x_1 \cdot x_2} \cdot |x_2+x_3| \cdot \cos(x3-x4)^2.\]</div>
@@ -471,7 +196,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Variables-and-domains">
-<h2>Variables and domains<a class="headerlink" href="#Variables-and-domains" title="Permalink to this heading"></a></h2>
+<h2>Variables and domains<a class="headerlink" href="#Variables-and-domains" title="Link to this heading"></a></h2>
 <p>In example above variables could take any real value. In practice it’s useful to have variables with limited domain. You can specify domain for every individual variable in the model. Note that <code class="docutils literal notranslate"><span class="pre">model[i]</span></code> accesses <code class="docutils literal notranslate"><span class="pre">i</span></code>-th variable:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -518,7 +243,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Factors">
-<h2>Factors<a class="headerlink" href="#Factors" title="Permalink to this heading"></a></h2>
+<h2>Factors<a class="headerlink" href="#Factors" title="Link to this heading"></a></h2>
 <p>In example above we used <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which is defined explicilty by a function, and it can be any function. There are other ways to represent factors.</p>
 <p>If all variables, on which the fcator depends, are discrete, number of possible combinations of variable values is finite, so you can tabulate the function and represnt it by this table (which will be a multidimensional array). You can do this in InferLO by using a <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>.</p>
 <div class="nbinput docutils container">
@@ -570,7 +295,7 @@ array([[[  2.,   3.,   4.],
 </div>
 </section>
 <section id="Pairwise-models">
-<h2>Pairwise models<a class="headerlink" href="#Pairwise-models" title="Permalink to this heading"></a></h2>
+<h2>Pairwise models<a class="headerlink" href="#Pairwise-models" title="Link to this heading"></a></h2>
 <p>Generic model can express any distribution, but it’s too abstract. InferLO defines classes for more concrete models, which may be subjects to some additional constraints, but allow for efficient algorithms to solve certain problems.</p>
 <p>First such example is Pairwise Finite model - a model where every factor depends on at most 2 variables, and where variables come from the same discrete domain. Famous partial cases of this kind of model are <a class="reference external" href="https://en.wikipedia.org/wiki/Ising_model">Ising model</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Potts_model">Potts model</a>.</p>
 <p>In InferLO such model is represented by class <code class="docutils literal notranslate"><span class="pre">PairWiseFiniteModel</span></code>. It’s defined by <code class="docutils literal notranslate"><span class="pre">gr_size</span></code> - graph size and <code class="docutils literal notranslate"><span class="pre">al_isze</span></code> - alphabet size. Domain of all variables is set of integers <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">...,</span> <span class="pre">al_size-1</span></code>.</p>
@@ -633,7 +358,7 @@ array([[[  2.,   3.,   4.],
 <p>We can see that there are 3 factors corresponding to edges and 4 factors corresponding to fields in vertices.</p>
 </section>
 <section id="Inference,-Optimization-and-Sampling">
-<h2>Inference, Optimization and Sampling<a class="headerlink" href="#Inference,-Optimization-and-Sampling" title="Permalink to this heading"></a></h2>
+<h2>Inference, Optimization and Sampling<a class="headerlink" href="#Inference,-Optimization-and-Sampling" title="Link to this heading"></a></h2>
 <p>Now, let’s do something with this toy model. First task is inference - finding partition function <span class="math notranslate nohighlight">\(Z\)</span> and marginal probabilities.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
@@ -676,7 +401,7 @@ InferenceResult(log_pf=34.12701627818652, marg_prob=array([[0.88076347, 0.119236
 </pre></div></div>
 </div>
 <p>Note that we return not parttion function, but its logarithm, because it itself may be so high that it doesn’t fit in float data type.</p>
-<p>Another task is optimization, i.e. finding state having the highest probability.</p>
+<p>Another task is optimization, i.e. finding state having the highest probability.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
@@ -716,13 +441,13 @@ array([[0, 1, 1, 1],
 </div>
 </section>
 <section id="Algorithms">
-<h2>Algorithms<a class="headerlink" href="#Algorithms" title="Permalink to this heading"></a></h2>
+<h2>Algorithms<a class="headerlink" href="#Algorithms" title="Link to this heading"></a></h2>
 <p>The same problem for the same model can be solved by different algorithm of different accuract and efficiency. Let’s build a model whose graph is 5x5 grid and perform inference using three algorithms - dynamic programming on path decomposition (exact), mean field (approximate) and message passing (approximate).</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">inferlo.testing</span> <span class="kn">import</span> <span class="n">grid_potts_model</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">grid_potts_model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">grid_potts_model</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;path_dp&#39;</span><span class="p">)</span>
@@ -783,11 +508,11 @@ array([[0, 1, 1, 1],
 <p>Mean field is guaranteed to give lower bound on partition function, and we can see that estimate is close to correct answer, but estimate of marginal probablities is worse than for message passing.</p>
 </section>
 <section id="Normal-Factor-Graph-models">
-<h2>Normal Factor Graph models<a class="headerlink" href="#Normal-Factor-Graph-models" title="Permalink to this heading"></a></h2>
+<h2>Normal Factor Graph models<a class="headerlink" href="#Normal-Factor-Graph-models" title="Link to this heading"></a></h2>
 <p>If every variable appears in exactly two factors, we can build a Normal Factor Graph - a graph where edges correspond to variables, and vertices correspond to factors. We we will call such models Normal Factor Graph (NFG) models. Also they are known ad Edge-Variable or Forney-style models.</p>
 <p>Not any model can be represented in such a way, but every model can be converted to NFG model. Conversion may add new variables and factors. This conversion is implemented by function <code class="docutils literal notranslate"><span class="pre">inferlo.NormalFactorGraphModel.from_model</span></code>, which takes arbitrary graphical model and returns equivalent NFG model.</p>
 <section id="Conversion-to-Normal-Factor-Graph-model">
-<h3>Conversion to Normal Factor Graph model<a class="headerlink" href="#Conversion-to-Normal-Factor-Graph-model" title="Permalink to this heading"></a></h3>
+<h3>Conversion to Normal Factor Graph model<a class="headerlink" href="#Conversion-to-Normal-Factor-Graph-model" title="Link to this heading"></a></h3>
 <p>Below we demonstrate how the conversion algorithm works. We build generic model with 5 variables and 4 factors. Then we convert it to equivalent Normal Factor Graph model.</p>
 <p>We plot factor graph for initial model, Normal Factor graph and factor graph for the new model.</p>
 <div class="nbinput docutils container">
@@ -833,7 +558,7 @@ array([[0, 1, 1, 1],
 </section>
 </section>
 <section id="Three-graphs-of-a-model">
-<h2>Three graphs of a model<a class="headerlink" href="#Three-graphs-of-a-model" title="Permalink to this heading"></a></h2>
+<h2>Three graphs of a model<a class="headerlink" href="#Three-graphs-of-a-model" title="Link to this heading"></a></h2>
 <p>Below we build a simple model which is both pairwise and NFG model, and show 3 graphs for it: pairwise graph, factor graph and Normal Factor (edge-variable) graph.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:

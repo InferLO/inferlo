@@ -1,24 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>inferlo.FunctionFactor &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -31,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -95,7 +98,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
       <li class="breadcrumb-item active">inferlo.FunctionFactor</li>
       <li class="wy-breadcrumbs-aside">
@@ -107,42 +110,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="inferlo-functionfactor">
-<h1>inferlo.FunctionFactor<a class="headerlink" href="#inferlo-functionfactor" title="Permalink to this heading"></a></h1>
+  <section id="inferlo-functionfactor">
+<h1>inferlo.FunctionFactor<a class="headerlink" href="#inferlo-functionfactor" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">FunctionFactor</span></span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">inferlo.</span></span><span class="sig-name descname"><span class="pre">FunctionFactor</span></span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor" title="Link to this definition"></a></dt>
 <dd><p>A factor given explicitly by function.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><span class="pre">GraphModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.__init__" title="Link to this definition"></a></dt>
 <dd><p>Create function factor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> – Graphical model this factor belongs to.</p></li>
 <li><p><strong>var_idx</strong> – Indices of variables in the model, on which this
@@ -155,10 +134,6 @@ factor depends.</p></li>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#inferlo.FunctionFactor.__init__" title="inferlo.FunctionFactor.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model, var_idx, func)</p></td>
 <td><p>Create function factor.</p></td>
@@ -197,44 +172,44 @@ factor depends.</p></li>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.apply_function">
-<span class="sig-name descname"><span class="pre">apply_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.apply_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.apply_function" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">apply_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.apply_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.apply_function" title="Link to this definition"></a></dt>
 <dd><p>Returns factor func(g(x)), where g(x) is given factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.combine_factors">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">combine_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.combine_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.combine_factors" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">combine_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#inferlo.FunctionFactor" title="inferlo.base.factors.function_factor.FunctionFactor"><span class="pre">FunctionFactor</span></a></span></span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.combine_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.combine_factors" title="Link to this definition"></a></dt>
 <dd><p>Returns a factor which is a function of other 2 factors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.combine_with">
-<span class="sig-name descname"><span class="pre">combine_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.combine_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.combine_with" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">combine_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.combine_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.combine_with" title="Link to this definition"></a></dt>
 <dd><p>Returns factor func(g(x), other), where g(x) is given factor.</p>
 <p><cite>other</cite> may be a number, variable or another factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.cos">
-<span class="sig-name descname"><span class="pre">cos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.cos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.cos" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">cos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.cos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.cos" title="Link to this definition"></a></dt>
 <dd><p>Sine of this factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.exp">
-<span class="sig-name descname"><span class="pre">exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.exp" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.exp" title="Link to this definition"></a></dt>
 <dd><p>Exponent of this factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.sin">
-<span class="sig-name descname"><span class="pre">sin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.sin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.sin" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.sin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.sin" title="Link to this definition"></a></dt>
 <dd><p>Sine of this factor.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="inferlo.FunctionFactor.value">
-<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.value" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/inferlo/base/factors/function_factor.html#FunctionFactor.value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#inferlo.FunctionFactor.value" title="Link to this definition"></a></dt>
 <dd><p>Value of function inside this factor in given point.</p>
 </dd></dl>
 

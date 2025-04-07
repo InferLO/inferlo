@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>inferlo.base.factors.discrete_factor &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -70,7 +73,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">inferlo.base.factors.discrete_factor</li>
       <li class="wy-breadcrumbs-aside">
@@ -84,24 +87,28 @@
   <h1>Source code for inferlo.base.factors.discrete_factor</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">inferlo.base.factors.factor</span> <span class="kn">import</span> <span class="n">Factor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.base.factors.factor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factor</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">inferlo.base</span> <span class="kn">import</span> <span class="n">GraphModel</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphModel</span>
 
 
-<div class="viewcode-block" id="DiscreteFactor"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor">[docs]</a><span class="k">class</span> <span class="nc">DiscreteFactor</span><span class="p">(</span><span class="n">Factor</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A factor of several discrete variables.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DiscreteFactor">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DiscreteFactor</span><span class="p">(</span><span class="n">Factor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A factor of several discrete variables.&quot;&quot;&quot;</span>
 
     <span class="c1"># TODO: make immutable.</span>
 
-<div class="viewcode-block" id="DiscreteFactor.__init__"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+<div class="viewcode-block" id="DiscreteFactor.__init__">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                  <span class="n">values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">)</span>
 
@@ -114,16 +121,22 @@
         <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Factors should be non-negative.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.value"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.value">[docs]</a>    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+
+<div class="viewcode-block" id="DiscreteFactor.value">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.value">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span>
         <span class="n">ans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
             <span class="n">ans</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">get_value_index</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
         <span class="k">return</span> <span class="n">ans</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.from_factor"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_factor">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Converts arbitrary factor to DiscreteFactor.</span>
+
+<div class="viewcode-block" id="DiscreteFactor.from_factor">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_factor">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts arbitrary factor to DiscreteFactor.</span>
 
 <span class="sd">        Returns `None` if some variables of the factor are not discrete.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -149,11 +162,14 @@
         <span class="n">new_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">factor</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">new_factor</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.from_flat_values"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_flat_values">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_flat_values</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
+
+<div class="viewcode-block" id="DiscreteFactor.from_flat_values">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_flat_values">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_flat_values</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                          <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                          <span class="n">values_flat</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Creates factor specified by list of values.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates factor specified by list of values.</span>
 
 <span class="sd">        :param model: GM to which this factor belongs.</span>
 <span class="sd">        :param var_idx: Indices of variables.</span>
@@ -164,8 +180,11 @@
         <span class="n">values</span> <span class="o">=</span> <span class="n">values_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.marginal"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.marginal">[docs]</a>    <span class="k">def</span> <span class="nf">marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DiscreteFactor.marginal">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.marginal">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables.&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">26</span>
         <span class="n">subscript_idx</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">chr</span><span class="p">(</span>
             <span class="mi">65</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">))}</span>
@@ -178,12 +197,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">new_values</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.max_marginal"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.max_marginal">[docs]</a>    <span class="k">def</span> <span class="nf">max_marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables, using MAX-PROD.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DiscreteFactor.max_marginal">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.max_marginal">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables, using MAX-PROD.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not implemented.&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DiscreteFactor.restrict"><a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_id</span><span class="p">,</span> <span class="n">fixed_value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fixes value of one variable.</span>
+
+<div class="viewcode-block" id="DiscreteFactor.restrict">
+<a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.restrict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_id</span><span class="p">,</span> <span class="n">fixed_value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fixes value of one variable.</span>
 
 <span class="sd">        Returns new factor which is equivalent to original factor, but with</span>
 <span class="sd">        value of one variable fixed.</span>
@@ -199,7 +224,9 @@
         <span class="n">idx</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">fixed_value</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">variable_id</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span>
         <span class="n">new_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">new_values</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">new_values</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

@@ -1,24 +1,23 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contributing to InferLO &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,11 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -82,7 +85,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Contributing to InferLO</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/contributing.md.txt" rel="nofollow"> View page source</a>
@@ -93,34 +96,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="contributing-to-inferlo">
-<h1>Contributing to InferLO<a class="headerlink" href="#contributing-to-inferlo" title="Permalink to this heading"></a></h1>
+  <section id="contributing-to-inferlo">
+<h1>Contributing to InferLO<a class="headerlink" href="#contributing-to-inferlo" title="Link to this heading"></a></h1>
 <section id="first-time-setup">
-<h2>First time setup<a class="headerlink" href="#first-time-setup" title="Permalink to this heading"></a></h2>
+<h2>First time setup<a class="headerlink" href="#first-time-setup" title="Link to this heading"></a></h2>
 <p>You will need <a class="reference external" href="https://git-scm.com/">Git</a> and <a class="reference external" href="python.org">Python</a> 3.7+. It’s
 recommended, but not necessary, to do all development in the virtual environment.</p>
 <p>Clone the repository:</p>
@@ -140,12 +119,12 @@ recommended, but not necessary, to do all development in the virtual environment
 </div>
 </section>
 <section id="git">
-<h2>Git<a class="headerlink" href="#git" title="Permalink to this heading"></a></h2>
+<h2>Git<a class="headerlink" href="#git" title="Link to this heading"></a></h2>
 <p>If you never worked with Git before, you will have to learn some Git basics. First of all,
 read <a class="reference external" href="https://guides.github.com/introduction/git-handbook/">Git Handbook</a> and bookmark or print <a class="reference external" href="https://github.github.com/training-kit/downloads/github-git-cheat-sheet/">Git cheet sheet</a>. To really understand how Git works, check out <a class="reference external" href="https://git-scm.com/book/en/v2">this site</a>.</p>
 </section>
 <section id="development-cycle">
-<h2>Development cycle<a class="headerlink" href="#development-cycle" title="Permalink to this heading"></a></h2>
+<h2>Development cycle<a class="headerlink" href="#development-cycle" title="Link to this heading"></a></h2>
 <p>For making any changes you will have to create new branch, make your changes 
 on that branch and then merge it with <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.</p>
 <p><em>Process below applies to those who has commit access to repository.
@@ -189,7 +168,7 @@ passes for your last commit. Now,
 <a class="reference external" href="https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-a-pull-request">merge it</a>.</p>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading"></a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Unit tests</strong>. All unit tests must pass. 
 That can be checked by running <code class="docutils literal notranslate"><span class="pre">pytest</span></code> in root of the repository. 
@@ -213,11 +192,11 @@ yuo tom mege code to master.</p></li>
 </ul>
 </section>
 <section id="code-style">
-<h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this heading"></a></h2>
+<h2>Code style<a class="headerlink" href="#code-style" title="Link to this heading"></a></h2>
 <p>Please follow <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a>.</p>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
 <p>We use <a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a> to automatically 
 build the documentation. Documentation is authomatically exported to 
 <a class="reference external" href="https://inferlo.readthedocs.io/">ReadTheDocs</a>.</p>
@@ -238,7 +217,7 @@ check that it builds.</p>
 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">intsall</span> <span class="pre">pandoc</span></code>.</p>
 </section>
 <section id="adding-new-algorithms">
-<h2>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Permalink to this heading"></a></h2>
+<h2>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Link to this heading"></a></h2>
 <p>If you are adding new algorithm to solve a problem fo particular kind of problem,
 for which we already have at least one algorithm, you should follow the following 
 process.</p>
@@ -249,7 +228,7 @@ should be keyword arguments with default values.</p>
 conditioned on user passing your algorithm name as <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> argument.</p>
 </section>
 <section id="release-management">
-<h2>Release management<a class="headerlink" href="#release-management" title="Permalink to this heading"></a></h2>
+<h2>Release management<a class="headerlink" href="#release-management" title="Link to this heading"></a></h2>
 <p>We follow <a class="reference external" href="https://semver.org/">Semantic versioning</a> rules. Currently 
 InferLO is in Alpha, which means major version is “0”, and we keep our right to
 make any breaking changes.</p>

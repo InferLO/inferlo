@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>inferlo.pairwise.inference.message_passing &mdash; InferLO 0.1.0 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
+
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> InferLO
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            InferLO
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -70,7 +73,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">inferlo.pairwise.inference.message_passing</li>
       <li class="wy-breadcrumbs-aside">
@@ -84,25 +87,25 @@
   <h1>Source code for inferlo.pairwise.inference.message_passing</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (c) 2020, The InferLO authors. All rights reserved.</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 - see LICENSE file.</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">import</span> <span class="nn">networkx</span>
-<span class="kn">import</span> <span class="nn">numba</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.special</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numba</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
 
-<span class="kn">from</span> <span class="nn">inferlo.base.inference_result</span> <span class="kn">import</span> <span class="n">InferenceResult</span>
-<span class="kn">from</span> <span class="nn">inferlo.utils.special_functions</span> <span class="kn">import</span> <span class="n">logsumexp_1d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.base.inference_result</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceResult</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.utils.special_functions</span><span class="w"> </span><span class="kn">import</span> <span class="n">logsumexp_1d</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">inferlo.pairwise</span> <span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
 
 
 <span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4[:](i4[:,:])&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_build_edge_lookup</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Builds edge lookup.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_edge_lookup</span><span class="p">(</span><span class="n">sorted_edges</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Builds edge lookup.</span>
 
 <span class="sd">    Edges must be sorted by end vertex (ascending).</span>
 
@@ -122,8 +125,8 @@
 
 
 <span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;f8[:,:](i4[:,:],f8[:,:,:],f8[:,:],i8)&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_message_passing</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">,</span> <span class="n">intrn</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Runs message passing algorithm.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_message_passing</span><span class="p">(</span><span class="n">dir_edges</span><span class="p">,</span> <span class="n">intrn</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs message passing algorithm.</span>
 
 <span class="sd">    Terminates if `max_iter` steps were made or if converged.</span>
 
@@ -171,9 +174,11 @@
     <span class="k">return</span> <span class="n">lmu</span>
 
 
-<div class="viewcode-block" id="infer_message_passing"><a class="viewcode-back" href="../../../../generated/inferlo.pairwise.inference.message_passing.infer_message_passing.html#inferlo.pairwise.inference.message_passing.infer_message_passing">[docs]</a><span class="k">def</span> <span class="nf">infer_message_passing</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span>
+<div class="viewcode-block" id="infer_message_passing">
+<a class="viewcode-back" href="../../../../generated/inferlo.pairwise.inference.message_passing.infer_message_passing.html#inferlo.pairwise.inference.message_passing.infer_message_passing">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">infer_message_passing</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span>
                           <span class="n">max_iter</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Inference with Message Passing.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference with Message Passing.</span>
 
 <span class="sd">    For acyclic graph returns exact partition function and marginal</span>
 <span class="sd">        probabilities. For graph with loops may return good approximation to</span>
@@ -220,6 +225,7 @@
     <span class="n">marg_prob</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">log_marg_pf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">marg_prob</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">InferenceResult</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">log_pf</span><span class="p">),</span> <span class="n">marg_prob</span><span class="p">)</span></div>
+
 </pre></div>
 
            </div>
