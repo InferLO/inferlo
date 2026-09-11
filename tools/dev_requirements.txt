@@ -1,9 +1,0 @@
-# Requirements needed for development.
-
-# Style checking.
-pycodestyle
-pylint
-autopep8
-
-# Testing.
-pytest
