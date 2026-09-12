@@ -11,74 +11,71 @@ jobs:
     name: Style check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
           architecture: 'x64'
       - name: Install libraries
-        run: pip install pylint pycodestyle
+        run: python -m pip install ".[lint]"
       - name: Check style
         run: tools/check_style.sh
   pytest-ubuntu:
+    strategy:
+      matrix:
+        python-version: [ '3.12', '3.13', '3.14' ]
     name: Tests (Ubuntu)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python-version }}
           architecture: 'x64'
       - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-          pip install pytest>=5.3
+        run: python -m pip install ".[test]"
       - name: Pytest check
-        run: pytest
+        run: python -m pytest
   pytest-windows:
     name: Tests (Windows)
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
           architecture: 'x64'
       - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-          pip install pytest>=5.3
+        run: python -m pip install ".[test]"
       - name: Pytest check
-        run: pytest
+        run: python -m pytest
   pytest-macos:
-     name: Tests (MacOS)
-     runs-on: macos-13
-     steps:
-       - uses: actions/checkout@v1
-       - uses: actions/setup-python@v1
-         with:
-           python-version: '3.12'
-           architecture: 'x64'
-       - name: Install requirements
-         run: |
-           brew install openblas
-           OPENBLAS="$(brew --prefix openblas)" pip install -r requirements.txt
-           pip install pytest>=5.3
-       - name: Pytest check
-         run: pytest
+    name: Tests (MacOS)
+    # Use Apple Silicon for Python 3.14 Numba/llvmlite wheels.
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          architecture: 'arm64'
+      - name: Install requirements
+        run: python -m pip install --only-binary=numba,llvmlite ".[test]"
+      - name: Pytest check
+        run: python -m pytest
   build-docs:
     name: Build documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
           architecture: 'x64'
       - name: Install requirements
         run: |
-          sudo apt-get install pandoc
-          pip install -r requirements.txt
-          pip install -r docs/requirements.txt
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          python -m pip install ".[docs]"
       - name: Build the docs
         run: tools/build_docs.sh

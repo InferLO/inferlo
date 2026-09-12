@@ -1,9 +1,0 @@
-# Requirements needed to build documentation.
-markdown==3.3.7 # Can't use >=3.4 until https://github.com/clayrisser/sphinx-markdown-parser/issues/36 is fixed.
-ipython
-sphinx
-sphinx_rtd_theme
-sphinx_markdown_parser
-sphinx-autodoc-typehints
-pypandoc
-nbsphinx

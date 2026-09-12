@@ -1,6 +1,7 @@
 # Copyright (c) 2020, The InferLO authors. All rights reserved.
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 import numpy as np
+import pytest
 
 from inferlo.pairwise.pwf_model import PairWiseFiniteModel
 from inferlo.testing import (assert_results_close, line_potts_model,
@@ -19,6 +20,24 @@ def test_isolated_exact():
     result = model.infer(algorithm='mean_field')
 
     assert_results_close(result, gt)
+
+
+@pytest.mark.parametrize("layout", ["fortran", "strided"])
+def test_noncontiguous_field(layout):
+    model = PairWiseFiniteModel(3, 2)
+    field = np.arange(6, dtype=np.float64).reshape(3, 2) / 10
+    if layout == "fortran":
+        model.set_field(np.asfortranarray(field))
+    else:
+        model.field = np.repeat(field, 2, axis=1)[:, ::2]
+    assert not model.field.flags.c_contiguous
+    model.add_interaction(0, 1, np.zeros((2, 2)))
+    expected = model.infer(algorithm='bruteforce')
+
+    result = model.infer(algorithm='mean_field')
+
+    assert_results_close(result, expected)
+    np.testing.assert_array_equal(model.field, field)
 
 
 def test_cycle3():

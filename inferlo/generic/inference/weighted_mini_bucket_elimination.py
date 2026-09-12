@@ -153,12 +153,17 @@ class WeightedMiniBucketElimination(MiniBucketElimination):
 
         converge_flag = True
         for rvar in self.variables_replicated_from_[variable]:
-            if np.sum(np.abs(-belief_from_[rvar].log_values +
-                             log_average_belief)) > 1e-2:
+            log_belief = belief_from_[rvar].log_values
+            # Matching zero-probability states need no correction. Avoid
+            # subtracting -inf from -inf, which would hide other differences
+            # behind a NaN in the convergence check.
+            both_zero = np.isneginf(log_belief) & np.isneginf(log_average_belief)
+            log_correction = np.subtract(
+                log_average_belief, log_belief,
+                out=np.zeros_like(log_belief), where=~both_zero)
+            if np.sum(np.abs(log_correction)) > 1e-2:
                 converge_flag = False
-                temp_log_val = (self.holder_weights_for_[rvar]) * (
-                    -belief_from_[rvar].log_values + log_average_belief
-                )
+                temp_log_val = self.holder_weights_for_[rvar] * log_correction
                 temp = Factor("", [rvar], log_values=temp_log_val)
                 self.factor_upper_to_[rvar].product(temp)
 

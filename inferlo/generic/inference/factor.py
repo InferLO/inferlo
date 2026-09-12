@@ -236,16 +236,7 @@ class Factor:
             fac.log_values += max_a
         else:
             a1 = fac1.transpose_by_(fac.variables, inplace=False).log_values
-            max_a = max(amax(a1), amax(fac.log_values))
-            with np.errstate(invalid="raise"):
-                try:
-                    fac.log_values = log(exp(a1 - max_a) + exp(fac.log_values - max_a))
-                except BaseException:
-                    print(a1)
-                    print(fac.log_values)
-                    print(max_a)
-
-            fac.log_values += max_a
+            fac.log_values = np.logaddexp(a1, fac.log_values)
 
         if not inplace:
             fac.name = default_factor_name()

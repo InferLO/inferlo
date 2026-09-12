@@ -12,15 +12,12 @@
 #
 import os
 import sys
-
-from sphinx_markdown_parser.parser import MarkdownParser
+from importlib import metadata
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 
 def setup(app):
-    app.add_source_parser(MarkdownParser)
-    app.add_config_value('pandoc_use_parser', 'markdown', True)
     app.connect('autodoc-process-signature', autodoc_process_signature)
     app.add_css_file('custom.css')
 
@@ -32,7 +29,7 @@ copyright = '2020, InferLO developers'
 author = 'InferLO developers'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = metadata.version('inferlo')
 
 # -- General configuration ---------------------------------------------------
 
@@ -40,6 +37,7 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'myst_parser',
     'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
