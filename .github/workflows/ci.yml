@@ -51,17 +51,16 @@ jobs:
         run: python -m pytest
   pytest-macos:
     name: Tests (MacOS)
-    runs-on: macos-15-intel
+    # Use Apple Silicon for Python 3.14 Numba/llvmlite wheels.
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.14'
-          architecture: 'x64'
+          architecture: 'arm64'
       - name: Install requirements
-        run: |
-          brew install openblas
-          OPENBLAS="$(brew --prefix openblas)" python -m pip install ".[test]"
+        run: python -m pip install --only-binary=numba,llvmlite ".[test]"
       - name: Pytest check
         run: python -m pytest
   build-docs:
