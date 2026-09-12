@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.forney.nfg_model &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.forney.nfg_model &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -104,7 +104,7 @@
 <div class="viewcode-block" id="NormalFactorGraphModel">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NormalFactorGraphModel</span><span class="p">(</span><span class="n">GraphModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normal Factor Graph model.</span>
+<span class="w">    </span><span class="sd">"""Normal Factor Graph model.</span>
 
 <span class="sd">    Also known as Forney-style or Edge-Variable graphical model.</span>
 
@@ -112,16 +112,16 @@
 <span class="sd">    a graph.</span>
 
 <span class="sd">    Every variable appears in exactly two factors.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="NormalFactorGraphModel.__init__">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_variables</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="n">Domain</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes Normal Factor Graph model.</span>
+<span class="w">        </span><span class="sd">"""Initializes Normal Factor Graph model.</span>
 
 <span class="sd">        :param num_variables: Number of variables in the model.</span>
 <span class="sd">        :param domain: Default domain of each variable.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">num_variables</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
 
         <span class="c1"># self.edges[i] -- two indices of factors, depending on i-th variable.</span>
@@ -134,15 +134,15 @@
 <div class="viewcode-block" id="NormalFactorGraphModel.add_factor">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.add_factor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a factor.&quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">built</span><span class="p">,</span> <span class="s2">&quot;Model is built.&quot;</span>
+<span class="w">        </span><span class="sd">"""Add a factor."""</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">built</span><span class="p">,</span> <span class="s2">"Model is built."</span>
         <span class="k">assert</span> <span class="n">factor</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="bp">self</span>
         <span class="n">factor_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">var_id</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span>
-                <span class="s2">&quot;One variable can&#39;t belong to more than 2 factors.&quot;</span><span class="p">)</span>
+                <span class="s2">"One variable can't belong to more than 2 factors."</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">var_id</span> <span class="ow">in</span> <span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor_idx</span><span class="p">)</span></div>
@@ -151,11 +151,11 @@
 <div class="viewcode-block" id="NormalFactorGraphModel.build">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.build">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validates the model and makes it immutable.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Validates the model and makes it immutable."""</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_variables</span><span class="p">):</span>
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span>
-                <span class="s2">&quot;Can&#39;t build Forney-style model. Variable </span><span class="si">%d</span><span class="s2"> appears in &quot;</span>
-                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> factors, but must appear in exactly 2 factors.&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="s2">"Can't build Forney-style model. Variable </span><span class="si">%d</span><span class="s2"> appears in "</span>
+                <span class="s2">"</span><span class="si">%d</span><span class="s2"> factors, but must appear in exactly 2 factors."</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">built</span> <span class="o">=</span> <span class="kc">True</span></div>
@@ -163,8 +163,8 @@
 
 <div class="viewcode-block" id="NormalFactorGraphModel.infer">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.infer">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates partition function.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Calculates partition function.</span>
 
 <span class="sd">        Available algorithms</span>
 <span class="sd">            * ``auto`` - Automatic.</span>
@@ -172,13 +172,13 @@
 
 <span class="sd">        :param algorithm: Which algorithm to use. String.</span>
 <span class="sd">        :return: Partition function.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_edge_elimination</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;edge_elimination&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'edge_elimination'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_edge_elimination</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown algorithm </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unknown algorithm </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NormalFactorGraphModel.max_likelihood">
@@ -197,14 +197,14 @@
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.from_model">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_model</span><span class="p">(</span><span class="n">original_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs NFG model which is equivalent to given model.</span>
+<span class="w">        </span><span class="sd">"""Constructs NFG model which is equivalent to given model.</span>
 
 <span class="sd">        If necessary, clones variables and adds factors.</span>
 
 <span class="sd">        Guarantees that first N variables in new model will correspond to</span>
 <span class="sd">        variables in original model, where N is number of variables in original</span>
 <span class="sd">        model.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">old_factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">original_model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">())</span>
 
         <span class="c1"># For every variable, find all factors in which it appears.</span>
@@ -233,7 +233,7 @@
         <span class="c1"># Helper function to create trivial constant factor.</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">create_constant_factor</span><span class="p">(</span><span class="n">var_id</span><span class="p">):</span>
             <span class="n">const_factor</span> <span class="o">=</span> <span class="n">FunctionFactor</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="p">[</span><span class="n">var_id</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">const_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+            <span class="n">const_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'1'</span>
             <span class="k">if</span> <span class="n">original_model</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">is_discrete</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">const_factor</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -243,7 +243,7 @@
         <span class="k">def</span><span class="w"> </span><span class="nf">create_delta_factor</span><span class="p">(</span><span class="n">var_ids</span><span class="p">):</span>
             <span class="n">delta_factor</span> <span class="o">=</span> <span class="n">FunctionFactor</span><span class="p">(</span><span class="n">new_model</span><span class="p">,</span> <span class="n">var_ids</span><span class="p">,</span>
                                           <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">delta_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span>
+            <span class="n">delta_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'='</span>
             <span class="k">if</span> <span class="n">original_model</span><span class="p">[</span><span class="n">var_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">is_discrete</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">delta_factor</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -264,7 +264,7 @@
                 <span class="n">new_factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_constant_factor</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
             <span class="c1"># For every variable, which appears in exactly two factors - copy</span>
-            <span class="c1"># this variable and don&#39;t add new factors.</span>
+            <span class="c1"># this variable and don't add new factors.</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">var_to_factors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="n">new_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">original_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span>
                 <span class="n">new_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">original_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
@@ -284,7 +284,7 @@
                     <span class="n">new_model</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="n">original_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span>
 
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
-                    <span class="n">new_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">original_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+                    <span class="n">new_name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">_</span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">original_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
                     <span class="n">new_model</span><span class="p">[</span><span class="n">var_idx</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_name</span>
 
                 <span class="c1"># Add delta factor.</span>
@@ -308,7 +308,7 @@
 <div class="viewcode-block" id="NormalFactorGraphModel.get_edge_variable_graph">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.get_edge_variable_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_edge_variable_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns edge-variable graph.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns edge-variable graph."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_built</span><span class="p">()</span>
         <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
         <span class="n">graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">)))</span>
@@ -319,7 +319,7 @@
 <div class="viewcode-block" id="NormalFactorGraphModel.draw_edge_variable_graph">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.draw_edge_variable_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw_edge_variable_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draws edge-variable graph.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Draws edge-variable graph."""</span>
         <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_edge_variable_graph</span><span class="p">()</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">kamada_kawai_layout</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
         <span class="n">node_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
@@ -328,17 +328,17 @@
                        <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_variables</span><span class="p">)}</span>
         <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span>
                          <span class="n">labels</span><span class="o">=</span><span class="n">node_labels</span><span class="p">,</span>
-                         <span class="n">node_shape</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span>
-                         <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">,</span>
-                         <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+                         <span class="n">node_shape</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span>
+                         <span class="n">node_color</span><span class="o">=</span><span class="s1">'lightgreen'</span><span class="p">,</span>
+                         <span class="n">edge_color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
         <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="n">edge_labels</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NormalFactorGraphModel.check_built">
 <a class="viewcode-back" href="../../../generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel.check_built">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">check_built</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks that model is built.&quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">built</span><span class="p">,</span> <span class="s2">&quot;Model is not built, call build().&quot;</span></div>
+<span class="w">        </span><span class="sd">"""Checks that model is built."""</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">built</span><span class="p">,</span> <span class="s2">"Model is not built, call build()."</span></div>
 </div>
 
 </pre></div>

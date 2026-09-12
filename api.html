@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Reference &mdash; InferLO 0.1.0 documentation</title>
+  <title>API Reference &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=01f34227"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -179,19 +179,19 @@
 <p>Classes representing different kinds of graphical models.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.GaussianModel.html#inferlo.GaussianModel" title="inferlo.GaussianModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GaussianModel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.GaussianModel.html#inferlo.GaussianModel" title="inferlo.GaussianModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GaussianModel</span></code></a>(J, h[, domain])</p></td>
 <td><p>Gaussian graphical model</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.GenericGraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GenericGraphModel</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.GenericGraphModel.html#inferlo.GenericGraphModel" title="inferlo.GenericGraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GenericGraphModel</span></code></a>(num_variables[, ...])</p></td>
 <td><p>Graphical model in the most general form.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GraphModel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.GraphModel.html#inferlo.GraphModel" title="inferlo.GraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.GraphModel</span></code></a>(num_variables, domain)</p></td>
 <td><p>Abstract class representing any graphical model.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel" title="inferlo.NormalFactorGraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.NormalFactorGraphModel</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.NormalFactorGraphModel.html#inferlo.NormalFactorGraphModel" title="inferlo.NormalFactorGraphModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.NormalFactorGraphModel</span></code></a>(...)</p></td>
 <td><p>Normal Factor Graph model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel" title="inferlo.PairWiseFiniteModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.PairWiseFiniteModel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel" title="inferlo.PairWiseFiniteModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.PairWiseFiniteModel</span></code></a>(size, al_size)</p></td>
 <td><p>Pairwise finite graphical model.</p></td>
 </tr>
 </tbody>
@@ -203,28 +203,28 @@
 Also contains data classes representing results of computations.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain" title="inferlo.DiscreteDomain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.DiscreteDomain</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain" title="inferlo.DiscreteDomain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.DiscreteDomain</span></code></a>(values)</p></td>
 <td><p>Domain consisting of finite set of numbers.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Domain</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.Domain.html#inferlo.Domain" title="inferlo.Domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Domain</span></code></a>()</p></td>
 <td><p>Describes set of values which a variable can take.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Factor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.Factor.html#inferlo.Factor" title="inferlo.Factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Factor</span></code></a>(model, var_idx)</p></td>
 <td><p>Abstract factor - function of one or more random variables.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor" title="inferlo.DiscreteFactor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.DiscreteFactor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor" title="inferlo.DiscreteFactor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.DiscreteFactor</span></code></a>(model, var_idx, values)</p></td>
 <td><p>A factor of several discrete variables.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor" title="inferlo.FunctionFactor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.FunctionFactor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor" title="inferlo.FunctionFactor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.FunctionFactor</span></code></a>(model, var_idx, func)</p></td>
 <td><p>A factor given explicitly by function.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.InferenceResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.InferenceResult</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.InferenceResult.html#inferlo.InferenceResult" title="inferlo.InferenceResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.InferenceResult</span></code></a>(log_pf, marg_prob)</p></td>
 <td><p>Inference result for discrete graphical model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.RealDomain.html#inferlo.RealDomain" title="inferlo.RealDomain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.RealDomain</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.RealDomain.html#inferlo.RealDomain" title="inferlo.RealDomain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.RealDomain</span></code></a>()</p></td>
 <td><p>Domain consisting of all real values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.Variable.html#inferlo.Variable" title="inferlo.Variable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Variable</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.Variable.html#inferlo.Variable" title="inferlo.Variable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.Variable</span></code></a>(model, index, domain)</p></td>
 <td><p>Random variable.</p></td>
 </tr>
 </tbody>
@@ -247,13 +247,13 @@ algorithm-specific parameters.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.forney.edge_elimination.infer_edge_elimination.html#inferlo.forney.edge_elimination.infer_edge_elimination" title="inferlo.forney.edge_elimination.infer_edge_elimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.forney.edge_elimination.infer_edge_elimination</span></code></a>(model)</p></td>
 <td><p>Calculates partition function using Edge Elimination.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP" title="inferlo.generic.libdai_bp.BP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.libdai_bp.BP</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.libdai_bp.BP.html#inferlo.generic.libdai_bp.BP" title="inferlo.generic.libdai_bp.BP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.libdai_bp.BP</span></code></a>(model, props)</p></td>
 <td><p>Belief propagation algorithm, equivalent to dai::BP.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.inference.html#module-inferlo.generic.inference.inference" title="inferlo.generic.inference.inference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.inference</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.BackwardBucketElimination.html#inferlo.generic.inference.BackwardBucketElimination" title="inferlo.generic.inference.BackwardBucketElimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.BackwardBucketElimination</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.generic.inference.BackwardBucketElimination.html#inferlo.generic.inference.BackwardBucketElimination" title="inferlo.generic.inference.BackwardBucketElimination"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.generic.inference.BackwardBucketElimination</span></code></a>()</p></td>
 <td><p>Backward Bucket Elimination algorithm.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP.html#inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP" title="inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.gaussian.inference.gaussian_belief_propagation.gaussian_BP</span></code></a>(model)</p></td>
@@ -395,7 +395,7 @@ useful for testing and benchmarking.</p>
 <p>These classes are repossible for interoperation with other GM libraries.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop" title="inferlo.interop.LibDaiInterop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.interop.LibDaiInterop</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.interop.LibDaiInterop.html#inferlo.interop.LibDaiInterop" title="inferlo.interop.LibDaiInterop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.interop.LibDaiInterop</span></code></a>()</p></td>
 <td><p>Interoperation with libDAI.</p></td>
 </tr>
 </tbody>
@@ -406,13 +406,13 @@ useful for testing and benchmarking.</p>
 <p>Helpers to load public datasets with graphical models.</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.Dataset</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.datasets.Dataset.html#inferlo.datasets.Dataset" title="inferlo.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.Dataset</span></code></a>(model, ...)</p></td>
 <td><p>Dataset containing GM and true answers.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader" title="inferlo.datasets.DatasetLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.DatasetLoader</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader" title="inferlo.datasets.DatasetLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.DatasetLoader</span></code></a>([data_dir])</p></td>
 <td><p>Loads graphical models from named datasets.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader" title="inferlo.datasets.UaiReader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.UaiReader</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader" title="inferlo.datasets.UaiReader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferlo.datasets.UaiReader</span></code></a>()</p></td>
 <td><p>Reads files in UAI format.</p></td>
 </tr>
 </tbody>

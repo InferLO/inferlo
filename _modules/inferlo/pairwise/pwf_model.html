@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.pwf_model &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.pwf_model &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -124,7 +124,7 @@
 <div class="viewcode-block" id="PairWiseFiniteModel">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PairWiseFiniteModel</span><span class="p">(</span><span class="n">GraphModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pairwise finite graphical model.</span>
+<span class="w">    </span><span class="sd">"""Pairwise finite graphical model.</span>
 
 <span class="sd">    Represents a graphical model in which all variables have the same discrete</span>
 <span class="sd">    domain, all factor depends on at most two variables.</span>
@@ -141,27 +141,27 @@
 <span class="sd">    ``(al_size, al_size)``.</span>
 
 <span class="sd">    Names</span>
-<span class="sd">        &quot;Field&quot; is called like that because in physical models (such as</span>
+<span class="sd">        "Field" is called like that because in physical models (such as</span>
 <span class="sd">        Ising model) these values correspond to local magnetic fields. They</span>
-<span class="sd">        are also known as biases. &quot;Interactions&quot; are called like that because</span>
+<span class="sd">        are also known as biases. "Interactions" are called like that because</span>
 <span class="sd">        in physical models they correspond to strength of spin-spin</span>
 <span class="sd">        interactions. The fact that all these terms enter the probability</span>
 <span class="sd">        density function inside the exponent also refers to physical models,</span>
 <span class="sd">        because fields and interactions are terms in energy and according to</span>
 <span class="sd">        Bolzmann distribution probability of the state with energy E is</span>
 <span class="sd">        proportional to ``exp(-E/(kT))``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="PairWiseFiniteModel.__init__">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes PairWiseFiniteModel.</span>
+<span class="w">        </span><span class="sd">"""Initializes PairWiseFiniteModel.</span>
 
 <span class="sd">        :param num_variables: Number of variables.</span>
 <span class="sd">        :param al_size: Size of the alphabet (domain).</span>
 
 <span class="sd">        Domain will consist of integers in range 0, 1, ... al_size - 1.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">DiscreteDomain</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">al_size</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span> <span class="o">=</span> <span class="n">size</span>
@@ -183,7 +183,7 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.set_field">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.set_field">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets values of field (biases) in all vertices.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Sets values of field (biases) in all vertices."""</span>
         <span class="k">assert</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
 
@@ -191,12 +191,12 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.add_interaction">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.add_interaction">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_interaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">interaction</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds factor corresponding to interaction between nodes u and v.</span>
+<span class="w">        </span><span class="sd">"""Adds factor corresponding to interaction between nodes u and v.</span>
 
 <span class="sd">        Factor is f(x) = exp(interaction[x[u], x[v]]).</span>
 <span class="sd">        If there already is interaction between these edges, this interaction</span>
-<span class="sd">        will be added to it (old interaction isn&#39;t discarded).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        will be added to it (old interaction isn't discarded).</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_ids</span><span class="p">:</span>
             <span class="n">edge_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_ids</span><span class="p">[(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)]</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
@@ -214,11 +214,11 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_interaction_matrix">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_interaction_matrix">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_interaction_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns interaction matrix between nodes u and v.</span>
+<span class="w">        </span><span class="sd">"""Returns interaction matrix between nodes u and v.</span>
 
 <span class="sd">        Returns np.array of shape (al_size, al_size).</span>
 <span class="sd">        If there is no interaction between these nodes, raises KeyError.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">edge_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_ids</span><span class="p">[(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges_interactions</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
@@ -229,14 +229,14 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_interactions_for_edges">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_interactions_for_edges">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_interactions_for_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns interaction for given edges.</span>
+<span class="w">        </span><span class="sd">"""Returns interaction for given edges.</span>
 
-<span class="sd">        If some edges don&#39;t exist, interaction matrix for them will be a zero</span>
+<span class="sd">        If some edges don't exist, interaction matrix for them will be a zero</span>
 <span class="sd">        matrix.</span>
 
 <span class="sd">        :param edges: Edge list. np.array of shape ``(x, 2)``.</span>
 <span class="sd">        :return: np.array of shape (x, al_size, al_size).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">edges_num</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">assert</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">edges_num</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">edges_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">),</span>
@@ -253,14 +253,14 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.has_edge">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.has_edge">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">has_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether there is edge between vertices u and v.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Whether there is edge between vertices u and v."""</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edge_ids</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.get_graph">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns interaction graph.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns interaction graph."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">))</span>
@@ -272,7 +272,7 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_dfs_result">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_dfs_result">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_dfs_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FastDfsResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs DFS for interaction graph.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Performs DFS for interaction graph."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfs_result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dfs_result</span> <span class="o">=</span> <span class="n">fast_dfs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_edges_array</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfs_result</span></div>
@@ -281,14 +281,14 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.is_graph_acyclic">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.is_graph_acyclic">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_graph_acyclic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether interaction graph is acyclic.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Whether interaction graph is acyclic."""</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dfs_result</span><span class="p">()</span><span class="o">.</span><span class="n">had_cycles</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.get_edges_array">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_edges_array">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_edges_array</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns edge list as np.array.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns edge list as np.array."""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_edges_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -300,7 +300,7 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_edges_connected">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_edges_connected">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_edges_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns edges, ensuring that graph is connected.</span>
+<span class="w">        </span><span class="sd">"""Returns edges, ensuring that graph is connected.</span>
 
 <span class="sd">        If graph is already connected, equivalent to ``get_edges_array``.</span>
 <span class="sd">        If graph is not connected, adds minimal amount of edges to make it</span>
@@ -308,7 +308,7 @@
 
 <span class="sd">        This is needed for algorithms which require connected graph to work</span>
 <span class="sd">        correctly.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dfs_result</span><span class="p">()</span><span class="o">.</span><span class="n">was_disconnected</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_edges_array</span><span class="p">()</span>
 
@@ -318,7 +318,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_graph_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invalidates cached graphs.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Invalidates cached graphs."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_edges_array</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dfs_result</span> <span class="o">=</span> <span class="kc">None</span>
@@ -326,12 +326,12 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_all_interactions">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_all_interactions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_all_interactions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns all interaction matrices in compact form.</span>
+<span class="w">        </span><span class="sd">"""Returns all interaction matrices in compact form.</span>
 
 <span class="sd">        :return: np.array of shape ``(edge_num, al_size, al_size)`` with</span>
 <span class="sd">          interaction matrix for every edge. Matrices correspond to edges in</span>
 <span class="sd">          the same order as returned by get_edges.array.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -341,21 +341,21 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.add_factor">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.add_factor">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a factor.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Adds a factor."""</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">DiscreteFactor</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_discrete_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">factor</span><span class="o">.</span><span class="n">is_discrete</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_discrete_factor</span><span class="p">(</span><span class="n">DiscreteFactor</span><span class="o">.</span><span class="n">from_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t add non-discrete factor.&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Can't add non-discrete factor."</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_add_discrete_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="n">DiscreteFactor</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">factor</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="bp">self</span>
-        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">):</span>
             <span class="n">log_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t add factor with more than 2 variables.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Can't add factor with more than 2 variables."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">factor</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">,)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">factor</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">log_factor</span>
@@ -366,7 +366,7 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.get_factors">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.get_factors">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_factors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Factor</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates explicit list of factors.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Generates explicit list of factors."""</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span> <span class="o">&gt;</span> <span class="mf">1e-9</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]))</span>
@@ -374,16 +374,16 @@
             <span class="n">factor</span> <span class="o">=</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">],</span>
                                     <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_interaction_matrix</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_variables</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
-                <span class="n">factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J</span><span class="si">%d%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="n">factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'J</span><span class="si">%d%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J_</span><span class="si">%d</span><span class="s1">_</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="n">factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'J_</span><span class="si">%d</span><span class="s1">_</span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">factor</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.infer">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.infer">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs inference.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Performs inference.</span>
 
 <span class="sd">        Available algorithms</span>
 <span class="sd">            * ``auto`` - Automatic.</span>
@@ -401,34 +401,34 @@
 <span class="sd">        :param algorithm: Which algorithm to use. String.</span>
 <span class="sd">        :return: `InferenceResult` object, which contains logarithm of</span>
 <span class="sd">          partition function and matrix of marginal probabilities.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_graph_acyclic</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">infer_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">infer_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">TooMuchStatesError</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">belief_propagation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;bruteforce&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'bruteforce'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;mean_field&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'mean_field'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_mean_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;message_passing&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'message_passing'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_message_passing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;path_dp&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'path_dp'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_path_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;tree_dp&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'tree_dp'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;junction_tree&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'junction_tree'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">infer_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown algorithm </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unknown algorithm </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.max_likelihood">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.max_likelihood">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">max_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds the most probable state.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Finds the most probable state.</span>
 
 <span class="sd">        Available algorithms</span>
 <span class="sd">            * ``auto`` - Automatic.</span>
@@ -442,8 +442,8 @@
 
 <span class="sd">        :param algorithm: Which algorithm to use. String.</span>
 <span class="sd">        :return: The most probable state as numpy int array.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_graph_acyclic</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">max_likelihood_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -451,23 +451,23 @@
                     <span class="k">return</span> <span class="n">max_lh_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
                 <span class="k">except</span> <span class="n">TooMuchStatesError</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">max_likelihood_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;bruteforce&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'bruteforce'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">max_lh_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;tree_dp&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'tree_dp'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">max_likelihood_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;path_dp&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'path_dp'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">max_lh_path_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;junction_tree&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'junction_tree'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">max_likelihood_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown algorithm </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unknown algorithm </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.sample">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.sample">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span>
                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draws i.i.d. samples from the distribution.</span>
+<span class="w">        </span><span class="sd">"""Draws i.i.d. samples from the distribution.</span>
 
 <span class="sd">        Available algorithms</span>
 <span class="sd">            * ``auto`` - Automatic.</span>
@@ -480,8 +480,8 @@
 <span class="sd">        :param algorithm: Which algorithm to use.</span>
 <span class="sd">        :return: ``np.array`` of type ``np.int32`` and shape</span>
 <span class="sd">          ``(num_samples, gr_size)``. Every row is an independent sample.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_graph_acyclic</span><span class="p">():</span>
                 <span class="k">return</span> <span class="n">sample_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -489,30 +489,30 @@
                     <span class="k">return</span> <span class="n">sample_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
                 <span class="k">except</span> <span class="n">TooMuchStatesError</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">sample_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;bruteforce&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'bruteforce'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sample_bruteforce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;tree_dp&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'tree_dp'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sample_tree_dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;junction_tree&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'junction_tree'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">sample_junction_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown algorithm </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unknown algorithm </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.encode_state">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.encode_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">encode_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns state represented by its integer id.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns state represented by its integer id."""</span>
         <span class="k">return</span> <span class="n">encode_state</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PairWiseFiniteModel.decode_state">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.decode_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">decode_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns id of given state.</span>
+<span class="w">        </span><span class="sd">"""Returns id of given state.</span>
 
 <span class="sd">        State id is integer between `0` and `al_size**gr_size-1`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">decode_state</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">al_size</span><span class="p">)</span></div>
 
 
@@ -522,7 +522,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                <span class="n">edges</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
                <span class="n">interactions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates PairwiseFiniteModel from compact representation.</span>
+<span class="w">        </span><span class="sd">"""Creates PairwiseFiniteModel from compact representation.</span>
 
 <span class="sd">        Infers number of variables and size of alphabet from shape of</span>
 <span class="sd">        ``field``.</span>
@@ -530,13 +530,13 @@
 <span class="sd">        :param field: Values of the field. ``np.array`` of shape</span>
 <span class="sd">          ``(gr_size, al_size)``.</span>
 <span class="sd">        :param edges: List of edges with interactions. ``np.array`` of integer</span>
-<span class="sd">          dtype and shape ``(edge_num, 2)``. Edges can&#39;t repeat. If there is</span>
-<span class="sd">          edge (u,v), you can&#39;t have edge (v,u).</span>
+<span class="sd">          dtype and shape ``(edge_num, 2)``. Edges can't repeat. If there is</span>
+<span class="sd">          edge (u,v), you can't have edge (v,u).</span>
 <span class="sd">        :param interactions: ``np.array`` of shape</span>
 <span class="sd">          ``(edge_num, al_size, al_size)``, or Iterable which can be converted</span>
 <span class="sd">          to such an array. ``interactons[i,:,:]`` is a matrix  decribing</span>
 <span class="sd">          interactions between variables ``edges[i, 0]`` and ``edges[i, `]``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">size</span><span class="p">,</span> <span class="n">al_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">set_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
@@ -551,15 +551,15 @@
 <div class="viewcode-block" id="PairWiseFiniteModel.draw_pairwise_graph">
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.draw_pairwise_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw_pairwise_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draws pairwise graph.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Draws pairwise graph."""</span>
         <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">kamada_kawai_layout</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
         <span class="n">node_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_variables</span><span class="p">)}</span>
         <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span>
                          <span class="n">labels</span><span class="o">=</span><span class="n">node_labels</span><span class="p">,</span>
-                         <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
-                         <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;#ffaaaa&#39;</span><span class="p">)</span>
-        <span class="n">edge_labels</span> <span class="o">=</span> <span class="p">{(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="s2">&quot;J_</span><span class="si">%d</span><span class="s2">_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">}</span>
+                         <span class="n">edge_color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">,</span>
+                         <span class="n">node_color</span><span class="o">=</span><span class="s1">'#ffaaaa'</span><span class="p">)</span>
+        <span class="n">edge_labels</span> <span class="o">=</span> <span class="p">{(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="s2">"J_</span><span class="si">%d</span><span class="s2">_</span><span class="si">%d</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">}</span>
         <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="n">edge_labels</span><span class="p">)</span></div>
 
 
@@ -568,23 +568,23 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">get_subgraph_factor_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                    <span class="n">vars_idx</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
                                    <span class="n">vars_skip</span><span class="p">:</span> <span class="n">Set</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates factor values for subgraph.</span>
+<span class="w">        </span><span class="sd">"""Calculates factor values for subgraph.</span>
 
 <span class="sd">        Consider model on subgraph containing only variables with indices</span>
 <span class="sd">        ``vars``. That is, containing only factors which depend only on</span>
 <span class="sd">        variables from ``vars``. For every possible combination of those</span>
 <span class="sd">        variable values, calculate product of all factors in the new model -</span>
-<span class="sd">        that&#39;s what this function returns.</span>
+<span class="sd">        that's what this function returns.</span>
 
-<span class="sd">        This can also be described as &quot;interactions within subgraph&quot;. Or if we</span>
-<span class="sd">        condense all variables in ``vars`` in single &quot;supervariable&quot;, this</span>
+<span class="sd">        This can also be described as "interactions within subgraph". Or if we</span>
+<span class="sd">        condense all variables in ``vars`` in single "supervariable", this</span>
 <span class="sd">        function returns field for the new supervariable.</span>
 
 <span class="sd">        :param vars_idx: Indices of variables in subgraph.</span>
 <span class="sd">        :param vars_skip_factors: Set. Indices of variables, which should be</span>
 <span class="sd">          skipped for factor calculation. Field factors for these variables</span>
-<span class="sd">          won&#39;t be included in the result. Interaction factors oth arguments</span>
-<span class="sd">          of which are in ``vars_skip_factors``, won&#39;t be included in the</span>
+<span class="sd">          won't be included in the result. Interaction factors oth arguments</span>
+<span class="sd">          of which are in ``vars_skip_factors``, won't be included in the</span>
 <span class="sd">          result. However, interaction factors where only one variable appears</span>
 <span class="sd">          in ``vars_skip_factors``, will be included in result. This parameter</span>
 <span class="sd">          is useful when building junction tree, to avoid double-counting</span>
@@ -593,7 +593,7 @@
 <span class="sd">          is logarithm of product of all relevant factors for certain variable</span>
 <span class="sd">          values. Correspondence between indices in this array and states</span>
 <span class="sd">          is consistent with ``decode_state``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">vars_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vars_idx</span><span class="p">)</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vars_num</span><span class="p">):</span>
@@ -620,7 +620,7 @@
 <a class="viewcode-back" href="../../../generated/inferlo.PairWiseFiniteModel.html#inferlo.PairWiseFiniteModel.from_model">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_model</span><span class="p">(</span><span class="n">original_model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PairWiseFiniteModel</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs Pairwise Finite model which is equivalent to given model.</span>
+<span class="w">        </span><span class="sd">"""Constructs Pairwise Finite model which is equivalent to given model.</span>
 
 <span class="sd">        All variables must be discrete. All factors must depend on at most 2</span>
 <span class="sd">        variables.</span>
@@ -628,7 +628,7 @@
 <span class="sd">        New model will have the same number of variables and factors. If</span>
 <span class="sd">        variables in original model have different domain sizes, in new model</span>
 <span class="sd">        they will be extended to have the same domain size.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">al_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">original_model</span><span class="o">.</span><span class="n">get_variables</span><span class="p">())</span>
         <span class="n">old_factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">original_model</span><span class="o">.</span><span class="n">get_factors</span><span class="p">())</span>
 
@@ -638,9 +638,9 @@
 
         <span class="c1"># Validate model.</span>
         <span class="k">if</span> <span class="n">al_size</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not all variables are discrete.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Not all variables are discrete."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">old_factors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model is not pairwise.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Model is not pairwise."</span><span class="p">)</span>
 
         <span class="n">new_model</span> <span class="o">=</span> <span class="n">PairWiseFiniteModel</span><span class="p">(</span><span class="n">original_model</span><span class="o">.</span><span class="n">num_variables</span><span class="p">,</span> <span class="n">al_size</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">old_factor</span> <span class="ow">in</span> <span class="n">old_factors</span><span class="p">:</span>

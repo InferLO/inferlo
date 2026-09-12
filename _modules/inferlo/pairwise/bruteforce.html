@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.bruteforce &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.bruteforce &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -103,14 +103,14 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TooMuchStatesError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error: algorithm can&#39;t solve given problem within reasonable time.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Error: algorithm can't solve given problem within reasonable time."""</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;void(i4[:],i4,i4)&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"void(i4[:],i4,i4)"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_next_state</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Go to the next state.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Go to the next state."""</span>
     <span class="c1"># States are like numbers in positional system, with least significant</span>
-    <span class="c1"># &quot;digit&quot; on the left.</span>
+    <span class="c1"># "digit" on the left.</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">state</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">while</span> <span class="n">state</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">==</span> <span class="n">al_size</span><span class="p">:</span>
@@ -119,7 +119,7 @@
         <span class="n">state</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;f8[:](f8[:,:],i4[:,:],f8[:,:,:])&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"f8[:](f8[:,:],i4[:,:],f8[:,:,:])"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_all_probs_internal</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">inter</span><span class="p">):</span>
     <span class="n">gr_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">al_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -141,7 +141,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_all_probs</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;For all possible states finds their probabilities (not normed).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""For all possible states finds their probabilities (not normed)."""</span>
     <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span> <span class="o">**</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span> <span class="o">&gt;</span> <span class="mf">2e7</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TooMuchStatesError</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">_compute_all_probs_internal</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">,</span>
@@ -150,19 +150,19 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_all_probs_normed</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;For all possible states finds their probabilities (normed to 1).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""For all possible states finds their probabilities (normed to 1)."""</span>
     <span class="n">probs</span> <span class="o">=</span> <span class="n">_compute_all_probs</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">probs</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;f8[:,:](f8[:],i4,i4)&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"f8[:,:](f8[:],i4,i4)"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_marg_probs</span><span class="p">(</span><span class="n">all_probs</span><span class="p">,</span> <span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes marginal probabilities given probabilities of all states.</span>
+<span class="w">    </span><span class="sd">"""Computes marginal probabilities given probabilities of all states.</span>
 
 <span class="sd">    For every variable and value sums over all states in which this variables</span>
 <span class="sd">    has this value. Result should be divided by partition function to get</span>
 <span class="sd">    marginal probabilities.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">marg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">al_size</span><span class="p">))</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">gr_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">state_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_probs</span><span class="p">)):</span>
@@ -175,7 +175,7 @@
 <div class="viewcode-block" id="infer_bruteforce">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.bruteforce.infer_bruteforce.html#inferlo.pairwise.bruteforce.infer_bruteforce">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">infer_bruteforce</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference by summing up all states.</span>
+<span class="w">    </span><span class="sd">"""Inference by summing up all states.</span>
 
 <span class="sd">    Uses definition to perform inference, so complexity is</span>
 <span class="sd">    ``O(al_size ** gr_size)``.</span>
@@ -184,7 +184,7 @@
 
 <span class="sd">    :param model: Model for which to perform inference.</span>
 <span class="sd">    :return: ``InferenceResult`` object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># Fully isolated model.</span>
         <span class="n">log_pf</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
@@ -202,7 +202,7 @@
 <div class="viewcode-block" id="max_lh_bruteforce">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.bruteforce.max_lh_bruteforce.html#inferlo.pairwise.bruteforce.max_lh_bruteforce">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">max_lh_bruteforce</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds max likelihood for pairwise model by checking all states.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Finds max likelihood for pairwise model by checking all states."""</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># Fully isolated model.</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -217,7 +217,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">sample_bruteforce</span><span class="p">(</span>
         <span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">,</span>
         <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Samples from Pairwise Finite model.</span>
+<span class="w">    </span><span class="sd">"""Samples from Pairwise Finite model.</span>
 
 <span class="sd">    Explicitly calculates probabilities of every state and uses them to sample</span>
 <span class="sd">    from categorical distribution.</span>
@@ -226,7 +226,7 @@
 <span class="sd">    :param num_samples: Number of samples.</span>
 <span class="sd">    :return: ``np.array`` of type ``np.int32`` and shape</span>
 <span class="sd">      ``(num_samples, gr_size)``. Every row is an independent sample.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">probs</span> <span class="o">=</span> <span class="n">_compute_all_probs_normed</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">sample_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">probs</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">)</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">decode_state</span><span class="p">(</span><span class="n">sample_ids</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">)</span>

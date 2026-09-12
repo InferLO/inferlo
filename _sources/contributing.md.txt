@@ -1,8 +1,8 @@
-## Contributing to InferLO
+# Contributing to InferLO
 
-### First time setup
+## First time setup
 
-You will need [Git](https://git-scm.com/) and [Python](python.org) 3.7+. It's
+You will need [Git](https://git-scm.com/) and [Python](https://python.org) 3.12+. It's
 recommended, but not necessary, to do all development in the virtual environment.
 
 Clone the repository:
@@ -15,9 +15,7 @@ cd inferlo
 Install the requirements:
 
 ```
-pip install -r requirements.txt
-pip install -r docs/requirements.txt
-pip install -r tools/dev_requirements.txt
+python -m pip install -e ".[lint,test,docs]"
 ```
 
 
@@ -27,12 +25,12 @@ Check that tests pass:
 pytest
 ```
 
-### Git
+## Git
 
 If you never worked with Git before, you will have to learn some Git basics. First of all,
 read [Git Handbook](https://guides.github.com/introduction/git-handbook/) and bookmark or print [Git cheet sheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet/). To really understand how Git works, check out [this site](https://git-scm.com/book/en/v2).
 
-### Development cycle
+## Development cycle
 
 For making any changes you will have to create new branch, make your changes 
 on that branch and then merge it with `master` branch.
@@ -92,7 +90,7 @@ Your pull request will be reviewed and you might be asked to make sme changes.
 Finally, when your PR is approved,
 [merge it](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-a-pull-request).
 
-### Testing 
+## Testing
 
 * **Unit tests**. All unit tests must pass. 
 That can be checked by running ```pytest``` in root of the repository. 
@@ -116,11 +114,11 @@ do that. Pylint performs series of more clever checks. Both
 checks are mandatory - if they fail, continuous integration won't let
 yuo tom mege code to master.
 
-### Code style
+## Code style
 
 Please follow [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
 
-### Documentation
+## Documentation
 
 We use [sphinx](https://www.sphinx-doc.org/en/master/) to automatically 
 build the documentation. Documentation is authomatically exported to 
@@ -147,7 +145,7 @@ To build the docs you will have to additionally install
 [pandoc](https://pandoc.org/). On Linux you can do that by running
 ```sudo apt-get intsall pandoc```.
 
-### Adding new algorithms
+## Adding new algorithms
 
 If you are adding new algorithm to solve a problem fo particular kind of problem,
 for which we already have at least one algorithm, you should follow the following 
@@ -160,7 +158,7 @@ should be keyword arguments with default values.
 Then add call to your function from a method on model class. It should be 
 conditioned on user passing your algorithm name as ```algorithm``` argument.
 
-### Release management
+## Release management
 
 We follow [Semantic versioning](https://semver.org/) rules. Currently 
 InferLO is in Alpha, which means major version is "0", and we keep our right to
@@ -171,7 +169,7 @@ time new useful functionality was added.
 
 Releases are pushed manually. To push a new release:
 
-1. Change version in setup.py. 
+1. Change `project.version` in [pyproject.toml](https://github.com/InferLO/inferlo/blob/master/pyproject.toml).
 2. Go to "Actions", click "Upload Python Package", then "Run workflow". 
 3. Go to "Releases", create new release with the same version and
 add releases notes describing what are new features since the last release.

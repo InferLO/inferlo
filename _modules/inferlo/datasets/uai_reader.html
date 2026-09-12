@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.datasets.uai_reader &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.datasets.uai_reader &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -95,7 +95,7 @@
 <div class="viewcode-block" id="UaiReader">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">UaiReader</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reads files in UAI format.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Reads files in UAI format."""</span>
 
 <div class="viewcode-block" id="UaiReader.__init__">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.__init__">[docs]</a>
@@ -105,8 +105,8 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_read_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_next_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -119,20 +119,20 @@
 <div class="viewcode-block" id="UaiReader.read_model">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.read_model">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericGraphModel</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads Graphical model form a file in UAI format.</span>
+<span class="w">        </span><span class="sd">"""Reads Graphical model form a file in UAI format.</span>
 
 <span class="sd">        Format description:</span>
 <span class="sd">        http://www.hlt.utdallas.edu/~vgogate/uai14-competition/modelformat.html</span>
 
 <span class="sd">        :param path: Local path to text file with GM in UAI format.</span>
 <span class="sd">        :return: Graphical model read from the file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Read model type.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">model_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;MARKOV&#39;</span><span class="p">,</span> <span class="s1">&#39;Unsupported model type: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">model_type</span>
+        <span class="k">assert</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">'MARKOV'</span><span class="p">,</span> <span class="s1">'Unsupported model type: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">model_type</span>
 
-        <span class="c1"># Read variables&#39; cardinalities and initialize the model.</span>
+        <span class="c1"># Read variables' cardinalities and initialize the model.</span>
         <span class="n">num_vars</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">())</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">GenericGraphModel</span><span class="p">(</span><span class="n">num_vars</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vars</span><span class="p">):</span>
@@ -146,7 +146,7 @@
             <span class="n">var_idx</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">var_count</span><span class="p">)]</span>
             <span class="n">var_idx_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var_idx</span><span class="p">)</span>
 
-        <span class="c1"># Read factors&#39; values and add factors to the model.</span>
+        <span class="c1"># Read factors' values and add factors to the model.</span>
         <span class="k">for</span> <span class="n">factor_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_factors</span><span class="p">):</span>
             <span class="n">vals_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -162,7 +162,7 @@
 <div class="viewcode-block" id="UaiReader.read_marginals">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.UaiReader.html#inferlo.datasets.UaiReader.read_marginals">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">read_marginals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads true marginals form a file in UAI format.</span>
+<span class="w">        </span><span class="sd">"""Reads true marginals form a file in UAI format.</span>
 
 <span class="sd">        Format description:</span>
 <span class="sd">        http://www.hlt.utdallas.edu/~vgogate/uai14-competition/resformat.html</span>
@@ -171,10 +171,10 @@
 <span class="sd">        :return: 2D numpy array. First dimension is number of variables,</span>
 <span class="sd">          second is maximal domain size of a variable. ``result[i][j]`` is a</span>
 <span class="sd">          probability that ``i``-th variable takes ``j``-th value (or 0 if this</span>
-<span class="sd">          variable&#39;s domain size is less than ``j+1``).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">          variable's domain size is less than ``j+1``).</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;MAR&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_token</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"MAR"</span>
 
         <span class="n">vars_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_int</span><span class="p">()</span>
         <span class="n">marginals</span> <span class="o">=</span> <span class="p">[]</span>

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.base.factors.discrete_factor &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.base.factors.discrete_factor &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -102,7 +102,7 @@
 <div class="viewcode-block" id="DiscreteFactor">
 <a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DiscreteFactor</span><span class="p">(</span><span class="n">Factor</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A factor of several discrete variables.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""A factor of several discrete variables."""</span>
 
     <span class="c1"># TODO: make immutable.</span>
 
@@ -116,9 +116,9 @@
         <span class="n">expected_shape</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">]</span>
         <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_shape</span><span class="p">,</span> <span class="p">(</span>
-            <span class="s2">&quot;Got values of shape </span><span class="si">%s</span><span class="s2">, but variables imply </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
+            <span class="s2">"Got values of shape </span><span class="si">%s</span><span class="s2">, but variables imply </span><span class="si">%s</span><span class="s2">."</span> <span class="o">%</span>
             <span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">expected_shape</span><span class="p">))</span>
-        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Factors should be non-negative.&quot;</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"Factors should be non-negative."</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span></div>
 
 
@@ -136,11 +136,11 @@
 <a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.from_factor">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_factor</span><span class="p">(</span><span class="n">factor</span><span class="p">:</span> <span class="n">Factor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts arbitrary factor to DiscreteFactor.</span>
+<span class="w">        </span><span class="sd">"""Converts arbitrary factor to DiscreteFactor.</span>
 
 <span class="sd">        Returns `None` if some variables of the factor are not discrete.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">factor</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;DiscreteFactor&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">factor</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'DiscreteFactor'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">factor</span>
 
         <span class="k">assert</span> <span class="n">factor</span><span class="o">.</span><span class="n">is_discrete</span><span class="p">()</span>
@@ -169,13 +169,13 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">from_flat_values</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                          <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                          <span class="n">values_flat</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates factor specified by list of values.</span>
+<span class="w">        </span><span class="sd">"""Creates factor specified by list of values.</span>
 
 <span class="sd">        :param model: GM to which this factor belongs.</span>
 <span class="sd">        :param var_idx: Indices of variables.</span>
 <span class="sd">        :param values_flat: 1D list of values.</span>
-<span class="sd">          Last variable is &quot;least significant&quot;.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">          Last variable is "least significant".</span>
+<span class="sd">        """</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var_idx</span><span class="p">]</span>
         <span class="n">values</span> <span class="o">=</span> <span class="n">values_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
@@ -184,15 +184,15 @@
 <div class="viewcode-block" id="DiscreteFactor.marginal">
 <a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.marginal">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Marginalizes factor on subset of variables."""</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">26</span>
         <span class="n">subscript_idx</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">chr</span><span class="p">(</span>
             <span class="mi">65</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">))}</span>
-        <span class="n">old_subscripts</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">subscript_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">])</span>
-        <span class="n">new_subscripts</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">subscript_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">new_var_idx</span><span class="p">])</span>
+        <span class="n">old_subscripts</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">subscript_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">])</span>
+        <span class="n">new_subscripts</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">subscript_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">new_var_idx</span><span class="p">])</span>
         <span class="n">new_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span>
             <span class="n">old_subscripts</span> <span class="o">+</span>
-            <span class="s1">&#39;-&gt;&#39;</span> <span class="o">+</span>
+            <span class="s1">'-&gt;'</span> <span class="o">+</span>
             <span class="n">new_subscripts</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DiscreteFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">,</span> <span class="n">new_values</span><span class="p">)</span></div>
@@ -201,18 +201,18 @@
 <div class="viewcode-block" id="DiscreteFactor.max_marginal">
 <a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.max_marginal">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">max_marginal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Marginalizes factor on subset of variables, using MAX-PROD.&quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not implemented.&quot;</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">"""Marginalizes factor on subset of variables, using MAX-PROD."""</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Not implemented."</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DiscreteFactor.restrict">
 <a class="viewcode-back" href="../../../../generated/inferlo.DiscreteFactor.html#inferlo.DiscreteFactor.restrict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_id</span><span class="p">,</span> <span class="n">fixed_value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DiscreteFactor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fixes value of one variable.</span>
+<span class="w">        </span><span class="sd">"""Fixes value of one variable.</span>
 
 <span class="sd">        Returns new factor which is equivalent to original factor, but with</span>
 <span class="sd">        value of one variable fixed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">assert</span> <span class="n">variable_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># TODO: remove this hack - this case should return scalar factor.</span>

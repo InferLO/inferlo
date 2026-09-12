@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marginal Probabilities with Elimination algorithms &mdash; InferLO 0.1.0 documentation</title>
+  <title>Marginal Probabilities with Elimination algorithms &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eea1f72d" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -111,19 +111,19 @@
 <p>We run the following algorithms:</p>
 <ul class="simple">
 <li><p>MBE-TR - Mini-Bucket elimination + Trivial Reduction (with varying ibound);</p></li>
-<li><p>MBR-TR - Mini-Bucket renormaliztion + Trivial Reduction (with varying ibound);</p></li>
+<li><p>MBR-TR - Mini-Bucket renormalization + Trivial Reduction (with varying ibound);</p></li>
 <li><p>MBE-BT - Mini-Bucket elimination + Binary Tree Elimination (with varying ibound);</p></li>
-<li><p>MBR-BT - Mini-Bucket renormaliztion + Binary Tree Elimination (with varying ibound);</p></li>
+<li><p>MBR-BT - Mini-Bucket renormalization + Binary Tree Elimination (with varying ibound);</p></li>
 <li><p>BP - Belief propagation;</p></li>
-<li><p>TRWBP - Tree-Reweighted Belif Propagation.</p></li>
+<li><p>TRWBP - Tree-Reweighted Belief Propagation.</p></li>
 </ul>
-<p>Algorithms MBE-TR, MBE-TR, MBE-BT, MBR-BT are implemented in the <a class="reference external" href="https://github.com/InferLO/inferlo">InferLO</a> library as part of current project.</p>
-<p>Algorithms BP and TRWBP are used from <a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/">LibDAI</a> library, using InferLO’s adapter. These are benchmarks so it’s reasonable to use independednt implementation.</p>
-<p>Also as part of this project we also implemented Trivial Reduction and Binary Tree Elimination for Bucket Elimination, but they don’t appear in the experiments. Thats because:</p>
+<p>Algorithms MBE-TR, MBR-TR, MBE-BT, MBR-BT are implemented in the <a class="reference external" href="https://github.com/InferLO/inferlo">InferLO</a> library as part of current project.</p>
+<p>Algorithms BP and TRWBP are used from <a class="reference external" href="https://staff.fnwi.uva.nl/j.m.mooij/libDAI/">LibDAI</a> library, using InferLO’s adapter. These are benchmarks so it’s reasonable to use independent implementation.</p>
+<p>Also as part of this project we also implemented Trivial Reduction and Binary Tree Elimination for Bucket Elimination, but they don’t appear in the experiments. That’s because:</p>
 <ul class="simple">
-<li><p>They guaranteed to give exact result;</p></li>
-<li><p>Their running time omn big datasets is so big it’s impractical;</p></li>
-<li><p>On synthetic Ising Grid datasets BE + Trivial Reduction gives misleadingly fast results because of special structure of the model, which womn’t happen in the general case. We used this to get exact marginal probabilities for Experiment 1.</p></li>
+<li><p>They are guaranteed to give exact result;</p></li>
+<li><p>Their running time on big datasets is so big it’s impractical;</p></li>
+<li><p>On synthetic Ising Grid datasets BE + Trivial Reduction gives misleadingly fast results because of special structure of the model, which won’t happen in the general case. We used this to get exact marginal probabilities for Experiment 1.</p></li>
 </ul>
 </section>
 <section id="Accuracy-metric">
@@ -132,7 +132,7 @@
 <div class="math notranslate nohighlight">
 \[\text{MKLD}(p) = \frac{1}{n} \sum_{i=1}^{n} \sum_{j=1}^{d_i} p_{i,j} \ln \left(\frac{p_{i,j}}{\max(\hat{p}_{i,j},10^{-10})}\right),\]</div>
 <p>where <span class="math notranslate nohighlight">\(p\)</span> is marginal probabilities given by the model and <span class="math notranslate nohighlight">\(\hat{p}\)</span> are known true marginal probabilities.</p>
-<p>Note that some datasets have true probabilities for some values of some variables equal to 0, which would result in the division by 0, so we had adjust such proabilities to be equal to very small positive value (<span class="math notranslate nohighlight">\(10^{-10}\)</span>).</p>
+<p>Note that some datasets have true probabilities for some values of some variables equal to 0, which would result in the division by 0, so we had to adjust such probabilities to be equal to very small positive value (<span class="math notranslate nohighlight">\(10^{-10}\)</span>).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -154,7 +154,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span>
 
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'../..'</span><span class="p">)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">inferlo</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceResult</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatasetLoader</span><span class="p">,</span> <span class="n">Dataset</span>
@@ -162,13 +162,13 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">inferlo.generic.inference</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">inf</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">testing</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.titlesize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'font.size'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'axes.titlesize'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'axes.labelsize'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span>
 
-<span class="n">loader</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_datasets&#39;</span><span class="p">)</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">'~/inferlo_datasets'</span><span class="p">)</span>
 <span class="n">libdai</span> <span class="o">=</span> <span class="n">LibDaiInterop</span><span class="p">()</span>
-<span class="n">exp_runner</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">ExperimentRunner</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;~/inferlo_experiments&#39;</span><span class="p">)</span>
+<span class="n">exp_runner</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">ExperimentRunner</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s1">'~/inferlo_experiments'</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">libdai</span><span class="o">.</span><span class="n">is_libdai_ready</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -186,19 +186,19 @@
 </section>
 <section id="Experiment-1-:-Ising-Grid.">
 <h3>Experiment 1 : Ising Grid.<a class="headerlink" href="#Experiment-1-:-Ising-Grid." title="Link to this heading"></a></h3>
-<p>We generate grid graph of size <span class="math notranslate nohighlight">\(13 \times h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is in range <span class="math notranslate nohighlight">\([1, 30]\)</span>. On this graph we build a syntetic Ising model ($x_i = { -1, 1 } $):</p>
+<p>We generate grid graph of size <span class="math notranslate nohighlight">\(13 \times h\)</span>, where <span class="math notranslate nohighlight">\(h\)</span> is in range <span class="math notranslate nohighlight">\([1, 30]\)</span>. On this graph we build a synthetic Ising model ($x_i = { -1, 1 } $):</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{x}) = \exp \left(\sum_{i \in \mathcal{V}} \phi_i x_i + \sum_{(i,j) \in \mathcal{E}} \phi_{ij} x_i x_j \right).\]</div>
 <p>We draw <span class="math notranslate nohighlight">\(\phi_i\)</span> and <span class="math notranslate nohighlight">\(\phi_{i,j}\)</span> uniformly from intervals [-1, 1].</p>
 <p>We get exact marginal probabilities by running Bucket Elimination + Trivial Reduction.</p>
-<p>Then for every model we run algorithms BP, MBE-BT, MBR-BT, MBE-TR, MBR-TR. ibound in these experiment is always 9.</p>
+<p>Then for every model we run algorithms BP, MBE-BT, MBR-BT, MBE-TR, MBR-TR. ibound in these experiments is always 9.</p>
 <p>The charts below for each model show running time and accuracy (mean KL divergence).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">ising_grid_dataset</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;ising_grid_</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">_seed=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">'ising_grid_</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">_seed=</span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">loader</span><span class="o">.</span><span class="n">custom_dataset_exists</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_custom_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">grid_graph</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
@@ -207,7 +207,7 @@
     <span class="n">model</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">GenericGraphModel</span><span class="o">.</span><span class="n">from_model</span><span class="p">(</span><span class="n">model_pwf</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
         <span class="n">model</span><span class="p">,</span>
-        <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_elimination</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">elimination_order_method</span><span class="o">=</span><span class="s1">&#39;not_random&#39;</span><span class="p">),</span>
+        <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_elimination</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">elimination_order_method</span><span class="o">=</span><span class="s1">'not_random'</span><span class="p">),</span>
         <span class="n">skip_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">,</span>
@@ -217,53 +217,53 @@
     <span class="k">return</span> <span class="n">dataset</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">compare_marginals_ising_grid</span><span class="p">(</span><span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_marginals_ising_grid</span><span class="p">(</span><span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">h</span><span class="o">&gt;</span><span class="mi">0</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">ising_grid_dataset</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;BP&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'BP'</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">'BP'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBE'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">marg_prob</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBR'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_renormalization</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inferlo</span><span class="o">.</span><span class="n">InferenceResult</span><span class="p">(</span><span class="n">log_pf</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">marg_prob</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBE-BT'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBE-TR'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
             <span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBE-BT'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBR-TR'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">get_marginals</span><span class="p">(</span>
             <span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">inf</span><span class="o">.</span><span class="n">bucket_renormalization</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBR-BT'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_renormalization_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown algorithm: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown algorithm: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span>
-      <span class="s2">&quot;log_pf_error&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
-      <span class="s2">&quot;mean_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
-      <span class="s2">&quot;max_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
-      <span class="s2">&quot;mean_kl_div&quot;</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
+      <span class="s2">"log_pf_error"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
+      <span class="s2">"mean_abs_mp_diff"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">"max_abs_mp_diff"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">"mean_kl_div"</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
     <span class="p">}</span>
 
 <span class="n">w</span><span class="o">=</span><span class="mi">13</span>
 <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">):</span>
     <span class="n">ising_grid_dataset</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
-    <span class="c1">#print(&#39;Grid is %dx%d&#39; % (w,h))</span>
-    <span class="n">algos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">]</span>
+    <span class="c1">#print('Grid is %dx%d' % (w,h))</span>
+    <span class="n">algos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'BP'</span><span class="p">,</span> <span class="s1">'MBE'</span><span class="p">,</span> <span class="s1">'MBR'</span><span class="p">,</span> <span class="s1">'MBE-BT'</span><span class="p">,</span> <span class="s1">'MBR-BT'</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="n">algos</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]</span>
+        <span class="n">algos</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">'MBE-TR'</span><span class="p">,</span> <span class="s1">'MBR-TR'</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span>
             <span class="n">compare_marginals_ising_grid</span><span class="p">,</span>
-            <span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">:</span><span class="n">h</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+            <span class="p">{</span><span class="s1">'w'</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">'h'</span><span class="p">:</span><span class="n">h</span><span class="p">,</span><span class="s1">'ibound'</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">'algo'</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
@@ -276,38 +276,38 @@
 <span class="n">ax_time</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
 
-<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]:</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
-                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
-    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
-    <span class="n">h_to_mkld</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'BP'</span><span class="p">,</span> <span class="s1">'MBE-BT'</span><span class="p">,</span> <span class="s1">'MBR-BT'</span><span class="p">,</span> <span class="s1">'MBE-TR'</span><span class="p">,</span> <span class="s1">'MBR-TR'</span><span class="p">]:</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">'compare_marginals_ising_grid'</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">'w'</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">'ibound'</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">'algo'</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][</span><span class="s1">'h'</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'result'</span><span class="p">][</span><span class="s1">'elapsed_time'</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+    <span class="n">h_to_mkld</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][</span><span class="s1">'h'</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'result'</span><span class="p">][</span><span class="s1">'mean_kl_div'</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
     <span class="n">h_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_to_time</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
     <span class="n">num_vars_range</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h_range</span><span class="p">)</span>
     <span class="n">time_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
     <span class="n">mkld_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_mkld</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
-    <span class="n">ax_mkld</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">mkld_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">ax_mkld</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">mkld_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'.'</span><span class="p">)</span>
 
 
     <span class="n">k</span><span class="p">,</span> <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">time_chart</span><span class="p">),</span> <span class="n">deg</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">num_vars_range</span><span class="o">**</span><span class="n">k</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
-    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: t~N^</span><span class="si">%.02f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">num_vars_range</span><span class="o">**</span><span class="n">k</span><span class="p">),</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+    <span class="n">ax_time</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'</span><span class="si">%s</span><span class="s1">: t~N^</span><span class="si">%.02f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'.'</span><span class="p">)</span>
 
 
 
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
-<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
-<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Accuracy of different algorithms&#39;</span><span class="p">,</span>
-                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Number of variables (13*h)'</span><span class="p">)</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Mean KL-divergence'</span><span class="p">)</span>
+<span class="n">ax_mkld</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">'Accuracy of different algorithms'</span><span class="p">,</span>
+                             <span class="s1">'</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9'</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
 <span class="n">ax_mkld</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
-<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax_time</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Time, s&#39;</span><span class="p">)</span>
-<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">ax_time</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">ax_time</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;Running time of different algorithms&#39;</span><span class="p">,</span>
-                             <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Number of variables (13*h)'</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Time, s'</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">ax_time</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">'Running time of different algorithms'</span><span class="p">,</span>
+                             <span class="s1">'</span><span class="si">%d</span><span class="s1"> x h Ising grid, ibound=9'</span> <span class="o">%</span> <span class="n">w</span><span class="p">]))</span>
 <span class="n">ax_time</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
 
@@ -325,7 +325,7 @@
 </div>
 </div>
 <p>We can see that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
-<p>We also fitted running time as function of number of variables in log-scale, and it appers that Trivial Reduction takes <span class="math notranslate nohighlight">\(O(n^{3.1})\)</span> time, while Bucket Elimination takes <span class="math notranslate nohighlight">\(O(n^{1.7})\)</span> time.</p>
+<p>We also fitted running time as function of number of variables in log-scale, and it appears that Trivial Reduction takes <span class="math notranslate nohighlight">\(O(n^{3.1})\)</span> time, while Bucket Elimination takes <span class="math notranslate nohighlight">\(O(n^{1.7})\)</span> time.</p>
 <p>Belief Propagation outperforms both MBE and MBR in accuracy and time, but these are very simple models, and ibound was deliberately chosen so these models don’t give exact answers.</p>
 <p>Main goal of this experiment was to prove that Binary Tree Elimination is much better than Trivial Reduction both in terms of accuracy and running time.</p>
 <p>We also calculated “relative” running time for MBE-BT, MBR-BT, MBE-TR, MBR-TR. For that, we divided running time by the running time of the base algorithm (i.e. the algorithm which does full elimination once and just computes partition function).</p>
@@ -338,35 +338,35 @@
 <span class="n">ax1</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="s1">&#39;MBE-TR&#39;</span><span class="p">,</span> <span class="s1">&#39;MBR-TR&#39;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'MBE-BT'</span><span class="p">,</span> <span class="s1">'MBR-BT'</span><span class="p">,</span> <span class="s1">'MBE-TR'</span><span class="p">,</span> <span class="s1">'MBR-TR'</span><span class="p">]:</span>
     <span class="n">base_algo</span> <span class="o">=</span> <span class="n">algo</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-    <span class="n">base_results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
-                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">base_algo</span><span class="p">})</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">&#39;compare_marginals_ising_grid&#39;</span><span class="p">,</span>
-                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;w&#39;</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">&#39;ibound&#39;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;algo&#39;</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
-    <span class="n">h_to_base_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">base_results</span><span class="p">}</span>
-    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="s1">&#39;elapsed_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
+    <span class="n">base_results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">'compare_marginals_ising_grid'</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">'w'</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">'ibound'</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">'algo'</span><span class="p">:</span><span class="n">base_algo</span><span class="p">})</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="s1">'compare_marginals_ising_grid'</span><span class="p">,</span>
+                                     <span class="n">filter_params</span><span class="o">=</span><span class="p">{</span><span class="s1">'w'</span><span class="p">:</span><span class="n">w</span><span class="p">,</span><span class="s1">'ibound'</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="s1">'algo'</span><span class="p">:</span><span class="n">algo</span><span class="p">})</span>
+    <span class="n">h_to_base_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][</span><span class="s1">'h'</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'result'</span><span class="p">][</span><span class="s1">'elapsed_time'</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">base_results</span><span class="p">}</span>
+    <span class="n">h_to_time</span> <span class="o">=</span> <span class="p">{</span><span class="n">r</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][</span><span class="s1">'h'</span><span class="p">]:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'result'</span><span class="p">][</span><span class="s1">'elapsed_time'</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">}</span>
 
     <span class="n">h_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_to_time</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
     <span class="n">num_vars_range</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">h_range</span><span class="p">)</span>
     <span class="n">time_chart</span> <span class="o">=</span> <span class="p">[</span><span class="n">h_to_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">/</span><span class="n">h_to_base_time</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">h_range</span><span class="p">]</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax1</span> <span class="k">if</span> <span class="s1">&#39;BT&#39;</span> <span class="ow">in</span> <span class="n">algo</span> <span class="k">else</span> <span class="n">ax2</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">ax1</span> <span class="k">if</span> <span class="s1">'BT'</span> <span class="ow">in</span> <span class="n">algo</span> <span class="k">else</span> <span class="n">ax2</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_vars_range</span><span class="p">,</span> <span class="n">time_chart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'.'</span><span class="p">)</span>
 
 <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative overhead&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Binary Tree Elimination algorithms&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Number of variables (13*h)'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Relative overhead'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Relative overhead for Binary Tree Elimination algorithms'</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y=2x&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">],</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'y=2x'</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">140</span><span class="p">])</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">])</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of variables (13*h)&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Relative overhead&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative overhead for Trivial Reduction algorithms&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Number of variables (13*h)'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Relative overhead'</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Relative overhead for Trivial Reduction algorithms'</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -381,7 +381,7 @@
 </div>
 </div>
 <p>For Trivial Reduction algorithms, as expected, relative running time is close to line y=2x, that is for model with N variables we call base algorithm <span class="math notranslate nohighlight">\(2 \times N\)</span> times (2 because variables are binary).</p>
-<p>For Binary Tree Elimination we got results even better then expected (if we ignore results for small models). We expected it to be like <span class="math notranslate nohighlight">\(y=\log_2(x)\)</span>, and <span class="math notranslate nohighlight">\(log_2(13 \times 30) \approx 9\)</span>, but it is almost constant (2 for MBE-BT and 3 dor MBR-BT).</p>
+<p>For Binary Tree Elimination we got results even better than expected (if we ignore results for small models). We expected it to be like <span class="math notranslate nohighlight">\(y=\log_2(x)\)</span>, and <span class="math notranslate nohighlight">\(log_2(13 \times 30) \approx 9\)</span>, but it is almost constant (2 for MBE-BT and 3 for MBR-BT).</p>
 <p>This can be explained as follows: as model becomes smaller, eliminations are cheaper, and most eliminations are done on small models. For example, <span class="math notranslate nohighlight">\(n (log_2(n)-1)\)</span> eliminations are done on model having less than <span class="math notranslate nohighlight">\(n/2\)</span> variables.</p>
 </section>
 <section id="Experiment-2:-UAI-datasets-with-varying-ibound.">
@@ -394,36 +394,36 @@
 <li><p>TRWBP</p></li>
 </ul>
 <p>Charts below show mean Kullback-Leibler divergence for all these experiments.</p>
-<p>Sometimes BP failed. Sometimes MBR-BT failed (<em>investigate: might be a bug in implemntation)</em>. For these cases data is missing on the chart.</p>
+<p>Sometimes BP failed. Sometimes MBR-BT failed (<em>investigate: might be a bug in implementation)</em>. For these cases data is missing on the chart.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment2_summary</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_marginals_uai</span><span class="p">(</span><span class="n">dataset_name</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">algo</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">ibound</span><span class="p">,</span> <span class="n">algo</span><span class="p">)</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_uai_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;BP&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'BP'</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;BP&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">'BP'</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)}</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;TRWBP&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)}</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'TRWBP'</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">libdai</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">'TRWBP'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBE-BT'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_elimination_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algo</span> <span class="o">==</span> <span class="s1">'MBR-BT'</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">mini_bucket_renormalization_bt</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">ibound</span><span class="o">=</span><span class="n">ibound</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown algorithm: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown algorithm: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">algo</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span>
-      <span class="s2">&quot;log_pf_error&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
-      <span class="s2">&quot;mean_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
-      <span class="s2">&quot;max_abs_mp_diff&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
-      <span class="s2">&quot;mean_kl_div&quot;</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
+      <span class="s2">"log_pf_error"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">),</span>
+      <span class="s2">"mean_abs_mp_diff"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">"max_abs_mp_diff"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span> <span class="o">-</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)),</span>
+      <span class="s2">"mean_kl_div"</span><span class="p">:</span> <span class="n">mean_kl_div</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">)</span>
     <span class="p">}</span>
 
 
@@ -435,50 +435,50 @@
     <span class="n">mbe_mkld</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
-            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;ibound&#39;</span><span class="p">:</span> <span class="n">ibound</span>
+            <span class="s1">'dataset_name'</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">'algo'</span><span class="p">:</span> <span class="s1">'MBE-BT'</span><span class="p">,</span>
+            <span class="s1">'ibound'</span><span class="p">:</span> <span class="n">ibound</span>
         <span class="p">})</span>
-        <span class="n">mbe_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbe_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MBE-BT&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-    <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;MBE-BT (ibound=6)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mbe_mkld</span><span class="p">[</span><span class="mi">6</span><span class="o">-</span><span class="n">ibound_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">mbe_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbe_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'MBE-BT'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">)</span>
+    <span class="n">summary</span><span class="p">[</span><span class="s2">"MBE-BT (ibound=6)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mbe_mkld</span><span class="p">[</span><span class="mi">6</span><span class="o">-</span><span class="n">ibound_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
     <span class="c1"># Mini-Bucket Renormalization + Binary Tree order.</span>
     <span class="n">ibound_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
     <span class="n">mbr_mkld</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">ibound</span> <span class="ow">in</span> <span class="n">ibound_range</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
-            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;ibound&#39;</span><span class="p">:</span> <span class="n">ibound</span>
+            <span class="s1">'dataset_name'</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">'algo'</span><span class="p">:</span> <span class="s1">'MBR-BT'</span><span class="p">,</span>
+            <span class="s1">'ibound'</span><span class="p">:</span> <span class="n">ibound</span>
         <span class="p">})</span>
-        <span class="n">mbr_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbr_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MBR-BT&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-    <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;MBR-BT (ibound=6)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mbr_mkld</span><span class="p">[</span><span class="mi">6</span><span class="o">-</span><span class="n">ibound_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">mbr_mkld</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ibound_range</span><span class="p">,</span> <span class="n">mbr_mkld</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'MBR-BT'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">)</span>
+    <span class="n">summary</span><span class="p">[</span><span class="s2">"MBR-BT (ibound=6)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mbr_mkld</span><span class="p">[</span><span class="mi">6</span><span class="o">-</span><span class="n">ibound_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
     <span class="c1"># Belief Propagation.</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
-            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;BP&#39;</span>
+            <span class="s1">'dataset_name'</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">'algo'</span><span class="p">:</span> <span class="s1">'BP'</span>
     <span class="p">})</span>
-    <span class="k">if</span> <span class="s1">&#39;mean_kl_div&#39;</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]):</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;BP&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-        <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;BP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">'mean_kl_div'</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">]):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'BP'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+        <span class="n">summary</span><span class="p">[</span><span class="s2">"BP"</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">]</span>
 
     <span class="c1"># Tree-Reweighted Belief Propagation.</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">exp_runner</span><span class="o">.</span><span class="n">run_experiment</span><span class="p">(</span><span class="n">compare_marginals_uai</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
-            <span class="s1">&#39;algo&#39;</span><span class="p">:</span> <span class="s1">&#39;TRWBP&#39;</span>
+            <span class="s1">'dataset_name'</span><span class="p">:</span> <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="s1">'algo'</span><span class="p">:</span> <span class="s1">'TRWBP'</span>
     <span class="p">})</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;TRWBP&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
-    <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;TRWBP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean_kl_div&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'TRWBP'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+    <span class="n">summary</span><span class="p">[</span><span class="s2">"TRWBP"</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">'mean_kl_div'</span><span class="p">]</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ibound&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Dataset: &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'ibound'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Mean KL-divergence'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Dataset: '</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
 
-    <span class="n">experiment2_summary</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mean_kl_div&quot;</span> <span class="p">:</span> <span class="n">summary</span><span class="p">}</span>
+    <span class="n">experiment2_summary</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"mean_kl_div"</span> <span class="p">:</span> <span class="n">summary</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -486,8 +486,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linkage_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">28</span><span class="p">)]</span>
-<span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Promedus_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">39</span><span class="p">)]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'linkage_</span><span class="si">%d</span><span class="s1">.uai'</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">28</span><span class="p">)]</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Promedus_</span><span class="si">%d</span><span class="s1">.uai'</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">39</span><span class="p">)]</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">ds</span><span class="p">):</span><span class="n">run_dataset</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">())</span>
 <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
@@ -541,33 +541,33 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">markers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;BP&quot;</span><span class="p">:</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
-    <span class="s2">&quot;TRWBP&quot;</span> <span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MBE-BT (ibound=6)&quot;</span><span class="p">:</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MBR-BT (ibound=6)&quot;</span><span class="p">:</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="s2">"BP"</span><span class="p">:</span><span class="s1">'+'</span><span class="p">,</span>
+    <span class="s2">"TRWBP"</span> <span class="p">:</span> <span class="s2">"x"</span><span class="p">,</span>
+    <span class="s2">"MBE-BT (ibound=6)"</span><span class="p">:</span> <span class="s2">"D"</span><span class="p">,</span>
+    <span class="s2">"MBR-BT (ibound=6)"</span><span class="p">:</span> <span class="s2">"o"</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">'font.size'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">summary_plot</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">ids</span><span class="p">):</span>
     <span class="n">ids</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;BP&quot;</span><span class="p">,</span><span class="s2">&quot;TRWBP&quot;</span><span class="p">,</span> <span class="s2">&quot;MBE-BT (ibound=6)&quot;</span><span class="p">,</span> <span class="s2">&quot;MBR-BT (ibound=6)&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"BP"</span><span class="p">,</span><span class="s2">"TRWBP"</span><span class="p">,</span> <span class="s2">"MBE-BT (ibound=6)"</span><span class="p">,</span> <span class="s2">"MBR-BT (ibound=6)"</span><span class="p">]:</span>
         <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="p">[],[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
-            <span class="n">algo_to_mkld</span> <span class="o">=</span> <span class="n">experiment2_summary</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%d</span><span class="s1">.uai&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">i</span><span class="p">)][</span><span class="s2">&quot;mean_kl_div&quot;</span><span class="p">]</span>
+            <span class="n">algo_to_mkld</span> <span class="o">=</span> <span class="n">experiment2_summary</span><span class="p">[</span><span class="s1">'</span><span class="si">%s</span><span class="s1">_</span><span class="si">%d</span><span class="s1">.uai'</span> <span class="o">%</span> <span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">i</span><span class="p">)][</span><span class="s2">"mean_kl_div"</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algo_to_mkld</span><span class="p">:</span>
                 <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                 <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">algo_to_mkld</span><span class="p">[</span><span class="n">algo</span><span class="p">])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">algo</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">markers</span><span class="p">[</span><span class="n">algo</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Dataset number&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean KL-divergence&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Dataset number'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Mean KL-divergence'</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">ids</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.2</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-<span class="n">summary_plot</span><span class="p">(</span><span class="s1">&#39;linkage&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">28</span><span class="p">))</span>
+<span class="n">summary_plot</span><span class="p">(</span><span class="s1">'linkage'</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">28</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -582,7 +582,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_plot</span><span class="p">(</span><span class="s1">&#39;Promedus&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">39</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_plot</span><span class="p">(</span><span class="s1">'Promedus'</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">39</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

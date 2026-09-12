@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.optimization.convex_bounds &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.optimization.convex_bounds &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -99,15 +99,15 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo</span><span class="w"> </span><span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
 
 
-<span class="n">LPRelaxResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;LPRelaxResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;lower_bound&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;rounded_solution&#39;</span><span class="p">])</span>
+<span class="n">LPRelaxResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'LPRelaxResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'upper_bound'</span><span class="p">,</span>
+                                             <span class="s1">'lower_bound'</span><span class="p">,</span>
+                                             <span class="s1">'rounded_solution'</span><span class="p">])</span>
 
 
 <div class="viewcode-block" id="lp_relaxation">
 <a class="viewcode-back" href="../../../../generated/inferlo.pairwise.optimization.convex_bounds.lp_relaxation.html#inferlo.pairwise.optimization.convex_bounds.lp_relaxation">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">lp_relaxation</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LPRelaxResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Max Likelihood for pairwise model by solving LP relaxation.</span>
+<span class="w">    </span><span class="sd">"""Max Likelihood for pairwise model by solving LP relaxation.</span>
 
 <span class="sd">    1) Reformulates the original problem of maximizing</span>
 <span class="sd">    ``sum F[i][X_i] + 0.5*sum J[i][j][X[i]][X[j]])``</span>
@@ -134,7 +134,7 @@
 
 <span class="sd">    :param model: Model for which to find most likely state.</span>
 <span class="sd">    :return: Solution of LP relaxation of the Max Likelihood problem.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">edge_list</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">edges</span>
 
     <span class="n">y</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">((</span><span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span><span class="p">),</span> <span class="n">nonneg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.forney.optimization.nfg_map_lp &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.forney.optimization.nfg_map_lp &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -95,19 +95,19 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.forney.nfg_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">NormalFactorGraphModel</span>
 
-<span class="n">map_lp_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;map_lp_result&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;upper_bound&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;lower_bound&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;factor_beliefs&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;variable_beliefs&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;normalization_duals&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;marginalization_duals&#39;</span>
+<span class="n">map_lp_result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'map_lp_result'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'upper_bound'</span><span class="p">,</span>
+                                             <span class="s1">'lower_bound'</span><span class="p">,</span>
+                                             <span class="s1">'factor_beliefs'</span><span class="p">,</span>
+                                             <span class="s1">'variable_beliefs'</span><span class="p">,</span>
+                                             <span class="s1">'normalization_duals'</span><span class="p">,</span>
+                                             <span class="s1">'marginalization_duals'</span>
                                              <span class="p">])</span>
 
 
 <div class="viewcode-block" id="map_lp">
 <a class="viewcode-back" href="../../../../generated/inferlo.forney.optimization.nfg_map_lp.map_lp.html#inferlo.forney.optimization.nfg_map_lp.map_lp">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">map_lp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">NormalFactorGraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">map_lp_result</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LP relaxation of MAP problem for NFG model.</span>
+<span class="w">    </span><span class="sd">"""LP relaxation of MAP problem for NFG model.</span>
 
 <span class="sd">    This function implements linear programming (LP) relaxation</span>
 <span class="sd">    of maximum a posteriori assignment problem (MAP) for</span>
@@ -121,7 +121,7 @@
 
 <span class="sd">    For every variable, we introduce Q non-negative belief variables</span>
 <span class="sd">    where Q is the size of the alphabet. Every such variable</span>
-<span class="sd">    is our &#39;belief&#39; that variable at node takes particular value.</span>
+<span class="sd">    is our 'belief' that variable at node takes particular value.</span>
 
 <span class="sd">    Analogously, for every factor we introduce Q^deg beliefs</span>
 <span class="sd">    where deg is a number of variables in factor.</span>
@@ -139,9 +139,9 @@
 <span class="sd">    upper bound on the MAP value. We restore the lower bound</span>
 <span class="sd">    on MAP value as the solution of the dual relaxation.</span>
 
-<span class="sd">    More details may be found in &quot;MAP Estimation,</span>
+<span class="sd">    More details may be found in "MAP Estimation,</span>
 <span class="sd">    Linear Programming and BeliefPropagation with</span>
-<span class="sd">    Convex Free Energies&quot; by Yair Weiss, Chen Yanover and Talya</span>
+<span class="sd">    Convex Free Energies" by Yair Weiss, Chen Yanover and Talya</span>
 <span class="sd">    Meltzer. https://arxiv.org/pdf/1206.5286.pdf</span>
 
 <span class="sd">    :param model: Model for which to solve MAP problem.</span>
@@ -155,7 +155,7 @@
 <span class="sd">      correspond to normalization constraints;</span>
 <span class="sd">      ``marginalization_duals`` - optimal values of dual variables that</span>
 <span class="sd">      correspond to marginalization constraints.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_default_domain</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="n">var_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>

@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting started with InferLO &mdash; InferLO 0.1.0 documentation</title>
+  <title>Getting started with InferLO &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eea1f72d" />
       <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
       <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -112,11 +112,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Don&#39;t run this cell unless you are InferLO developer and this notebook is in inferlo/docs/tutorials.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Don't run this cell unless you are InferLO developer and this notebook is in inferlo/docs/tutorials.</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'../..'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -133,15 +133,15 @@
 <section id="Introduction">
 <h2>Introduction<a class="headerlink" href="#Introduction" title="Link to this heading"></a></h2>
 <p>Essentially graphical model is a way to represent a probabilistic distribution over variables. This distribution is usually defined by non-normalized probability density function, represented as a product of factors, each factor being a function of small number of variables. Then we can define a graph describing structure of those factors (there are multiple ways to do so).</p>
-<p>In InferLO you define a model in terms of two basic building blocks: <code class="docutils literal notranslate"><span class="pre">Variable</span></code>s and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>s. First we review how you can do it by defining them explicilty.</p>
+<p>In InferLO you define a model in terms of two basic building blocks: <code class="docutils literal notranslate"><span class="pre">Variable</span></code>s and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>s. First we review how you can do it by defining them explicitly.</p>
 </section>
 <section id="Defining-a-model">
 <h2>Defining a model<a class="headerlink" href="#Defining-a-model" title="Link to this heading"></a></h2>
 <p>Let’s start by defining a generic graphical model, which is explicitly defined by (non-normalized) probability density function. Let’s say we have 4 variables <span class="math notranslate nohighlight">\(x_0, x_1, x_2, x_3\)</span> which can take any value, and we want to represent probability distribution</p>
 <div class="math notranslate nohighlight">
 \[p(x) \sim e^{x_1 \cdot x_2} \cdot |x_2+x_3| \cdot \cos(x3-x4)^2.\]</div>
-<p>For this we will use <code class="docutils literal notranslate"><span class="pre">GenericGraphModel</span></code>. First, we should initialize the model with number of variables. Then, we will add factors add by one.</p>
-<p>In this case we will use <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which defines factor explicilty by indices of variables on which it depends and a function. To define such a factor we need three things: a model, indices of variables and a function. Function should take a list of values (its length must match number of variables this factor depends on) and evaluate value of this factor for given values of variables.</p>
+<p>For this we will use <code class="docutils literal notranslate"><span class="pre">GenericGraphModel</span></code>. First, we should initialize the model with number of variables. Then, we will add factors one by one.</p>
+<p>In this case we will use <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which defines factor explicitly by indices of variables on which it depends and a function. To define such a factor we need three things: a model, indices of variables and a function. Function should take a list of values (its length must match number of variables this factor depends on) and evaluate value of this factor for given values of variables.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -171,7 +171,7 @@
 10.785309445728231
 </pre></div></div>
 </div>
-<p>We can define the same model in more succint way, using symbolic expressions. Note that <code class="docutils literal notranslate"><span class="pre">*=</span></code> is just shortcut for <code class="docutils literal notranslate"><span class="pre">add_factor</span></code> and expression on the right creates a <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>.</p>
+<p>We can define the same model in more succinct way, using symbolic expressions. Note that <code class="docutils literal notranslate"><span class="pre">*=</span></code> is just shortcut for <code class="docutils literal notranslate"><span class="pre">add_factor</span></code> and expression on the right creates a <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -244,8 +244,8 @@
 </section>
 <section id="Factors">
 <h2>Factors<a class="headerlink" href="#Factors" title="Link to this heading"></a></h2>
-<p>In example above we used <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which is defined explicilty by a function, and it can be any function. There are other ways to represent factors.</p>
-<p>If all variables, on which the fcator depends, are discrete, number of possible combinations of variable values is finite, so you can tabulate the function and represnt it by this table (which will be a multidimensional array). You can do this in InferLO by using a <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>.</p>
+<p>In example above we used <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>, which is defined explicitly by a function, and it can be any function. There are other ways to represent factors.</p>
+<p>If all variables, on which the factor depends, are discrete, number of possible combinations of variable values is finite, so you can tabulate the function and represent it by this table (which will be a multidimensional array). You can do this in InferLO by using a <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -266,7 +266,7 @@
 </pre></div></div>
 </div>
 <p>Above we described a function <span class="math notranslate nohighlight">\(f(x_0, x_1)\)</span> such that <span class="math notranslate nohighlight">\(f(0,0)=0, f(0,1)=1, f(1,0)=2, f(1,1)=3\)</span>.</p>
-<p>You can define a function explicilty (using <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>) and then convert it do <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>, obtaining explict table of function values:</p>
+<p>You can define a function explicitly (using <code class="docutils literal notranslate"><span class="pre">FunctionFactor</span></code>) and then convert it to <code class="docutils literal notranslate"><span class="pre">DiscreteFactor</span></code>, obtaining explicit table of function values:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -296,16 +296,16 @@ array([[[  2.,   3.,   4.],
 </section>
 <section id="Pairwise-models">
 <h2>Pairwise models<a class="headerlink" href="#Pairwise-models" title="Link to this heading"></a></h2>
-<p>Generic model can express any distribution, but it’s too abstract. InferLO defines classes for more concrete models, which may be subjects to some additional constraints, but allow for efficient algorithms to solve certain problems.</p>
+<p>Generic model can express any distribution, but it’s too abstract. InferLO defines classes for more concrete models, which may be subject to some additional constraints, but allow for efficient algorithms to solve certain problems.</p>
 <p>First such example is Pairwise Finite model - a model where every factor depends on at most 2 variables, and where variables come from the same discrete domain. Famous partial cases of this kind of model are <a class="reference external" href="https://en.wikipedia.org/wiki/Ising_model">Ising model</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Potts_model">Potts model</a>.</p>
-<p>In InferLO such model is represented by class <code class="docutils literal notranslate"><span class="pre">PairWiseFiniteModel</span></code>. It’s defined by <code class="docutils literal notranslate"><span class="pre">gr_size</span></code> - graph size and <code class="docutils literal notranslate"><span class="pre">al_isze</span></code> - alphabet size. Domain of all variables is set of integers <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">...,</span> <span class="pre">al_size-1</span></code>.</p>
+<p>In InferLO such model is represented by class <code class="docutils literal notranslate"><span class="pre">PairWiseFiniteModel</span></code>. It’s defined by <code class="docutils literal notranslate"><span class="pre">gr_size</span></code> - graph size and <code class="docutils literal notranslate"><span class="pre">al_size</span></code> - alphabet size. Domain of all variables is set of integers <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">...,</span> <span class="pre">al_size-1</span></code>.</p>
 <p>Denote <span class="math notranslate nohighlight">\(N\)</span> - <code class="docutils literal notranslate"><span class="pre">gr_size</span></code>, <span class="math notranslate nohighlight">\(T\)</span> - <code class="docutils literal notranslate"><span class="pre">al_size</span></code>. Probability of given state <span class="math notranslate nohighlight">\(X \in \{0, \dots T-1 \}^{N}\)</span> is given by formula:</p>
 <div class="math notranslate nohighlight">
 \[p(X) = \frac{1}{Z} \exp \Big(
 \sum_{i=0}^{N-1} F[i, X_i] +
 \sum_{u, v \in E} J_{i,j} [X_i, X_j] \Big),\]</div>
 <p>where <span class="math notranslate nohighlight">\(F \in \mathbb{R}^{N, T}\)</span> - “field”, <span class="math notranslate nohighlight">\(E \in V \times V\)</span> — set of edges (<span class="math notranslate nohighlight">\(V = \{0, \dots, N-1\}^2\)</span> - vertices), <span class="math notranslate nohighlight">\(J_{u, v} \in \mathbb{R}^{T, T}\)</span> - interaction matrix corresponding to edge <span class="math notranslate nohighlight">\((u, v)\)</span>. <span class="math notranslate nohighlight">\(Z\)</span> is normalization function, which is constant defined to ensure that <span class="math notranslate nohighlight">\(\sum_{X} p(X)=1\)</span>, also known as <em>partition function</em>.</p>
-<p>In InferLO you can create such a model by field, all edges and interaction at once, or by setting field and individual interactions one by one. Below we show two ways to create the same model. It has 4 vertices, 3 edges, and all edges has the same interactions matrix.</p>
+<p>In InferLO you can create such a model by field, all edges and interaction at once, or by setting field and individual interactions one by one. Below we show two ways to create the same model. It has 4 vertices, 3 edges, and all edges have the same interaction matrix.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -323,7 +323,7 @@ array([[[  2.,   3.,   4.],
 </pre></div>
 </div>
 </div>
-<p>Now, let’s can show pairwise grap for this model - this is the graph <span class="math notranslate nohighlight">\(G=(V, E)\)</span> from definition above, where vertices represent variables and edges represent interactions.</p>
+<p>Now, let’s show pairwise graph for this model - this is the graph <span class="math notranslate nohighlight">\(G=(V, E)\)</span> from definition above, where vertices represent variables and edges represent interactions.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -400,7 +400,7 @@ InferenceResult(log_pf=34.12701627818652, marg_prob=array([[0.88076347, 0.119236
        [0.11923653, 0.88076347]]))
 </pre></div></div>
 </div>
-<p>Note that we return not parttion function, but its logarithm, because it itself may be so high that it doesn’t fit in float data type.</p>
+<p>Note that we return not partition function, but its logarithm, because it itself may be so high that it doesn’t fit in float data type.</p>
 <p>Another task is optimization, i.e. finding state having the highest probability.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
@@ -442,7 +442,7 @@ array([[0, 1, 1, 1],
 </section>
 <section id="Algorithms">
 <h2>Algorithms<a class="headerlink" href="#Algorithms" title="Link to this heading"></a></h2>
-<p>The same problem for the same model can be solved by different algorithm of different accuract and efficiency. Let’s build a model whose graph is 5x5 grid and perform inference using three algorithms - dynamic programming on path decomposition (exact), mean field (approximate) and message passing (approximate).</p>
+<p>The same problem for the same model can be solved by different algorithms of different accuracy and efficiency. Let’s build a model whose graph is 5x5 grid and perform inference using three algorithms - dynamic programming on path decomposition (exact), mean field (approximate) and message passing (approximate).</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
@@ -450,7 +450,7 @@ array([[0, 1, 1, 1],
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.testing</span><span class="w"> </span><span class="kn">import</span> <span class="n">grid_potts_model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">grid_potts_model</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">al_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;path_dp&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'path_dp'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -469,7 +469,7 @@ array([[0, 1, 1, 1],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;message_passing&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'message_passing'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -488,7 +488,7 @@ array([[0, 1, 1, 1],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;mean_field&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'mean_field'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">log_pf</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">marg_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -504,12 +504,12 @@ array([[0, 1, 1, 1],
 </pre></div></div>
 </div>
 <p>First answer is guaranteed to be exact.</p>
-<p>Message passing gives good approximation for marginal probabilities, but partion function is completely wrong (in fact, we can restore correct patition function for this algorithm only if graph is a tree).</p>
-<p>Mean field is guaranteed to give lower bound on partition function, and we can see that estimate is close to correct answer, but estimate of marginal probablities is worse than for message passing.</p>
+<p>Message passing gives good approximation for marginal probabilities, but partition function is completely wrong (in fact, we can restore correct partition function for this algorithm only if graph is a tree).</p>
+<p>Mean field is guaranteed to give lower bound on partition function, and we can see that estimate is close to correct answer, but estimate of marginal probabilities is worse than for message passing.</p>
 </section>
 <section id="Normal-Factor-Graph-models">
 <h2>Normal Factor Graph models<a class="headerlink" href="#Normal-Factor-Graph-models" title="Link to this heading"></a></h2>
-<p>If every variable appears in exactly two factors, we can build a Normal Factor Graph - a graph where edges correspond to variables, and vertices correspond to factors. We we will call such models Normal Factor Graph (NFG) models. Also they are known ad Edge-Variable or Forney-style models.</p>
+<p>If every variable appears in exactly two factors, we can build a Normal Factor Graph - a graph where edges correspond to variables, and vertices correspond to factors. We will call such models Normal Factor Graph (NFG) models. Also they are known as Edge-Variable or Forney-style models.</p>
 <p>Not any model can be represented in such a way, but every model can be converted to NFG model. Conversion may add new variables and factors. This conversion is implemented by function <code class="docutils literal notranslate"><span class="pre">inferlo.NormalFactorGraphModel.from_model</span></code>, which takes arbitrary graphical model and returns equivalent NFG model.</p>
 <section id="Conversion-to-Normal-Factor-Graph-model">
 <h3>Conversion to Normal Factor Graph model<a class="headerlink" href="#Conversion-to-Normal-Factor-Graph-model" title="Link to this heading"></a></h3>
@@ -527,7 +527,7 @@ array([[0, 1, 1, 1],
 <span class="n">model1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x2</span><span class="o">*</span><span class="n">x3</span><span class="o">*</span><span class="n">x5</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model1</span><span class="o">.</span><span class="n">factors</span><span class="p">)):</span>
-    <span class="n">model1</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;f</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span>
+    <span class="n">model1</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'f</span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">i</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">model1</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -538,9 +538,9 @@ array([[0, 1, 1, 1],
 <span class="n">model2</span><span class="o">.</span><span class="n">draw_factor_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Initial factor graph&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normal Factor graph of an equivalent model&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Factor graph of converted model&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Initial factor graph'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Normal Factor graph of an equivalent model'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Factor graph of converted model'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -561,7 +561,7 @@ array([[0, 1, 1, 1],
 <h2>Three graphs of a model<a class="headerlink" href="#Three-graphs-of-a-model" title="Link to this heading"></a></h2>
 <p>Below we build a simple model which is both pairwise and NFG model, and show 3 graphs for it: pairwise graph, factor graph and Normal Factor (edge-variable) graph.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
@@ -579,9 +579,9 @@ array([[0, 1, 1, 1],
 <span class="n">model2</span><span class="o">.</span><span class="n">draw_edge_variable_graph</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_axes</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Pairwise graph&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Factor graph&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Edge-varable graph&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Pairwise graph'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Factor graph'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Edge-variable graph'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -595,7 +595,7 @@ array([[0, 1, 1, 1],
 </div>
 <p>You can define pairwise graph only for pairwise model and Normal Factor Graph only for NFG model. Factor graph is defined for any model.</p>
 <p>For this example we selected model which is both pairwise and NFG. In general, we wouldn’t be able to convert pairwise model to NFG model without adding.</p>
-<p>This example demonstrates how factors and variables correspond to different elements of graph in different representations. In pairwise graph vertices are variables and edges are factors. In Normal Factor Graph vertices are factors and edges are variables. In factor graph vertices in one part are variables, and vertices in other part are factor.</p>
+<p>This example demonstrates how factors and variables correspond to different elements of graph in different representations. In pairwise graph vertices are variables and edges are factors. In Normal Factor Graph vertices are factors and edges are variables. In factor graph vertices in one part are variables, and vertices in other part are factors.</p>
 <p>Note how things representing variables are always red, and things representing factors are always green.</p>
 </section>
 </section>

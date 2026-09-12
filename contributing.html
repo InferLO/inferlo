@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contributing to InferLO &mdash; InferLO 0.1.0 documentation</title>
+  <title>Contributing to InferLO &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=eea1f72d" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=01f34227"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -100,7 +100,7 @@
 <h1>Contributing to InferLO<a class="headerlink" href="#contributing-to-inferlo" title="Link to this heading"></a></h1>
 <section id="first-time-setup">
 <h2>First time setup<a class="headerlink" href="#first-time-setup" title="Link to this heading"></a></h2>
-<p>You will need <a class="reference external" href="https://git-scm.com/">Git</a> and <a class="reference external" href="python.org">Python</a> 3.7+. It’s
+<p>You will need <a class="reference external" href="https://git-scm.com/">Git</a> and <a class="reference external" href="https://python.org">Python</a> 3.12+. It’s
 recommended, but not necessary, to do all development in the virtual environment.</p>
 <p>Clone the repository:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">InferLO</span><span class="o">/</span><span class="n">inferlo</span><span class="o">.</span><span class="n">git</span>
@@ -108,9 +108,7 @@ recommended, but not necessary, to do all development in the virtual environment
 </pre></div>
 </div>
 <p>Install the requirements:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">tools</span><span class="o">/</span><span class="n">dev_requirements</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="s2">".[lint,test,docs]"</span>
 </pre></div>
 </div>
 <p>Check that tests pass:</p>
@@ -125,14 +123,16 @@ read <a class="reference external" href="https://guides.github.com/introduction/
 </section>
 <section id="development-cycle">
 <h2>Development cycle<a class="headerlink" href="#development-cycle" title="Link to this heading"></a></h2>
-<p>For making any changes you will have to create new branch, make your changes 
+<p>For making any changes you will have to create new branch, make your changes
 on that branch and then merge it with <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.</p>
 <p><em>Process below applies to those who has commit access to repository.
 If you don’t have it, you should fork this repository and make all changes to a
 branch in your own repository. Then you should create pull request to merge
 your branch with <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of the main repository.</em></p>
-<p>Create new branch (replace <code class="docutils literal notranslate"><span class="pre">my-branch</span></code> with descriptive name):
-<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">my-branch</span></code></p>
+<p>Create new branch (replace <code class="docutils literal notranslate"><span class="pre">my-branch</span></code> with descriptive name):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">my</span><span class="o">-</span><span class="n">branch</span>
+</pre></div>
+</div>
 <p>If you are getting back to work on existing branch, switch to that branch
 and sync it with master:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="n">my</span><span class="o">-</span><span class="n">branch</span>
@@ -151,17 +151,15 @@ or <code class="docutils literal notranslate"><span class="pre">tools/check_styl
 <p>If checks don’t pass - make them pass.</p>
 <p>Commit your changes.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
-<span class="n">git</span> <span class="n">commmit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">&#39;Commit description&#39;</span>
+<span class="n">git</span> <span class="n">commmit</span> <span class="o">-</span><span class="n">m</span> <span class="s1">'Commit description'</span>
 <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">HEAD</span>
 </pre></div>
 </div>
-<p>If you get error at this point saying “Updates were rejected”, then remote 
+<p>If you get error at this point saying “Updates were rejected”, then remote
 version of your branch was updated, you have to pull the changes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">my</span><span class="o">-</span><span class="n">branch</span>
-</pre></div>
-</div>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">origin</span> <span class="pre">my-branch</span></code></p>
 <p>Now, go to GitHub and find your branch. Make sure that continuous integration
-passes for your last commit. Now, 
+passes for your last commit. Now,
 <a class="reference external" href="https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request">create a pull request</a>.</p>
 <p>Your pull request will be reviewed and you might be asked to make sme changes.</p>
 <p>Finally, when your PR is approved,
@@ -170,21 +168,21 @@ passes for your last commit. Now,
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Unit tests</strong>. All unit tests must pass. 
-That can be checked by running <code class="docutils literal notranslate"><span class="pre">pytest</span></code> in root of the repository. 
+<li><p><strong>Unit tests</strong>. All unit tests must pass.
+That can be checked by running <code class="docutils literal notranslate"><span class="pre">pytest</span></code> in root of the repository.
 When you are working on a new feature, to save time, you can run tests only for
-the test file affected by your changes: <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">path_to_file.py</span></code>, 
-also PyCharm can run tests in one file or one package for you. 
+the test file affected by your changes: <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">path_to_file.py</span></code>,
+also PyCharm can run tests in one file or one package for you.
 Before pushing chages, please run global <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p></li>
 <li><p><strong>Coverage</strong>. You should cover all functionality with tests. In other words, any
-change to existing code which makes it incorrect must make some test to fail. We 
+change to existing code which makes it incorrect must make some test to fail. We
 don’t enforce coverage automatically, but we might do it in the future.
 Code reviewers should ask contributors to add tests if some behaviors are not
 covered with tests.</p></li>
-<li><p><strong>Style</strong>. We perform 2 independent style checks: 
-<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> and 
+<li><p><strong>Style</strong>. We perform 2 independent style checks:
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> and
 <a class="reference external" href="https://www.pylint.org/">pylint</a>. PEP8 is set of simple rules about code layout.
-We enforce them with <code class="docutils literal notranslate"><span class="pre">pycodestyle</span></code>. Most PEP8 violations can be automatically 
+We enforce them with <code class="docutils literal notranslate"><span class="pre">pycodestyle</span></code>. Most PEP8 violations can be automatically
 fixed by <code class="docutils literal notranslate"><span class="pre">autopep8</span></code>, and we have a simple script <code class="docutils literal notranslate"><span class="pre">tools/fix_style.sh</span></code> to
 do that. Pylint performs series of more clever checks. Both
 checks are mandatory - if they fail, continuous integration won’t let
@@ -197,8 +195,8 @@ yuo tom mege code to master.</p></li>
 </section>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
-<p>We use <a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a> to automatically 
-build the documentation. Documentation is authomatically exported to 
+<p>We use <a class="reference external" href="https://www.sphinx-doc.org/en/master/">sphinx</a> to automatically
+build the documentation. Documentation is authomatically exported to
 <a class="reference external" href="https://inferlo.readthedocs.io/">ReadTheDocs</a>.</p>
 <p>In particular, pydocs are automatically converted to “API reference” section in
 documentation. If you are adding new public class or function to the library,
@@ -209,35 +207,35 @@ you should add it to <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>And then open <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code>.</p>
-<p>We have continuous integration check requiring that documentation builds. 
-So, if you made any changes to documentation, you should build it locally to 
+<p>We have continuous integration check requiring that documentation builds.
+So, if you made any changes to documentation, you should build it locally to
 check that it builds.</p>
-<p>To build the docs you will have to additionally install 
+<p>To build the docs you will have to additionally install
 <a class="reference external" href="https://pandoc.org/">pandoc</a>. On Linux you can do that by running
 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">intsall</span> <span class="pre">pandoc</span></code>.</p>
 </section>
 <section id="adding-new-algorithms">
 <h2>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Link to this heading"></a></h2>
 <p>If you are adding new algorithm to solve a problem fo particular kind of problem,
-for which we already have at least one algorithm, you should follow the following 
+for which we already have at least one algorithm, you should follow the following
 process.</p>
 <p>Write your algorithm as a function, which takes graphical model object
 as first parameter. If your algorithm has configurable parameters, they
 should be keyword arguments with default values.</p>
-<p>Then add call to your function from a method on model class. It should be 
+<p>Then add call to your function from a method on model class. It should be
 conditioned on user passing your algorithm name as <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> argument.</p>
 </section>
 <section id="release-management">
 <h2>Release management<a class="headerlink" href="#release-management" title="Link to this heading"></a></h2>
-<p>We follow <a class="reference external" href="https://semver.org/">Semantic versioning</a> rules. Currently 
+<p>We follow <a class="reference external" href="https://semver.org/">Semantic versioning</a> rules. Currently
 InferLO is in Alpha, which means major version is “0”, and we keep our right to
 make any breaking changes.</p>
 <p>There is no fixed release schedule, but we try to push new minor version any
 time new useful functionality was added.</p>
 <p>Releases are pushed manually. To push a new release:</p>
-<ol class="simple">
-<li><p>Change version in setup.py. </p></li>
-<li><p>Go to “Actions”, click “Upload Python Package”, then “Run workflow”. </p></li>
+<ol class="arabic simple">
+<li><p>Change <code class="docutils literal notranslate"><span class="pre">project.version</span></code> in <a class="reference external" href="https://github.com/InferLO/inferlo/blob/master/pyproject.toml">pyproject.toml</a>.</p></li>
+<li><p>Go to “Actions”, click “Upload Python Package”, then “Run workflow”.</p></li>
 <li><p>Go to “Releases”, create new release with the same version and
 add releases notes describing what are new features since the last release.</p></li>
 </ol>

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.optimization.tree_dp &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.optimization.tree_dp &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -98,15 +98,15 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">PairWiseFiniteModel</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4[:](f8[:,:],i4[:,:],f8[:,:,:])&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"i4[:](f8[:,:],i4[:,:],f8[:,:,:])"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_max_likelihood_internal</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">dfs_edges</span><span class="p">,</span> <span class="n">ints</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Max likelihood for pairwise model (internal).</span>
+<span class="w">    </span><span class="sd">"""Max likelihood for pairwise model (internal).</span>
 
 <span class="sd">    :param field: Field.</span>
 <span class="sd">    :param dfs_edges: Edges in DFS tree.</span>
 <span class="sd">    :param ints: Interactions corresponding to DFS edges.</span>
 <span class="sd">    :return: Most likely state.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">gr_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">al_size</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">dfs_edges_count</span> <span class="o">=</span> <span class="n">dfs_edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -133,7 +133,7 @@
 <div class="viewcode-block" id="max_likelihood_tree_dp">
 <a class="viewcode-back" href="../../../../generated/inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp.html#inferlo.pairwise.optimization.tree_dp.max_likelihood_tree_dp">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">max_likelihood_tree_dp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Max Likelihood for the pairwise model.</span>
+<span class="w">    </span><span class="sd">"""Max Likelihood for the pairwise model.</span>
 
 <span class="sd">    Performs dynamic programming on tree.</span>
 
@@ -142,8 +142,8 @@
 
 <span class="sd">    :param model: Model for which to find most likely state.</span>
 <span class="sd">    :return: Most likely state. np.array of ints.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">get_dfs_result</span><span class="p">()</span><span class="o">.</span><span class="n">had_cycles</span><span class="p">,</span> <span class="s2">&quot;Graph has cycles.&quot;</span>
+<span class="sd">    """</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">get_dfs_result</span><span class="p">()</span><span class="o">.</span><span class="n">had_cycles</span><span class="p">,</span> <span class="s2">"Graph has cycles."</span>
 
     <span class="n">field</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">dfs_edges</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_dfs_result</span><span class="p">()</span><span class="o">.</span><span class="n">dfs_edges</span>

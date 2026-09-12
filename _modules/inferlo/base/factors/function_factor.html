@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.base.factors.function_factor &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.base.factors.function_factor &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -101,20 +101,20 @@
 <div class="viewcode-block" id="FunctionFactor">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FunctionFactor</span><span class="p">(</span><span class="n">Factor</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A factor given explicitly by function.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""A factor given explicitly by function."""</span>
 
 <div class="viewcode-block" id="FunctionFactor.__init__">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">GraphModel</span><span class="p">,</span>
                  <span class="n">var_idx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
                  <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create function factor.</span>
+<span class="w">        </span><span class="sd">"""Create function factor.</span>
 
 <span class="sd">        :param model: Graphical model this factor belongs to.</span>
 <span class="sd">        :param var_idx: Indices of variables in the model, on which this</span>
 <span class="sd">            factor depends.</span>
 <span class="sd">        :param func: Function of this factor (as Python callable).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span></div>
 
@@ -132,7 +132,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">combine_factors</span><span class="p">(</span><span class="n">factor1</span><span class="p">:</span> <span class="n">FunctionFactor</span><span class="p">,</span> <span class="n">factor2</span><span class="p">:</span> <span class="n">FunctionFactor</span><span class="p">,</span>
                         <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span>
                             <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">FunctionFactor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a factor which is a function of other 2 factors.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns a factor which is a function of other 2 factors."""</span>
         <span class="k">assert</span> <span class="n">factor1</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="n">factor2</span><span class="o">.</span><span class="n">model</span>
 
         <span class="c1"># List of variable indices in the new factor.</span>
@@ -158,7 +158,7 @@
 <div class="viewcode-block" id="FunctionFactor.apply_function">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.apply_function">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">apply_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns factor func(g(x)), where g(x) is given factor.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Returns factor func(g(x)), where g(x) is given factor."""</span>
         <span class="k">return</span> <span class="n">FunctionFactor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_idx</span><span class="p">,</span>
                               <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span></div>
 
@@ -166,17 +166,17 @@
 <div class="viewcode-block" id="FunctionFactor.combine_with">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.combine_with">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">combine_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns factor func(g(x), other), where g(x) is given factor.</span>
+<span class="w">        </span><span class="sd">"""Returns factor func(g(x), other), where g(x) is given factor.</span>
 
 <span class="sd">        `other` may be a number, variable or another factor.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">other</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;FunctionFactor&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'FunctionFactor'</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">FunctionFactor</span><span class="o">.</span><span class="n">combine_factors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s1">&#39;Cannot combine FunctionFactor with </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span></div>
+                <span class="s1">'Cannot combine FunctionFactor with </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
@@ -218,21 +218,21 @@
 <div class="viewcode-block" id="FunctionFactor.exp">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.exp">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exponent of this factor.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Exponent of this factor."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FunctionFactor.sin">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.sin">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">sin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sine of this factor.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Sine of this factor."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FunctionFactor.cos">
 <a class="viewcode-back" href="../../../../generated/inferlo.FunctionFactor.html#inferlo.FunctionFactor.cos">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sine of this factor.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Sine of this factor."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_function</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">)</span></div>
 </div>
 

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.inference.path_dp &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.inference.path_dp &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -105,7 +105,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_b</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">layer1</span><span class="p">,</span> <span class="n">layer2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns tensor describing interactions between two layers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Returns tensor describing interactions between two layers."""</span>
     <span class="n">l1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer1</span><span class="p">)</span>
     <span class="n">l2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer2</span><span class="p">)</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># all edges from layer1 to layer2.</span>
@@ -136,13 +136,13 @@
 
 
 <span class="c1"># Path decomposition of Pairwise model.</span>
-<span class="c1"># Contains layers of graph&#39;s path decomposition and also matrices A and B</span>
+<span class="c1"># Contains layers of graph's path decomposition and also matrices A and B</span>
 <span class="c1"># describing interactions within and between layers.</span>
-<span class="n">PwPathDecomposition</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;PwPathDecomposition&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">PwPathDecomposition</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'PwPathDecomposition'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'layers'</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">])</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">prepare_path_dp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PwPathDecomposition</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepares model for path decomposition dynamic programming.</span>
+<span class="w">    </span><span class="sd">"""Prepares model for path decomposition dynamic programming.</span>
 
 <span class="sd">    Builds path decomposition and calculates matrices A describing interactions</span>
 <span class="sd">    with layers and matrices B describing interactions between them.</span>
@@ -150,13 +150,13 @@
 <span class="sd">    :param model: Pairwise model.</span>
 <span class="sd">    :return: PwPathDecomposition object with path decomposition and calculated</span>
 <span class="sd">      matrices A and B.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">layers</span> <span class="o">=</span> <span class="n">path_decomposition</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_graph</span><span class="p">())</span>
     <span class="n">sum_layers_size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">])</span>
-    <span class="k">assert</span> <span class="n">sum_layers_size</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="s2">&quot;Graph is not connected.&quot;</span>
+    <span class="k">assert</span> <span class="n">sum_layers_size</span> <span class="o">==</span> <span class="n">model</span><span class="o">.</span><span class="n">gr_size</span><span class="p">,</span> <span class="s2">"Graph is not connected."</span>
     <span class="n">max_layer_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">])</span>
     <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span> <span class="o">**</span> <span class="n">max_layer_size</span> <span class="o">&lt;=</span> <span class="mf">1e5</span><span class="p">,</span> <span class="p">(</span>
-        <span class="s2">&quot;Algorithm won&#39;t handle this complexity.&quot;</span><span class="p">)</span>
+        <span class="s2">"Algorithm won't handle this complexity."</span><span class="p">)</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_subgraph_factor_values</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">]</span>
     <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_b</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
@@ -168,7 +168,7 @@
 <div class="viewcode-block" id="infer_path_dp">
 <a class="viewcode-back" href="../../../../generated/inferlo.pairwise.inference.path_dp.infer_path_dp.html#inferlo.pairwise.inference.path_dp.infer_path_dp">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">infer_path_dp</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inference using DP on path decomposition.</span>
+<span class="w">    </span><span class="sd">"""Inference using DP on path decomposition.</span>
 
 <span class="sd">    Performs dynamic programming on the path decomposition of the underlying</span>
 <span class="sd">    graph of the pairwise model.</span>
@@ -178,7 +178,7 @@
 
 <span class="sd">    :param model: Potts model for which to perform inference.</span>
 <span class="sd">    :return: ``InferenceResult`` object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">decomp</span> <span class="o">=</span> <span class="n">prepare_path_dp</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
     <span class="n">layers_cnt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">decomp</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
 

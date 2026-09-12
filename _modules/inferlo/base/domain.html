@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.base.domain &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.base.domain &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -95,19 +95,19 @@
 <div class="viewcode-block" id="Domain">
 <a class="viewcode-back" href="../../../generated/inferlo.Domain.html#inferlo.Domain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Domain</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Describes set of values which a variable can take.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Describes set of values which a variable can take."""</span>
 
 <div class="viewcode-block" id="Domain.size">
 <a class="viewcode-back" href="../../../generated/inferlo.Domain.html#inferlo.Domain.size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cardinality of the domain.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Cardinality of the domain."""</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span></div>
 
 
 <div class="viewcode-block" id="Domain.is_discrete">
 <a class="viewcode-back" href="../../../generated/inferlo.Domain.html#inferlo.Domain.is_discrete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_discrete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the domain is discrete.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Whether the domain is discrete."""</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 </div>
 
@@ -116,7 +116,7 @@
 <div class="viewcode-block" id="DiscreteDomain">
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DiscreteDomain</span><span class="p">(</span><span class="n">Domain</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Domain consisting of finite set of numbers.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Domain consisting of finite set of numbers."""</span>
 
 <div class="viewcode-block" id="DiscreteDomain.__init__">
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.__init__">[docs]</a>
@@ -128,23 +128,23 @@
 <div class="viewcode-block" id="DiscreteDomain.size">
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cardinality of the domain.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Cardinality of the domain."""</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DiscreteDomain.get_value_index">
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.get_value_index">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_value_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets number of given value in list of al values in domain.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Gets number of given value in list of al values in domain."""</span>
         <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rev_idx</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rev_idx</span><span class="p">[</span><span class="n">val</span><span class="p">]</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Value </span><span class="si">%f</span><span class="s2"> is not in domain.&quot;</span> <span class="o">%</span> <span class="n">val</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Value </span><span class="si">%f</span><span class="s2"> is not in domain."</span> <span class="o">%</span> <span class="n">val</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DiscreteDomain.is_discrete">
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.is_discrete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_discrete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether the domain is discrete.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Whether the domain is discrete."""</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
@@ -152,7 +152,7 @@
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.binary">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">binary</span><span class="p">():</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates domain with two values 0 and 1.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Creates domain with two values 0 and 1."""</span>
         <span class="k">return</span> <span class="n">DiscreteDomain</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
 
 
@@ -160,22 +160,22 @@
 <a class="viewcode-back" href="../../../generated/inferlo.DiscreteDomain.html#inferlo.DiscreteDomain.range">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates domain with integer values from 0 to n-1.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Creates domain with integer values from 0 to n-1."""</span>
         <span class="k">return</span> <span class="n">DiscreteDomain</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;DiscreteDomain([</span><span class="si">%s</span><span class="s1">])&#39;</span> <span class="o">%</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="s1">'DiscreteDomain([</span><span class="si">%s</span><span class="s1">])'</span> <span class="o">%</span> <span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">])</span></div>
 
 
 
 <div class="viewcode-block" id="RealDomain">
 <a class="viewcode-back" href="../../../generated/inferlo.RealDomain.html#inferlo.RealDomain">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RealDomain</span><span class="p">(</span><span class="n">Domain</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Domain consisting of all real values.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Domain consisting of all real values."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;RealDomain&#39;</span></div>
+        <span class="k">return</span> <span class="s1">'RealDomain'</span></div>
 
 </pre></div>
 

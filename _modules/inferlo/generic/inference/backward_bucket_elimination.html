@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.generic.inference.backward_bucket_elimination &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.generic.inference.backward_bucket_elimination &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -96,9 +96,9 @@
 <div class="viewcode-block" id="BackwardBucketElimination">
 <a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.BackwardBucketElimination.html#inferlo.generic.inference.BackwardBucketElimination">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BackwardBucketElimination</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backward Bucket Elimination algorithm.</span>
+<span class="w">    </span><span class="sd">"""Backward Bucket Elimination algorithm.</span>
 
-<span class="sd">    This is the regular Bucket Elimination algorithm followed by a &quot;backward pass&quot; for computing</span>
+<span class="sd">    This is the regular Bucket Elimination algorithm followed by a "backward pass" for computing</span>
 <span class="sd">    marginal probabilities.</span>
 
 <span class="sd">    Implemented as described in [1] (pages 31-32), code uses notation from [1].</span>
@@ -107,13 +107,13 @@
 <span class="sd">        [1] Qiang Liu.</span>
 <span class="sd">        Reasoning and Decisions in Probabilistic Graphical Models – A Unified Framework. 2014.</span>
 <span class="sd">        http://sli.ics.uci.edu/pmwiki/uploads/Group/liu_phd.pdf</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="BackwardBucketElimination.infer">
 <a class="viewcode-back" href="../../../../generated/inferlo.generic.inference.BackwardBucketElimination.html#inferlo.generic.inference.BackwardBucketElimination.infer">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">infer</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs inference for graphical model.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Performs inference for graphical model."""</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">_convert</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="n">elimination_order</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span>
         <span class="n">buckets</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -128,7 +128,7 @@
             <span class="c1"># Eliminate the variable.</span>
             <span class="n">new_factor</span> <span class="o">=</span> <span class="n">product_over_</span><span class="p">(</span><span class="o">*</span><span class="n">bucket</span><span class="p">)</span>
             <span class="n">new_factor</span><span class="o">.</span><span class="n">marginalize</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="n">var_id</span><span class="p">])</span>
-            <span class="n">new_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;new_&#39;</span> <span class="o">+</span> <span class="n">var_id</span>
+            <span class="n">new_factor</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'new_'</span> <span class="o">+</span> <span class="n">var_id</span>
             <span class="c1"># Update the factor list.</span>
             <span class="n">model</span><span class="o">.</span><span class="n">remove_factors_from</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
             <span class="n">model</span><span class="o">.</span><span class="n">add_factor</span><span class="p">(</span><span class="n">new_factor</span><span class="p">)</span>
@@ -136,7 +136,7 @@
             <span class="n">buckets</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">bucket</span>
             <span class="n">new_factors</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_factor</span>
             <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="n">bucket</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">factor</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;new_&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">factor</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'new_'</span><span class="p">):</span>
                     <span class="n">i_to_j</span><span class="p">[</span><span class="n">factor</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">:]]</span> <span class="o">=</span> <span class="n">var_id</span>
             <span class="c1"># c_i - set of variables on which bucket depends.</span>
             <span class="n">pi_i</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">new_factors</span><span class="p">[</span><span class="n">var_id</span><span class="p">]</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.graphs.fast_dfs &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.graphs.fast_dfs &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -93,10 +93,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:],i4[:],i4[:])&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"i4(i4[:],i4[:],i1[:],i4[:,:],i4,i4,i1[:],i4[:],i4[:])"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">dfs_one_vertex</span><span class="p">(</span><span class="n">flat_adj_list</span><span class="p">,</span> <span class="n">fal_start</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">dfs_edges</span><span class="p">,</span>
                    <span class="n">dfs_edges_count</span><span class="p">,</span> <span class="n">start_vx</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">fal_pos_stack</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs depth-first search starting from given vertex.</span>
+<span class="w">    </span><span class="sd">"""Performs depth-first search starting from given vertex.</span>
 
 <span class="sd">    This algorithm returns DFS tree for connected component containing</span>
 <span class="sd">    ``start_vx``.</span>
@@ -104,10 +104,10 @@
 <span class="sd">    Equivalent to ``dfs_edges`` from NetworkX library (v2.4).</span>
 
 <span class="sd">    :param flat_adj_list: Flat adjacency list of length ``2 * edges_num``.</span>
-<span class="sd">      It&#39;s obtained by listing adjacent vertices for every vertex and</span>
+<span class="sd">      It's obtained by listing adjacent vertices for every vertex and</span>
 <span class="sd">      concatenating these lists.</span>
 <span class="sd">    :param fal_start: For every vertex contains pointer to ``flat_adj_list``</span>
-<span class="sd">      where we should start reading it&#39;s adjacent vertices. In other words,</span>
+<span class="sd">      where we should start reading it's adjacent vertices. In other words,</span>
 <span class="sd">      neighbors of vertex ``v`` are</span>
 <span class="sd">      ``flat_adj_list[fal_start[v]: fal_start[v+1]].</span>
 <span class="sd">      Length is ``vert_num + 1``. First element is 0, last element is</span>
@@ -120,13 +120,13 @@
 <span class="sd">      ``flags[0] = 1``.</span>
 <span class="sd">    :param stack: Allocated memory for DFS stack. DFS stack contains nodes</span>
 <span class="sd">      which DFS entered but not exited. It corresponds to call stack if we</span>
-<span class="sd">      implemented DFS recursively. It&#39;s important that we don&#39; allocate this</span>
+<span class="sd">      implemented DFS recursively. It's important that we don' allocate this</span>
 <span class="sd">      memory inside this function, because then algorithm would have quadratic</span>
 <span class="sd">      complexity if graph has a lot of small connected components.</span>
 <span class="sd">    :param fal_stack: Allocated memory stack which would contain pointers</span>
 <span class="sd">      (flat_adj_list indices) to currently considered children at each level.</span>
 <span class="sd">    :return: Updated dfs_edges_count.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Push start_vx to the stack.</span>
     <span class="n">stack_head</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">stack</span><span class="p">[</span><span class="n">stack_head</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_vx</span>
@@ -166,9 +166,9 @@
     <span class="k">return</span> <span class="n">dfs_edges_count</span>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">&quot;i4[:,:](i4,i4[:,:],i1[:])&quot;</span><span class="p">)</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span><span class="p">(</span><span class="s2">"i4[:,:](i4,i4[:,:],i1[:])"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_fast_dfs_internal</span><span class="p">(</span><span class="n">vert_num</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs depth-first search handling multiple connected components.</span>
+<span class="w">    </span><span class="sd">"""Performs depth-first search handling multiple connected components.</span>
 
 <span class="sd">    :param vert_num: Number of vertices in the graph.</span>
 <span class="sd">    :param edges: Edge list.</span>
@@ -176,7 +176,7 @@
 <span class="sd">      flag[0] - whether graph has cycles (i.e. was not a forest).</span>
 <span class="sd">      flag[1] - whether graph was disconnected and we added edges to make it</span>
 <span class="sd">        connected.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Number of edges.</span>
     <span class="n">edge_num</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="c1"># Calculate degree of each vertex.</span>
@@ -224,16 +224,16 @@
     <span class="k">return</span> <span class="n">dfs_edges</span>
 
 
-<span class="n">FastDfsResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;FastDfsResult&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dfs_edges&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;had_cycles&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;was_disconnected&#39;</span><span class="p">,</span>
-                                             <span class="s1">&#39;was_tree&#39;</span><span class="p">])</span>
+<span class="n">FastDfsResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'FastDfsResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'dfs_edges'</span><span class="p">,</span>
+                                             <span class="s1">'had_cycles'</span><span class="p">,</span>
+                                             <span class="s1">'was_disconnected'</span><span class="p">,</span>
+                                             <span class="s1">'was_tree'</span><span class="p">])</span>
 
 
 <div class="viewcode-block" id="fast_dfs">
 <a class="viewcode-back" href="../../../generated/inferlo.graphs.fast_dfs.html#inferlo.graphs.fast_dfs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fast_dfs</span><span class="p">(</span><span class="n">vert_num</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FastDfsResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Depth-first search.</span>
+<span class="w">    </span><span class="sd">"""Depth-first search.</span>
 
 <span class="sd">    Runs the depth-first search algorithm on given simple undirected graph</span>
 <span class="sd">    represented by an edge list and returns edges of DFS tree in order of</span>
@@ -265,7 +265,7 @@
 <span class="sd">        * ``was_tree`` - whether input graph was a tree.</span>
 
 <span class="sd">    See https://en.wikipedia.org/wiki/Depth-first_search.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">edges_count</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">edges</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">edges_count</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>

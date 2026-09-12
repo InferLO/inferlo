@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.datasets.dataset_loader &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.datasets.dataset_loader &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -99,63 +99,63 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.datasets.uai_reader</span><span class="w"> </span><span class="kn">import</span> <span class="n">UaiReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">inferlo.datasets.uai_writer</span><span class="w"> </span><span class="kn">import</span> <span class="n">UaiWriter</span>
 
-<span class="n">REPO_URL</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/&#39;</span>
-<span class="n">UAI_PROB_URL</span> <span class="o">=</span> <span class="n">REPO_URL</span> <span class="o">+</span> <span class="s1">&#39;MAR_prob&#39;</span>
-<span class="n">UAI_SOL_URL</span> <span class="o">=</span> <span class="n">REPO_URL</span> <span class="o">+</span> <span class="s1">&#39;MAR_sol&#39;</span>
+<span class="n">REPO_URL</span> <span class="o">=</span> <span class="s1">'https://raw.githubusercontent.com/akxlr/tbp/master/tests/uai/'</span>
+<span class="n">UAI_PROB_URL</span> <span class="o">=</span> <span class="n">REPO_URL</span> <span class="o">+</span> <span class="s1">'MAR_prob'</span>
+<span class="n">UAI_SOL_URL</span> <span class="o">=</span> <span class="n">REPO_URL</span> <span class="o">+</span> <span class="s1">'MAR_sol'</span>
 
 <span class="c1"># Copied from http://sli.ics.uci.edu/~ihler/uai-data/</span>
 <span class="c1"># Values here are log10.</span>
 <span class="c1"># TODO: load data from remote data repository.</span>
 <span class="n">UAI_PF</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;DBN_11.uai&#39;</span><span class="p">:</span> <span class="mf">58.5307</span><span class="p">,</span>
-    <span class="s1">&#39;CSP_11.uai&#39;</span><span class="p">:</span> <span class="mf">13.563</span><span class="p">,</span>
-    <span class="s1">&#39;CSP_12.uai&#39;</span><span class="p">:</span> <span class="mf">16.4536</span><span class="p">,</span>
-    <span class="s1">&#39;CSP_13.uai&#39;</span><span class="p">:</span> <span class="mf">15.3037</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_11.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.39145</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_12.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.16462</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_13.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.50703</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_14.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.80675</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_15.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.63667</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_16.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.97522</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_17.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">9.4592</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_18.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.67228</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_19.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.34464</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_20.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.06065</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_21.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.58012</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_22.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.49474</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_23.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">11.3151</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_24.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.86181</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_25.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">9.41791</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_26.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.30489</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_27.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.13576</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_28.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.13152</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_29.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">10.4527</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_30.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">22.1005</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_31.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.79979</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_32.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.20193</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_33.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.80866</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_34.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.07996</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_35.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.74295</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_36.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.7427</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_37.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.1711</span><span class="p">,</span>
-    <span class="s1">&#39;Promedus_38.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.98235</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_11.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">31.1776</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_12.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">69.7017</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_13.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">76.0389</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_14.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">30.7614</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_15.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">76.6058</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_16.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">38.5556</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_17.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">64.8245</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_18.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">78.5222</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_19.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">59.0249</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_20.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">64.2292</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_21.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">29.6304</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_22.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">54.2777</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_23.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">116.58</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_24.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">83.7331</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_25.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">87.8848</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_26.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">115.772</span><span class="p">,</span>
-    <span class="s1">&#39;linkage_27.uai&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">63.4735</span><span class="p">,</span>
+    <span class="s1">'DBN_11.uai'</span><span class="p">:</span> <span class="mf">58.5307</span><span class="p">,</span>
+    <span class="s1">'CSP_11.uai'</span><span class="p">:</span> <span class="mf">13.563</span><span class="p">,</span>
+    <span class="s1">'CSP_12.uai'</span><span class="p">:</span> <span class="mf">16.4536</span><span class="p">,</span>
+    <span class="s1">'CSP_13.uai'</span><span class="p">:</span> <span class="mf">15.3037</span><span class="p">,</span>
+    <span class="s1">'Promedus_11.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.39145</span><span class="p">,</span>
+    <span class="s1">'Promedus_12.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.16462</span><span class="p">,</span>
+    <span class="s1">'Promedus_13.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.50703</span><span class="p">,</span>
+    <span class="s1">'Promedus_14.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.80675</span><span class="p">,</span>
+    <span class="s1">'Promedus_15.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.63667</span><span class="p">,</span>
+    <span class="s1">'Promedus_16.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.97522</span><span class="p">,</span>
+    <span class="s1">'Promedus_17.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">9.4592</span><span class="p">,</span>
+    <span class="s1">'Promedus_18.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.67228</span><span class="p">,</span>
+    <span class="s1">'Promedus_19.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.34464</span><span class="p">,</span>
+    <span class="s1">'Promedus_20.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.06065</span><span class="p">,</span>
+    <span class="s1">'Promedus_21.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.58012</span><span class="p">,</span>
+    <span class="s1">'Promedus_22.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.49474</span><span class="p">,</span>
+    <span class="s1">'Promedus_23.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">11.3151</span><span class="p">,</span>
+    <span class="s1">'Promedus_24.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.86181</span><span class="p">,</span>
+    <span class="s1">'Promedus_25.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">9.41791</span><span class="p">,</span>
+    <span class="s1">'Promedus_26.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.30489</span><span class="p">,</span>
+    <span class="s1">'Promedus_27.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.13576</span><span class="p">,</span>
+    <span class="s1">'Promedus_28.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.13152</span><span class="p">,</span>
+    <span class="s1">'Promedus_29.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">10.4527</span><span class="p">,</span>
+    <span class="s1">'Promedus_30.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">22.1005</span><span class="p">,</span>
+    <span class="s1">'Promedus_31.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.79979</span><span class="p">,</span>
+    <span class="s1">'Promedus_32.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.20193</span><span class="p">,</span>
+    <span class="s1">'Promedus_33.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.80866</span><span class="p">,</span>
+    <span class="s1">'Promedus_34.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.07996</span><span class="p">,</span>
+    <span class="s1">'Promedus_35.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.74295</span><span class="p">,</span>
+    <span class="s1">'Promedus_36.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.7427</span><span class="p">,</span>
+    <span class="s1">'Promedus_37.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.1711</span><span class="p">,</span>
+    <span class="s1">'Promedus_38.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">4.98235</span><span class="p">,</span>
+    <span class="s1">'linkage_11.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">31.1776</span><span class="p">,</span>
+    <span class="s1">'linkage_12.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">69.7017</span><span class="p">,</span>
+    <span class="s1">'linkage_13.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">76.0389</span><span class="p">,</span>
+    <span class="s1">'linkage_14.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">30.7614</span><span class="p">,</span>
+    <span class="s1">'linkage_15.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">76.6058</span><span class="p">,</span>
+    <span class="s1">'linkage_16.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">38.5556</span><span class="p">,</span>
+    <span class="s1">'linkage_17.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">64.8245</span><span class="p">,</span>
+    <span class="s1">'linkage_18.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">78.5222</span><span class="p">,</span>
+    <span class="s1">'linkage_19.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">59.0249</span><span class="p">,</span>
+    <span class="s1">'linkage_20.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">64.2292</span><span class="p">,</span>
+    <span class="s1">'linkage_21.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">29.6304</span><span class="p">,</span>
+    <span class="s1">'linkage_22.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">54.2777</span><span class="p">,</span>
+    <span class="s1">'linkage_23.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">116.58</span><span class="p">,</span>
+    <span class="s1">'linkage_24.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">83.7331</span><span class="p">,</span>
+    <span class="s1">'linkage_25.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">87.8848</span><span class="p">,</span>
+    <span class="s1">'linkage_26.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">115.772</span><span class="p">,</span>
+    <span class="s1">'linkage_27.uai'</span><span class="p">:</span> <span class="o">-</span><span class="mf">63.4735</span><span class="p">,</span>
 <span class="p">}</span>
 
 
@@ -163,14 +163,14 @@
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.Dataset.html#inferlo.datasets.Dataset">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Dataset</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dataset containing GM and true answers.</span>
+<span class="w">    </span><span class="sd">"""Dataset containing GM and true answers.</span>
 
 <span class="sd">    Fields:</span>
 <span class="sd">        * ``model`` - Graphical model.</span>
 <span class="sd">        * ``true_marginals`` - known true exact marginal probabilities for all variables.</span>
 <span class="sd">        * ``true_log_pf`` - known true exact natural logarithm of the partition function.</span>
 <span class="sd">        * ``name`` - name of the dataset.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">GenericGraphModel</span>
     <span class="n">true_marginals</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span>
     <span class="n">true_log_pf</span><span class="p">:</span> <span class="nb">float</span>
@@ -181,22 +181,22 @@
 <div class="viewcode-block" id="DatasetLoader">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DatasetLoader</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads graphical models from named datasets.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Loads graphical models from named datasets."""</span>
 
 <div class="viewcode-block" id="DatasetLoader.__init__">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :param data_dir: Where to store cached datasets. Specify if you want</span>
 <span class="sd">          datasets being cached locally. If not set, default system temporary</span>
 <span class="sd">          directory will be used.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s1">&#39;inferlo_data&#39;</span><span class="p">)</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s1">'inferlo_data'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;custom&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">'custom'</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span> <span class="o">=</span> <span class="n">UaiReader</span><span class="p">()</span>
@@ -206,14 +206,14 @@
 <div class="viewcode-block" id="DatasetLoader.load_file_">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_file_">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_file_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url_prefix</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads file from the web to local file.</span>
+<span class="w">        </span><span class="sd">"""Loads file from the web to local file.</span>
 
 <span class="sd">        If local file already exists, does nothing.</span>
 <span class="sd">        Returns local path to loaded file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="n">url_prefix</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">file_name</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url_prefix</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="n">file_name</span>
             <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">path</span></div>
@@ -222,22 +222,22 @@
 <div class="viewcode-block" id="DatasetLoader.load_uai_dataset">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_uai_dataset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_uai_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads named dataset from UAI competition.</span>
+<span class="w">        </span><span class="sd">"""Loads named dataset from UAI competition.</span>
 
-<span class="sd">        :param dataset_name: Name of dataset, e.g. &quot;Promedus_11.uai&quot;. For full</span>
+<span class="sd">        :param dataset_name: Name of dataset, e.g. "Promedus_11.uai". For full</span>
 <span class="sd">            list of UAI datasets, see http://sli.ics.uci.edu/~ihler/uai-data/.</span>
 <span class="sd">            Not all of them are currently supported.</span>
 <span class="sd">        :return: `Dataset` object, containing graphical model</span>
 <span class="sd">            (as `GenericGraphModel` object), true logarithm of the partition</span>
 <span class="sd">            function and true marginals.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">dataset_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">UAI_PF</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown UAI dataset: &quot;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown UAI dataset: "</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
         <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_file_</span><span class="p">(</span><span class="n">UAI_PROB_URL</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span><span class="o">.</span><span class="n">read_model</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
 
         <span class="c1"># True marginals.</span>
-        <span class="n">mar_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_file_</span><span class="p">(</span><span class="n">UAI_SOL_URL</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="o">+</span> <span class="s1">&#39;.MAR&#39;</span><span class="p">)</span>
+        <span class="n">mar_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_file_</span><span class="p">(</span><span class="n">UAI_SOL_URL</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="o">+</span> <span class="s1">'.MAR'</span><span class="p">)</span>
         <span class="n">marginals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span><span class="o">.</span><span class="n">read_marginals</span><span class="p">(</span><span class="n">mar_file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
                        <span class="n">true_marginals</span><span class="o">=</span><span class="n">marginals</span><span class="p">,</span>
@@ -248,39 +248,39 @@
 <div class="viewcode-block" id="DatasetLoader.save_custom_dataset">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.save_custom_dataset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">save_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves dataset locally.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Saves dataset locally."""</span>
         <span class="c1"># Store model.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uai_writer</span><span class="o">.</span><span class="n">write_model</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-                                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">))</span>
+                                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">'.uai'</span><span class="p">))</span>
 
         <span class="c1"># Store true answers.</span>
-        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.ans.npy&#39;</span><span class="p">)</span>
-        <span class="n">ans</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;true_marginals&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">,</span> <span class="s1">&#39;true_log_pf&#39;</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">}</span>
+        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">'.ans.npy'</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'true_marginals'</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_marginals</span><span class="p">,</span> <span class="s1">'true_log_pf'</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">true_log_pf</span><span class="p">}</span>
         <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ans_path</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DatasetLoader.load_custom_dataset">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.load_custom_dataset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads previously saved datataset.&quot;&quot;&quot;</span>
-        <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""Loads previously saved datataset."""</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">'.uai'</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uai_reader</span><span class="o">.</span><span class="n">read_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
 
-        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.ans.npy&#39;</span><span class="p">)</span>
+        <span class="n">ans_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">'.ans.npy'</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
         <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ans_path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>  <span class="c1"># type: Dict</span>
         <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">&#39;true_log_pf&#39;</span><span class="p">],</span>
-                       <span class="n">true_marginals</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">&#39;true_marginals&#39;</span><span class="p">],</span>
+                       <span class="n">true_log_pf</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">'true_log_pf'</span><span class="p">],</span>
+                       <span class="n">true_marginals</span><span class="o">=</span><span class="n">ans</span><span class="p">[</span><span class="s1">'true_marginals'</span><span class="p">],</span>
                        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DatasetLoader.custom_dataset_exists">
 <a class="viewcode-back" href="../../../generated/inferlo.datasets.DatasetLoader.html#inferlo.datasets.DatasetLoader.custom_dataset_exists">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">custom_dataset_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if custom dataset exists.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.uai&#39;</span><span class="p">))</span></div>
+<span class="w">        </span><span class="sd">"""Checks if custom dataset exists."""</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">'.uai'</span><span class="p">))</span></div>
 </div>
 
 </pre></div>

@@ -5,17 +5,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inferlo.pairwise.junction_tree &mdash; InferLO 0.1.0 documentation</title>
+  <title>inferlo.pairwise.junction_tree &mdash; InferLO 0.3.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eea1f72d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=71d9d8e6"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -105,11 +105,11 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">build_multi_delta</span><span class="p">(</span><span class="n">var_num</span><span class="p">,</span> <span class="n">al_size</span><span class="p">,</span> <span class="n">nodes1</span><span class="p">,</span> <span class="n">nodes2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build boolean matrix describing Kroneker delta symbol.</span>
+<span class="w">    </span><span class="sd">"""Build boolean matrix describing Kroneker delta symbol.</span>
 
 <span class="sd">    Result[i][j]==True iff state of first supervariable encoded by i and state</span>
 <span class="sd">    of second supervariable encoded by j are consistent. If the same variable</span>
-<span class="sd">    appears both in nodes1 and nodes2, then &quot;consistent&quot;  means this variable</span>
+<span class="sd">    appears both in nodes1 and nodes2, then "consistent"  means this variable</span>
 <span class="sd">    takes the same value in both supervariables.</span>
 
 <span class="sd">    :param var_num: Number of variables in each supervariable.</span>
@@ -117,7 +117,7 @@
 <span class="sd">    :param nodes1: Indices of variables in first supervariable.</span>
 <span class="sd">    :param nodes2: Indices of variables in second supervariable.</span>
 <span class="sd">    :return: Square boolean matrix of size al_size ** var_num.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ans_size</span> <span class="o">=</span> <span class="n">al_size</span> <span class="o">**</span> <span class="n">var_num</span>
     <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">ans_size</span><span class="p">,</span> <span class="n">ans_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes1</span><span class="p">)):</span>
@@ -134,26 +134,26 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">JunctionizedModel</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Junction tree decomposition of pairwise model.</span>
+<span class="w">    </span><span class="sd">"""Junction tree decomposition of pairwise model.</span>
 
 <span class="sd">    Contains list of new nodes, represented as lists of old nodes. Also</span>
 <span class="sd">    contains model over junction tree, which is equivalent to the original</span>
 <span class="sd">    model.</span>
 
-<span class="sd">    It&#39;s guaranteed that interaction graph of new model doesn&#39;t have any</span>
+<span class="sd">    It's guaranteed that interaction graph of new model doesn't have any</span>
 <span class="sd">    cycles. This object can be used to restore answers to problems on original</span>
 <span class="sd">    model if we know answers to new model.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">new_model</span><span class="p">:</span> <span class="n">PairWiseFiniteModel</span>
     <span class="n">junction_nodes</span><span class="p">:</span> <span class="nb">list</span>
     <span class="n">orig_gr_size</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">orig_al_size</span><span class="p">:</span> <span class="nb">int</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">restore_original_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_state</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts new model state to original model state.</span>
+<span class="w">        </span><span class="sd">"""Converts new model state to original model state.</span>
 
-<span class="sd">        Doesn&#39;t validate input.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        Doesn't validate input.</span>
+<span class="sd">        """</span>
         <span class="n">old_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_gr_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">junction_nodes</span><span class="p">)):</span>
             <span class="n">decoded_state</span> <span class="o">=</span> <span class="n">decode_state</span><span class="p">(</span><span class="n">new_state</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
@@ -166,7 +166,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">restore_original_inference_result</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">new_result</span><span class="p">:</span> <span class="n">InferenceResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts new model inference result to orig. model inf. result.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Converts new model inference result to orig. model inf. result."""</span>
         <span class="n">new_marg_prob</span> <span class="o">=</span> <span class="n">new_result</span><span class="o">.</span><span class="n">marg_prob</span>
         <span class="n">old_marg_prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_gr_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_al_size</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">junction_nodes</span><span class="p">)):</span>
@@ -186,23 +186,23 @@
 <div class="viewcode-block" id="to_junction_tree_model">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.junction_tree.to_junction_tree_model.html#inferlo.pairwise.junction_tree.to_junction_tree_model">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JunctionizedModel</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Builds equivalent model on a junction tree.</span>
+<span class="w">    </span><span class="sd">"""Builds equivalent model on a junction tree.</span>
 
 <span class="sd">    First, builds a junction tree using algorithm from NetworkX which uses</span>
 <span class="sd">    Minimum Fill-in heuristic.</span>
 
 <span class="sd">    Then, builds a new model in which variables correspond to nodes in junction</span>
-<span class="sd">    tree - we will call them &quot;supervariables&quot;. Values of new supervariables are</span>
+<span class="sd">    tree - we will call them "supervariables". Values of new supervariables are</span>
 <span class="sd">    encoded values of original variables. New alphabet size is original</span>
 <span class="sd">    alphabet size to the power of maximaljunction size. If some supervariables</span>
-<span class="sd">    have less variables than others, we just don&#39;t use all available for</span>
-<span class="sd">    encoding &quot;address space&quot;. We mark those impossible values as having</span>
+<span class="sd">    have less variables than others, we just don't use all available for</span>
+<span class="sd">    encoding "address space". We mark those impossible values as having</span>
 <span class="sd">    probability 0 (i.e log probability -inf).</span>
 
 <span class="sd">    Fields in new model are calculated by multiplying all field and</span>
 <span class="sd">    interaction factors on variables in the same supervariable. While doing</span>
 <span class="sd">    this, we make sure that every factor is counted only once. If some factor</span>
-<span class="sd">    was accounted for in one supervariable field, it won&#39;t be accounted for</span>
+<span class="sd">    was accounted for in one supervariable field, it won't be accounted for</span>
 <span class="sd">    again in other supervariables.</span>
 
 <span class="sd">    Interaction factors in new model contain consistency requirement. If</span>
@@ -220,14 +220,14 @@
 <span class="sd">    :return: JunctionizedModel object, which contains junction tree and the</span>
 <span class="sd">      new model, which is equivalent to original model, but whose graph is a</span>
 <span class="sd">      tree.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Build junction tree.</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;min_fill_in&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'min_fill_in'</span><span class="p">:</span>
         <span class="n">tree_width</span><span class="p">,</span> <span class="n">junc_tree</span> <span class="o">=</span> <span class="n">treewidth_min_fill_in</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;min_degree&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'min_degree'</span><span class="p">:</span>
         <span class="n">tree_width</span><span class="p">,</span> <span class="n">junc_tree</span> <span class="o">=</span> <span class="n">treewidth_min_degree</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
         <span class="n">tree_width_1</span><span class="p">,</span> <span class="n">junc_tree_1</span> <span class="o">=</span> <span class="n">treewidth_min_fill_in</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
         <span class="n">tree_width_2</span><span class="p">,</span> <span class="n">junc_tree_2</span> <span class="o">=</span> <span class="n">treewidth_min_degree</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tree_width_1</span> <span class="o">&lt;</span> <span class="n">tree_width_2</span><span class="p">:</span>
@@ -236,7 +236,7 @@
             <span class="n">tree_width</span><span class="p">,</span> <span class="n">junc_tree</span> <span class="o">=</span> <span class="n">tree_width_2</span><span class="p">,</span> <span class="n">junc_tree_2</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s1">&#39;Unknown treewidth decomposition algorithm </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span>
+            <span class="s1">'Unknown treewidth decomposition algorithm </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">algorithm</span><span class="p">)</span>
 
     <span class="n">jt_nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">junc_tree</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
     <span class="n">sv_size</span> <span class="o">=</span> <span class="n">tree_width</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Supervariable size.</span>
@@ -245,7 +245,7 @@
     <span class="n">new_al_size</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">al_size</span> <span class="o">**</span> <span class="n">sv_size</span>  <span class="c1"># New alphabet size.</span>
     <span class="k">if</span> <span class="n">new_al_size</span> <span class="o">&gt;</span> <span class="mf">1e6</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">TooMuchStatesError</span><span class="p">(</span>
-            <span class="s2">&quot;New domain size is too large: </span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">new_al_size</span><span class="p">)</span>
+            <span class="s2">"New domain size is too large: </span><span class="si">%d</span><span class="s2">."</span> <span class="o">%</span> <span class="n">new_al_size</span><span class="p">)</span>
 
     <span class="c1"># Build edge list in terms of indices in new graph.</span>
     <span class="n">nodes_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">jt_nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jt_nodes</span><span class="p">))}</span>
@@ -260,7 +260,7 @@
     <span class="c1"># Then, when decoding, we will just throw away values from the left.</span>
     <span class="c1"># We should account for each factor of the old graph in exactly one factor</span>
     <span class="c1"># in the new graph. So, for field and interaction factors of the old graph</span>
-    <span class="c1"># we keep track of whether we already took them, and don&#39;t take them for</span>
+    <span class="c1"># we keep track of whether we already took them, and don't take them for</span>
     <span class="c1"># the second time.</span>
     <span class="n">new_field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">new_gr_size</span><span class="p">,</span> <span class="n">new_al_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
     <span class="n">used_node_fields</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -294,7 +294,7 @@
 <div class="viewcode-block" id="infer_junction_tree">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.junction_tree.infer_junction_tree.html#inferlo.pairwise.junction_tree.infer_junction_tree">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">infer_junction_tree</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferenceResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs inference using Junction Tree decomposition.</span>
+<span class="w">    </span><span class="sd">"""Performs inference using Junction Tree decomposition.</span>
 
 <span class="sd">    Decomposes graph into junction tree, builds equivalent model on that tree,</span>
 <span class="sd">    performs inference for the new model and restores answer for the original</span>
@@ -302,9 +302,9 @@
 
 <span class="sd">    :param model: Model, for which to perform inference.</span>
 <span class="sd">    :param result: InferenceResult object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;min_fill_in&#39;</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;tree_dp&#39;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'min_fill_in'</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'tree_dp'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">restore_original_inference_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
@@ -312,7 +312,7 @@
 <div class="viewcode-block" id="max_likelihood_junction_tree">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.junction_tree.max_likelihood_junction_tree.html#inferlo.pairwise.junction_tree.max_likelihood_junction_tree">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">max_likelihood_junction_tree</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Finds most probable state using Junction Tree decomposition.</span>
+<span class="w">    </span><span class="sd">"""Finds most probable state using Junction Tree decomposition.</span>
 
 <span class="sd">    Decomposes graph into junction tree, builds equivalent model on that tree,</span>
 <span class="sd">    finds the most probable state for the new model and restores answer for the</span>
@@ -321,9 +321,9 @@
 <span class="sd">    :param model: Model, for which to find the most probable state.</span>
 <span class="sd">    :param result: The most probable state. Integer np.array of length</span>
 <span class="sd">      ``model.gr_size``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;min_fill_in&#39;</span><span class="p">)</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">max_likelihood</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;tree_dp&#39;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'min_fill_in'</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">max_likelihood</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'tree_dp'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">restore_original_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
 
 
@@ -331,7 +331,7 @@
 <div class="viewcode-block" id="sample_junction_tree">
 <a class="viewcode-back" href="../../../generated/inferlo.pairwise.junction_tree.sample_junction_tree.html#inferlo.pairwise.junction_tree.sample_junction_tree">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sample_junction_tree</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;IID sampling using Junction Tree decomposition.</span>
+<span class="w">    </span><span class="sd">"""IID sampling using Junction Tree decomposition.</span>
 
 <span class="sd">    Decomposes graph into junction tree, builds equivalent model on that tree,</span>
 <span class="sd">    samples from that model and restores answer for the original model.</span>
@@ -340,9 +340,9 @@
 <span class="sd">    :param num_samples: Number of samples.</span>
 <span class="sd">    :return: ``np.array`` of type ``np.int32`` and shape</span>
 <span class="sd">      ``(num_samples, gr_size)``. Every row is an independent sample.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;min_fill_in&#39;</span><span class="p">)</span>
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;tree_dp&#39;</span><span class="p">,</span>
+<span class="sd">    """</span>
+    <span class="n">junct_model</span> <span class="o">=</span> <span class="n">to_junction_tree_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">'min_fill_in'</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">junct_model</span><span class="o">.</span><span class="n">new_model</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">'tree_dp'</span><span class="p">,</span>
                                            <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">junct_model</span><span class="o">.</span><span class="n">restore_original_state</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">])</span></div>
 
