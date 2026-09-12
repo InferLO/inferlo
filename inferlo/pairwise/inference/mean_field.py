@@ -2,25 +2,19 @@
 # Licensed under the Apache License, Version 2.0 - see LICENSE file.
 from __future__ import annotations
 
-import os
 from typing import TYPE_CHECKING
 
 import numba
 import numpy as np
 
-from inferlo.utils import special_functions
 from inferlo.base.inference_result import InferenceResult
+from inferlo.utils import special_functions
 
 if TYPE_CHECKING:
     from inferlo.pairwise import PairWiseFiniteModel
 
-# To prevent numba from complaining that we call np.dot on non-continuous
-# arrays (which are in fact continuous).
 
-os.environ["NUMBA_DISABLE_PERFORMANCE_WARNINGS"] = '1'
-
-
-@numba.jit("f8(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
+@numba.jit("f8(f8[:,::1],f8[:,::1],i4[:,::1],f8[:,:,::1])")
 def _logpf_lower_bound(mu, field, edges, inter):
     ans = np.sum(field * mu) + special_functions.entropy(mu)
     for i in range(len(edges)):
@@ -29,7 +23,7 @@ def _logpf_lower_bound(mu, field, edges, inter):
     return ans
 
 
-@numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:])")
+@numba.jit("void(f8[:,::1],f8[:,::1],i4[:,::1],f8[:,:,::1])")
 def _naive_mean_field_iteration(mu, field, edges, inter):
     f = np.copy(field)
     for i in range(len(edges)):
@@ -40,7 +34,7 @@ def _naive_mean_field_iteration(mu, field, edges, inter):
         mu[i, :] = special_functions.softmax_1d(f[i, :])
 
 
-@numba.jit("void(f8[:,:],f8[:,:],i4[:,:],f8[:,:,:],i8,i8,i8)")
+@numba.jit("void(f8[:,::1],f8[:,::1],i4[:,::1],f8[:,:,::1],i8,i8,i8)")
 def _infer_mean_field_internal(best_mu,
                                field,
                                edges,
@@ -85,11 +79,13 @@ def infer_mean_field(model: PairWiseFiniteModel,
         for logarithm of the true partition function. `marg_prob` is
         approximation for marginal probabilities.
     """
-    field = model.field
-    edges = model.get_edges_array()
-    interactions = model.get_all_interactions()
+    # Ensure the layouts match the compiled signatures, including when the
+    # model field was supplied in Fortran order or as a strided view.
+    field = np.ascontiguousarray(model.field)
+    edges = np.ascontiguousarray(model.get_edges_array())
+    interactions = np.ascontiguousarray(model.get_all_interactions())
 
-    best_mu = np.zeros_like(model.field)
+    best_mu = np.zeros_like(field)
     _infer_mean_field_internal(best_mu, field, edges, interactions,
                                iters_wait, max_iter, num_attempts)
     best_bound = _logpf_lower_bound(best_mu, field, edges, interactions)
